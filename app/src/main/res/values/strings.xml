@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LameMp3Ndk</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="timer_no_text"><![CDATA[<< : >>]]></string>
+</resources>

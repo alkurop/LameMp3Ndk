@@ -1,0 +1,11 @@
+.gradle
+/local.properties
+/.idea
+/build
+/gradle
+/LameMp3Ndk.iml
+/gradlew
+/gradlew.bat
+/gradle.properties
+/app/build
+/app/app.iml

@@ -1,0 +1,146 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="10dp" android:background="@drawable/bg">
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp" android:layout_weight="1" android:paddingLeft="15dp" android:paddingTop="15dp"
+            android:paddingRight="15dp">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                >
+            <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView" android:layout_weight="2" android:src="@drawable/speaker_l"
+                    android:scaleType="fitStart" android:layout_marginLeft="3dp"/>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent" android:layout_weight="7">
+                <FrameLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp" android:layout_weight="1">
+                    <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/imageView4" android:layout_weight="1" android:src="@drawable/title"
+                            android:layout_marginBottom="10dp" android:layout_marginTop="3dp"/>
+                </FrameLayout>
+                <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:orientation="horizontal" android:layout_weight="3">
+                    <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent" android:layout_weight="3" android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp" android:background="@drawable/holder_l"
+                            android:id="@+id/ll_radio_container1">
+                    </LinearLayout>
+                    <ImageView android:layout_width="0dp" android:layout_height="wrap_content" android:id="@+id/imageView3"
+                               android:layout_weight="1" android:src="@drawable/holder_mic"/>
+                    <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent" android:layout_weight="3" android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp" android:background="@drawable/holder_r"
+                            android:id="@+id/ll_radio_container2">
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView2" android:layout_weight="2" android:src="@drawable/speaker_r"
+                    android:scaleType="fitStart"/>
+        </LinearLayout>
+    </FrameLayout>
+    <FrameLayout android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1"
+                 android:padding="15dp">
+
+    <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+               android:src="@drawable/holder_bt"
+               android:scaleType="fitXY"/>
+
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal">
+        <com.omar.lamemp3ndk.app.customviews.VisualizerView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/visualizer"
+                android:background="#55000000"
+                android:layout_alignTop="@+id/scrollView" android:layout_centerHorizontal="true"
+                android:layout_margin="20dp" android:layout_weight="2"/>
+        <ScrollView android:layout_width="0dp" android:layout_height="match_parent"
+                    android:background="#55000000"
+                    android:id="@+id/scrollView"
+                    android:scrollbars="vertical"
+                    android:layout_margin="20dp" android:layout_weight="2">
+            <LinearLayout
+                    android:id="@+id/ll_logHolder"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+            </LinearLayout>
+        </ScrollView>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent" android:layout_weight="1" android:layout_margin="20dp"
+                android:background="#55000000">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_alignTop="@+id/visualizer" android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+                <ImageView
+                        android:clickable="true"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/iv_play" android:src="@drawable/ic_action_play"
+                        android:layout_gravity="right|center_vertical" android:layout_weight="1"
+                        android:layout_marginTop="10dp" android:layout_marginBottom="10dp"/>
+                <ImageView
+                        android:clickable="true"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/iv_record" android:src="@drawable/ic_action_rec"
+                        android:layout_gravity="center_vertical" android:layout_weight="1"
+                        android:layout_marginBottom="10dp" android:layout_marginTop="10dp"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp" android:layout_weight="1">
+                <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent" android:layout_weight="2">
+                </FrameLayout>
+                <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/iv_share" android:layout_weight="4" android:layout_gravity="center_horizontal|bottom"
+                        android:src="@drawable/abc_ic_menu_share_mtrl_alpha" android:clickable="true"
+                        android:paddingLeft="10dp" android:paddingRight="10dp" android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"/>
+                <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent" android:layout_weight="2">
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
+</LinearLayout>
