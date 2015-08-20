@@ -1,5 +1,6 @@
 package com.omar.lamemp3ndk.app.presenters;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.LinearLayout;
 import com.omar.lamemp3ndk.app.Constants;
@@ -9,9 +10,9 @@ import com.omar.lamemp3ndk.app.controllers.AudioStatesController;
 import com.omar.lamemp3ndk.app.controllers.IAudioStatesEvents;
 import com.omar.lamemp3ndk.app.controllers.ILsdDisplay;
 import com.omar.lamemp3ndk.app.controllers.StateSelector;
-import com.omar.lamemp3ndk.app.callbacks.CheckboxCallback;
-import com.omar.lamemp3ndk.app.share.IShadingModule;
+import com.omar.lamemp3ndk.app.callbacks.ICheckboxCallback;
 import com.omar.lamemp3ndk.app.share.SharingModule;
+import com.omar.lamemp3ndk.app.utils.ContextHelper;
 import com.omar.lamemp3ndk.app.views.IMainView;
 
 /**
@@ -19,14 +20,17 @@ import com.omar.lamemp3ndk.app.views.IMainView;
  */
 public class MainPresenter implements IMainEvents, ILsdDisplay {
 
+    private Context context;
+
     private IMainView view;
-    private StateSelector stateSelector;
     private IAudioStatesEvents audioController;
     private IRadioGroupEvents bitRatePresenter;
     private IRadioGroupEvents sampleRatePresenter;
 
+    private StateSelector stateSelector;
 
     public void Init(IMainView _view) {
+        context = ContextHelper.GetContext();
         view = _view;
         setUpAudioController();
         setUpStatesSelector();
@@ -69,14 +73,12 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
             public void onPlayerStoped() {
                 stateSelector.CallbackStop();
                 view.StopVisualizer();
-
             }
 
             @Override
             public void onRecorderStoped() {
                 view.StopVisualizer();
                 stateSelector.CallbackStop();
-
             }
 
             @Override
@@ -87,7 +89,6 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
             @Override
             public void onPlayerError(String s) {
                 MainPresenter.this.SetText(s);
-                Log.e("Player", s);
                 stateSelector.CallbackStop();
                 view.StopVisualizer();
             }
@@ -96,7 +97,6 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
             public void onRecorderError(String s) {
                 view.StopVisualizer();
                 MainPresenter.this.SetText(s);
-                Log.e("Recorder", s);
                 stateSelector.CallbackStop();
             }
         });
@@ -107,7 +107,6 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
             @Override
             public void StartRecording() {
                 view.SetRecordBtnImg(R.drawable.ic_action_stop);
-
                 audioController.StartRecord();
             }
 
@@ -144,8 +143,9 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
     private void setUpSampleRateRadioGroup(LinearLayout container) {
         String groupName = Constants.SAMPLE_RATE_LABEL;
         String format = Constants.HZ_LABEL;
+
         sampleRatePresenter = new RadioGroupPresenter();
-        sampleRatePresenter.CreateRadioGroup(container, groupName, format, Constants.SAMPLE_RATE_PRESETS, new CheckboxCallback() {
+        sampleRatePresenter.CreateRadioGroup(container, groupName, format, Constants.SAMPLE_RATE_PRESETS, new ICheckboxCallback() {
             @Override
             public void setDataIndex(int index) {
                 audioController.SetReсorderHz(Constants.SAMPLE_RATE_PRESETS[index]);
@@ -157,11 +157,11 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
     }
 
     private void setUpBitRateRadioGroup(LinearLayout container) {
-        String groupName = Constants.BIT_RATE_LABEL;
-        String format = Constants.BPM_LABEL;
+        String groupName = context.getString(R.string.bit_rate);
+        String format = context.getString(R.string.sample_rate);
 
         bitRatePresenter = new RadioGroupPresenter();
-        bitRatePresenter.CreateRadioGroup(container, groupName, format, Constants.BIT_RATE_PRESETS, new CheckboxCallback() {
+        bitRatePresenter.CreateRadioGroup(container, groupName, format, Constants.BIT_RATE_PRESETS, new ICheckboxCallback() {
             @Override
             public void setDataIndex(int index) {
                 audioController.SetReсorderBPM(Constants.BIT_RATE_PRESETS[index]);

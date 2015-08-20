@@ -5,12 +5,60 @@ package com.omar.lamemp3ndk.app.controllers;
  */
 abstract public class StateSelector {
 
+    private enum STATES {STOPPED, RECORDING, PLAYING}
+    private STATES currentState = STATES.STOPPED;
 
+    public void RecordingClicked() {
+        switch (currentState) {
+            case STOPPED:
+                currentState = STATES.RECORDING;
+                StartRecording();
+                break;
+            case RECORDING:
+                currentState = STATES.STOPPED;
+                StopRecodring();
+                break;
+            case PLAYING:
+                currentState = STATES.RECORDING;
+                StopPlaying();
+                StartRecording();
+                break;
+        }
+    }
 
+    public void StopAll(){
+        switch (currentState) {
+            case RECORDING:
+                currentState = STATES.PLAYING;
+                StopRecodring();
+                break;
+            case PLAYING:
+                currentState = STATES.STOPPED;
+                StopPlaying();
+                break;
+        }
+    }
 
-    private enum states {Stoped, Recodring, Playing}
+    public void PlayCLicked() {
+        switch (currentState) {
+            case STOPPED:
+                currentState = STATES.PLAYING;
+                StartPlaying();
+                break;
+            case RECORDING:
+                currentState = STATES.PLAYING;
+                StopRecodring();
+                StartPlaying();
+                break;
+            case PLAYING:
+                currentState = STATES.STOPPED;
+                StopPlaying();
+                break;
+        }
+    }
 
-    private states currentState = states.Stoped;
+    public void CallbackStop(){currentState = STATES.STOPPED;
+        OnCallbackStop();}
 
 
     public abstract void StartRecording();
@@ -22,62 +70,4 @@ abstract public class StateSelector {
     public abstract void StopRecodring();
 
     public abstract void OnCallbackStop();
-
-
-
-    public void RecordingClicked() {
-        switch (currentState) {
-            case Stoped:
-                currentState = states.Recodring;
-                StartRecording();
-                break;
-            case Recodring:
-                currentState = states.Stoped;
-                StopRecodring();
-                break;
-            case Playing:
-                currentState = states.Recodring;
-                StopPlaying();
-                StartRecording();
-                break;
-
-        }
-    }
-
-    public void StopAll(){
-        switch (currentState) {
-
-            case Recodring:
-                currentState = states.Playing;
-                StopRecodring();
-                break;
-            case Playing:
-                currentState = states.Stoped;
-                StopPlaying();
-                break;
-
-        }
-    }
-
-    public void PlayCLicked() {
-        switch (currentState) {
-            case Stoped:
-                currentState = states.Playing;
-                StartPlaying();
-                break;
-            case Recodring:
-                currentState = states.Playing;
-                StopRecodring();
-                StartPlaying();
-                break;
-            case Playing:
-                currentState = states.Stoped;
-                StopPlaying();
-                break;
-
-        }
-    }
-
-    public void CallbackStop(){currentState = states.Stoped;
-        OnCallbackStop();}
 }

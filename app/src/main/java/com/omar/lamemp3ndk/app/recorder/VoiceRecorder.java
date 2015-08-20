@@ -1,13 +1,15 @@
 package com.omar.lamemp3ndk.app.recorder;
 
+import android.content.Context;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.*;
+import android.os.Process;
 import android.util.Log;
 import com.omar.lamemp3ndk.app.Constants;
+import com.omar.lamemp3ndk.app.R;
 import com.omar.lamemp3ndk.app.callbacks.IRecorderCallback;
+import com.omar.lamemp3ndk.app.utils.ContextHelper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,13 +19,17 @@ import java.io.FileOutputStream;
  * Created by omar on 17.08.15.
  */
 public class VoiceRecorder {
+    private Context context;
 
-    private AudioRecord recorder;
     private IRecorderCallback callback;
     private Handler callbackHandler;
-    private String filePath;
+
+    private AudioRecord recorder;
     private FileOutputStream output;
 
+    private final int STATUS_NORMAL = 0;
+    private final int STATUS_ERROR = 1;
+    private final int STATUS_ID = 2;
 
     private short channelConfig = Constants.CHANNEL_PRESETS[0];
     private int quality = Constants.QUALITY_PRESETS[1];
@@ -31,29 +37,23 @@ public class VoiceRecorder {
     private short audioFormat = Constants.AUDIO_FORMAT_PRESETS[1];
     private int mBitRate = Constants.BIT_RATE_PRESETS[1];
 
+    private String filePath;
 
     private int minBufferSize;
     private short[] buffer;
     private byte[] mp3buffer;
     private boolean recording;
 
-
-    private final int STATUS_NORMAL = 0;
-    private final int STATUS_ERROR = 1;
-    private final int STATUS_ID = 2;
-
+    private int sleepMillis = 100;
     private long counter;
 
-    private final String DATA = "data";
-    private final String TAG = "recorder";
-
-    private int sleepMillis = 100;
-
-
     public VoiceRecorder(String _filepath, IRecorderCallback _callback) {
+        context = ContextHelper.GetContext();
+
         filePath = _filepath;
         callback = _callback;
         setupCallbackHandler();
+
     }
 
 
@@ -68,7 +68,7 @@ public class VoiceRecorder {
 
     public void recordStop() {
         recording = false;
-        sendHandlerMessage(STATUS_NORMAL, "recorder stopped");
+        sendHandlerMessage(STATUS_NORMAL, context.getString(R.string.recorder_stopped));
 
     }
 
@@ -105,14 +105,13 @@ public class VoiceRecorder {
         }).start();
     }
 
-
     private void recThread() {
         counterThread();
         new Thread() {
             @Override
             public void run() {
 
-                android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
+                Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO);
 
                 try {
                     File outFile = new File(filePath);
@@ -142,13 +141,16 @@ public class VoiceRecorder {
                     LameModule.close();
                     File file = new File(filePath);
                     if (file.exists()) {
-                        sendHandlerMessage(STATUS_NORMAL, "file saved to " + filePath);
-                        sendHandlerMessage(STATUS_NORMAL, String.format("audio length = %.1f seconds", ((float) counter) / 1000));
-                        sendHandlerMessage(STATUS_NORMAL, String.format("file size = %.1f kb", ((float) file.length()) / 1000));
-                        sendHandlerMessage(STATUS_NORMAL, String.format(" %.1f kb per second", ((float) file.length()
-                        ) / ((float) counter) ));
+                        sendHandlerMessage(STATUS_NORMAL, context.getString(R.string.file_saved_to) + filePath);
+                        sendHandlerMessage(STATUS_NORMAL, String.format(context.getString(R.string.audio_length)  +
+                                "= %.1f" + context.getString(R.string.seconds), (
+                                (float) counter) / 1000));
+                        sendHandlerMessage(STATUS_NORMAL, String.format(context.getString(R.string.file_size) + " = %.1f " + Constants.KB, (
+                                (float) file.length()) / 1000));
+                        sendHandlerMessage(STATUS_NORMAL, String.format(  "%.1f " + Constants.KB +   context.getString(R.string
+                                .compression_rate), ((float) file.length()) / ((float) counter)));
 
-                    } else sendHandlerMessage(STATUS_ERROR, "error saving file to " + filePath);
+                    } else sendHandlerMessage(STATUS_ERROR, context.getString(R.string.error_saving_file_to) + filePath);
 
 
                 } catch (Exception e) {
@@ -160,33 +162,27 @@ public class VoiceRecorder {
     }
 
     private AudioRecord findAudioRecord() throws Exception {
-
-
-        Log.d(TAG, "Attempting rate " + mSampleRate + "Hz, bits: " + audioFormat + ", channel: " + channelConfig);
-
-
         minBufferSize = AudioRecord.getMinBufferSize(mSampleRate, channelConfig, audioFormat);
-
         if (minBufferSize != AudioRecord.ERROR_BAD_VALUE) {
 
             AudioRecord recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, mSampleRate, channelConfig, audioFormat, minBufferSize * 4);
             try {
                 LameModule.init(mSampleRate, 1, mSampleRate, mBitRate, quality);
             } catch (Exception e) {
-                throw new Exception("Error initializing recorder");
+                throw new Exception(context.getString(R.string.error_init_recorder));
             }
             if (recorder.getState() == AudioRecord.STATE_INITIALIZED) {
-
-                String logMessage = String.format("recording MP3 at %d kbps , %d Hz ", mBitRate, mSampleRate);
+                String logMessage = String.format(context.getString(R.string.recording_mp3_at) + " %d " + Constants.KBPS + " , %d " + Constants.HZ, mBitRate,
+                        mSampleRate);
                 sendHandlerMessage(STATUS_NORMAL, logMessage);
-
                 return recorder;
+
             } else {
-                throw new Exception("Error initializing recorder");
+                throw new Exception(context.getString(R.string.error_init_recorder));
             }
 
         } else {
-            throw new Exception("AudioRecord.ERROR_BAD_VALUE");
+            throw new Exception(context.getString(R.string.audioRecord_bad_value));
         }
 
 
@@ -196,22 +192,12 @@ public class VoiceRecorder {
         Message m = new Message();
         m.what = status;
         Bundle b = new Bundle();
-        b.putString(DATA, data);
+        b.putString(Constants.DATA, data);
         m.setData(b);
         callbackHandler.sendMessage(m);
 
     }
 
-
-    private void sendHandlerMessage(int status, int data) {
-        Message m = new Message();
-        m.what = status;
-        Bundle b = new Bundle();
-        b.putInt(DATA, data);
-        m.setData(b);
-        callbackHandler.sendMessage(m);
-
-    }
 
     private void setupCallbackHandler() {
         callbackHandler = new Handler() {
@@ -219,13 +205,13 @@ public class VoiceRecorder {
             public void handleMessage(Message message) {
                 switch (message.what) {
                     case STATUS_NORMAL:
-                        callback.NormalMessage(message.getData().getString(DATA));
+                        callback.NormalMessage(message.getData().getString(Constants.DATA));
                         break;
                     case STATUS_ERROR:
-                        callback.OnErrorOccured(message.getData().getString(DATA));
+                        callback.OnErrorOccured(message.getData().getString(Constants.DATA));
                         break;
                     case STATUS_ID:
-                        callback.SendRecorderId(message.getData().getInt(DATA));
+                        callback.SendRecorderId(message.getData().getInt(Constants.DATA));
                         break;
                 }
             }

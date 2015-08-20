@@ -6,10 +6,8 @@ import android.content.Context;
  * Created by omar on 17.08.15.
  */
 public class ContextHelper {
-    private static Context mContext;
 
-    public ContextHelper() {
-    }
+    private static Context mContext;
 
     public static void SetContext(Context context) {
         mContext = context;

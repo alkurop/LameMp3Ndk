@@ -1,23 +1,14 @@
 package com.omar.lamemp3ndk.app.recorder;
 
+import com.omar.lamemp3ndk.app.Constants;
+
 /**
  * Created by omar on 17.08.15.
  */
 public class LameModule {
 
     static {
-        System.loadLibrary("mp3lame");
-    }
-    /**
-     * Initialize LAME.
-     *
-     * @param inSamplerate  input sample rate in Hz.
-     * @param outChannel    number of channels in input stream.
-     * @param outSamplerate output sample rate in Hz.
-     * @param outBitrate    brate compression ratio in KHz.
-     */
-    public static void init(int inSamplerate, int outChannel, int outSamplerate, int outBitrate) {
-        init(inSamplerate, outChannel, outSamplerate, outBitrate, 7);
+        System.loadLibrary(Constants.MP3_LAME_LIB);
     }
 
     /**

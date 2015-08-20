@@ -1,6 +1,8 @@
 package com.omar.lamemp3ndk.app.controllers;
 
 import android.content.Context;
+import com.omar.lamemp3ndk.app.Constants;
+import com.omar.lamemp3ndk.app.R;
 import com.omar.lamemp3ndk.app.callbacks.IAudioControllerCallback;
 import com.omar.lamemp3ndk.app.callbacks.IPlayerCallback;
 import com.omar.lamemp3ndk.app.callbacks.IRecorderCallback;
@@ -15,23 +17,29 @@ import java.io.File;
  * Created by omar on 17.08.15.
  */
 public class AudioStatesController implements IAudioStatesEvents {
-    private ILsdDisplay lsdDisplay;
-    private String filePath;
-
-    private VoiceRecorder voiceRecorder;
-    private AudioPlayer audioPlayer;
 
     private IAudioControllerCallback upperLevelCallback;
     private IPlayerCallback playerCallback;
     private IRecorderCallback recorderCallback;
+    private ILsdDisplay lsdDisplay;
+
+
+    private VoiceRecorder voiceRecorder;
+    private AudioPlayer audioPlayer;
+
+
+    private String filePath;
+
     private int currentBPM;
     private int currentHz;
+
+    private Context context;
 
     @Override
     public void StartRecord() {
         voiceRecorder = new VoiceRecorder(filePath, recorderCallback);
-
         voiceRecorder.recordStart(currentHz, currentBPM);
+        context = ContextHelper.GetContext();
     }
 
     @Override
@@ -40,7 +48,7 @@ public class AudioStatesController implements IAudioStatesEvents {
             audioPlayer = new AudioPlayer(filePath, playerCallback);
             audioPlayer.playerStart();
         } else {
-            upperLevelCallback.onPlayerError("Player cannot find file");
+            upperLevelCallback.onPlayerError(context.getString(R.string.player_cannot_find_file));
         }
     }
 
@@ -81,8 +89,8 @@ public class AudioStatesController implements IAudioStatesEvents {
 
     private String genrateFilePath(Context _context) {
 
-        String subDir = "voice_record";
-        String fileName = subDir + ".mp3";
+        String name = _context.getString(R.string.voice_record);
+        String fileName = name + Constants.MP3_EXTENTION;
         String filepath = _context.getCacheDir() + "/" + fileName;
         return filepath;
     }

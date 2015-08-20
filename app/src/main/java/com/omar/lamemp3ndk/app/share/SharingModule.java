@@ -1,11 +1,14 @@
 package com.omar.lamemp3ndk.app.share;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.LabeledIntent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import com.omar.lamemp3ndk.app.Constants;
+import com.omar.lamemp3ndk.app.R;
 import com.omar.lamemp3ndk.app.controllers.ILsdDisplay;
 import com.omar.lamemp3ndk.app.utils.ContextHelper;
 
@@ -19,22 +22,32 @@ import java.util.List;
 
 
 public class SharingModule implements IShadingModule {
-    private static final String SUBJECT = "Retro mp3 recording";
-    private static final String TEXT = "mp3 file is included";
+    private Context context ;
+
+    private String SUBJECT;
+    private String TEXT;
     private String filePath;
 
-    public static SharingModule I(){return new SharingModule();}
+    public static SharingModule I() {
+        return new SharingModule();
+    }
+
     @Override
-    public void StartShading(String _filePath, ILsdDisplay _display){
+    public void StartShading(String _filePath, ILsdDisplay _display) {
+        context = ContextHelper.GetContext();
+        SUBJECT = context. getString(R.string.retro_mp3_recordnig);
+        TEXT = context.getString(R.string.mp3_file_is_included);
+
         filePath = _filePath;
-        if(checkFile(filePath)){
+        if (checkFile(filePath)) {
             share();
-            _display.SetText("Trying to share");
-        }else{
-            _display.SetText("Cannot share: file not detected");
+            _display.SetText(context.getString(R.string.trying_to_share));
+        } else {
+            _display.SetText(context.getString(R.string.cannot_share));
         }
     }
-    private boolean checkFile (String _filePath) {
+
+    private boolean checkFile(String _filePath) {
 
         File file = new File(_filePath);
         return file.exists();
@@ -49,71 +62,70 @@ public class SharingModule implements IShadingModule {
         File fileIn = new File(filePath);
         fileIn.setReadable(true, false);
         Uri u = Uri.fromFile(fileIn);
-    return u;
+        return u;
 
-}
+    }
 
-    private List<LabeledIntent> formShareChoise(Intent emailIntent, PackageManager pm, ArrayList<Uri> utiList,
-            List<ResolveInfo> resInfo) {
-
+    private List<LabeledIntent> formShareChoise(Intent emailIntent, PackageManager pm, ArrayList<Uri> utiList, List<ResolveInfo> resInfo) {
 
 
         List<LabeledIntent> intentList = new ArrayList<LabeledIntent>();
-        String packageName = null;
+        String packageName;
         ResolveInfo ri;
 
         for (int i = 0; i < resInfo.size(); i++) {
 
             ri = resInfo.get(i);
             packageName = ri.activityInfo.packageName;
-            if (packageName.contains("android.email")) {
+            if (packageName.contains(Constants.ANDROID_EMAIL)) {
                 emailIntent.setPackage(packageName);
-            } else if (packageName.contains("twitter") || packageName.contains("facebook.orca") || packageName.contains("skype") || packageName.contains("instagram") || packageName.contains("viber") || packageName.contains("dropbox") || packageName.contains("android.gm")) {
+            } else if (packageName.contains(Constants.TWEETER) || packageName.contains(Constants.FACEBOOK_ORCA) || packageName.contains(Constants.SKYPE) || packageName.contains(Constants.INSTAGRAM) || packageName.contains(Constants.VIBER) ||
+                    packageName.contains(Constants.DROPBOX) || packageName.contains(Constants.ANDROID_GM)) {
 
                 Intent intent = new Intent();
                 intent.setComponent(new ComponentName(packageName, ri.activityInfo.name));
                 intent.setAction(Intent.ACTION_SEND_MULTIPLE);
-                intent.setType("text/plain");
-                if (packageName.contains("android.gm")) {
+                intent.setType(Constants.TEXT_PLAIN);
+                if (packageName.contains(Constants.ANDROID_GM)) {
                     intent.putExtra(Intent.EXTRA_TEXT, TEXT);
                     intent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT);
                     intent.putParcelableArrayListExtra(android.content.Intent.EXTRA_STREAM, utiList);
-                    intent.setType("message/rfc822");
+                    intent.setType(Constants.MESSAGE_RFC822);
 
                 }
 
-                if (packageName.contains("dropbox")) {
+                if (packageName.contains(Constants.DROPBOX)) {
                     intent.putExtra(Intent.EXTRA_TEXT, TEXT);
                     intent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT);
                     intent.putParcelableArrayListExtra(android.content.Intent.EXTRA_STREAM, utiList);
-                    intent.setType("message/rfc822");
+                    intent.setType(Constants.MESSAGE_RFC822);
 
                 }
 
-                if (packageName.contains("skype")) {
+                if (packageName.contains(Constants.SKYPE)) {
                     intent.setAction(Intent.ACTION_SEND_MULTIPLE);
                     intent.putExtra(Intent.EXTRA_TEXT, SUBJECT + "\n" + TEXT);
                     intent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT);
                     intent.putParcelableArrayListExtra(android.content.Intent.EXTRA_STREAM, utiList);
-                    intent.setType("message/rfc822");
+                    intent.setType(Constants.MESSAGE_RFC822);
 
                 }
 
-                if (packageName.contains("viber")) {
+                if (packageName.contains(Constants.VIBER)) {
                     intent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT);
                     intent.putExtra(Intent.EXTRA_TEXT, SUBJECT + "\n" + TEXT);
                     intent.putParcelableArrayListExtra(android.content.Intent.EXTRA_STREAM, utiList);
-                    intent.setType("message/rfc822");
+                    intent.setType(Constants.MESSAGE_RFC822);
 
                 }
-                if (packageName.contains("facebook.orca")) {
+                if (packageName.contains(Constants.FACEBOOK_ORCA)) {
                     intent.putExtra(Intent.EXTRA_TEXT, SUBJECT + TEXT + "\n");
                     intent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT);
                     intent.putParcelableArrayListExtra(android.content.Intent.EXTRA_STREAM, utiList);
-                    intent.setType("text/pain");
+                    intent.setType(Constants.TEXT_PLAIN);
                 }
 
-                if (packageName.contains("twitter")) {
+                if (packageName.contains(Constants.TWEETER)) {
                     intent.setAction(Intent.ACTION_SEND);
                     if (utiList.size() > 0) {
                         intent.putExtra(Intent.EXTRA_STREAM, utiList.get(0));
@@ -121,7 +133,7 @@ public class SharingModule implements IShadingModule {
                     intent.putExtra(Intent.EXTRA_TEXT, SUBJECT + "\n" + TEXT);
                     intent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT);
 
-                    intent.setType("text/pain");
+                    intent.setType(Constants.TEXT_PLAIN);
 
                 }
                 intentList.add(new LabeledIntent(intent, packageName, ri.loadLabel(pm), ri.icon));
@@ -143,21 +155,21 @@ public class SharingModule implements IShadingModule {
         emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, TEXT);
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, SUBJECT);
         emailIntent.putParcelableArrayListExtra(android.content.Intent.EXTRA_STREAM, audUris);
-        emailIntent.setType("message/rfc822");
+        emailIntent.setType(Constants.MESSAGE_RFC822);
 
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
-        sendIntent.setType("*/*");
+        sendIntent.setType(Constants.TYPE_ALL);
         PackageManager pm = ContextHelper.GetContext().getPackageManager();
         List<ResolveInfo> resInfo = pm.queryIntentActivities(sendIntent, 0);
-        Intent openInChooser = Intent.createChooser(emailIntent, "Select");
+        Intent openInChooser = Intent.createChooser(emailIntent, context.getString(R.string.select));
 
-        List<LabeledIntent> intentList = formShareChoise(emailIntent, pm,  audUris, resInfo);
+        List<LabeledIntent> intentList = formShareChoise(emailIntent, pm, audUris, resInfo);
 
         LabeledIntent[] extraIntents = intentList.toArray(new LabeledIntent[intentList.size()]);
 
         openInChooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, extraIntents);
         openInChooser.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        ContextHelper.GetContext().startActivity(openInChooser );
+        ContextHelper.GetContext().startActivity(openInChooser);
     }
 
 
