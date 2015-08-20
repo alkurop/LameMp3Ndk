@@ -20,7 +20,7 @@ public class Constants {
 
 
     public static final String SAMPLE_RATE_LABEL                = "Sample rate";
-
+    public static final String VOICE_RECORD                      = "voice_record";
     public static final String DATA                             = "data";
 
     public static final String TWEETER                           = "twitter";
@@ -50,6 +50,7 @@ public class Constants {
     public static final int[]       QUALITY_PRESETS              = new int[]{2, 5, 7};  // the lower the better
     public static final  short[]    CHANNEL_PRESETS              = new short[]{AudioFormat.CHANNEL_IN_MONO, AudioFormat
                                                                                      .CHANNEL_IN_STEREO};
+
 
 }
 

@@ -89,16 +89,14 @@ public class AudioStatesController implements IAudioStatesEvents {
 
     private String genrateFilePath(Context _context) {
 
-        String name = _context.getString(R.string.voice_record);
+        String name = Constants.VOICE_RECORD;
         String fileName = name + Constants.MP3_EXTENTION;
-        String filepath = _context.getCacheDir() + "/" + fileName;
-        return filepath;
+        return _context.getCacheDir() + "/" + fileName;
     }
 
     private boolean checkIfFileExists(String _filepath) {
         File file = new File(_filepath);
-        if (file.exists()) return true;
-        else return false;
+        return file.exists();
     }
 
     private void initRecorderCallback() {
