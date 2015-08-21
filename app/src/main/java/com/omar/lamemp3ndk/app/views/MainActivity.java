@@ -26,17 +26,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Visualizer mVisualizer;
 
 
+    private boolean isAllowClick;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new MainPresenter();
         presenter.Init(this);
+        isAllowClick = true;
+    }
+
+    private boolean allowClick() {
+
+        if (isAllowClick) new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    isAllowClick = false;
+                    Thread.sleep(500);
+                    isAllowClick = true;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        return isAllowClick;
     }
 
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
+        if (allowClick()) switch (view.getId()) {
             case R.id.iv_play:
                 presenter.PlayClicked();
                 break;
@@ -84,20 +106,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mVisualizer = new Visualizer(playerId);
         mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
         mVisualizer.setDataCaptureListener(new Visualizer.OnDataCaptureListener() {
-                    public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
-                        mVisualizerView.updateVisualizer(bytes);
-                    }
+            public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
+                mVisualizerView.updateVisualizer(bytes);
+            }
 
-                    public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
-                    }
-                }, Visualizer.getMaxCaptureRate() / 2, true, false);
+            public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
+            }
+        }, Visualizer.getMaxCaptureRate() / 2, true, false);
         mVisualizer.setEnabled(true);
     }
 
     @Override
     public void StopVisualizer() {
-        if(mVisualizer != null)
-        mVisualizer.release();
+        if (mVisualizer != null) mVisualizer.release();
     }
 
     @Override
@@ -114,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            scrollView. fullScroll(View.FOCUS_DOWN);
+                            scrollView.fullScroll(View.FOCUS_DOWN);
                         }
                     });
                 } catch (InterruptedException e) {
