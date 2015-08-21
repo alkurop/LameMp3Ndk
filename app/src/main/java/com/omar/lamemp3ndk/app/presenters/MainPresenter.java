@@ -24,8 +24,6 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
 
     private IMainView view;
     private IAudioStatesEvents audioController;
-    private IRadioGroupEvents bitRatePresenter;
-    private IRadioGroupEvents sampleRatePresenter;
 
     private StateSelector stateSelector;
 
@@ -144,13 +142,8 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
         String groupName = Constants.SAMPLE_RATE_LABEL;
         String format = Constants.HZ_LABEL;
 
-        sampleRatePresenter = new RadioGroupPresenter();
-        sampleRatePresenter.CreateRadioGroup(container, groupName, format, Constants.SAMPLE_RATE_PRESETS, new ICheckboxCallback() {
-            @Override
-            public void setDataIndex(int index) {
-                audioController.SetReсorderHz(Constants.SAMPLE_RATE_PRESETS[index]);
-            }
-        });
+        IRadioGroupEvents sampleRatePresenter = new RadioGroupPresenter();
+        sampleRatePresenter.CreateRadioGroup(container, groupName, format, Constants.SAMPLE_RATE_PRESETS, index -> audioController.SetReсorderHz(Constants.SAMPLE_RATE_PRESETS[index]));
         sampleRatePresenter.SetSelected(0);
 
 
@@ -160,13 +153,8 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
         String groupName = context.getString(R.string.bit_rate);
         String format = context.getString(R.string.sample_rate);
 
-        bitRatePresenter = new RadioGroupPresenter();
-        bitRatePresenter.CreateRadioGroup(container, groupName, format, Constants.BIT_RATE_PRESETS, new ICheckboxCallback() {
-            @Override
-            public void setDataIndex(int index) {
-                audioController.SetReсorderBPM(Constants.BIT_RATE_PRESETS[index]);
-            }
-        });
+        IRadioGroupEvents bitRatePresenter = new RadioGroupPresenter();
+        bitRatePresenter.CreateRadioGroup(container, groupName, format, Constants.BIT_RATE_PRESETS, index -> audioController.SetReсorderBPM(Constants.BIT_RATE_PRESETS[index]));
         bitRatePresenter.SetSelected(0);
 
     }

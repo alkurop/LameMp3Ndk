@@ -106,20 +106,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_Timer = (TextView) getLayoutInflater().inflate(R.layout.log_view, null);
         tv_Timer.setText(s);
         llLogHolder.addView(tv_Timer);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(150);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            scrollView.fullScroll(View.FOCUS_DOWN);
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
+                Thread.sleep(150);
+                runOnUiThread(() -> scrollView.fullScroll(View.FOCUS_DOWN));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }).start();
 

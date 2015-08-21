@@ -7,11 +7,11 @@ import com.omar.lamemp3ndk.app.Constants;
  */
 public class TouchController {
     private static boolean isAllowClick = true;
+
     public static boolean allowClick() {
 
-        if (isAllowClick) new Thread(new Runnable() {
-            @Override
-            public void run() {
+        if (isAllowClick) new Thread(() -> {
+           {
                 try {
                     isAllowClick = false;
                     Thread.sleep(Constants.MILLI_DELAY);
@@ -24,6 +24,12 @@ public class TouchController {
 
         return isAllowClick;
     }
+
+     interface LL {
+         void onCLick();
+         void onFUck();
+     }
+
 
 
 }
