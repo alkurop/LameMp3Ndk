@@ -91,7 +91,7 @@ public class AudioStatesController implements IAudioStatesEvents {
 
         String name = Constants.VOICE_RECORD;
         String fileName = name + Constants.MP3_EXTENTION;
-        return _context.getCacheDir() + "/" + fileName;
+        return _context.getExternalCacheDir() + "/" + fileName;
     }
 
     private boolean checkIfFileExists(String _filepath) {
