@@ -24,12 +24,4 @@ public class TouchController {
 
         return isAllowClick;
     }
-
-     interface LL {
-         void onCLick();
-         void onFUck();
-     }
-
-
-
 }
