@@ -12,7 +12,7 @@ import com.omar.lamemp3ndk.app.R;
 import com.omar.lamemp3ndk.app.customviews.VisualizerView;
 import com.omar.lamemp3ndk.app.presenters.IMainEvents;
 import com.omar.lamemp3ndk.app.presenters.MainPresenter;
-import com.omar.lamemp3ndk.app.utils.ContextHelper;
+import com.omar.lamemp3ndk.app.utils.TouchController;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, IMainView {
@@ -26,39 +26,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Visualizer mVisualizer;
 
 
-    private boolean isAllowClick;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new MainPresenter();
         presenter.Init(this);
-        isAllowClick = true;
-    }
-
-    private boolean allowClick() {
-
-        if (isAllowClick) new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    isAllowClick = false;
-                    Thread.sleep(500);
-                    isAllowClick = true;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-        return isAllowClick;
     }
 
 
     @Override
     public void onClick(View view) {
-        if (allowClick()) switch (view.getId()) {
+        if (TouchController.allowClick())
+            switch (view.getId()) {
             case R.id.iv_play:
                 presenter.PlayClicked();
                 break;
