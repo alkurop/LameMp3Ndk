@@ -23,15 +23,15 @@ repositories {
 }
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
 
     defaultConfig {
-        applicationId "com.lamemp3ndk.app"
+        applicationId "com.omar.retromp3recorder.app"
         minSdkVersion 9
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 23
+        versionCode 2
+        versionName "1.1"
     }
 
     compileOptions {
@@ -48,6 +48,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.0.0'
     compile 'me.tatarka:gradle-retrolambda:3.2.2'
 }

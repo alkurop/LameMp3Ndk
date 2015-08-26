@@ -73,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal">
-        <com.omar.lamemp3ndk.app.customviews.VisualizerView
+        <com.omar.retromp3recorder.app.customviews.VisualizerView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/visualizer"

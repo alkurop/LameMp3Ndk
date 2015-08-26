@@ -1,7 +1,7 @@
-/home/omar/Desktop/LameMp3Ndk/app/src/main/obj/local/armeabi/objs/mp3lame/libmp3lame/tables.o: \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/tables.c \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/machine.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/version.h \
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/obj/local/armeabi/objs/mp3lame/libmp3lame/tables.o: \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/tables.c \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/machine.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/version.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/stdio.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/cdefs.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -36,12 +36,12 @@
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/endian.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/endian.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/machine/endian.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/lame.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/tables.h
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/lame.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/tables.h
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/machine.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/machine.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/version.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/version.h:
 
 /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/stdio.h:
 
@@ -111,6 +111,6 @@
 
 /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/machine/endian.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/lame.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/lame.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/tables.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/tables.h:

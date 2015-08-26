@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Retro MP3</string>
+    <string name="app_name">MP3 Recorder</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -26,7 +26,7 @@
     <string name="player_error_on_stop">player error onStop</string>
     <string name="started_playing">started playing</string>
     <string name="player_erro_on_stop">player error onPlay</string>
-    <string name="select">Select</string>
+    <string name="select">Share</string>
     <string name="bit_rate">Bit Rate</string>
     <string name="sample_rate">Sample Rate</string>
 </resources>

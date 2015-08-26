@@ -1,6 +1,6 @@
-/home/omar/Desktop/LameMp3Ndk/app/src/main/obj/local/armeabi/objs/mp3lame/libmp3lame/encoder.o: \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/encoder.c \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/lame.h \
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/obj/local/armeabi/objs/mp3lame/libmp3lame/encoder.o: \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/encoder.c \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/lame.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/stdio.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/cdefs.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -18,8 +18,8 @@
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/linux/types.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/machine/kernel.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/sysmacros.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/machine.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/version.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/machine.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/version.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/assert.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/math.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/limits.h \
@@ -37,19 +37,19 @@
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/endian.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/endian.h \
  /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/machine/endian.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/encoder.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/util.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/l3side.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/id3tag.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/lame_global_flags.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/newmdct.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/psymodel.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/lame-analysis.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/bitstream.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/VbrTag.h \
- /home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/quantize_pvt.h
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/encoder.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/util.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/l3side.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/id3tag.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/lame_global_flags.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/newmdct.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/psymodel.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/lame-analysis.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/bitstream.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/VbrTag.h \
+ /media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/quantize_pvt.h
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/lame.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/lame.h:
 
 /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/stdio.h:
 
@@ -85,9 +85,9 @@
 
 /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/sysmacros.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/machine.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/machine.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/version.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/version.h:
 
 /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/assert.h:
 
@@ -123,24 +123,24 @@
 
 /home/omar/Android/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/machine/endian.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/encoder.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/encoder.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/util.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/util.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/l3side.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/l3side.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/id3tag.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/id3tag.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/lame_global_flags.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/lame_global_flags.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/newmdct.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/newmdct.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/psymodel.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/psymodel.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/lame-analysis.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/lame-analysis.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/bitstream.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/bitstream.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/VbrTag.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/VbrTag.h:
 
-/home/omar/Desktop/LameMp3Ndk/app/src/main/jni/libmp3lame/quantize_pvt.h:
+/media/omar/d/AndroidStudioProjects/LameMp3Ndk/app/src/main/jni/libmp3lame/quantize_pvt.h:
