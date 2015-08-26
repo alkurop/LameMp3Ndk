@@ -97,7 +97,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void StopVisualizer() {
-        if (mVisualizer != null) mVisualizer.release();
+        if (mVisualizer != null)  new Thread(() -> {
+            try {
+                Thread.sleep(100);
+                runOnUiThread(() -> {mVisualizer.release();});
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+
+            }
+        }).start();
     }
 
     @Override

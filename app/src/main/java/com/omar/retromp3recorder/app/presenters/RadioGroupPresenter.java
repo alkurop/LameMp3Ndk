@@ -64,16 +64,19 @@ public class RadioGroupPresenter implements IRadioGroupEvents, View.OnClickListe
 
     private void addCheckBox(String text, int id) {
         RadioButton cb = (RadioButton) li.inflate(R.layout.checkbox, null);
+
         cb.setText(text);
         cb.setTag(id);
         cb.setOnClickListener(this);
-        container.addView(cb);
+        cb.setHeight(context.getResources().getDimensionPixelSize(R.dimen.cb_height));
+         container.addView(cb);
     }
 
 
     private void addTitleView(String title) {
         TextView titleView = (TextView) li.inflate(R.layout.container_title, null);
         titleView.setText(title);
+
         container.addView(titleView);
     }
 

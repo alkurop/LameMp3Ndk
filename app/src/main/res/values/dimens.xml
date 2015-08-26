@@ -3,4 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="log_tet_size">12dp</dimen>
+    <dimen name="log_padding_top">2dp</dimen>
+    <dimen name="cb_height">24dp</dimen>
+    <dimen name="controller_margin">10dp</dimen>
 </resources>
