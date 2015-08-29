@@ -97,15 +97,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void StopVisualizer() {
-        if (mVisualizer != null)  new Thread(() -> {
-            try {
-                Thread.sleep(100);
-                runOnUiThread(() -> {mVisualizer.release();});
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if (mVisualizer != null)  new Thread(new Runnable() {
+            @Override
+            public void run(){
+                try {
+                    Thread.sleep(100);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mVisualizer.release();
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
 
+                }
             }
-        }).start();
+        } ).start();
     }
 
     @Override
@@ -114,13 +122,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_Timer = (TextView) getLayoutInflater().inflate(R.layout.log_view, null);
         tv_Timer.setText(s);
         llLogHolder.addView(tv_Timer);
-        new Thread(() -> {
-            try {
-                Thread.sleep(150);
-                runOnUiThread(() -> scrollView.fullScroll(View.FOCUS_DOWN));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        new Thread(new Runnable() {
+            @Override
+            public void run(){
+                try {
+                    Thread.sleep(150);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.fullScroll(View.FOCUS_DOWN);
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }}
+
         }).start();
 
     }

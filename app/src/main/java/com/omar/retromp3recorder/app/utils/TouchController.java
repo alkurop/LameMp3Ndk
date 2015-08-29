@@ -10,8 +10,9 @@ public class TouchController {
 
     public static boolean allowClick() {
 
-        if (isAllowClick) new Thread(() -> {
-           {
+        if (isAllowClick) new Thread(new Runnable() {
+            @Override
+            public void run() {
                 try {
                     isAllowClick = false;
                     Thread.sleep(Constants.MILLI_DELAY);
@@ -22,6 +23,8 @@ public class TouchController {
             }
         }).start();
 
-        return isAllowClick;
+
+
+    return isAllowClick;
     }
 }

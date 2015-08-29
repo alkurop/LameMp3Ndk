@@ -57,7 +57,7 @@ EOF
     ;;
 esac
 
-if test -z "$depmode" || test -z "$source" || test -z "$object"; then
+if com.omar.retromp3recorder.app.test.UnitTestBase -z "$depmode" || com.omar.retromp3recorder.app.test.UnitTestBase -z "$source" || com.omar.retromp3recorder.app.test.UnitTestBase -z "$object"; then
   echo "depcomp: Variables source, object and depmode must be set" 1>&2
   exit 1
 fi
@@ -73,20 +73,20 @@ rm -f "$tmpdepfile"
 # parameterize here, but still list the modes in the big case below,
 # to make depend.m4 easier to write.  Note that we *cannot* use a case
 # here, because this file can only contain one case statement.
-if test "$depmode" = hp; then
+if com.omar.retromp3recorder.app.test.UnitTestBase "$depmode" = hp; then
   # HP compiler uses -M and no extra arg.
   gccflag=-M
   depmode=gcc
 fi
 
-if test "$depmode" = dashXmstdout; then
+if com.omar.retromp3recorder.app.test.UnitTestBase "$depmode" = dashXmstdout; then
    # This is just like dashmstdout with a different argument.
    dashmflag=-xM
    depmode=dashmstdout
 fi
 
 cygpath_u="cygpath -u -f -"
-if test "$depmode" = msvcmsys; then
+if com.omar.retromp3recorder.app.test.UnitTestBase "$depmode" = msvcmsys; then
    # This is just like msvisualcpp but w/o cygpath translation.
    # Just convert the backslash-escaped backslashes to single forward
    # slashes to satisfy depend.m4
@@ -114,7 +114,7 @@ gcc3)
   done
   "$@"
   stat=$?
-  if test $stat -eq 0; then :
+  if com.omar.retromp3recorder.app.test.UnitTestBase $stat -eq 0; then :
   else
     rm -f "$tmpdepfile"
     exit $stat
@@ -132,12 +132,12 @@ gcc)
 ##   -MM, not -M (despite what the docs say).
 ## - Using -M directly means running the compiler twice (even worse
 ##   than renaming).
-  if test -z "$gccflag"; then
+  if com.omar.retromp3recorder.app.test.UnitTestBase -z "$gccflag"; then
     gccflag=-MD,
   fi
   "$@" -Wp,"$gccflag$tmpdepfile"
   stat=$?
-  if test $stat -eq 0; then :
+  if com.omar.retromp3recorder.app.test.UnitTestBase $stat -eq 0; then :
   else
     rm -f "$tmpdepfile"
     exit $stat
@@ -173,20 +173,20 @@ hp)
   ;;
 
 sgi)
-  if test "$libtool" = yes; then
+  if com.omar.retromp3recorder.app.test.UnitTestBase "$libtool" = yes; then
     "$@" "-Wp,-MDupdate,$tmpdepfile"
   else
     "$@" -MDupdate "$tmpdepfile"
   fi
   stat=$?
-  if test $stat -eq 0; then :
+  if com.omar.retromp3recorder.app.test.UnitTestBase $stat -eq 0; then :
   else
     rm -f "$tmpdepfile"
     exit $stat
   fi
   rm -f "$depfile"
 
-  if test -f "$tmpdepfile"; then  # yes, the sourcefile depend on other files
+  if com.omar.retromp3recorder.app.test.UnitTestBase -f "$tmpdepfile"; then  # yes, the sourcefile depend on other files
     echo "$object : \\" > "$depfile"
 
     # Clip off the initial element (the dependent).  Don't try to be
@@ -223,9 +223,9 @@ aix)
   # start of each line; $object doesn't have directory information.
   # Version 6 uses the directory in both cases.
   dir=`echo "$object" | sed -e 's|/[^/]*$|/|'`
-  test "x$dir" = "x$object" && dir=
+  com.omar.retromp3recorder.app.test.UnitTestBase "x$dir" = "x$object" && dir=
   base=`echo "$object" | sed -e 's|^.*/||' -e 's/\.o$//' -e 's/\.lo$//'`
-  if test "$libtool" = yes; then
+  if com.omar.retromp3recorder.app.test.UnitTestBase "$libtool" = yes; then
     tmpdepfile1=$dir$base.u
     tmpdepfile2=$base.u
     tmpdepfile3=$dir.libs/$base.u
@@ -238,7 +238,7 @@ aix)
   fi
   stat=$?
 
-  if test $stat -eq 0; then :
+  if com.omar.retromp3recorder.app.test.UnitTestBase $stat -eq 0; then :
   else
     rm -f "$tmpdepfile1" "$tmpdepfile2" "$tmpdepfile3"
     exit $stat
@@ -246,9 +246,9 @@ aix)
 
   for tmpdepfile in "$tmpdepfile1" "$tmpdepfile2" "$tmpdepfile3"
   do
-    test -f "$tmpdepfile" && break
+    com.omar.retromp3recorder.app.test.UnitTestBase -f "$tmpdepfile" && break
   done
-  if test -f "$tmpdepfile"; then
+  if com.omar.retromp3recorder.app.test.UnitTestBase -f "$tmpdepfile"; then
     # Each line is of the form `foo.o: dependent.h'.
     # Do two passes, one to just change these to
     # `$object: dependent.h' and one to simply `dependent.h:'.
@@ -284,7 +284,7 @@ icc)
 
   "$@" -MD -MF "$tmpdepfile"
   stat=$?
-  if test $stat -eq 0; then :
+  if com.omar.retromp3recorder.app.test.UnitTestBase $stat -eq 0; then :
   else
     rm -f "$tmpdepfile"
     exit $stat
@@ -310,9 +310,9 @@ hp2)
   # happens to be.
   # Much of this is similar to the tru64 case; see comments there.
   dir=`echo "$object" | sed -e 's|/[^/]*$|/|'`
-  test "x$dir" = "x$object" && dir=
+  com.omar.retromp3recorder.app.test.UnitTestBase "x$dir" = "x$object" && dir=
   base=`echo "$object" | sed -e 's|^.*/||' -e 's/\.o$//' -e 's/\.lo$//'`
-  if test "$libtool" = yes; then
+  if com.omar.retromp3recorder.app.test.UnitTestBase "$libtool" = yes; then
     tmpdepfile1=$dir$base.d
     tmpdepfile2=$dir.libs/$base.d
     "$@" -Wc,+Maked
@@ -322,7 +322,7 @@ hp2)
     "$@" +Maked
   fi
   stat=$?
-  if test $stat -eq 0; then :
+  if com.omar.retromp3recorder.app.test.UnitTestBase $stat -eq 0; then :
   else
      rm -f "$tmpdepfile1" "$tmpdepfile2"
      exit $stat
@@ -330,9 +330,9 @@ hp2)
 
   for tmpdepfile in "$tmpdepfile1" "$tmpdepfile2"
   do
-    test -f "$tmpdepfile" && break
+    com.omar.retromp3recorder.app.test.UnitTestBase -f "$tmpdepfile" && break
   done
-  if test -f "$tmpdepfile"; then
+  if com.omar.retromp3recorder.app.test.UnitTestBase -f "$tmpdepfile"; then
     sed -e "s,^.*\.[a-z]*:,$object:," "$tmpdepfile" > "$depfile"
     # Add `dependent.h:' lines.
     sed -ne '2,${
@@ -354,10 +354,10 @@ tru64)
    # dependencies in `foo.d' instead, so we check for that too.
    # Subdirectories are respected.
    dir=`echo "$object" | sed -e 's|/[^/]*$|/|'`
-   test "x$dir" = "x$object" && dir=
+   com.omar.retromp3recorder.app.test.UnitTestBase "x$dir" = "x$object" && dir=
    base=`echo "$object" | sed -e 's|^.*/||' -e 's/\.o$//' -e 's/\.lo$//'`
 
-   if test "$libtool" = yes; then
+   if com.omar.retromp3recorder.app.test.UnitTestBase "$libtool" = yes; then
       # With Tru64 cc, shared objects can also be used to make a
       # static library.  This mechanism is used in libtool 1.4 series to
       # handle both shared and static libraries in a single compilation.
@@ -385,7 +385,7 @@ tru64)
    fi
 
    stat=$?
-   if test $stat -eq 0; then :
+   if com.omar.retromp3recorder.app.test.UnitTestBase $stat -eq 0; then :
    else
       rm -f "$tmpdepfile1" "$tmpdepfile2" "$tmpdepfile3" "$tmpdepfile4"
       exit $stat
@@ -393,9 +393,9 @@ tru64)
 
    for tmpdepfile in "$tmpdepfile1" "$tmpdepfile2" "$tmpdepfile3" "$tmpdepfile4"
    do
-     test -f "$tmpdepfile" && break
+     com.omar.retromp3recorder.app.test.UnitTestBase -f "$tmpdepfile" && break
    done
-   if test -f "$tmpdepfile"; then
+   if com.omar.retromp3recorder.app.test.UnitTestBase -f "$tmpdepfile"; then
       sed -e "s,^.*\.[a-z]*:,$object:," < "$tmpdepfile" > "$depfile"
       # That's a tab and a space in the [].
       sed -e 's,^.*\.[a-z]*:[	 ]*,,' -e 's,$,:,' < "$tmpdepfile" >> "$depfile"
@@ -415,8 +415,8 @@ dashmstdout)
   "$@" || exit $?
 
   # Remove the call to Libtool.
-  if test "$libtool" = yes; then
-    while test "X$1" != 'X--mode=compile'; do
+  if com.omar.retromp3recorder.app.test.UnitTestBase "$libtool" = yes; then
+    while com.omar.retromp3recorder.app.test.UnitTestBase "X$1" != 'X--mode=compile'; do
       shift
     done
     shift
@@ -441,7 +441,7 @@ dashmstdout)
     esac
   done
 
-  test -z "$dashmflag" && dashmflag=-M
+  com.omar.retromp3recorder.app.test.UnitTestBase -z "$dashmflag" && dashmflag=-M
   # Require at least two characters before searching for `:'
   # in the target name.  This is to cope with DOS-style filenames:
   # a dependency such as `c:/foo/bar' could be seen as target `c' otherwise.
@@ -466,8 +466,8 @@ dashXmstdout)
 makedepend)
   "$@" || exit $?
   # Remove any Libtool call
-  if test "$libtool" = yes; then
-    while test "X$1" != 'X--mode=compile'; do
+  if com.omar.retromp3recorder.app.test.UnitTestBase "$libtool" = yes; then
+    while com.omar.retromp3recorder.app.test.UnitTestBase "X$1" != 'X--mode=compile'; do
       shift
     done
     shift
@@ -482,7 +482,7 @@ makedepend)
       set ""; shift
       cleared=yes ;;
     esac
-    if test $eat = yes; then
+    if com.omar.retromp3recorder.app.test.UnitTestBase $eat = yes; then
       eat=no
       continue
     fi
@@ -518,8 +518,8 @@ cpp)
   "$@" || exit $?
 
   # Remove the call to Libtool.
-  if test "$libtool" = yes; then
-    while test "X$1" != 'X--mode=compile'; do
+  if com.omar.retromp3recorder.app.test.UnitTestBase "$libtool" = yes; then
+    while com.omar.retromp3recorder.app.test.UnitTestBase "X$1" != 'X--mode=compile'; do
       shift
     done
     shift
@@ -561,8 +561,8 @@ msvisualcpp)
   "$@" || exit $?
 
   # Remove the call to Libtool.
-  if test "$libtool" = yes; then
-    while test "X$1" != 'X--mode=compile'; do
+  if com.omar.retromp3recorder.app.test.UnitTestBase "$libtool" = yes; then
+    while com.omar.retromp3recorder.app.test.UnitTestBase "X$1" != 'X--mode=compile'; do
       shift
     done
     shift

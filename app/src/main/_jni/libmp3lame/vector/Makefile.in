@@ -251,7 +251,7 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(top_srcdir
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
 	      ( cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh ) \
-	        && { if test -f $@; then exit 0; else break; fi; }; \
+	        && { if com.omar.retromp3recorder.app.test.UnitTestBase -f $@; then exit 0; else break; fi; }; \
 	      exit 1;; \
 	  esac; \
 	done; \
@@ -278,10 +278,10 @@ $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 $(am__aclocal_m4_deps):
 
 clean-noinstLTLIBRARIES:
-	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
+	-com.omar.retromp3recorder.app.test.UnitTestBase -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
 	@list='$(noinst_LTLIBRARIES)'; for p in $$list; do \
 	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
-	  test "$$dir" != "$$p" || dir=.; \
+	  com.omar.retromp3recorder.app.test.UnitTestBase "$$dir" != "$$p" || dir=.; \
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
@@ -297,7 +297,7 @@ $(top_srcdir)/ansi2knr:
 	$(am__cd) $(top_srcdir) && $(MAKE) $(AM_MAKEFLAGS) ./ansi2knr
 
 mostlyclean-kr:
-	-test "$U" = "" || rm -f *_.c
+	-com.omar.retromp3recorder.app.test.UnitTestBase "$U" = "" || rm -f *_.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xmm_quantize_sub$U.Plo@am__quote@
 
@@ -322,7 +322,7 @@ mostlyclean-kr:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 xmm_quantize_sub_.c: xmm_quantize_sub.c $(ANSI2KNR)
-	$(CPP) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) `if test -f $(srcdir)/xmm_quantize_sub.c; then echo $(srcdir)/xmm_quantize_sub.c; else echo xmm_quantize_sub.c; fi` | sed 's/^# \([0-9]\)/#line \1/' | $(ANSI2KNR) > $@ || rm -f $@
+	$(CPP) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) `if com.omar.retromp3recorder.app.test.UnitTestBase -f $(srcdir)/xmm_quantize_sub.c; then echo $(srcdir)/xmm_quantize_sub.c; else echo xmm_quantize_sub.c; fi` | sed 's/^# \([0-9]\)/#line \1/' | $(ANSI2KNR) > $@ || rm -f $@
 xmm_quantize_sub_.$(OBJEXT) xmm_quantize_sub_.lo : $(ANSI2KNR)
 
 mostlyclean-libtool:
@@ -334,7 +334,7 @@ clean-libtool:
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
-	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	    if com.omar.retromp3recorder.app.test.UnitTestBase -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
 	  done | \
 	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
 	      END { if (nonempty) { for (i in files) print i; }; }'`; \
@@ -347,14 +347,14 @@ TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 	here=`pwd`; \
 	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
-	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	    if com.omar.retromp3recorder.app.test.UnitTestBase -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
 	  done | \
 	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
 	      END { if (nonempty) { for (i in files) print i; }; }'`; \
 	shift; \
-	if test -z "$(ETAGS_ARGS)$$*$$unique"; then :; else \
-	  test -n "$$unique" || unique=$$empty_fix; \
-	  if test $$# -gt 0; then \
+	if com.omar.retromp3recorder.app.test.UnitTestBase -z "$(ETAGS_ARGS)$$*$$unique"; then :; else \
+	  com.omar.retromp3recorder.app.test.UnitTestBase -n "$$unique" || unique=$$empty_fix; \
+	  if com.omar.retromp3recorder.app.test.UnitTestBase $$# -gt 0; then \
 	    $(ETAGS) $(ETAGSFLAGS) $(AM_ETAGSFLAGS) $(ETAGS_ARGS) \
 	      "$$@" $$unique; \
 	  else \
@@ -367,11 +367,11 @@ CTAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
-	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	    if com.omar.retromp3recorder.app.test.UnitTestBase -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
 	  done | \
 	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
 	      END { if (nonempty) { for (i in files) print i; }; }'`; \
-	test -z "$(CTAGS_ARGS)$$unique" \
+	com.omar.retromp3recorder.app.test.UnitTestBase -z "$(CTAGS_ARGS)$$unique" \
 	  || $(CTAGS) $(CTAGSFLAGS) $(AM_CTAGSFLAGS) $(CTAGS_ARGS) \
 	     $$unique
 
@@ -396,19 +396,19 @@ distdir: $(DISTFILES)
 			   sort -u` ;; \
 	esac; \
 	for file in $$dist_files; do \
-	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
-	  if test -d $$d/$$file; then \
+	  if com.omar.retromp3recorder.app.test.UnitTestBase -f $$file || com.omar.retromp3recorder.app.test.UnitTestBase -d $$file; then d=.; else d=$(srcdir); fi; \
+	  if com.omar.retromp3recorder.app.test.UnitTestBase -d $$d/$$file; then \
 	    dir=`echo "/$$file" | sed -e 's,/[^/]*$$,,'`; \
-	    if test -d "$(distdir)/$$file"; then \
+	    if com.omar.retromp3recorder.app.test.UnitTestBase -d "$(distdir)/$$file"; then \
 	      find "$(distdir)/$$file" -type d ! -perm -700 -exec chmod u+rwx {} \;; \
 	    fi; \
-	    if test -d $(srcdir)/$$file && test $$d != $(srcdir); then \
+	    if com.omar.retromp3recorder.app.test.UnitTestBase -d $(srcdir)/$$file && com.omar.retromp3recorder.app.test.UnitTestBase $$d != $(srcdir); then \
 	      cp -fpR $(srcdir)/$$file "$(distdir)$$dir" || exit 1; \
 	      find "$(distdir)/$$file" -type d ! -perm -700 -exec chmod u+rwx {} \;; \
 	    fi; \
 	    cp -fpR $$d/$$file "$(distdir)$$dir" || exit 1; \
 	  else \
-	    test -f "$(distdir)/$$file" \
+	    com.omar.retromp3recorder.app.test.UnitTestBase -f "$(distdir)/$$file" \
 	    || cp -p $$d/$$file "$(distdir)/$$file" \
 	    || exit 1; \
 	  fi; \
@@ -429,16 +429,16 @@ installcheck: installcheck-am
 install-strip:
 	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
 	  install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
-	  `test -z '$(STRIP)' || \
+	  `com.omar.retromp3recorder.app.test.UnitTestBase -z '$(STRIP)' || \
 	    echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install
 mostlyclean-generic:
 
 clean-generic:
-	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+	-com.omar.retromp3recorder.app.test.UnitTestBase -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
-	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
-	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-com.omar.retromp3recorder.app.test.UnitTestBase -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
+	-com.omar.retromp3recorder.app.test.UnitTestBase . = "$(srcdir)" || com.omar.retromp3recorder.app.test.UnitTestBase -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"

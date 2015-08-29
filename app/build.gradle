@@ -3,9 +3,9 @@ buildscript {
         jcenter()
         mavenCentral()
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.1'
-        classpath 'me.tatarka:gradle-retrolambda:3.2.2'
+        classpath 'com.android.tools.build:gradle:1.2.3'
 
 
     }
@@ -16,11 +16,8 @@ buildscript {
 
 
 apply plugin: 'com.android.application'
-apply plugin: "me.tatarka.retrolambda"
 
-repositories {
-    jcenter()
-}
+
 
 android {
     compileSdkVersion 23
@@ -35,19 +32,32 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+    }
+    sourceSets{
+        test {
+            setRoot('src/test')
+        }
     }
 }
 
+
+
 dependencies {
+
+
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'me.tatarka:gradle-retrolambda:3.2.2'
+     testCompile 'org.robolectric:robolectric:3.0'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+
 }
