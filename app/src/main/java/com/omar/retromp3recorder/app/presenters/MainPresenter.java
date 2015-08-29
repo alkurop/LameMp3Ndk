@@ -11,6 +11,7 @@ import com.omar.retromp3recorder.app.controllers.IAudioStatesEvents;
 import com.omar.retromp3recorder.app.controllers.ILsdDisplay;
 import com.omar.retromp3recorder.app.controllers.StateSelector;
 import com.omar.retromp3recorder.app.callbacks.ICheckboxCallback;
+import com.omar.retromp3recorder.app.share.IShadingModule;
 import com.omar.retromp3recorder.app.share.SharingModule;
 import com.omar.retromp3recorder.app.utils.ContextHelper;
 import com.omar.retromp3recorder.app.views.IMainView;
@@ -35,7 +36,10 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
         setUpStatesSelector();
         DisplayView();
     }
-
+    @Override
+    public void SetText(String text) {
+        view.SetLabelText(text);
+    }
 
     @Override
     public void RecordClicked() {
@@ -50,7 +54,7 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
     @Override
     public void ShareClicked() {
         stateSelector.StopAll();
-        SharingModule.I().StartShading(audioController.GetFilePath(), this);
+        getSharingModule().StartShading(audioController.GetFilePath(), this);
 
     }
 
@@ -170,15 +174,25 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
 
     }
 
-    @Override
-    public void SetText(String text) {
-        view.SetLabelText(text);
+    public IShadingModule getSharingModule(){
+        return SharingModule.I();
     }
+
+
 
     /*FOR UNIT TEST ONLY
     * DO NOT USE THESE METHODS*/
 
     public void setStateSelector (StateSelector stateSelector)
     {this.stateSelector = stateSelector;}
+
+    public void setAudioController (AudioStatesController audioController){
+        this.audioController = audioController;
+    }
+
+
+    public void setView(IMainView view){this.view = view;}
+
+
 
 }
