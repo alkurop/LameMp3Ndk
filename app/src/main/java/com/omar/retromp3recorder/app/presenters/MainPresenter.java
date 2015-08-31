@@ -1,16 +1,15 @@
 package com.omar.retromp3recorder.app.presenters;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.LinearLayout;
 import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.callbacks.IAudioControllerCallback;
+import com.omar.retromp3recorder.app.callbacks.ICheckboxCallback;
 import com.omar.retromp3recorder.app.controllers.AudioStatesController;
 import com.omar.retromp3recorder.app.controllers.IAudioStatesEvents;
 import com.omar.retromp3recorder.app.controllers.ILsdDisplay;
 import com.omar.retromp3recorder.app.controllers.StateSelector;
-import com.omar.retromp3recorder.app.callbacks.ICheckboxCallback;
 import com.omar.retromp3recorder.app.share.IShadingModule;
 import com.omar.retromp3recorder.app.share.SharingModule;
 import com.omar.retromp3recorder.app.utils.ContextHelper;
@@ -28,6 +27,7 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
     private IRadioGroupEvents bitRatePresenter;
     private IRadioGroupEvents sampleRatePresenter;
     private StateSelector stateSelector;
+
 
     public void Init(IMainView _view) {
         context = ContextHelper.GetContext();
@@ -63,13 +63,13 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
         stateSelector.StopAll();
     }
 
-    private void DisplayView() {
+    public void DisplayView() {
         view.SetUI();
         setUpSampleRateRadioGroup(view.GetRadioContainer1());
         setUpBitRateRadioGroup(view.GetRadioContainer2());
     }
 
-    private void setUpAudioController() {
+    public void setUpAudioController() {
         audioController = new AudioStatesController();
         audioController.Init(this, new IAudioControllerCallback() {
             @Override
@@ -105,7 +105,7 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
         });
     }
 
-    private void setUpStatesSelector() {
+    public void setUpStatesSelector() {
         stateSelector = new StateSelector() {
             @Override
             public void StartRecording() {
@@ -143,7 +143,7 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
         };
     }
 
-    private void setUpSampleRateRadioGroup(LinearLayout container) {
+    public void setUpSampleRateRadioGroup(LinearLayout container) {
         String groupName = Constants.SAMPLE_RATE_LABEL;
         String format = Constants.HZ_LABEL;
 
@@ -159,7 +159,7 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
 
     }
 
-    private void setUpBitRateRadioGroup(LinearLayout container) {
+    public void setUpBitRateRadioGroup(LinearLayout container) {
         String groupName = context.getString(R.string.bit_rate);
         String format = context.getString(R.string.sample_rate);
 
@@ -194,5 +194,27 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
     public void setView(IMainView view){this.view = view;}
 
 
+    public Context getContext() {
+        return context;
+    }
 
+    public IMainView getView() {
+        return view;
+    }
+
+    public IAudioStatesEvents getAudioController() {
+        return audioController;
+    }
+
+    public IRadioGroupEvents getBitRatePresenter() {
+        return bitRatePresenter;
+    }
+
+    public IRadioGroupEvents getSampleRatePresenter() {
+        return sampleRatePresenter;
+    }
+
+    public StateSelector getStateSelector() {
+        return stateSelector;
+    }
 }

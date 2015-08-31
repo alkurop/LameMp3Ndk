@@ -37,7 +37,7 @@ public class AudioStatesController implements IAudioStatesEvents {
 
     @Override
     public void StartRecord() {
-        voiceRecorder = new VoiceRecorder(filePath, recorderCallback);
+        getVoiceRecorder();
         voiceRecorder.recordStart(currentHz, currentBPM);
         context = ContextHelper.GetContext();
     }
@@ -141,5 +141,15 @@ public class AudioStatesController implements IAudioStatesEvents {
             }
         };
     }
+
+
+    public VoiceRecorder getVoiceRecorder(){
+        return voiceRecorder = new VoiceRecorder(filePath, recorderCallback);
+    }
+
+
+    /*FOR UNIT TESTING ONLY*/
+
+
 
 }
