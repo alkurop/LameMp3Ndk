@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.test;
+package com.omar.retromp3recorder.app;
 
 import android.support.v7.appcompat.BuildConfig;
 import org.junit.Before;
@@ -15,12 +15,13 @@ import org.robolectric.annotation.Config;
 
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
+@Config(constants = BuildConfig.class, sdk = 21,  packageName = "com.omar.retromp3recorder.app")
 
 public class UnitTestBase {
     @Before
     public void initMocks(){
-        MockitoAnnotations.initMocks(this);  }
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void emptyTest() throws Exception {

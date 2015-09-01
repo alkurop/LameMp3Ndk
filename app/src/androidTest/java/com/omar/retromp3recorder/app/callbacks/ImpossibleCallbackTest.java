@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.callbacks;
 
-import com.omar.retromp3recorder.app.test.UnitTestBase;
+import com.omar.retromp3recorder.app.UnitTestBase;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.mockito.Mock;

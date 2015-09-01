@@ -1,8 +1,8 @@
-package com.omar.retromp3recorder.app.test;
+package com.omar.retromp3recorder.app.presenters;
 
+import com.omar.retromp3recorder.app.UnitTestBase;
 import com.omar.retromp3recorder.app.controllers.AudioStatesController;
 import com.omar.retromp3recorder.app.controllers.StateSelector;
-import com.omar.retromp3recorder.app.presenters.MainPresenter;
 import com.omar.retromp3recorder.app.share.SharingModule;
 import com.omar.retromp3recorder.app.views.MainActivity;
 import org.junit.Test;
@@ -37,7 +37,7 @@ public class MainPresenterTest extends UnitTestBase {
         mainPresenter.RecordClicked();
 
         //assert
-        verify(mckStateSelector, timeout(1)).RecordingClicked();
+        verify(mckStateSelector, times(1)).RecordingClicked();
         verifyNoMoreInteractions(mckStateSelector);
     }
     @Test

@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+
     @Override
     public void onClick(View view) {
         if (TouchController.allowClick())
@@ -156,4 +157,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onStop();
         presenter.StopAll();
     }
+
+    /*FOR TESTING ONLY*/
+    public MainPresenter getMainPresenter(){return new MainPresenter();}
+    public void setMainPresenter(){presenter = getMainPresenter();}
 }

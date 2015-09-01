@@ -10,7 +10,7 @@ public class ContextHelper {
     private static Context mContext;
 
     public static void SetContext(Context context) {
-        mContext = context;
+       mContext = context;
     }
 
     public static Context GetContext() {

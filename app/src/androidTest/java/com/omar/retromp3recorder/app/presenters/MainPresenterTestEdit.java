@@ -1,9 +1,9 @@
-package com.omar.retromp3recorder.app.test;
+package com.omar.retromp3recorder.app.presenters;
 
 import android.widget.LinearLayout;
+import com.omar.retromp3recorder.app.UnitTestBase;
 import com.omar.retromp3recorder.app.controllers.AudioStatesController;
 import com.omar.retromp3recorder.app.controllers.StateSelector;
-import com.omar.retromp3recorder.app.presenters.MainPresenter;
 import com.omar.retromp3recorder.app.share.SharingModule;
 import com.omar.retromp3recorder.app.views.IMainView;
 import com.omar.retromp3recorder.app.views.MainActivity;
