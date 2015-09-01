@@ -13,18 +13,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 
+
 @SuppressLint("NewApi")
 public class MainActivityTest extends UnitTestBase {
+    private MainActivity spyMainActivity;
+    private MainActivity activity;
 
     @Mock
-    MainPresenter mckMainPresenter;
+    private MainPresenter mckMainPresenter;
 
-
-
-
-
-    MainActivity spyMainActivity;
-    MainActivity activity;
 
     @Before
     public void setupMainAct() {
@@ -33,15 +30,14 @@ public class MainActivityTest extends UnitTestBase {
         spyMainActivity.SetUI();
         Mockito.when(spyMainActivity.getMainPresenter()).thenReturn(mckMainPresenter);
         spyMainActivity.setMainPresenter();
-    }
+
+     }
 
 
     @Test
     public void PlayClickedTest() throws Exception {
-
         //act
         (spyMainActivity.findViewById(R.id.iv_play)).performClick();
-
         //verify
         Mockito.verify(mckMainPresenter).PlayClicked();
 
@@ -49,17 +45,14 @@ public class MainActivityTest extends UnitTestBase {
 
     @Test
     public void RecordClickedTest() throws Exception {
-
         //act
         (spyMainActivity.findViewById(R.id.iv_record)).performClick();
-
         //verify
         Mockito.verify(mckMainPresenter).RecordClicked();
 
     }
 
     @Test
-
     public void SetRecordBtnImgTest() throws Exception {
         //init
         int drawableId = R.drawable.abc_ab_share_pack_mtrl_alpha;
@@ -77,7 +70,6 @@ public class MainActivityTest extends UnitTestBase {
         spyMainActivity.onStop();
         //verify
         Mockito.verify(mckMainPresenter).StopAll();
-
     }
 
 
