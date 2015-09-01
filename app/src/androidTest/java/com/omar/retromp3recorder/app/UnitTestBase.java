@@ -16,7 +16,6 @@ import org.robolectric.annotation.Config;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21,  packageName = "com.omar.retromp3recorder.app")
-
 public class UnitTestBase {
     @Before
     public void initMocks(){
