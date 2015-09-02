@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.app.views;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 import android.widget.ImageView;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.UnitTestBase;
@@ -31,7 +32,7 @@ public class MainActivityTest extends UnitTestBase {
         Mockito.when(spyMainActivity.getMainPresenter()).thenReturn(mckMainPresenter);
         spyMainActivity.setMainPresenter();
 
-     }
+    }
 
 
     @Test
@@ -47,6 +48,29 @@ public class MainActivityTest extends UnitTestBase {
     public void RecordClickedTest() throws Exception {
         //act
         (spyMainActivity.findViewById(R.id.iv_record)).performClick();
+        //verify
+        Mockito.verify(mckMainPresenter).RecordClicked();
+
+    }
+
+
+
+    @Test
+    public void RecordClickedTestSimple() throws Exception {
+        MainActivity mckActivity = Mockito.mock(MainActivity.class);
+        View v = Mockito.mock(View.class);
+        int id = R.id.iv_record;
+
+
+        //init
+        Mockito.when(mckActivity.getMainPresenter()).thenReturn(mckMainPresenter);
+        Mockito.doCallRealMethod().when(mckActivity).onClick(Mockito.any(View.class));
+        Mockito.doCallRealMethod().when(mckActivity).setMainPresenter();
+        Mockito.when(v.getId()).thenReturn(id);
+        //act
+        mckActivity.setMainPresenter();
+        mckActivity.onClick(v);
+
         //verify
         Mockito.verify(mckMainPresenter).RecordClicked();
 
