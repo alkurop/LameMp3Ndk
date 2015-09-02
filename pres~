@@ -1,0 +1,64 @@
+1. intro
+	hbo: robelectric + mockito + junit4
+2. why robelectric
+	
+3. robelectric 3 vs robelectric 2
+	+ easyer setup
+	+ newer api
+	- poor documentation
+
+	
+4. robelectric gragle setup
+	repo or /lib
+	testCompile
+	source set / test folder setup
+	
+5. robelectric RobolectricGradleTestRunner setup
+	provide api
+	provide package name
+
+6. test with gradle
+	where to see results
+
+7. why mockito
+	test logic
+	mock or spy methods
+	veryfication 
+
+8. mockito test lifecycle:
+	init
+		base or mock
+		do call real method
+		return when		
+		app lifecycle methods
+	act
+	verify
+		method was called  .times .params
+		no more / zero interactions
+		do answer
+		(in order)
+		
+9. mockito class overview
+	base
+	spy
+	mock
+
+10. advanced thechniques
+	@before
+        	MockitoAnnotations.initMocks(this)
+	mockito annotations
+		@Mock
+		@Spy
+		(injections)
+
+11. test ui
+	create acitivy / fragment/ service with robelectric
+	spy with mockito
+	test lifecycle
+
+12. test ui easy way
+
+13. common problems
+	test class dep not found
+	robelectric runtime error
+	PowerMock		
