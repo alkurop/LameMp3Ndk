@@ -52,6 +52,6 @@ public class Constants {
                                                                                      .CHANNEL_IN_STEREO};
 
 
-    public static final int MILLI_DELAY                          = 500;
+    public static final int         MILLI_DELAY                          = 500;
 }
 

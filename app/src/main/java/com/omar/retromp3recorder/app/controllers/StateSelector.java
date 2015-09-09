@@ -8,66 +8,66 @@ abstract public class StateSelector {
     private enum STATES {STOPPED, RECORDING, PLAYING}
     private STATES currentState = STATES.STOPPED;
 
-    public void RecordingClicked() {
+    public void recordingClicked() {
         switch (currentState) {
             case STOPPED:
                 currentState = STATES.RECORDING;
-                StartRecording();
+                startRecording();
                 break;
             case RECORDING:
                 currentState = STATES.STOPPED;
-                StopRecodring();
+                stopRecodring();
                 break;
             case PLAYING:
                 currentState = STATES.RECORDING;
-                StopPlaying();
-                StartRecording();
+                stopPlaying();
+                startRecording();
                 break;
         }
     }
 
-    public void StopAll(){
+    public void stopAll(){
         switch (currentState) {
             case RECORDING:
                 currentState = STATES.PLAYING;
-                StopRecodring();
+                stopRecodring();
                 break;
             case PLAYING:
                 currentState = STATES.STOPPED;
-                StopPlaying();
+                stopPlaying();
                 break;
         }
     }
 
-    public void PlayCLicked() {
+    public void playCLicked() {
         switch (currentState) {
             case STOPPED:
                 currentState = STATES.PLAYING;
-                StartPlaying();
+                startPlaying();
                 break;
             case RECORDING:
                 currentState = STATES.PLAYING;
-                StopRecodring();
-                StartPlaying();
+                stopRecodring();
+                startPlaying();
                 break;
             case PLAYING:
                 currentState = STATES.STOPPED;
-                StopPlaying();
+                stopPlaying();
                 break;
         }
     }
 
-    public void CallbackStop(){currentState = STATES.STOPPED;
-        OnCallbackStop();}
+    public void callbackStop(){currentState = STATES.STOPPED;
+        onCallbackStop();}
 
 
-    public abstract void StartRecording();
+    public abstract void startRecording();
 
-    public abstract void StartPlaying();
+    public abstract void startPlaying();
 
-    public abstract void StopPlaying();
+    public abstract void stopPlaying();
 
-    public abstract void StopRecodring();
+    public abstract void stopRecodring();
 
-    public abstract void OnCallbackStop();
+    public abstract void onCallbackStop();
 }

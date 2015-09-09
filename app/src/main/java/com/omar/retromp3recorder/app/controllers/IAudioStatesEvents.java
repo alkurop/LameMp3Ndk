@@ -7,20 +7,20 @@ import com.omar.retromp3recorder.app.callbacks.IAudioControllerCallback;
  */
 public interface IAudioStatesEvents {
 
-    void StartRecord();
+    void startRecord();
 
-    void StartPlay();
+    void startPlay();
 
-    void StopRecord();
+    void stopRecord();
 
-    void StopPlay();
+    void stopPlay();
 
-    void Init(ILsdDisplay lsdDisplay, IAudioControllerCallback callback);
+    void init(ILsdDisplay lsdDisplay, IAudioControllerCallback callback);
 
-    void SetReсorderBPM(int _bpm);
+    void setReсorderBPM(int _bpm);
 
 
-    void SetReсorderHz(int _hz);
+    void setReсorderHz(int _hz);
 
-    String GetFilePath();
+    String getFilePath();
 }

@@ -36,14 +36,14 @@ public class AudioStatesController implements IAudioStatesEvents {
     private Context context;
 
     @Override
-    public void StartRecord() {
-        voiceRecorder = new VoiceRecorder(filePath, recorderCallback);
+    public void startRecord() {
+        getVoiceRecorder();
         voiceRecorder.recordStart(currentHz, currentBPM);
-        context = ContextHelper.GetContext();
+        context = ContextHelper.getContext();
     }
 
     @Override
-    public void StartPlay() {
+    public void startPlay() {
         if (checkIfFileExists(filePath)) {
             audioPlayer = new AudioPlayer(filePath, playerCallback);
             audioPlayer.playerStart();
@@ -53,37 +53,37 @@ public class AudioStatesController implements IAudioStatesEvents {
     }
 
     @Override
-    public void StopRecord() {
+    public void stopRecord() {
         voiceRecorder.recordStop();
     }
 
     @Override
-    public void StopPlay() {
+    public void stopPlay() {
         audioPlayer.playerStop();
     }
 
 
     @Override
-    public void Init(ILsdDisplay _lsdDisplay, IAudioControllerCallback _callback) {
+    public void init(ILsdDisplay _lsdDisplay, IAudioControllerCallback _callback) {
         lsdDisplay = _lsdDisplay;
         upperLevelCallback = _callback;
-        filePath = genrateFilePath(ContextHelper.GetContext());
+        filePath = genrateFilePath(ContextHelper.getContext());
         initPlayerCallback();
         initRecorderCallback();
     }
 
     @Override
-    public void SetReсorderBPM(int _bpm) {
+    public void setReсorderBPM(int _bpm) {
         currentBPM = _bpm;
     }
 
     @Override
-    public void SetReсorderHz(int _hz) {
+    public void setReсorderHz(int _hz) {
         currentHz = _hz;
     }
 
     @Override
-    public String GetFilePath() {
+    public String getFilePath() {
         return filePath;
     }
 
@@ -102,18 +102,18 @@ public class AudioStatesController implements IAudioStatesEvents {
     private void initRecorderCallback() {
         recorderCallback = new IRecorderCallback() {
             @Override
-            public void OnErrorOccured(String error) {
+            public void onErrorOccured(String error) {
                 upperLevelCallback.onRecorderError(error);
             }
 
             @Override
-            public void NormalMessage(String message) {
-                lsdDisplay.SetText(message);
+            public void normalMessage(String message) {
+                lsdDisplay.setText(message);
             }
 
             @Override
-            public void SendRecorderId(int id) {
-                upperLevelCallback.SetPlayerId(id);
+            public void sendRecorderId(int id) {
+               // upperLevelCallback.SetPlayerId(id);
             }
         };
     }
@@ -121,25 +121,35 @@ public class AudioStatesController implements IAudioStatesEvents {
     private void initPlayerCallback() {
         playerCallback = new IPlayerCallback() {
             @Override
-            public void OnErrorOccured(String error) {
+            public void onErrorOccured(String error) {
                 upperLevelCallback.onPlayerError(error);
             }
 
             @Override
-            public void OnAudioEndedAndStoped() {
+            public void onAudioEndedAndStoped() {
                 upperLevelCallback.onPlayerStoped();
             }
 
             @Override
-            public void NormalMessage(String message) {
-                lsdDisplay.SetText(message);
+            public void normalMessage(String message) {
+                lsdDisplay.setText(message);
             }
 
             @Override
-            public void SendPlayerId(int id) {
+            public void sendPlayerId(int id) {
                 upperLevelCallback.SetPlayerId(id);
             }
         };
     }
+
+
+    public VoiceRecorder getVoiceRecorder(){
+        return voiceRecorder = new VoiceRecorder(filePath, recorderCallback);
+    }
+
+
+    /*FOR UNIT TESTING ONLY*/
+
+
 
 }

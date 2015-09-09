@@ -9,9 +9,8 @@ import com.omar.retromp3recorder.app.callbacks.ICheckboxCallback;
 public interface IRadioGroupEvents {
 
 
-    void CreateRadioGroup(final LinearLayout _container, final String _containerName, final String _format, final
-    int[] _intData, final ICheckboxCallback _callback);
+    void createRadioGroup(final LinearLayout _container, final String _containerName, final String _format, final int[] _intData, final ICheckboxCallback _callback);
 
 
-    void SetSelected(int index);
+    void setSelected(int index);
 }

@@ -25,7 +25,7 @@ public class RadioGroupPresenter implements IRadioGroupEvents, View.OnClickListe
 
 
     @Override
-    public void CreateRadioGroup(final LinearLayout _container, final String _containerName, final String _format, final int[] _intData, final ICheckboxCallback _callback) {
+    public void createRadioGroup(final LinearLayout _container, final String _containerName, final String _format, final int[] _intData, final ICheckboxCallback _callback) {
         container = _container;
         context = _container.getContext();
         callback = _callback;
@@ -46,7 +46,7 @@ public class RadioGroupPresenter implements IRadioGroupEvents, View.OnClickListe
     }
 
     @Override
-    public void SetSelected(int index) {
+    public void setSelected(int index) {
         RadioButton castView = (RadioButton) container.findViewWithTag(index);
         if (castView != null) {
             castView.performClick();

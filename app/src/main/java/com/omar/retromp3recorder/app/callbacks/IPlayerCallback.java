@@ -4,11 +4,11 @@ package com.omar.retromp3recorder.app.callbacks;
  * Created by omar on 18.08.15.
  */
 public interface IPlayerCallback {
-    void OnErrorOccured (String error);
+    void onErrorOccured(String error);
 
-    void OnAudioEndedAndStoped();
+    void onAudioEndedAndStoped();
 
-    void NormalMessage(String message);
+    void normalMessage(String message);
 
-    void SendPlayerId(int id);
+    void sendPlayerId(int id);
 }

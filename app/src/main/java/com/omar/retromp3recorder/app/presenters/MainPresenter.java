@@ -1,16 +1,16 @@
 package com.omar.retromp3recorder.app.presenters;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.LinearLayout;
 import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.callbacks.IAudioControllerCallback;
+import com.omar.retromp3recorder.app.callbacks.ICheckboxCallback;
 import com.omar.retromp3recorder.app.controllers.AudioStatesController;
 import com.omar.retromp3recorder.app.controllers.IAudioStatesEvents;
 import com.omar.retromp3recorder.app.controllers.ILsdDisplay;
 import com.omar.retromp3recorder.app.controllers.StateSelector;
-import com.omar.retromp3recorder.app.callbacks.ICheckboxCallback;
+import com.omar.retromp3recorder.app.share.IShadingModule;
 import com.omar.retromp3recorder.app.share.SharingModule;
 import com.omar.retromp3recorder.app.utils.ContextHelper;
 import com.omar.retromp3recorder.app.views.IMainView;
@@ -24,143 +24,198 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
 
     private IMainView view;
     private IAudioStatesEvents audioController;
-
+    private IRadioGroupEvents bitRatePresenter;
+    private IRadioGroupEvents sampleRatePresenter;
     private StateSelector stateSelector;
 
-    public void Init(IMainView _view) {
-        context = ContextHelper.GetContext();
+
+    public void init(IMainView _view) {
+        context = ContextHelper.getContext();
         view = _view;
         setUpAudioController();
         setUpStatesSelector();
-        DisplayView();
+        displayView();
     }
-
-
     @Override
-    public void RecordClicked() {
-        stateSelector.RecordingClicked();
+    public void setText(String text) {
+        view.setLabelText(text);
     }
 
     @Override
-    public void PlayClicked() {
-        stateSelector.PlayCLicked();
+    public void recordClicked() {
+        stateSelector.recordingClicked();
     }
 
     @Override
-    public void ShareClicked() {
-        stateSelector.StopAll();
-        SharingModule.I().StartShading(audioController.GetFilePath(), this);
+    public void playClicked() {
+        stateSelector.playCLicked();
+    }
+
+    @Override
+    public void shareClicked() {
+        stateSelector.stopAll();
+        getSharingModule().startShading(audioController.getFilePath(), this);
 
     }
 
     @Override
-    public void StopAll() {
-        stateSelector.StopAll();
+    public void stopAll() {
+        stateSelector.stopAll();
     }
 
-    private void DisplayView() {
-        view.SetUI();
-        setUpSampleRateRadioGroup(view.GetRadioContainer1());
-        setUpBitRateRadioGroup(view.GetRadioContainer2());
+    public void displayView() {
+        view.setUI();
+        setUpSampleRateRadioGroup(view.getRadioContainer1());
+        setUpBitRateRadioGroup(view.getRadioContainer2());
     }
 
-    private void setUpAudioController() {
+    public void setUpAudioController() {
         audioController = new AudioStatesController();
-        audioController.Init(this, new IAudioControllerCallback() {
+        audioController.init(this, new IAudioControllerCallback() {
             @Override
             public void onPlayerStoped() {
-                stateSelector.CallbackStop();
-                view.StopVisualizer();
+                view.stopVisualizer();
+                stateSelector.callbackStop();
+
             }
 
             @Override
             public void onRecorderStoped() {
-                view.StopVisualizer();
-                stateSelector.CallbackStop();
+
+                stateSelector.callbackStop();
             }
 
             @Override
             public void SetPlayerId(int id) {
-                view.StartVisualizer(id);
+                view.startVisualizer(id);
             }
 
             @Override
             public void onPlayerError(String s) {
-                MainPresenter.this.SetText(s);
-                stateSelector.CallbackStop();
-                view.StopVisualizer();
+                MainPresenter.this.setText(s);
+
+                view.stopVisualizer();
+                stateSelector.callbackStop();
             }
 
             @Override
             public void onRecorderError(String s) {
-                view.StopVisualizer();
-                MainPresenter.this.SetText(s);
-                stateSelector.CallbackStop();
+                MainPresenter.this.setText(s);
+                stateSelector.callbackStop();
             }
         });
     }
 
-    private void setUpStatesSelector() {
+    public void setUpStatesSelector() {
         stateSelector = new StateSelector() {
             @Override
-            public void StartRecording() {
-                view.SetRecordBtnImg(R.drawable.ic_action_stop);
-                audioController.StartRecord();
+            public void startRecording() {
+                view.setRecordBtnImg(R.drawable.ic_action_stop);
+                audioController.startRecord();
             }
 
             @Override
-            public void StartPlaying() {
-                view.SetPlayBtnImg(R.drawable.ic_action_stop);
-                audioController.StartPlay();
+            public void startPlaying() {
+                view.setPlayBtnImg(R.drawable.ic_action_stop);
+                audioController.startPlay();
             }
 
             @Override
-            public void StopPlaying() {
-                view.SetPlayBtnImg(R.drawable.ic_action_play);
-                audioController.StopPlay();
-                view.StopVisualizer();
+            public void stopPlaying() {
+                view.setPlayBtnImg(R.drawable.ic_action_play);
+
+                view.stopVisualizer();
+                audioController.stopPlay();
             }
 
             @Override
-            public void StopRecodring() {
-                view.StopVisualizer();
-                view.SetRecordBtnImg(R.drawable.ic_action_rec);
-                audioController.StopRecord();
+            public void stopRecodring() {
+                view.setRecordBtnImg(R.drawable.ic_action_rec);
+                audioController.stopRecord();
 
             }
 
             @Override
-            public void OnCallbackStop() {
-                view.StopVisualizer();
-                view.SetRecordBtnImg(R.drawable.ic_action_rec);
-                view.SetPlayBtnImg(R.drawable.ic_action_play);
+            public void onCallbackStop() {
+                view.stopVisualizer();
+                view.setRecordBtnImg(R.drawable.ic_action_rec);
+                view.setPlayBtnImg(R.drawable.ic_action_play);
             }
         };
     }
 
-    private void setUpSampleRateRadioGroup(LinearLayout container) {
+    public void setUpSampleRateRadioGroup(LinearLayout container) {
         String groupName = Constants.SAMPLE_RATE_LABEL;
         String format = Constants.HZ_LABEL;
 
-        IRadioGroupEvents sampleRatePresenter = new RadioGroupPresenter();
-        sampleRatePresenter.CreateRadioGroup(container, groupName, format, Constants.SAMPLE_RATE_PRESETS, index -> audioController.SetReсorderHz(Constants.SAMPLE_RATE_PRESETS[index]));
-        sampleRatePresenter.SetSelected(0);
+        sampleRatePresenter = new RadioGroupPresenter();
+        sampleRatePresenter.createRadioGroup(container, groupName, format, Constants.SAMPLE_RATE_PRESETS, new ICheckboxCallback() {
+            @Override
+            public void setDataIndex(int index) {
+                audioController.setReсorderHz(Constants.SAMPLE_RATE_PRESETS[index]);
+            }
+        });
+        sampleRatePresenter.setSelected(0);
 
 
     }
 
-    private void setUpBitRateRadioGroup(LinearLayout container) {
+    public void setUpBitRateRadioGroup(LinearLayout container) {
         String groupName = context.getString(R.string.bit_rate);
         String format = context.getString(R.string.sample_rate);
 
-        IRadioGroupEvents bitRatePresenter = new RadioGroupPresenter();
-        bitRatePresenter.CreateRadioGroup(container, groupName, format, Constants.BIT_RATE_PRESETS, index -> audioController.SetReсorderBPM(Constants.BIT_RATE_PRESETS[index]));
-        bitRatePresenter.SetSelected(0);
+        bitRatePresenter = new RadioGroupPresenter();
+        bitRatePresenter.createRadioGroup(container, groupName, format, Constants.BIT_RATE_PRESETS, new ICheckboxCallback() {
+            @Override
+            public void setDataIndex(int index) {
+                audioController.setReсorderBPM(Constants.BIT_RATE_PRESETS[index]);
+            }
+        });
+        bitRatePresenter.setSelected(0);
 
     }
 
-    @Override
-    public void SetText(String text) {
-        view.SetLabelText(text);
+    public IShadingModule getSharingModule(){
+        return SharingModule.I();
+    }
+
+
+
+    /*FOR UNIT TEST ONLY
+    * DO NOT USE THESE METHODS*/
+
+    public void setStateSelector (StateSelector stateSelector)
+    {this.stateSelector = stateSelector;}
+
+    public void setAudioController (AudioStatesController audioController){
+        this.audioController = audioController;
+    }
+
+
+    public void setView(IMainView view){this.view = view;}
+
+
+    public Context getContext() {
+        return context;
+    }
+
+    public IMainView getView() {
+        return view;
+    }
+
+    public IAudioStatesEvents getAudioController() {
+        return audioController;
+    }
+
+    public IRadioGroupEvents getBitRatePresenter() {
+        return bitRatePresenter;
+    }
+
+    public IRadioGroupEvents getSampleRatePresenter() {
+        return sampleRatePresenter;
+    }
+
+    public StateSelector getStateSelector() {
+        return stateSelector;
     }
 }

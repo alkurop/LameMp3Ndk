@@ -9,11 +9,11 @@ public class ContextHelper {
 
     private static Context mContext;
 
-    public static void SetContext(Context context) {
-        mContext = context;
+    public static void setContext(Context context) {
+       mContext = context;
     }
 
-    public static Context GetContext() {
+    public static Context getContext() {
         return mContext;
     }
 }

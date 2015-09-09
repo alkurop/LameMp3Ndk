@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new MainPresenter();
-        presenter.Init(this);
+        presenter.init(this);
     }
+
 
 
     @Override
@@ -39,13 +40,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (TouchController.allowClick())
             switch (view.getId()) {
             case R.id.iv_play:
-                presenter.PlayClicked();
+                presenter.playClicked();
                 break;
             case R.id.iv_record:
-                presenter.RecordClicked();
+                presenter.recordClicked();
                 break;
             case R.id.iv_share:
-                presenter.ShareClicked();
+                presenter.shareClicked();
                 break;
 
         }
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void SetUI() {
+    public void setUI() {
         setContentView(R.layout.activity_main);
         btn_Play = (ImageView) findViewById(R.id.iv_play);
         btn_Record = (ImageView) findViewById(R.id.iv_record);
@@ -71,17 +72,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void SetRecordBtnImg(int drawable) {
+    public void setRecordBtnImg(int drawable) {
         btn_Record.setImageResource(drawable);
     }
 
     @Override
-    public void SetPlayBtnImg(int drawable) {
+    public void setPlayBtnImg(int drawable) {
         btn_Play.setImageResource(drawable);
     }
 
     @Override
-    public void StartVisualizer(int playerId) {
+    public void startVisualizer(int playerId) {
         mVisualizer = new Visualizer(playerId);
         mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
         mVisualizer.setDataCaptureListener(new Visualizer.OnDataCaptureListener() {
@@ -96,48 +97,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void StopVisualizer() {
-        if (mVisualizer != null)  new Thread(() -> {
-            try {
-                Thread.sleep(100);
-                runOnUiThread(() -> {mVisualizer.release();});
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+    public void stopVisualizer() {
+        if (mVisualizer != null)  new Thread(new Runnable() {
+            @Override
+            public void run(){
+                try {
+                    Thread.sleep(1);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mVisualizer.release();
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
 
+                }
             }
-        }).start();
+        } ).start();
     }
 
     @Override
-    public void SetLabelText(String s) {
+    public void setLabelText(String s) {
 
         tv_Timer = (TextView) getLayoutInflater().inflate(R.layout.log_view, null);
         tv_Timer.setText(s);
         llLogHolder.addView(tv_Timer);
-        new Thread(() -> {
-            try {
-                Thread.sleep(150);
-                runOnUiThread(() -> scrollView.fullScroll(View.FOCUS_DOWN));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        new Thread(new Runnable() {
+            @Override
+            public void run(){
+                try {
+                    Thread.sleep(150);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.fullScroll(View.FOCUS_DOWN);
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }}
+
         }).start();
 
     }
 
     @Override
-    public LinearLayout GetRadioContainer1() {
+    public LinearLayout getRadioContainer1() {
         return llRadioContainer1;
     }
 
     @Override
-    public LinearLayout GetRadioContainer2() {
+    public LinearLayout getRadioContainer2() {
         return llRadioContainer2;
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        presenter.StopAll();
+        presenter.stopAll();
     }
+
+    /*FOR TESTING ONLY*/
+    public MainPresenter getMainPresenter(){return new MainPresenter();}
+    public void setMainPresenter(){presenter = getMainPresenter();}
 }

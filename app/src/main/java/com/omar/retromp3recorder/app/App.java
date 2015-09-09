@@ -10,6 +10,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ContextHelper.SetContext(this);
+        ContextHelper.setContext(this);
     }
 }

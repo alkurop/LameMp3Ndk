@@ -7,13 +7,13 @@ import com.omar.retromp3recorder.app.views.IMainView;
  */
 public interface IMainEvents {
 
-    void  Init(IMainView _view);
+    void init(IMainView _view);
 
-    void RecordClicked();
+    void recordClicked();
 
-    void PlayClicked();
+    void playClicked();
 
-    void ShareClicked();
+    void shareClicked();
 
-    void StopAll();
+    void stopAll();
 }

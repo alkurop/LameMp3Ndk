@@ -5,5 +5,5 @@ package com.omar.retromp3recorder.app.controllers;
  */
 public interface ILsdDisplay {
 
-    void SetText(String text);
+    void setText(String text);
 }
