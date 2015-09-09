@@ -34,10 +34,10 @@ public class MainPresenterTest extends UnitTestBase {
 
 
         //act
-        mainPresenter.RecordClicked();
+        mainPresenter.recordClicked();
 
         //assert
-        verify(mckStateSelector, times(1)).RecordingClicked();
+        verify(mckStateSelector, times(1)).recordingClicked();
         verifyNoMoreInteractions(mckStateSelector);
     }
     @Test
@@ -49,10 +49,10 @@ public class MainPresenterTest extends UnitTestBase {
 
 
         //act
-        mainPresenter.PlayClicked();
+        mainPresenter.playClicked();
 
         //assert
-        verify(mckStateSelector,times(1)).PlayCLicked();
+        verify(mckStateSelector,times(1)).playCLicked();
         verifyNoMoreInteractions(mckStateSelector);
 
 
@@ -66,16 +66,16 @@ public class MainPresenterTest extends UnitTestBase {
         final String filePath = "filaPath";
 
         when(spyMainPresenter.getSharingModule()).thenReturn(mckSharingModule);
-        when(mckAudioStatesController.GetFilePath()).thenReturn(filePath);
+        when(mckAudioStatesController.getFilePath()).thenReturn(filePath);
         //init
         spyMainPresenter.setStateSelector(mckStateSelector);
         spyMainPresenter.setAudioController(mckAudioStatesController);
         //act
-        spyMainPresenter.ShareClicked();
+        spyMainPresenter.shareClicked();
 
         //assert
-        verify(mckStateSelector,times(1)).StopAll();
-        verify(mckSharingModule,times(1)).StartShading(eq(filePath), any(MainPresenter.class));
+        verify(mckStateSelector,times(1)).stopAll();
+        verify(mckSharingModule,times(1)).startShading(eq(filePath), any(MainPresenter.class));
         verify(spyMainPresenter).getSharingModule();
 
     }
@@ -88,10 +88,10 @@ public class MainPresenterTest extends UnitTestBase {
 
 
         //act
-        mainPresenter.StopAll();
+        mainPresenter.stopAll();
 
         //assert
-        verify(mckStateSelector,times(1)).StopAll();
+        verify(mckStateSelector,times(1)).stopAll();
         verifyNoMoreInteractions(mckStateSelector);
     }
     @Test
@@ -103,10 +103,10 @@ public class MainPresenterTest extends UnitTestBase {
 
         //act
         mainPresenter.setView(mainView);
-        mainPresenter.SetText(someText);
+        mainPresenter.setText(someText);
 
         //assert
-        verify(mainView,times(1)).SetLabelText(eq(someText));
+        verify(mainView,times(1)).setLabelText(eq(someText));
         verifyNoMoreInteractions(mainView);
     }
 

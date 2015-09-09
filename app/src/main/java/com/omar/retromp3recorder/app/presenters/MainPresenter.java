@@ -29,78 +29,79 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
     private StateSelector stateSelector;
 
 
-    public void Init(IMainView _view) {
-        context = ContextHelper.GetContext();
+    public void init(IMainView _view) {
+        context = ContextHelper.getContext();
         view = _view;
         setUpAudioController();
         setUpStatesSelector();
-        DisplayView();
+        displayView();
     }
     @Override
-    public void SetText(String text) {
-        view.SetLabelText(text);
-    }
-
-    @Override
-    public void RecordClicked() {
-        stateSelector.RecordingClicked();
+    public void setText(String text) {
+        view.setLabelText(text);
     }
 
     @Override
-    public void PlayClicked() {
-        stateSelector.PlayCLicked();
+    public void recordClicked() {
+        stateSelector.recordingClicked();
     }
 
     @Override
-    public void ShareClicked() {
-        stateSelector.StopAll();
-        getSharingModule().StartShading(audioController.GetFilePath(), this);
+    public void playClicked() {
+        stateSelector.playCLicked();
+    }
+
+    @Override
+    public void shareClicked() {
+        stateSelector.stopAll();
+        getSharingModule().startShading(audioController.getFilePath(), this);
 
     }
 
     @Override
-    public void StopAll() {
-        stateSelector.StopAll();
+    public void stopAll() {
+        stateSelector.stopAll();
     }
 
-    public void DisplayView() {
-        view.SetUI();
-        setUpSampleRateRadioGroup(view.GetRadioContainer1());
-        setUpBitRateRadioGroup(view.GetRadioContainer2());
+    public void displayView() {
+        view.setUI();
+        setUpSampleRateRadioGroup(view.getRadioContainer1());
+        setUpBitRateRadioGroup(view.getRadioContainer2());
     }
 
     public void setUpAudioController() {
         audioController = new AudioStatesController();
-        audioController.Init(this, new IAudioControllerCallback() {
+        audioController.init(this, new IAudioControllerCallback() {
             @Override
             public void onPlayerStoped() {
-                stateSelector.CallbackStop();
-                view.StopVisualizer();
+                view.stopVisualizer();
+                stateSelector.callbackStop();
+
             }
 
             @Override
             public void onRecorderStoped() {
-                view.StopVisualizer();
-                stateSelector.CallbackStop();
+
+                stateSelector.callbackStop();
             }
 
             @Override
             public void SetPlayerId(int id) {
-                view.StartVisualizer(id);
+                view.startVisualizer(id);
             }
 
             @Override
             public void onPlayerError(String s) {
-                MainPresenter.this.SetText(s);
-                stateSelector.CallbackStop();
-                view.StopVisualizer();
+                MainPresenter.this.setText(s);
+
+                view.stopVisualizer();
+                stateSelector.callbackStop();
             }
 
             @Override
             public void onRecorderError(String s) {
-                view.StopVisualizer();
-                MainPresenter.this.SetText(s);
-                stateSelector.CallbackStop();
+                MainPresenter.this.setText(s);
+                stateSelector.callbackStop();
             }
         });
     }
@@ -108,37 +109,37 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
     public void setUpStatesSelector() {
         stateSelector = new StateSelector() {
             @Override
-            public void StartRecording() {
-                view.SetRecordBtnImg(R.drawable.ic_action_stop);
-                audioController.StartRecord();
+            public void startRecording() {
+                view.setRecordBtnImg(R.drawable.ic_action_stop);
+                audioController.startRecord();
             }
 
             @Override
-            public void StartPlaying() {
-                view.SetPlayBtnImg(R.drawable.ic_action_stop);
-                audioController.StartPlay();
+            public void startPlaying() {
+                view.setPlayBtnImg(R.drawable.ic_action_stop);
+                audioController.startPlay();
             }
 
             @Override
-            public void StopPlaying() {
-                view.SetPlayBtnImg(R.drawable.ic_action_play);
-                audioController.StopPlay();
-                view.StopVisualizer();
+            public void stopPlaying() {
+                view.setPlayBtnImg(R.drawable.ic_action_play);
+
+                view.stopVisualizer();
+                audioController.stopPlay();
             }
 
             @Override
-            public void StopRecodring() {
-                view.StopVisualizer();
-                view.SetRecordBtnImg(R.drawable.ic_action_rec);
-                audioController.StopRecord();
+            public void stopRecodring() {
+                view.setRecordBtnImg(R.drawable.ic_action_rec);
+                audioController.stopRecord();
 
             }
 
             @Override
-            public void OnCallbackStop() {
-                view.StopVisualizer();
-                view.SetRecordBtnImg(R.drawable.ic_action_rec);
-                view.SetPlayBtnImg(R.drawable.ic_action_play);
+            public void onCallbackStop() {
+                view.stopVisualizer();
+                view.setRecordBtnImg(R.drawable.ic_action_rec);
+                view.setPlayBtnImg(R.drawable.ic_action_play);
             }
         };
     }
@@ -148,13 +149,13 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
         String format = Constants.HZ_LABEL;
 
         sampleRatePresenter = new RadioGroupPresenter();
-        sampleRatePresenter.CreateRadioGroup(container, groupName, format, Constants.SAMPLE_RATE_PRESETS, new ICheckboxCallback() {
+        sampleRatePresenter.createRadioGroup(container, groupName, format, Constants.SAMPLE_RATE_PRESETS, new ICheckboxCallback() {
             @Override
             public void setDataIndex(int index) {
-                audioController.SetReсorderHz(Constants.SAMPLE_RATE_PRESETS[index]);
+                audioController.setReсorderHz(Constants.SAMPLE_RATE_PRESETS[index]);
             }
         });
-        sampleRatePresenter.SetSelected(0);
+        sampleRatePresenter.setSelected(0);
 
 
     }
@@ -164,13 +165,13 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
         String format = context.getString(R.string.sample_rate);
 
         bitRatePresenter = new RadioGroupPresenter();
-        bitRatePresenter.CreateRadioGroup(container, groupName, format, Constants.BIT_RATE_PRESETS, new ICheckboxCallback() {
+        bitRatePresenter.createRadioGroup(container, groupName, format, Constants.BIT_RATE_PRESETS, new ICheckboxCallback() {
             @Override
             public void setDataIndex(int index) {
-                audioController.SetReсorderBPM(Constants.BIT_RATE_PRESETS[index]);
+                audioController.setReсorderBPM(Constants.BIT_RATE_PRESETS[index]);
             }
         });
-        bitRatePresenter.SetSelected(0);
+        bitRatePresenter.setSelected(0);
 
     }
 

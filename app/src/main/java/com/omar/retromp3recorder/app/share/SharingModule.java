@@ -1,20 +1,13 @@
 package com.omar.retromp3recorder.app.share;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.LabeledIntent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.controllers.ILsdDisplay;
 import com.omar.retromp3recorder.app.utils.ContextHelper;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by omar on 20.08.15.
@@ -31,15 +24,15 @@ public class SharingModule implements IShadingModule {
     }
 
     @Override
-    public void StartShading(String _filePath, ILsdDisplay _display) {
-        context = ContextHelper.GetContext();
+    public void startShading(String _filePath, ILsdDisplay _display) {
+        context = ContextHelper.getContext();
 
         filePath = _filePath;
         if (checkFile(filePath)) {
             share();
-            _display.SetText(context.getString(R.string.trying_to_share));
+            _display.setText(context.getString(R.string.trying_to_share));
         } else {
-            _display.SetText(context.getString(R.string.cannot_share));
+            _display.setText(context.getString(R.string.cannot_share));
         }
     }
 

@@ -5,7 +5,7 @@ package com.omar.retromp3recorder.app.callbacks;
  */
 public class ImpossibleCallback {
 
-    interface ICallback{
+    public interface ICallback{
         void Success(String s);
         void Error(String s);
     }

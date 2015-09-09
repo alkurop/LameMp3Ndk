@@ -21,7 +21,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
 
     public AudioPlayer(String _voiceURL, IPlayerCallback _callback) {
-        context = ContextHelper.GetContext();
+        context = ContextHelper.getContext();
         voiceURL = _voiceURL;
         callback = _callback;
     }
@@ -51,7 +51,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
             mediaPlayer.setDataSource(voiceURL);
             mediaPlayer.prepareAsync();
         } catch (IOException e) {
-            callback.OnErrorOccured(context.getString(R.string.not_recorder_yet));
+            callback.onErrorOccured(context.getString(R.string.not_recorder_yet));
         }
     }
 
@@ -60,20 +60,20 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
-            callback.NormalMessage(context.getString(R.string.stopped_playing));
-            callback.OnAudioEndedAndStoped();
+            callback.normalMessage(context.getString(R.string.stopped_playing));
+            callback.onAudioEndedAndStoped();
         } else {
-            callback.OnErrorOccured(context.getString(R.string.player_error_on_stop));
+            callback.onErrorOccured(context.getString(R.string.player_error_on_stop));
         }
     }
 
     private void playMedia() {
         if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
             mediaPlayer.start();
-            callback.SendPlayerId(mediaPlayer.getAudioSessionId());
-            callback.NormalMessage(context.getString(R.string.started_playing));
+            callback.sendPlayerId(mediaPlayer.getAudioSessionId());
+            callback.normalMessage(context.getString(R.string.started_playing));
         } else {
-            callback.OnErrorOccured(context.getString(R.string.player_erro_on_stop));
+            callback.onErrorOccured(context.getString(R.string.player_erro_on_stop));
         }
     }
 

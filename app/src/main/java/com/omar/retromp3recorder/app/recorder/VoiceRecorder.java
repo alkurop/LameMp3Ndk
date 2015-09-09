@@ -3,9 +3,10 @@ package com.omar.retromp3recorder.app.recorder;
 import android.content.Context;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.*;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Process;
-
 import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.callbacks.IRecorderCallback;
@@ -50,7 +51,7 @@ public class VoiceRecorder {
     private long counter;
 
     public VoiceRecorder(String _filepath, IRecorderCallback _callback) {
-        context = ContextHelper.GetContext();
+        context = ContextHelper.getContext();
 
         filePath = _filepath;
         callback = _callback;
@@ -206,13 +207,13 @@ public class VoiceRecorder {
                 public void handleMessage(Message message) {
                     switch (message.what) {
                         case STATUS_NORMAL:
-                            callback.NormalMessage(message.getData().getString(Constants.DATA));
+                            callback.normalMessage(message.getData().getString(Constants.DATA));
                             break;
                         case STATUS_ERROR:
-                            callback.OnErrorOccured(message.getData().getString(Constants.DATA));
+                            callback.onErrorOccured(message.getData().getString(Constants.DATA));
                             break;
                         case STATUS_ID:
-                            callback.SendRecorderId(message.getData().getInt(Constants.DATA));
+                            callback.sendRecorderId(message.getData().getInt(Constants.DATA));
                             break;
                     }
                 }

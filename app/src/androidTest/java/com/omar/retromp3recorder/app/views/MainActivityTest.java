@@ -28,7 +28,7 @@ public class MainActivityTest extends UnitTestBase {
     public void setupMainAct() {
         activity = Robolectric.buildActivity(MainActivity.class).create().start().resume().get();
         spyMainActivity = Mockito.spy(activity);
-        spyMainActivity.SetUI();
+        spyMainActivity.setUI();
         Mockito.when(spyMainActivity.getMainPresenter()).thenReturn(mckMainPresenter);
         spyMainActivity.setMainPresenter();
 
@@ -40,7 +40,7 @@ public class MainActivityTest extends UnitTestBase {
         //act
         (spyMainActivity.findViewById(R.id.iv_play)).performClick();
         //verify
-        Mockito.verify(mckMainPresenter).PlayClicked();
+        Mockito.verify(mckMainPresenter).playClicked();
 
     }
 
@@ -49,7 +49,7 @@ public class MainActivityTest extends UnitTestBase {
         //act
         (spyMainActivity.findViewById(R.id.iv_record)).performClick();
         //verify
-        Mockito.verify(mckMainPresenter).RecordClicked();
+        Mockito.verify(mckMainPresenter).recordClicked();
 
     }
 
@@ -72,7 +72,7 @@ public class MainActivityTest extends UnitTestBase {
         mckActivity.onClick(v);
 
         //verify
-        Mockito.verify(mckMainPresenter).RecordClicked();
+        Mockito.verify(mckMainPresenter).recordClicked();
 
     }
 
@@ -81,7 +81,7 @@ public class MainActivityTest extends UnitTestBase {
         //init
         int drawableId = R.drawable.abc_ab_share_pack_mtrl_alpha;
         //act
-        spyMainActivity.SetRecordBtnImg(drawableId);
+        spyMainActivity.setRecordBtnImg(drawableId);
         Drawable drawable = spyMainActivity.getDrawable(drawableId);
         //verify
         Assert.assertEquals(drawable, ((ImageView) spyMainActivity.findViewById(R.id.iv_record)).getDrawable());
@@ -93,7 +93,7 @@ public class MainActivityTest extends UnitTestBase {
         //act
         spyMainActivity.onStop();
         //verify
-        Mockito.verify(mckMainPresenter).StopAll();
+        Mockito.verify(mckMainPresenter).stopAll();
     }
 
 

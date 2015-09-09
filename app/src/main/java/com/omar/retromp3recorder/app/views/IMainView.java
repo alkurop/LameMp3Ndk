@@ -7,20 +7,20 @@ import android.widget.LinearLayout;
  */
 public interface IMainView {
 
-     void SetUI();
+    void setUI();
 
-    void SetRecordBtnImg(int drawable);
+    void setRecordBtnImg(int drawable);
 
-    void  SetPlayBtnImg(int drawable);
+    void setPlayBtnImg(int drawable);
 
-    void StartVisualizer(int playerId);
+    void startVisualizer(int playerId);
 
-    void StopVisualizer();
+    void stopVisualizer();
 
-    void SetLabelText(String s);
+    void setLabelText(String s);
 
-    LinearLayout GetRadioContainer1();
+    LinearLayout getRadioContainer1();
 
-    LinearLayout GetRadioContainer2();
+    LinearLayout getRadioContainer2();
 
 }

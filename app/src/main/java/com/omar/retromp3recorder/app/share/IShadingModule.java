@@ -7,5 +7,5 @@ import com.omar.retromp3recorder.app.controllers.ILsdDisplay;
  */
 public interface IShadingModule {
 
-    void StartShading(String _filePath, ILsdDisplay _display);
+    void startShading(String _filePath, ILsdDisplay _display);
 }
