@@ -23,23 +23,18 @@ public class AudioStatesController implements IAudioStatesEvents {
     private IRecorderCallback recorderCallback;
     private ILsdDisplay lsdDisplay;
 
-
     private VoiceRecorder voiceRecorder;
     private AudioPlayer audioPlayer;
-
 
     private String filePath;
 
     private int currentBPM;
     private int currentHz;
 
-    private Context context;
-
     @Override
     public void startRecord() {
         getVoiceRecorder();
         voiceRecorder.recordStart(currentHz, currentBPM);
-        context = ContextHelper.getContext();
     }
 
     @Override
@@ -48,7 +43,7 @@ public class AudioStatesController implements IAudioStatesEvents {
             audioPlayer = new AudioPlayer(filePath, playerCallback);
             audioPlayer.playerStart();
         } else {
-            upperLevelCallback.onPlayerError(context.getString(R.string.player_cannot_find_file));
+            upperLevelCallback.onPlayerError(ContextHelper.getContext().getString(R.string.player_cannot_find_file));
         }
     }
 
