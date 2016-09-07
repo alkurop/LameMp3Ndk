@@ -1,9 +1,17 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/background"/>
 <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp" android:background="@drawable/bg">
+        android:padding="10dp"
+    >
     <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp" android:layout_weight="4" android:paddingLeft="15dp" android:paddingTop="15dp"
@@ -144,3 +152,4 @@
     </LinearLayout>
 </FrameLayout>
 </LinearLayout>
+</FrameLayout>
