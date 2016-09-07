@@ -1,6 +1,8 @@
 package com.omar.retromp3recorder.app.presenters;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -63,7 +65,7 @@ public class RadioGroupPresenter implements IRadioGroupEvents, View.OnClickListe
 
 
     private void addCheckBox(String text, int id) {
-        RadioButton cb = (RadioButton) li.inflate(R.layout.checkbox, null);
+        RadioButton cb = (RadioButton) li.inflate(R.layout.checkbox,null);
 
         cb.setText(text);
         cb.setTag(id);
@@ -96,6 +98,62 @@ public class RadioGroupPresenter implements IRadioGroupEvents, View.OnClickListe
         } else {
             castView.setChecked(true);
         }
+    }
 
+    @Override
+    public RadioGroupPresenter.RadioGroupState saveState () {
+        boolean[] checkedState = new boolean[checkBoxNames.length];
+        for (int i = 0; i < checkBoxNames.length; i++) {
+            checkedState[i] = ((RadioButton) container.findViewWithTag(i)).isChecked();
+        }
+        return new RadioGroupState(checkedState);
+    }
+
+    @Override
+    public void restoreState (RadioGroupState state) {
+        if(state != null){
+            for (int i = 0; i < state.state.length; i++) {
+               if( state.state[i]){
+                   setSelected(i);
+                   break;
+               }
+            }
+        }
+    }
+    public static class RadioGroupState implements Parcelable {
+        boolean [] state;
+
+        public RadioGroupState (boolean[] state) {
+            this.state = state;
+        }
+
+        @Override
+        public int describeContents () {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel (Parcel dest, int flags) {
+            dest.writeBooleanArray(this.state);
+        }
+
+        public RadioGroupState () {
+        }
+
+        protected RadioGroupState (Parcel in) {
+            this.state = in.createBooleanArray();
+        }
+
+        public static final Parcelable.Creator<RadioGroupState> CREATOR = new Parcelable.Creator<RadioGroupState>() {
+            @Override
+            public RadioGroupState createFromParcel (Parcel source) {
+                return new RadioGroupState(source);
+            }
+
+            @Override
+            public RadioGroupState[] newArray (int size) {
+                return new RadioGroupState[size];
+            }
+        };
     }
 }

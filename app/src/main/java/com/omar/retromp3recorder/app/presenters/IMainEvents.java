@@ -1,5 +1,7 @@
 package com.omar.retromp3recorder.app.presenters;
 
+import android.os.Parcelable;
+
 import com.omar.retromp3recorder.app.views.IMainView;
 
 /**
@@ -16,4 +18,10 @@ public interface IMainEvents {
     void shareClicked();
 
     void stopAll();
+
+    Parcelable saveState();
+
+    void restoreState(Parcelable parcelable);
+
+    void hardfixRestoreState ();
 }

@@ -49,12 +49,16 @@ public class AudioStatesController implements IAudioStatesEvents {
 
     @Override
     public void stopRecord() {
-        voiceRecorder.recordStop();
+        if (voiceRecorder != null) {
+            voiceRecorder.recordStop();
+        }
     }
 
     @Override
     public void stopPlay() {
-        audioPlayer.playerStop();
+        if (audioPlayer != null) {
+            audioPlayer.playerStop();
+        }
     }
 
 

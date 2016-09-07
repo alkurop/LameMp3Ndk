@@ -1,7 +1,11 @@
 package com.omar.retromp3recorder.app.presenters;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+
 import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.callbacks.IAudioControllerCallback;
@@ -27,7 +31,7 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
     private IRadioGroupEvents bitRatePresenter;
     private IRadioGroupEvents sampleRatePresenter;
     private StateSelector stateSelector;
-
+    private State state;
 
     public void init(IMainView _view) {
         context = ContextHelper.getContext();
@@ -67,6 +71,24 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
         view.setUI();
         setUpSampleRateRadioGroup(view.getRadioContainer1());
         setUpBitRateRadioGroup(view.getRadioContainer2());
+    }
+
+    @Override
+    public Parcelable saveState () {
+        return new State(bitRatePresenter.saveState(), sampleRatePresenter.saveState());
+    }
+
+    @Override
+    public void restoreState (Parcelable parcelable) {
+      state = ((State) parcelable);
+    }
+
+    @Override
+    public void hardfixRestoreState () {
+        if (state != null) {
+            sampleRatePresenter.restoreState(state.sampleRateState);
+            bitRatePresenter.restoreState(state.bitRateState);
+        }
     }
 
     public void setUpAudioController() {
@@ -156,8 +178,6 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
             }
         });
         sampleRatePresenter.setSelected(0);
-
-
     }
 
     public void setUpBitRateRadioGroup(LinearLayout container) {
@@ -217,5 +237,43 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
 
     public StateSelector getStateSelector() {
         return stateSelector;
+    }
+
+    static class State implements Parcelable {
+        RadioGroupPresenter.RadioGroupState bitRateState;
+        RadioGroupPresenter.RadioGroupState sampleRateState;
+
+        public State (RadioGroupPresenter.RadioGroupState bitRateState, RadioGroupPresenter.RadioGroupState sampleRateState) {
+            this.bitRateState = bitRateState;
+            this.sampleRateState = sampleRateState;
+        }
+
+        @Override
+        public int describeContents () {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel (Parcel dest, int flags) {
+            dest.writeParcelable(this.bitRateState, flags);
+            dest.writeParcelable(this.sampleRateState, flags);
+        }
+
+        protected State (Parcel in) {
+            this.bitRateState = in.readParcelable(RadioGroupPresenter.RadioGroupState.class.getClassLoader());
+            this.sampleRateState = in.readParcelable(RadioGroupPresenter.RadioGroupState.class.getClassLoader());
+        }
+
+        public static final Creator<State> CREATOR = new Creator<State>() {
+            @Override
+            public State createFromParcel (Parcel source) {
+                return new State(source);
+            }
+
+            @Override
+            public State[] newArray (int size) {
+                return new State[size];
+            }
+        };
     }
 }

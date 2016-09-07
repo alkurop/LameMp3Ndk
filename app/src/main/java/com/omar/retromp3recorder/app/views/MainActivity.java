@@ -31,7 +31,7 @@ import kotlin.jvm.functions.Function1;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, IMainView {
 
     private ImageView btn_Play, btn_Record, btn_Share;
-    private LinearLayout llLogHolder, llRadioContainer1, llRadioContainer2;
+    private LinearLayout llLogHolder, radioContainer1, radioContainer2;
     private IMainEvents presenter;
     private ScrollView scrollView;
     private TextView tv_Timer;
@@ -60,6 +60,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onSaveInstanceState (Bundle outState) {
+        Bundle b = outState == null ? new Bundle()  : outState;
+        b.putParcelable("presenter",presenter.saveState());
+        super.onSaveInstanceState(b);
+    }
+
+    @Override
+    protected void onRestoreInstanceState (Bundle savedInstanceState) {
+        presenter.restoreState(savedInstanceState.getParcelable("presenter"));
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
     protected void onStart () {
         super.onStart();
         permissionManager.addPermissionsListener(new Function1<Map<String, Boolean>, Unit>() {
@@ -75,6 +88,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         permissionManager.makePermissionRequest(true);
+    }
+
+    @Override
+    protected void onResume () {
+        super.onResume();
+        hardFixRestorePresenter();
+    }
+
+    private void hardFixRestorePresenter () {
+        presenter.hardfixRestoreState();
     }
 
     @Override
@@ -114,8 +137,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         llLogHolder = (LinearLayout) findViewById(R.id.ll_logHolder);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
         mVisualizerView = (VisualizerView) findViewById(R.id.visualizer);
-        llRadioContainer1 = (LinearLayout) findViewById(R.id.ll_radio_container1);
-        llRadioContainer2 = (LinearLayout) findViewById(R.id.ll_radio_container2);
+        radioContainer1 = (LinearLayout) findViewById(R.id.ll_radio_container1);
+        radioContainer2 = (LinearLayout) findViewById(R.id.ll_radio_container2);
         background = ((ImageView) findViewById(R.id.background));
         Picasso.with(this).load(R.drawable.bg).fit().into(background);
 
@@ -197,12 +220,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public LinearLayout getRadioContainer1() {
-        return llRadioContainer1;
+        return radioContainer1;
     }
 
     @Override
     public LinearLayout getRadioContainer2() {
-        return llRadioContainer2;
+        return radioContainer2;
     }
 
     @Override
