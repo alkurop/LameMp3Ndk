@@ -12,8 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.github.alkurop.permissionmanager.PermissionRequiredDetails;
-import com.github.alkurop.permissionmanager.PermissionsManager;
+import com.github.alkurop.jpermissionmanager.PermissionOptionalDetails;
+import com.github.alkurop.jpermissionmanager.PermissionRequiredDetails;
+import com.github.alkurop.jpermissionmanager.PermissionsManager;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.customviews.VisualizerView;
 import com.omar.retromp3recorder.app.presenters.IMainEvents;
@@ -23,9 +24,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, IMainView {
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         presenter = new MainPresenter();
         presenter.init(this);
         permissionManager = new PermissionsManager(this);
-        HashMap<String, PermissionRequiredDetails> permissions = new HashMap<>();
+        HashMap<String, PermissionOptionalDetails> permissions = new HashMap<>();
         permissions.put(Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 new PermissionRequiredDetails(getString(R.string.write_permission_title),
                         getString(R.string.write_permission_message),
@@ -60,54 +58,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onSaveInstanceState (Bundle outState) {
-        Bundle b = outState == null ? new Bundle()  : outState;
-        b.putParcelable("presenter",presenter.saveState());
+    protected void onSaveInstanceState(Bundle outState) {
+        Bundle b = outState == null ? new Bundle() : outState;
+        b.putParcelable("presenter", presenter.saveState());
         super.onSaveInstanceState(b);
     }
 
     @Override
-    protected void onRestoreInstanceState (Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
         presenter.restoreState(savedInstanceState.getParcelable("presenter"));
         super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
-    protected void onStart () {
+    protected void onStart() {
         super.onStart();
-        permissionManager.addPermissionsListener(new Function1<Map<String, Boolean>, Unit>() {
+        permissionManager.addPermissionsListener(new PermissionsManager.PermissionListener() {
             @Override
-            public Unit invoke (Map<String, Boolean> stringBooleanMap) {
+            public void onPermissionResult(HashMap<String, Boolean> stringBooleanMap) {
                 permissionManager.clearPermissionsListeners();
-                for(Map.Entry<String, Boolean> entry: stringBooleanMap.entrySet()){
+                for (Map.Entry<String, Boolean> entry : stringBooleanMap.entrySet()) {
                     if (!entry.getValue()) {
-                        return null;
+                        return;
                     }
                 }
-                return null;
             }
         });
         permissionManager.makePermissionRequest(true);
     }
 
     @Override
-    protected void onResume () {
+    protected void onResume() {
         super.onResume();
         hardFixRestorePresenter();
     }
 
-    private void hardFixRestorePresenter () {
+    private void hardFixRestorePresenter() {
         presenter.hardfixRestoreState();
     }
 
     @Override
-    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         permissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
-    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         permissionManager.onActivityResult(requestCode);
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -116,30 +113,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (TouchController.allowClick())
             switch (view.getId()) {
-            case R.id.iv_play:
-                presenter.playClicked();
-                break;
-            case R.id.iv_record:
-                presenter.recordClicked();
-                break;
-            case R.id.iv_share:
-                presenter.shareClicked();
-                break;
-        }
+                case R.id.iv_play:
+                    presenter.playClicked();
+                    break;
+                case R.id.iv_record:
+                    presenter.recordClicked();
+                    break;
+                case R.id.iv_share:
+                    presenter.shareClicked();
+                    break;
+            }
     }
 
     @Override
     public void setUI() {
         setContentView(R.layout.activity_main);
-        btn_Play = (ImageView) findViewById(R.id.iv_play);
-        btn_Record = (ImageView) findViewById(R.id.iv_record);
-        btn_Share = (ImageView) findViewById(R.id.iv_share);
-        llLogHolder = (LinearLayout) findViewById(R.id.ll_logHolder);
-        scrollView = (ScrollView) findViewById(R.id.scrollView);
-        mVisualizerView = (VisualizerView) findViewById(R.id.visualizer);
-        radioContainer1 = (LinearLayout) findViewById(R.id.ll_radio_container1);
-        radioContainer2 = (LinearLayout) findViewById(R.id.ll_radio_container2);
-        background = ((ImageView) findViewById(R.id.background));
+        btn_Play = findViewById(R.id.iv_play);
+        btn_Record = findViewById(R.id.iv_record);
+        btn_Share = findViewById(R.id.iv_share);
+        llLogHolder = findViewById(R.id.ll_logHolder);
+        scrollView = findViewById(R.id.scrollView);
+        mVisualizerView = findViewById(R.id.visualizer);
+        radioContainer1 = findViewById(R.id.ll_radio_container1);
+        radioContainer2 = findViewById(R.id.ll_radio_container2);
+        background = findViewById(R.id.background);
         Picasso.with(this).load(R.drawable.bg).fit().into(background);
 
         btn_Play.setOnClickListener(this);
@@ -174,9 +171,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void stopVisualizer() {
-        if (mVisualizer != null)  new Thread(new Runnable() {
+        if (mVisualizer != null) new Thread(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 try {
                     Thread.sleep(1);
                     runOnUiThread(new Runnable() {
@@ -190,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 }
             }
-        } ).start();
+        }).start();
     }
 
     @Override
@@ -201,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         llLogHolder.addView(tv_Timer);
         new Thread(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 try {
                     Thread.sleep(150);
                     runOnUiThread(new Runnable() {
@@ -212,7 +209,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     });
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }}
+                }
+            }
 
         }).start();
 
@@ -235,6 +233,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /*FOR TESTING ONLY*/
-    public MainPresenter getMainPresenter(){return new MainPresenter();}
-    public void setMainPresenter(){presenter = getMainPresenter();}
+    public MainPresenter getMainPresenter() {
+        return new MainPresenter();
+    }
+
+    public void setMainPresenter() {
+        presenter = getMainPresenter();
+    }
 }
