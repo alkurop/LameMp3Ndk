@@ -7,5 +7,4 @@ public interface Presenter<Action, Result, ViewModel> {
 
     ObservableTransformer<Action, ViewModel> process();
 
-    ObservableTransformer<Result, ViewModel> mapResults();
 }

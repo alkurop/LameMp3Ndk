@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 
 import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
@@ -17,7 +16,7 @@ import com.omar.retromp3recorder.app.controllers.StateSelector;
 import com.omar.retromp3recorder.app.share.IShadingModule;
 import com.omar.retromp3recorder.app.share.SharingModule;
 import com.omar.retromp3recorder.app.utils.ContextHelper;
-import com.omar.retromp3recorder.app.views.IMainView;
+import com.omar.retromp3recorder.app.main.IMainView;
 
 /**
  * Created by omar on 17.08.15.

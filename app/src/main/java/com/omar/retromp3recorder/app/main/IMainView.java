@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.views;
+package com.omar.retromp3recorder.app.main;
 
 import android.widget.LinearLayout;
 

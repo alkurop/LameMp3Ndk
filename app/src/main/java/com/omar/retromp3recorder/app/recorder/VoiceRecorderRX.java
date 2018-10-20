@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.recorder;
 
+import android.annotation.SuppressLint;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Process;
@@ -17,8 +18,12 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 /**
  * Created by omar on 17.08.15.
@@ -29,11 +34,14 @@ public class VoiceRecorderRX implements VoiceRecorder {
     private static final int quality = Constants.QUALITY_PRESETS[1];
     private static final short audioFormat = Constants.AUDIO_FORMAT_PRESETS[1];
     private final StringProvider stringProvider;
-    private final PublishSubject<Event> events = PublishSubject.create();
+    private final Scheduler scheduler;
+    private final Subject<Event> events = PublishSubject.create();
     private final AtomicLong elapsed = new AtomicLong(0);
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    public VoiceRecorderRX(StringProvider stringProvider) {
+    public VoiceRecorderRX(StringProvider stringProvider, Scheduler scheduler) {
         this.stringProvider = stringProvider;
+        this.scheduler = scheduler;
     }
 
     @Override
@@ -42,7 +50,9 @@ public class VoiceRecorderRX implements VoiceRecorder {
     }
 
     @Override
-    public Completable record(String filePath, int sampleRate, int bitRate) {
+    public void record(String filePath, int sampleRate, int bitRate) {
+        stopRecord();
+
         int minBufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat);
 
         Single<Pair<File, AudioRecord>> recorderParams = Single
@@ -59,13 +69,20 @@ public class VoiceRecorderRX implements VoiceRecorder {
                         sampleRate
                 ));
 
-        return  recorderCompletable
+        Disposable disposable = recorderCompletable
                 .onErrorResumeNext(throwable -> {
                     events.onNext(new Error(throwable.getMessage()));
                     return Completable.complete();
-                });
+                })
+                .subscribeOn(scheduler)
+                .subscribe();
+        compositeDisposable.add(disposable);
     }
 
+    @Override
+    public void stopRecord() {
+        compositeDisposable.clear();
+    }
 
     private short[] createBuffer(int sampleRate) {
         return new short[sampleRate * (16 / 8) * 5];
@@ -79,11 +96,11 @@ public class VoiceRecorderRX implements VoiceRecorder {
         return Single.fromCallable(() -> findAudioRecord(minBufferSize, sampleRate, bitRate));
     }
 
-
     private Single<File> createOutputFile(String filePath) {
         return Single.fromCallable(() -> {
                     File outFile = new File(filePath);
                     if (outFile.exists()) {
+                        @SuppressLint("UNUSED")
                         boolean delete = outFile.delete();
                     }
                     boolean fileWasCreated = outFile.createNewFile();
@@ -170,8 +187,4 @@ public class VoiceRecorderRX implements VoiceRecorder {
             throw new Exception(stringProvider.getString(R.string.audioRecord_bad_value));
         }
     }
-
-
-
-
 }

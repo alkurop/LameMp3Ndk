@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.app.presenters;
 
 import android.os.Parcelable;
 
-import com.omar.retromp3recorder.app.views.IMainView;
+import com.omar.retromp3recorder.app.main.IMainView;
 
 /**
  * Created by omar on 17.08.15.

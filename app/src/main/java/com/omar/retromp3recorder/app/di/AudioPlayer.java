@@ -3,16 +3,16 @@ package com.omar.retromp3recorder.app.di;
 import io.reactivex.Observable;
 
 public interface AudioPlayer {
+
     void playerStop();
 
     void playerStart(String voiceURL);
 
     Observable<Event> observeEvents();
 
-    interface Event {
-    }
+    interface Event { }
 
-    class Message implements Event {
+    final class Message implements Event {
         public final String message;
 
         public Message(String errorMessage) {
@@ -20,13 +20,15 @@ public interface AudioPlayer {
         }
     }
 
-    class Error extends Message {
-        public Error(String errorMessage) {
-            super(errorMessage);
+    final class Error implements Event {
+        public final String error;
+
+        public Error(String error) {
+            this.error = error;
         }
     }
 
-    class SendPlayerId implements Event {
+    final class SendPlayerId implements Event {
         public final int playerId;
 
         public SendPlayerId(int playerId) {
@@ -34,6 +36,5 @@ public interface AudioPlayer {
         }
     }
 
-    class PlaybackEnded implements Event {
-    }
+    final class PlaybackEnded implements Event { }
 }
