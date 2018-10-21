@@ -13,4 +13,8 @@ public class FileNameRepo {
     public Observable<String> observe() {
         return stateSubject;
     }
+
+    public boolean hasValue(){
+        return stateSubject.hasValue();
+    }
 }

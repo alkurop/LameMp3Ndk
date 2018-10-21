@@ -2,20 +2,33 @@ package com.omar.retromp3recorder.app.main;
 
 
 import com.omar.retromp3recorder.app.di.Interactor;
+import com.omar.retromp3recorder.app.di.VoiceRecorder;
 import com.omar.retromp3recorder.app.repo.BitRateRepo;
 import com.omar.retromp3recorder.app.repo.SampleRateRepo;
+import com.omar.retromp3recorder.app.repo.StateRepo;
 import com.omar.retromp3recorder.app.usecase.ChangeBitrateUC;
 import com.omar.retromp3recorder.app.usecase.ChangeSampleRateUC;
 import com.omar.retromp3recorder.app.usecase.ShareUC;
 import com.omar.retromp3recorder.app.usecase.StartPlaybackUC;
 import com.omar.retromp3recorder.app.usecase.StopPlaybackAndRecordUC;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Scheduler;
 import io.reactivex.functions.Function;
 
-import static com.omar.retromp3recorder.app.main.MainView.*;
+import static com.omar.retromp3recorder.app.main.MainView.BitRateChangeAction;
+import static com.omar.retromp3recorder.app.main.MainView.BitrateChangedResult;
+import static com.omar.retromp3recorder.app.main.MainView.InitialAction;
+import static com.omar.retromp3recorder.app.main.MainView.MainViewAction;
+import static com.omar.retromp3recorder.app.main.MainView.MainViewResult;
+import static com.omar.retromp3recorder.app.main.MainView.PlayAction;
+import static com.omar.retromp3recorder.app.main.MainView.SampleRateChangeAction;
+import static com.omar.retromp3recorder.app.main.MainView.SampleRateChangeResult;
+import static com.omar.retromp3recorder.app.main.MainView.ShareAction;
+import static com.omar.retromp3recorder.app.main.MainView.State;
+import static com.omar.retromp3recorder.app.main.MainView.StopAction;
 import static com.omar.retromp3recorder.app.utils.ListFromVararg.createList;
 
 public class MainViewInteractor implements Interactor<MainViewAction, MainViewResult> {
@@ -28,6 +41,7 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
     private final BitRateRepo bitRateRepo;
     private final SampleRateRepo sampleRateRepo;
     private final ChangeBitrateUC changeBitrateUC;
+    private final StateRepo stateRepo;
 
 
     public MainViewInteractor(
@@ -37,7 +51,7 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
             ShareUC shareUC,
             StartPlaybackUC startPlaybackUC,
             StopPlaybackAndRecordUC stopPlaybacAndRecordkUC,
-            BitRateRepo bitRateRepo, SampleRateRepo sampleRateRepo) {
+            BitRateRepo bitRateRepo, SampleRateRepo sampleRateRepo, StateRepo stateRepo) {
         this.scheduler = scheduler;
         this.changeBitrateUC = changeBitrateUC;
         this.changeSampleRateUC = changeSampleRateUC;
@@ -46,6 +60,7 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
         this.stopPlaybacAndRecordkUC = stopPlaybacAndRecordkUC;
         this.bitRateRepo = bitRateRepo;
         this.sampleRateRepo = sampleRateRepo;
+        this.stateRepo = stateRepo;
     }
 
     @Override
@@ -57,6 +72,12 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
                                     actions
                                             .ofType(PlayAction.class)
                                             .flatMapCompletable(playAction -> startPlaybackUC.execute())
+                                            .toObservable(),
+                                    actions
+                                            .ofType(InitialAction.class)
+                                            .flatMapCompletable(initialAction -> Completable
+                                                    .fromAction(() -> stateRepo.newValue(State.Idle))
+                                            )
                                             .toObservable(),
                                     actions
                                             .ofType(ShareAction.class)
@@ -78,10 +99,11 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
                                             .toObservable(),
                                     bitRateRepo
                                             .observe()
-                                            .map((Function<BitRate, MainViewResult>) BitrateChangedResult::new),
+                                            .map((Function<VoiceRecorder.BitRate, MainViewResult>) BitrateChangedResult::new),
                                     sampleRateRepo
                                             .observe()
-                                            .map((Function<SampleRate, MainViewResult>) SampleRateChangeResult::new)
+                                            .map((Function<VoiceRecorder.SampleRate, MainViewResult>) SampleRateChangeResult::new)
+
                             ));
                 });
     }

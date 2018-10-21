@@ -1,25 +1,40 @@
 package com.omar.retromp3recorder.app.main;
 
 import com.omar.retromp3recorder.app.di.MviView;
+import static com.omar.retromp3recorder.app.di.VoiceRecorder.*;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
 
 public interface MainView extends MviView<MainView.MainViewModel> {
 
+    enum State {Recording, Playing, Idle}
+
+    //region ViewModel
     final class MainViewModel {
-        @NonNull final SampleRate sampleRate;
-        @NonNull final BitRate bitRate;
+        @NonNull final  SampleRate sampleRate;
+        @NonNull final State state;
+        @NonNull final  BitRate bitRate;
         @Nullable final String message;
         @Nullable final String error;
 
-        public MainViewModel(SampleRate sampleRate, BitRate bitRate, String message, String error) {
+        MainViewModel(
+                State state,
+                SampleRate sampleRate,
+                BitRate bitRate,
+                String message,
+                String error
+        ) {
+            this.state = state;
             this.sampleRate = sampleRate;
             this.bitRate = bitRate;
             this.message = message;
             this.error = error;
         }
     }
+    //endregion
+
+    //region Action
 
     interface MainViewAction { }
 
@@ -39,24 +54,24 @@ public interface MainView extends MviView<MainView.MainViewModel> {
         }
     }
 
+    final class InitialAction implements MainViewAction { }
+
     final class PlayAction implements MainViewAction { }
 
     final class ShareAction implements MainViewAction { }
 
     final class StopAction implements MainViewAction { }
 
+    //endregion
 
-    enum SampleRate {_44100, _22050, _11052, _8000}
+    //Region result
 
-    enum BitRate {_320, _192, _160, _128}
-
-    interface MainViewResult {
-    }
+    interface MainViewResult { }
 
     final class MessageLogResult implements MainViewResult {
         final String message;
 
-        public MessageLogResult(String message) {
+        MessageLogResult(String message) {
             this.message = message;
         }
     }
@@ -64,7 +79,7 @@ public interface MainView extends MviView<MainView.MainViewModel> {
     final class ErrorLogResult implements MainViewResult {
         final String error;
 
-        public ErrorLogResult(String error) {
+        ErrorLogResult(String error) {
             this.error = error;
         }
     }
@@ -72,7 +87,7 @@ public interface MainView extends MviView<MainView.MainViewModel> {
     final class BitrateChangedResult implements MainViewResult {
         final BitRate bitRate;
 
-        public BitrateChangedResult(BitRate bitRate) {
+        BitrateChangedResult(BitRate bitRate) {
             this.bitRate = bitRate;
         }
     }
@@ -80,9 +95,18 @@ public interface MainView extends MviView<MainView.MainViewModel> {
     final class SampleRateChangeResult implements MainViewResult {
         final SampleRate sampleRate;
 
-        public SampleRateChangeResult(SampleRate sampleRate) {
+          SampleRateChangeResult(SampleRate sampleRate) {
             this.sampleRate = sampleRate;
         }
     }
+
+    final class StateChangedResult implements MainViewResult {
+        final State state;
+
+        public StateChangedResult(State state) {
+            this.state = state;
+        }
+    }
+    //endregion
 }
 

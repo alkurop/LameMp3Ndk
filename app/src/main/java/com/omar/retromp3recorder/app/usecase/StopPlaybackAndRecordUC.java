@@ -1,9 +1,33 @@
 package com.omar.retromp3recorder.app.usecase;
 
+import com.omar.retromp3recorder.app.di.AudioPlayer;
+import com.omar.retromp3recorder.app.di.VoiceRecorder;
+import com.omar.retromp3recorder.app.main.MainView;
+import com.omar.retromp3recorder.app.repo.StateRepo;
+
 import io.reactivex.Completable;
 
 public class StopPlaybackAndRecordUC {
+    private final AudioPlayer audioPlayer;
+    private final VoiceRecorder voiceRecorder;
+    private final StateRepo stateRepo;
+
+    public StopPlaybackAndRecordUC(
+            AudioPlayer audioPlayer,
+            VoiceRecorder voiceRecorder,
+            StateRepo stateRepo
+    ) {
+        this.audioPlayer = audioPlayer;
+        this.voiceRecorder = voiceRecorder;
+        this.stateRepo = stateRepo;
+    }
+
     public Completable execute() {
-        return Completable.complete();
+        return Completable
+                .fromAction(() -> {
+                    voiceRecorder.stopRecord();
+                    audioPlayer.playerStop();
+                    stateRepo.newValue(MainView.State.Idle);
+                });
     }
 }

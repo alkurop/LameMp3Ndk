@@ -50,15 +50,15 @@ public class VoiceRecorderRX implements VoiceRecorder {
     }
 
     @Override
-    public void record(String filePath, int sampleRate, int bitRate) {
+    public void record(RecorderProps props) {
         stopRecord();
 
-        int minBufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat);
+        int minBufferSize = AudioRecord.getMinBufferSize(props.sampleRate.value, channelConfig, audioFormat);
 
         Single<Pair<File, AudioRecord>> recorderParams = Single
                 .zip(
-                        createOutputFile(filePath),
-                        createRecorder(minBufferSize, sampleRate, bitRate),
+                        createOutputFile(props.filepath),
+                        createRecorder(minBufferSize, props.sampleRate.value, props.bitRate.value),
                         Pair::new
                 );
 
@@ -66,7 +66,7 @@ public class VoiceRecorderRX implements VoiceRecorder {
                 .flatMapCompletable(fileAudioRecordPair -> record(
                         fileAudioRecordPair.first,
                         fileAudioRecordPair.second,
-                        sampleRate
+                        props.sampleRate.value
                 ));
 
         Disposable disposable = recorderCompletable

@@ -6,11 +6,34 @@ public interface VoiceRecorder {
 
     Observable<VoiceRecorder.Event> observeEvents();
 
-    void record(String filePath, int sampleRate, int bitRate);
+    void record(RecorderProps props);
 
     void stopRecord();
 
-    interface Event { }
+    enum SampleRate {
+        _44100(44100),
+        _22050(22050),
+        _11052(11052),
+        _8000(8800);
+
+        public final int value;
+
+        SampleRate(int value) {
+            this.value = value;
+        }
+    }
+
+    enum BitRate {
+        _320(320), _192(192), _160(160), _128(128);
+        public final int value;
+
+        BitRate(int value) {
+            this.value = value;
+        }
+    }
+
+    interface Event {
+    }
 
     final class Message implements Event {
         public final String message;
@@ -25,6 +48,18 @@ public interface VoiceRecorder {
 
         public Error(String error) {
             this.error = error;
+        }
+    }
+
+    final class RecorderProps {
+        public final String filepath;
+        public final BitRate bitRate;
+        public final SampleRate sampleRate;
+
+        public RecorderProps(String filepath, BitRate bitRate, SampleRate sampleRate) {
+            this.filepath = filepath;
+            this.bitRate = bitRate;
+            this.sampleRate = sampleRate;
         }
     }
 }
