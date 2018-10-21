@@ -5,6 +5,8 @@ import com.omar.retromp3recorder.app.di.VoiceRecorder;
 import com.omar.retromp3recorder.app.main.MainView;
 import com.omar.retromp3recorder.app.repo.StateRepo;
 
+import javax.inject.Inject;
+
 import io.reactivex.Completable;
 
 public class StopPlaybackAndRecordUC {
@@ -12,6 +14,7 @@ public class StopPlaybackAndRecordUC {
     private final VoiceRecorder voiceRecorder;
     private final StateRepo stateRepo;
 
+    @Inject
     public StopPlaybackAndRecordUC(
             AudioPlayer audioPlayer,
             VoiceRecorder voiceRecorder,

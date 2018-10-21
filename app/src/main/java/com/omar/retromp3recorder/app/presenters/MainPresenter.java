@@ -14,7 +14,7 @@ import com.omar.retromp3recorder.app.controllers.IAudioStatesEvents;
 import com.omar.retromp3recorder.app.controllers.ILsdDisplay;
 import com.omar.retromp3recorder.app.controllers.StateSelector;
 import com.omar.retromp3recorder.app.share.IShadingModule;
-import com.omar.retromp3recorder.app.share.SharingModule;
+import com.omar.retromp3recorder.app.share.OldSharingModule;
 import com.omar.retromp3recorder.app.utils.ContextHelper;
 import com.omar.retromp3recorder.app.main.IMainView;
 
@@ -195,7 +195,7 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
     }
 
     public IShadingModule getSharingModule(){
-        return SharingModule.I();
+        return OldSharingModule.I();
     }
 
 

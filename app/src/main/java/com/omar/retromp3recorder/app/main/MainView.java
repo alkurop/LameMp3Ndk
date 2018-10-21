@@ -57,13 +57,13 @@ public interface MainView extends MviView<MainView.MainViewModel> {
         }
     }
 
-    final class InitialAction implements MainViewAction { }
+     final class PlayAction implements MainViewAction { }
 
-    final class PlayAction implements MainViewAction { }
+     final class RecordAction implements MainViewAction { }
 
-    final class ShareAction implements MainViewAction { }
+     final class ShareAction implements MainViewAction { }
 
-    final class StopAction implements MainViewAction { }
+     final class StopAction implements MainViewAction { }
 
     //endregion
 

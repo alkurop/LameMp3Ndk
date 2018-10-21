@@ -10,6 +10,8 @@ import com.omar.retromp3recorder.app.repo.StateRepo;
 
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function3;
@@ -32,6 +34,7 @@ public class StartRecordUC {
     private final CheckPermissionsUC checkPermissionsUC;
     private final RequestPermissionsRepo requestPermissionsRepo;
 
+    @Inject
     public StartRecordUC(
             FileNameRepo fileNameRepo,
             StateRepo stateRepo,

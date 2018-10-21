@@ -9,6 +9,8 @@ import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 
@@ -16,6 +18,7 @@ public class CheckPermissionsUC {
     private final Context context;
     private final RequestPermissionsRepo requestPermissionsRepo;
 
+    @Inject
     public CheckPermissionsUC(Context context, RequestPermissionsRepo requestPermissionsRepo) {
         this.context = context;
         this.requestPermissionsRepo = requestPermissionsRepo;

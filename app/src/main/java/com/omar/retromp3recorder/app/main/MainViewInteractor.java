@@ -12,36 +12,53 @@ import com.omar.retromp3recorder.app.usecase.ChangeBitrateUC;
 import com.omar.retromp3recorder.app.usecase.ChangeSampleRateUC;
 import com.omar.retromp3recorder.app.usecase.ShareUC;
 import com.omar.retromp3recorder.app.usecase.StartPlaybackUC;
+import com.omar.retromp3recorder.app.usecase.StartRecordUC;
 import com.omar.retromp3recorder.app.usecase.StopPlaybackAndRecordUC;
 
-import io.reactivex.Completable;
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Scheduler;
 import io.reactivex.functions.Function;
 
-import static com.omar.retromp3recorder.app.main.MainView.*;
+import static com.omar.retromp3recorder.app.main.MainView.BitRateChangeAction;
+import static com.omar.retromp3recorder.app.main.MainView.BitrateChangedResult;
+import static com.omar.retromp3recorder.app.main.MainView.ErrorLogResult;
+import static com.omar.retromp3recorder.app.main.MainView.MainViewAction;
+import static com.omar.retromp3recorder.app.main.MainView.MainViewResult;
+import static com.omar.retromp3recorder.app.main.MainView.MessageLogResult;
+import static com.omar.retromp3recorder.app.main.MainView.PlayAction;
+import static com.omar.retromp3recorder.app.main.MainView.RecordAction;
+import static com.omar.retromp3recorder.app.main.MainView.SampleRateChangeAction;
+import static com.omar.retromp3recorder.app.main.MainView.SampleRateChangeResult;
+import static com.omar.retromp3recorder.app.main.MainView.ShareAction;
+import static com.omar.retromp3recorder.app.main.MainView.StopAction;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
 public class MainViewInteractor implements Interactor<MainViewAction, MainViewResult> {
 
     private final Scheduler scheduler;
+
     private final ChangeSampleRateUC changeSampleRateUC;
+    private final StartRecordUC startRecordUC;
     private final ShareUC shareUC;
     private final StartPlaybackUC startPlaybackUC;
     private final StopPlaybackAndRecordUC stopPlaybackAndRecordUC;
+    private final ChangeBitrateUC changeBitrateUC;
+
     private final BitRateRepo bitRateRepo;
     private final SampleRateRepo sampleRateRepo;
-    private final ChangeBitrateUC changeBitrateUC;
     private final StateRepo stateRepo;
     private final RequestPermissionsRepo requestPermissionsRepo;
     private final LogRepo logRepo;
 
+    @Inject
     public MainViewInteractor(
             Scheduler scheduler,
             ChangeBitrateUC changeBitrateUC,
             ChangeSampleRateUC changeSampleRateUC,
-            ShareUC shareUC,
+            StartRecordUC startRecordUC, ShareUC shareUC,
             StartPlaybackUC startPlaybackUC,
             StopPlaybackAndRecordUC stopPlaybackAndRecordUC,
             BitRateRepo bitRateRepo,
@@ -52,6 +69,7 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
         this.scheduler = scheduler;
         this.changeBitrateUC = changeBitrateUC;
         this.changeSampleRateUC = changeSampleRateUC;
+        this.startRecordUC = startRecordUC;
         this.shareUC = shareUC;
         this.startPlaybackUC = startPlaybackUC;
         this.stopPlaybackAndRecordUC = stopPlaybackAndRecordUC;
@@ -73,10 +91,8 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
                                             .flatMapCompletable(playAction -> startPlaybackUC.execute())
                                             .toObservable(),
                                     actions
-                                            .ofType(InitialAction.class)
-                                            .flatMapCompletable(initialAction -> Completable
-                                                    .fromAction(() -> stateRepo.newValue(State.Idle))
-                                            )
+                                            .ofType(RecordAction.class)
+                                            .flatMapCompletable(playAction -> startRecordUC.execute())
                                             .toObservable(),
                                     actions
                                             .ofType(ShareAction.class)
@@ -119,7 +135,10 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
                                             .ofType(LogRepo.Error.class)
                                             .map((Function<LogRepo.Error, MainViewResult>) message -> {
                                                 return new ErrorLogResult(message.error);
-                                            })
+                                            }),
+                                    stateRepo
+                                            .observe()
+                                            .map((Function<MainView.State, MainViewResult>) MainView.StateChangedResult::new)
 
                             ));
                 });

@@ -4,6 +4,8 @@ import com.omar.retromp3recorder.app.di.Interactor;
 import com.omar.retromp3recorder.app.di.Presenter;
 import com.omar.retromp3recorder.app.di.VoiceRecorder;
 
+import javax.inject.Inject;
+
 import io.reactivex.ObservableTransformer;
 import io.reactivex.functions.BiFunction;
 
@@ -19,7 +21,8 @@ public class MainViewPresenter implements Presenter<MainViewAction, MainViewResu
 
     private final Interactor<MainViewAction, MainViewResult> interactor;
 
-    public MainViewPresenter(Interactor<MainViewAction, MainViewResult> interactor) {
+    @Inject
+    public MainViewPresenter(MainViewInteractor interactor) {
         this.interactor = interactor;
     }
 
