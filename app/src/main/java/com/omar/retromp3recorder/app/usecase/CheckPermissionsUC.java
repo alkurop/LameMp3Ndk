@@ -21,22 +21,22 @@ public class CheckPermissionsUC {
         this.requestPermissionsRepo = requestPermissionsRepo;
     }
 
-    public Completable execute(Set<String> permssions) {
+    public Completable execute(Set<String> permissions) {
         return Observable
                 .fromCallable(() -> {
                     Set<String> requestPermissions = new HashSet<>();
-                    for (String permissions : permssions) {
+                    for (String permission : permissions) {
                         boolean hasPermission = ContextCompat
-                                .checkSelfPermission(context, permissions) == PackageManager.PERMISSION_GRANTED;
+                                .checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
                         if (!hasPermission) {
-                            requestPermissions.add(permissions);
+                            requestPermissions.add(permission);
                         }
                     }
                     return requestPermissions.isEmpty() ? new RequestPermissionsRepo.No()
                             : new RequestPermissionsRepo.Yes(requestPermissions);
                 })
-                .flatMapCompletable(shouldRequestPermissions -> Completable.fromAction(
-                        () -> requestPermissionsRepo.newValue(shouldRequestPermissions))
+                .flatMapCompletable(shouldRequestPermissions -> Completable.fromAction(() ->
+                        requestPermissionsRepo.newValue(shouldRequestPermissions))
                 );
     }
 }

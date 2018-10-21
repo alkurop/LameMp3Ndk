@@ -6,7 +6,7 @@ import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.callbacks.IAudioControllerCallback;
 import com.omar.retromp3recorder.app.callbacks.IPlayerCallback;
 import com.omar.retromp3recorder.app.callbacks.IRecorderCallback;
-import com.omar.retromp3recorder.app.player.AudioPlayer;
+import com.omar.retromp3recorder.app.player.OldAudioPlayer;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.utils.ContextHelper;
 
@@ -24,7 +24,7 @@ public class AudioStatesController implements IAudioStatesEvents {
     private ILsdDisplay lsdDisplay;
 
     private VoiceRecorder voiceRecorder;
-    private AudioPlayer audioPlayer;
+    private OldAudioPlayer audioPlayer;
 
     private String filePath;
 
@@ -40,7 +40,7 @@ public class AudioStatesController implements IAudioStatesEvents {
     @Override
     public void startPlay() {
         if (checkIfFileExists(filePath)) {
-            audioPlayer = new AudioPlayer(filePath, playerCallback);
+            audioPlayer = new OldAudioPlayer(filePath, playerCallback);
             audioPlayer.playerStart();
         } else {
             upperLevelCallback.onPlayerError(ContextHelper.getContext().getString(R.string.player_cannot_find_file));

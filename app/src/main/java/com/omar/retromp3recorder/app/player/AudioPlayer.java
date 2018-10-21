@@ -1,81 +1,40 @@
 package com.omar.retromp3recorder.app.player;
 
-import android.content.Context;
-import android.media.MediaPlayer;
-import com.omar.retromp3recorder.app.R;
-import com.omar.retromp3recorder.app.callbacks.IPlayerCallback;
-import com.omar.retromp3recorder.app.utils.ContextHelper;
+import io.reactivex.Observable;
 
-import java.io.IOException;
+public interface AudioPlayer {
 
-/**
- * Created by omar on 18.08.15.
- */
-public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
-    private Context context;
-    private IPlayerCallback callback;
+    void playerStop();
 
-    private MediaPlayer mediaPlayer;
+    void playerStart(String voiceURL);
 
-    private String voiceURL;
+    Observable<Event> observeEvents();
 
+    interface Event { }
 
-    public AudioPlayer(String _voiceURL, IPlayerCallback _callback) {
-        context = ContextHelper.getContext();
-        voiceURL = _voiceURL;
-        callback = _callback;
-    }
+    final class Message implements Event {
+        public final String message;
 
-    public void playerStop() {
-        stopMedia();
-    }
-
-    public void playerStart() {
-        setupMediaPlayer(voiceURL);
-    }
-
-
-    @Override
-    public void onCompletion(MediaPlayer mediaPlayer) {
-        stopMedia();
-    }
-
-    @Override
-    public void onPrepared(MediaPlayer mediaPlayer) {playMedia();}
-
-    private void setupMediaPlayer(String voiceURL) {
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setOnCompletionListener(this);
-        mediaPlayer.setOnPreparedListener(this);
-        try {
-            mediaPlayer.setDataSource(voiceURL);
-            mediaPlayer.prepareAsync();
-        } catch (IOException e) {
-            callback.onErrorOccured(context.getString(R.string.not_recorder_yet));
+        public Message(String errorMessage) {
+            this.message = errorMessage;
         }
     }
 
-    private void stopMedia() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-            callback.normalMessage(context.getString(R.string.stopped_playing));
-            callback.onAudioEndedAndStoped();
-        } else {
-            callback.onErrorOccured(context.getString(R.string.player_error_on_stop));
+    final class Error implements Event {
+        public final String error;
+
+        public Error(String error) {
+            this.error = error;
         }
     }
 
-    private void playMedia() {
-        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-            callback.sendPlayerId(mediaPlayer.getAudioSessionId());
-            callback.normalMessage(context.getString(R.string.started_playing));
-        } else {
-            callback.onErrorOccured(context.getString(R.string.player_erro_on_stop));
+    final class SendPlayerId implements Event {
+        public final int playerId;
+
+        public SendPlayerId(int playerId) {
+            this.playerId = playerId;
         }
     }
 
-
+    final class PlaybackEnded implements Event { }
 }

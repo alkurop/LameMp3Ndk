@@ -14,4 +14,7 @@ public class FileNameRepo {
         return stateSubject;
     }
 
+    public boolean hasValue(){
+        return stateSubject.hasValue();
+    }
 }

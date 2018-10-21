@@ -11,9 +11,7 @@ import com.omar.retromp3recorder.app.repo.StateRepo;
 import java.util.Set;
 
 import io.reactivex.Completable;
-import io.reactivex.CompletableSource;
 import io.reactivex.Observable;
-import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createHashSet;
@@ -53,12 +51,15 @@ public class StartRecordUC {
     }
 
     public Completable execute() {
-        Observable<RequestPermissionsRepo.ShouldRequestPermissions> share = requestPermissionsRepo.observe().take(1).share();
+        Observable<RequestPermissionsRepo.ShouldRequestPermissions> share =
+                requestPermissionsRepo.observe()
+                        .take(1)
+                        .share();
+
         final Function3<String,
                 VoiceRecorder.BitRate,
                 VoiceRecorder.SampleRate,
                 VoiceRecorder.RecorderProps> propsZipper = VoiceRecorder.RecorderProps::new;
-
 
         Completable beg = share
                 .ofType(RequestPermissionsRepo.Yes.class)
@@ -80,7 +81,6 @@ public class StartRecordUC {
                         })
                 );
 
-
         return stopPlaybackAndRecordUC
                 .execute()
                 .andThen(Completable
@@ -89,6 +89,8 @@ public class StartRecordUC {
                                 beg
                         ))
                 )
-                .andThen(checkPermissionsUC.execute(recordPermissions));
+                .andThen(
+                        checkPermissionsUC.execute(recordPermissions)
+                );
     }
 }

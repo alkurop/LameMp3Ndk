@@ -3,7 +3,6 @@ package com.omar.retromp3recorder.app.player;
 import android.media.MediaPlayer;
 
 import com.omar.retromp3recorder.app.R;
-import com.omar.retromp3recorder.app.di.AudioPlayer;
 import com.omar.retromp3recorder.app.di.StringProvider;
 
 import java.io.IOException;

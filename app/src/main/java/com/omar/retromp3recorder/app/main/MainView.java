@@ -1,6 +1,9 @@
 package com.omar.retromp3recorder.app.main;
 
 import com.omar.retromp3recorder.app.di.MviView;
+
+import java.util.Set;
+
 import static com.omar.retromp3recorder.app.di.VoiceRecorder.*;
 
 import io.reactivex.annotations.NonNull;
@@ -105,6 +108,14 @@ public interface MainView extends MviView<MainView.MainViewModel> {
 
         public StateChangedResult(State state) {
             this.state = state;
+        }
+    }
+
+    final class RequestPermissionsResult implements MainViewResult {
+        final Set<String> permissionsToRequest;
+
+        public RequestPermissionsResult(Set<String> permissionsToRequest) {
+            this.permissionsToRequest = permissionsToRequest;
         }
     }
     //endregion

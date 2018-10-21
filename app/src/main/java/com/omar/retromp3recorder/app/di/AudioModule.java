@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.di;
 
+import com.omar.retromp3recorder.app.player.AudioPlayer;
 import com.omar.retromp3recorder.app.player.AudioPlayerRx;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorderRX;
 

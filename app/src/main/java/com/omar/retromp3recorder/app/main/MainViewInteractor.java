@@ -4,6 +4,7 @@ package com.omar.retromp3recorder.app.main;
 import com.omar.retromp3recorder.app.di.Interactor;
 import com.omar.retromp3recorder.app.di.VoiceRecorder;
 import com.omar.retromp3recorder.app.repo.BitRateRepo;
+import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;
 import com.omar.retromp3recorder.app.repo.SampleRateRepo;
 import com.omar.retromp3recorder.app.repo.StateRepo;
 import com.omar.retromp3recorder.app.usecase.ChangeBitrateUC;
@@ -37,12 +38,12 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
     private final ChangeSampleRateUC changeSampleRateUC;
     private final ShareUC shareUC;
     private final StartPlaybackUC startPlaybackUC;
-    private final StopPlaybackAndRecordUC stopPlaybacAndRecordkUC;
+    private final StopPlaybackAndRecordUC stopPlaybackAndRecordUC;
     private final BitRateRepo bitRateRepo;
     private final SampleRateRepo sampleRateRepo;
     private final ChangeBitrateUC changeBitrateUC;
     private final StateRepo stateRepo;
-
+    private final RequestPermissionsRepo requestPermissionsRepo;
 
     public MainViewInteractor(
             Scheduler scheduler,
@@ -50,17 +51,21 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
             ChangeSampleRateUC changeSampleRateUC,
             ShareUC shareUC,
             StartPlaybackUC startPlaybackUC,
-            StopPlaybackAndRecordUC stopPlaybacAndRecordkUC,
-            BitRateRepo bitRateRepo, SampleRateRepo sampleRateRepo, StateRepo stateRepo) {
+            StopPlaybackAndRecordUC stopPlaybackAndRecordUC,
+            BitRateRepo bitRateRepo,
+            SampleRateRepo sampleRateRepo,
+            StateRepo stateRepo,
+            RequestPermissionsRepo requestPermissionsRepo) {
         this.scheduler = scheduler;
         this.changeBitrateUC = changeBitrateUC;
         this.changeSampleRateUC = changeSampleRateUC;
         this.shareUC = shareUC;
         this.startPlaybackUC = startPlaybackUC;
-        this.stopPlaybacAndRecordkUC = stopPlaybacAndRecordkUC;
+        this.stopPlaybackAndRecordUC = stopPlaybackAndRecordUC;
         this.bitRateRepo = bitRateRepo;
         this.sampleRateRepo = sampleRateRepo;
         this.stateRepo = stateRepo;
+        this.requestPermissionsRepo = requestPermissionsRepo;
     }
 
     @Override
@@ -85,7 +90,7 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
                                             .toObservable(),
                                     actions
                                             .ofType(StopAction.class)
-                                            .flatMapCompletable(stopAction -> stopPlaybacAndRecordkUC.execute())
+                                            .flatMapCompletable(stopAction -> stopPlaybackAndRecordUC.execute())
                                             .toObservable(),
                                     actions
                                             .ofType(SampleRateChangeAction.class)
@@ -102,8 +107,13 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
                                             .map((Function<VoiceRecorder.BitRate, MainViewResult>) BitrateChangedResult::new),
                                     sampleRateRepo
                                             .observe()
-                                            .map((Function<VoiceRecorder.SampleRate, MainViewResult>) SampleRateChangeResult::new)
-
+                                            .map((Function<VoiceRecorder.SampleRate, MainViewResult>) SampleRateChangeResult::new),
+                                    requestPermissionsRepo
+                                            .observe()
+                                            .ofType(RequestPermissionsRepo.Yes.class)
+                                            .map((Function<RequestPermissionsRepo.Yes, MainViewResult>) yes -> {
+                                                return new MainView.RequestPermissionsResult(yes.permissions);
+                                            })
                             ));
                 });
     }
