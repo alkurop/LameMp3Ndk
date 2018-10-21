@@ -29,7 +29,7 @@ import static com.omar.retromp3recorder.app.main.MainView.SampleRateChangeResult
 import static com.omar.retromp3recorder.app.main.MainView.ShareAction;
 import static com.omar.retromp3recorder.app.main.MainView.State;
 import static com.omar.retromp3recorder.app.main.MainView.StopAction;
-import static com.omar.retromp3recorder.app.utils.ListFromVararg.createList;
+import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
 public class MainViewInteractor implements Interactor<MainViewAction, MainViewResult> {
 
@@ -68,7 +68,7 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
         return upstream -> upstream.observeOn(scheduler)
                 .compose((ObservableTransformer<MainViewAction, MainViewResult>) actions -> {
                     return Observable.merge(
-                            createList(
+                            createLinkedList(
                                     actions
                                             .ofType(PlayAction.class)
                                             .flatMapCompletable(playAction -> startPlaybackUC.execute())

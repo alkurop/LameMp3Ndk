@@ -8,7 +8,7 @@ import io.reactivex.subjects.BehaviorSubject;
 public class BitRateRepo {
     private BehaviorSubject<VoiceRecorder.BitRate> stateSubject = BehaviorSubject.create();
 
-    public void newValue( VoiceRecorder.BitRate bitRate) {
+    public void newValue(VoiceRecorder.BitRate bitRate) {
         stateSubject.onNext(bitRate);
     }
 

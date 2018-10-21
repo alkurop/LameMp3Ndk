@@ -6,7 +6,7 @@ import io.reactivex.subjects.BehaviorSubject;
 public class FileNameRepo {
     private BehaviorSubject<String> stateSubject = BehaviorSubject.create();
 
-    public void setValue(String bitRate) {
+    public void newValue(String bitRate) {
         stateSubject.onNext(bitRate);
     }
 
@@ -14,7 +14,4 @@ public class FileNameRepo {
         return stateSubject;
     }
 
-    public boolean hasValue(){
-        return stateSubject.hasValue();
-    }
 }
