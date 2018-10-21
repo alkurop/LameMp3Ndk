@@ -20,19 +20,22 @@ public interface MainView extends MviView<MainView.MainViewModel> {
         @NonNull final  BitRate bitRate;
         @Nullable final String message;
         @Nullable final String error;
+        @Nullable final Set<String> requestForPermissions;
 
         MainViewModel(
                 State state,
                 SampleRate sampleRate,
                 BitRate bitRate,
                 String message,
-                String error
+                String error,
+                Set<String> requestForPermissions
         ) {
             this.state = state;
             this.sampleRate = sampleRate;
             this.bitRate = bitRate;
             this.message = message;
             this.error = error;
+            this.requestForPermissions = requestForPermissions;
         }
     }
     //endregion

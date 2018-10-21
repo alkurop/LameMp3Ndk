@@ -18,7 +18,7 @@ import dagger.Module;
 import static com.omar.retromp3recorder.app.di.AppComponent.INTERNAL;
 
 @Module(
-        subcomponents = {RepoSubComponent.class}
+        subcomponents = {ConfigSubComponent.class}
 )
 abstract class FunctionalityModule {
 
@@ -35,7 +35,6 @@ abstract class FunctionalityModule {
     @Named(INTERNAL)
     @Binds
     abstract VoiceRecorder provideVoiceRecorderInternal(VoiceRecorderRX recorder);
-
 
     @Named(INTERNAL)
     @Binds

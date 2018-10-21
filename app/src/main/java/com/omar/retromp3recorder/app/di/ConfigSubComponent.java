@@ -4,11 +4,11 @@ import dagger.Subcomponent;
 
 
 @Subcomponent(modules = ConfigModule.class)
-public interface RepoSubComponent {
+public interface ConfigSubComponent {
 
     @Subcomponent.Builder
     interface Builder {
         Builder requestModule(ConfigModule module);
-        RepoSubComponent build();
+        ConfigSubComponent build();
     }
 }

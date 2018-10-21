@@ -1,6 +1,4 @@
-package com.omar.retromp3recorder.app.di;
-
-import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
+package com.omar.retromp3recorder.app.recorder;
 
 public class RecorderDefaults {
     public final VoiceRecorder.BitRate bitRate;

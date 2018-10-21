@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.repo;
 
-import com.omar.retromp3recorder.app.di.RecorderDefaults;
+import com.omar.retromp3recorder.app.recorder.RecorderDefaults;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

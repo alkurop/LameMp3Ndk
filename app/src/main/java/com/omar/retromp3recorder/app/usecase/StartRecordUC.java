@@ -1,7 +1,8 @@
 package com.omar.retromp3recorder.app.usecase;
 
-import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.main.MainView;
+import com.omar.retromp3recorder.app.recorder.FilePathGenerator;
+import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.repo.BitRateRepo;
 import com.omar.retromp3recorder.app.repo.FileNameRepo;
 import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;
@@ -33,6 +34,7 @@ public class StartRecordUC {
     private final StopPlaybackAndRecordUC stopPlaybackAndRecordUC;
     private final CheckPermissionsUC checkPermissionsUC;
     private final RequestPermissionsRepo requestPermissionsRepo;
+    private final FilePathGenerator filePathGenerator;
 
     @Inject
     public StartRecordUC(
@@ -42,7 +44,9 @@ public class StartRecordUC {
             SampleRateRepo sampleRateRepo,
             VoiceRecorder voiceRecorder,
             StopPlaybackAndRecordUC stopPlaybackAndRecordUC,
-            CheckPermissionsUC checkPermissionsUC, RequestPermissionsRepo requestPermissionsRepo) {
+            CheckPermissionsUC checkPermissionsUC,
+            RequestPermissionsRepo requestPermissionsRepo,
+            FilePathGenerator filePathGenerator) {
         this.fileNameRepo = fileNameRepo;
         this.stateRepo = stateRepo;
         this.bitRateRepo = bitRateRepo;
@@ -51,6 +55,7 @@ public class StartRecordUC {
         this.stopPlaybackAndRecordUC = stopPlaybackAndRecordUC;
         this.checkPermissionsUC = checkPermissionsUC;
         this.requestPermissionsRepo = requestPermissionsRepo;
+        this.filePathGenerator = filePathGenerator;
     }
 
     public Completable execute() {
@@ -70,13 +75,17 @@ public class StartRecordUC {
 
         Completable execute = share
                 .ofType(RequestPermissionsRepo.No.class)
-                .flatMap(answer -> (Observable
+                .flatMapCompletable(answer -> Completable.fromAction(() -> {
+                    String filePath = filePathGenerator.genrateFilePath();
+                    fileNameRepo.newValue(filePath);
+                }))
+                .andThen(Observable
                         .zip(
                                 fileNameRepo.observe().take(1),
                                 bitRateRepo.observe().take(1),
                                 sampleRateRepo.observe().take(1),
                                 propsZipper
-                        )))
+                        ))
                 .flatMapCompletable(props -> Completable
                         .fromAction(() -> {
                             voiceRecorder.record(props);

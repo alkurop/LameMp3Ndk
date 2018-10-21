@@ -4,12 +4,13 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
-import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.ReplaySubject;
+import io.reactivex.subjects.Subject;
 
 @Singleton
 public class LogRepo {
 
-    private final PublishSubject<Event> events = PublishSubject.create();
+    private final Subject<Event> events = ReplaySubject.create();
 
     @Inject
     public LogRepo(){}
