@@ -1,20 +1,20 @@
 package com.omar.retromp3recorder.app.usecase;
 
-import com.omar.retromp3recorder.app.repo.FileNameRepo;
+import com.omar.retromp3recorder.app.share.SharingModule;
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
 
 public class ShareUC {
-    private final FileNameRepo repo;
+    private final SharingModule sharingModule;
 
     @Inject
-    public ShareUC(FileNameRepo repo) {
-        this.repo = repo;
+    public ShareUC(SharingModule sharingModule) {
+        this.sharingModule = sharingModule;
     }
 
     public Completable execute() {
-        return Completable.complete();
+        return sharingModule.share();
     }
 }
