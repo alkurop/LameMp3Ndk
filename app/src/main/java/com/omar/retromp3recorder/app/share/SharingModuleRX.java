@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.omar.retromp3recorder.app.R;
-import com.omar.retromp3recorder.app.di.StringProvider;
+import com.omar.retromp3recorder.app.stringer.StringProvider;
 import com.omar.retromp3recorder.app.repo.FileNameRepo;
 
 import java.io.File;
+
+import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -26,7 +28,13 @@ public class SharingModuleRX implements SharingModule {
     private final Scheduler scheduler;
     private final PublishSubject<Event> events = PublishSubject.create();
 
-    public SharingModuleRX(Context context, FileNameRepo fileNameRepo, StringProvider stringProvider, Scheduler scheduler) {
+    @Inject
+    public SharingModuleRX(
+            Context context,
+            FileNameRepo fileNameRepo,
+            StringProvider stringProvider,
+            Scheduler scheduler
+    ) {
         this.context = context;
         this.fileNameRepo = fileNameRepo;
         this.stringProvider = stringProvider;

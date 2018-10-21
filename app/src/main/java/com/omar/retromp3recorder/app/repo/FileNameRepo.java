@@ -1,10 +1,21 @@
 package com.omar.retromp3recorder.app.repo;
 
+import com.omar.retromp3recorder.app.di.RecorderDefaults;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 
+@Singleton
 public class FileNameRepo {
-    private BehaviorSubject<String> stateSubject = BehaviorSubject.create();
+    private final BehaviorSubject<String> stateSubject = BehaviorSubject.create();
+
+    @Inject
+    public FileNameRepo(RecorderDefaults defaults){
+        stateSubject.onNext(defaults.filePath);
+    }
 
     public void newValue(String bitRate) {
         stateSubject.onNext(bitRate);
@@ -14,7 +25,4 @@ public class FileNameRepo {
         return stateSubject;
     }
 
-    public boolean hasValue(){
-        return stateSubject.hasValue();
-    }
 }

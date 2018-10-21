@@ -1,13 +1,18 @@
-package com.omar.retromp3recorder.app.logger;
+package com.omar.retromp3recorder.app.repo;
 
-import com.omar.retromp3recorder.app.di.VoiceRecorder;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
+@Singleton
 public class LogRepo {
 
     private final PublishSubject<Event> events = PublishSubject.create();
+
+    @Inject
+    public LogRepo(){}
 
     public Observable<Event> observe() {
         return events;

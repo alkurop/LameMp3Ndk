@@ -1,17 +1,25 @@
 package com.omar.retromp3recorder.app.recorder;
 
-import com.omar.retromp3recorder.app.di.VoiceRecorder;
-import com.omar.retromp3recorder.app.logger.LogRepo;
+import com.omar.retromp3recorder.app.repo.LogRepo;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 
+import static com.omar.retromp3recorder.app.di.AppComponent.INTERNAL;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
 public class LoggingVoiceRecorder implements VoiceRecorder {
     private final VoiceRecorder recorder;
 
-    public LoggingVoiceRecorder(VoiceRecorder recorder, LogRepo logRepo, Scheduler scheduler) {
+    @Inject
+    public LoggingVoiceRecorder(
+            @Named(INTERNAL) VoiceRecorder recorder,
+            LogRepo logRepo,
+            Scheduler scheduler) {
         this.recorder = recorder;
 
         Observable<Event> share = recorder.observeEvents().share();
@@ -24,6 +32,8 @@ public class LoggingVoiceRecorder implements VoiceRecorder {
                 .merge(createLinkedList(
                         message, error
                 ))
+                .flatMapCompletable(event ->
+                        Completable.fromAction(() -> logRepo.newValue(event)))
                 .subscribeOn(scheduler)
                 .subscribe();
     }

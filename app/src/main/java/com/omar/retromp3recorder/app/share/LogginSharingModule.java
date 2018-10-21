@@ -1,19 +1,27 @@
 package com.omar.retromp3recorder.app.share;
 
-import com.omar.retromp3recorder.app.logger.LogRepo;
+import com.omar.retromp3recorder.app.repo.LogRepo;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 
+import static com.omar.retromp3recorder.app.di.AppComponent.INTERNAL;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
 public class LogginSharingModule implements SharingModule {
 
     private final SharingModule sharingModule;
 
-
-    public LogginSharingModule(SharingModule sharingModule, LogRepo logRepo, Scheduler scheduler) {
+    @Inject
+    public LogginSharingModule(
+            @Named(INTERNAL) SharingModule sharingModule,
+            LogRepo logRepo,
+            Scheduler scheduler
+    ) {
         this.sharingModule = sharingModule;
         Observable<SharingModule.Event> share = sharingModule.observeEvents().share();
         Observable<LogRepo.Event> message = share.ofType(SharingModule.SharingOk.class)
@@ -24,6 +32,9 @@ public class LogginSharingModule implements SharingModule {
         Observable
                 .merge(createLinkedList(
                         message, error
+                ))
+                .flatMapCompletable(event -> Completable.fromAction(() ->
+                        logRepo.newValue(event)
                 ))
                 .subscribeOn(scheduler)
                 .subscribe();

@@ -2,12 +2,19 @@ package com.omar.retromp3recorder.app.repo;
 
 import java.util.Set;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
+@Singleton
 public class RequestPermissionsRepo {
 
     private final PublishSubject<ShouldRequestPermissions> state = PublishSubject.create();
+
+    @Inject
+    public RequestPermissionsRepo(){}
 
     public Observable<ShouldRequestPermissions> observe() {
         return state;

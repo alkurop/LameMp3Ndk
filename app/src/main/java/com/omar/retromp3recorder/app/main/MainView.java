@@ -1,10 +1,10 @@
 package com.omar.retromp3recorder.app.main;
 
-import com.omar.retromp3recorder.app.di.MviView;
+import com.omar.retromp3recorder.app.mvi.MviView;
 
 import java.util.Set;
 
-import static com.omar.retromp3recorder.app.di.VoiceRecorder.*;
+import static com.omar.retromp3recorder.app.recorder.VoiceRecorder.*;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;

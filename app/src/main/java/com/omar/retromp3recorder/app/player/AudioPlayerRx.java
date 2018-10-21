@@ -3,9 +3,11 @@ package com.omar.retromp3recorder.app.player;
 import android.media.MediaPlayer;
 
 import com.omar.retromp3recorder.app.R;
-import com.omar.retromp3recorder.app.di.StringProvider;
+import com.omar.retromp3recorder.app.stringer.StringProvider;
 
 import java.io.IOException;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
@@ -22,8 +24,9 @@ public class AudioPlayerRx implements
     private final PublishSubject<Event> events = PublishSubject.create();
     private MediaPlayer mediaPlayer;
 
-    public AudioPlayerRx(StringProvider context) {
-        this.stringProvider = context;
+    @Inject
+    public AudioPlayerRx(StringProvider stringProvider) {
+        this.stringProvider = stringProvider;
     }
 
     @Override

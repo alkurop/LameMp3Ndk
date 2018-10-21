@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.di;
+package com.omar.retromp3recorder.app.stringer;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
@@ -11,8 +11,8 @@ public class ContextStringProvider implements StringProvider {
     }
 
     @Override
-    public String getString(@StringRes int strintRes){
-        return context.getString(strintRes);
+    public String getString(@StringRes int stringRes){
+        return context.getString(stringRes);
     }
 
     @Override

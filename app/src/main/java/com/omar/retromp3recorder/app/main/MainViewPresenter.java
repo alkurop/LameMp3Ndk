@@ -1,8 +1,8 @@
 package com.omar.retromp3recorder.app.main;
 
-import com.omar.retromp3recorder.app.di.Interactor;
-import com.omar.retromp3recorder.app.di.Presenter;
-import com.omar.retromp3recorder.app.di.VoiceRecorder;
+import com.omar.retromp3recorder.app.mvi.Interactor;
+import com.omar.retromp3recorder.app.mvi.Presenter;
+import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 
 import javax.inject.Inject;
 

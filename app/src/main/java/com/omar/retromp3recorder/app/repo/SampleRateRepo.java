@@ -1,12 +1,22 @@
 package com.omar.retromp3recorder.app.repo;
 
-import com.omar.retromp3recorder.app.di.VoiceRecorder;
+import com.omar.retromp3recorder.app.di.RecorderDefaults;
+import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 
+@Singleton
 public class SampleRateRepo {
-    private BehaviorSubject<VoiceRecorder.SampleRate> stateSubject = BehaviorSubject.create();
+    private final BehaviorSubject<VoiceRecorder.SampleRate> stateSubject = BehaviorSubject.create();
+
+    @Inject
+    public SampleRateRepo(RecorderDefaults defaults){
+        stateSubject.onNext(defaults.sampleRate);
+    }
 
     public void newValue( VoiceRecorder.SampleRate bitRate) {
         stateSubject.onNext(bitRate);

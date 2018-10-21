@@ -8,13 +8,14 @@ import android.support.v4.util.Pair;
 
 import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
-import com.omar.retromp3recorder.app.di.StringProvider;
-import com.omar.retromp3recorder.app.di.VoiceRecorder;
+import com.omar.retromp3recorder.app.stringer.StringProvider;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicLong;
+
+import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -39,6 +40,7 @@ public class VoiceRecorderRX implements VoiceRecorder {
     private final AtomicLong elapsed = new AtomicLong(0);
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
+    @Inject
     public VoiceRecorderRX(StringProvider stringProvider, Scheduler scheduler) {
         this.stringProvider = stringProvider;
         this.scheduler = scheduler;

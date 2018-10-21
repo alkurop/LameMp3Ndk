@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.usecase;
 
 import com.omar.retromp3recorder.app.player.AudioPlayer;
-import com.omar.retromp3recorder.app.di.VoiceRecorder;
+import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.main.MainView;
 import com.omar.retromp3recorder.app.repo.FileNameRepo;
 import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;

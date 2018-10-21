@@ -1,9 +1,9 @@
 package com.omar.retromp3recorder.app.main;
 
 
-import com.omar.retromp3recorder.app.di.Interactor;
-import com.omar.retromp3recorder.app.di.VoiceRecorder;
-import com.omar.retromp3recorder.app.logger.LogRepo;
+import com.omar.retromp3recorder.app.mvi.Interactor;
+import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
+import com.omar.retromp3recorder.app.repo.LogRepo;
 import com.omar.retromp3recorder.app.repo.BitRateRepo;
 import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;
 import com.omar.retromp3recorder.app.repo.SampleRateRepo;

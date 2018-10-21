@@ -7,7 +7,7 @@ import com.omar.retromp3recorder.app.callbacks.IAudioControllerCallback;
 import com.omar.retromp3recorder.app.callbacks.IPlayerCallback;
 import com.omar.retromp3recorder.app.callbacks.IRecorderCallback;
 import com.omar.retromp3recorder.app.player.OldAudioPlayer;
-import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
+import com.omar.retromp3recorder.app.recorder.OldVoiceRecorder;
 import com.omar.retromp3recorder.app.utils.ContextHelper;
 
 import java.io.File;
@@ -23,7 +23,7 @@ public class AudioStatesController implements IAudioStatesEvents {
     private IRecorderCallback recorderCallback;
     private ILsdDisplay lsdDisplay;
 
-    private VoiceRecorder voiceRecorder;
+    private OldVoiceRecorder voiceRecorder;
     private OldAudioPlayer audioPlayer;
 
     private String filePath;
@@ -142,8 +142,8 @@ public class AudioStatesController implements IAudioStatesEvents {
     }
 
 
-    public VoiceRecorder getVoiceRecorder(){
-        return voiceRecorder = new VoiceRecorder(filePath, recorderCallback);
+    public OldVoiceRecorder getVoiceRecorder(){
+        return voiceRecorder = new OldVoiceRecorder(filePath, recorderCallback);
     }
 
 

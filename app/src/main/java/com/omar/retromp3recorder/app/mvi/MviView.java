@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.di;
+package com.omar.retromp3recorder.app.mvi;
 
 public interface MviView<ViewModel> {
 
