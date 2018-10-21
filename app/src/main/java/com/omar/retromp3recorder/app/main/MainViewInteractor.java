@@ -3,6 +3,7 @@ package com.omar.retromp3recorder.app.main;
 
 import com.omar.retromp3recorder.app.di.Interactor;
 import com.omar.retromp3recorder.app.di.VoiceRecorder;
+import com.omar.retromp3recorder.app.logger.LogRepo;
 import com.omar.retromp3recorder.app.repo.BitRateRepo;
 import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;
 import com.omar.retromp3recorder.app.repo.SampleRateRepo;
@@ -19,17 +20,7 @@ import io.reactivex.ObservableTransformer;
 import io.reactivex.Scheduler;
 import io.reactivex.functions.Function;
 
-import static com.omar.retromp3recorder.app.main.MainView.BitRateChangeAction;
-import static com.omar.retromp3recorder.app.main.MainView.BitrateChangedResult;
-import static com.omar.retromp3recorder.app.main.MainView.InitialAction;
-import static com.omar.retromp3recorder.app.main.MainView.MainViewAction;
-import static com.omar.retromp3recorder.app.main.MainView.MainViewResult;
-import static com.omar.retromp3recorder.app.main.MainView.PlayAction;
-import static com.omar.retromp3recorder.app.main.MainView.SampleRateChangeAction;
-import static com.omar.retromp3recorder.app.main.MainView.SampleRateChangeResult;
-import static com.omar.retromp3recorder.app.main.MainView.ShareAction;
-import static com.omar.retromp3recorder.app.main.MainView.State;
-import static com.omar.retromp3recorder.app.main.MainView.StopAction;
+import static com.omar.retromp3recorder.app.main.MainView.*;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
 public class MainViewInteractor implements Interactor<MainViewAction, MainViewResult> {
@@ -44,6 +35,7 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
     private final ChangeBitrateUC changeBitrateUC;
     private final StateRepo stateRepo;
     private final RequestPermissionsRepo requestPermissionsRepo;
+    private final LogRepo logRepo;
 
     public MainViewInteractor(
             Scheduler scheduler,
@@ -55,7 +47,8 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
             BitRateRepo bitRateRepo,
             SampleRateRepo sampleRateRepo,
             StateRepo stateRepo,
-            RequestPermissionsRepo requestPermissionsRepo) {
+            RequestPermissionsRepo requestPermissionsRepo,
+            LogRepo logRepo) {
         this.scheduler = scheduler;
         this.changeBitrateUC = changeBitrateUC;
         this.changeSampleRateUC = changeSampleRateUC;
@@ -66,6 +59,7 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
         this.sampleRateRepo = sampleRateRepo;
         this.stateRepo = stateRepo;
         this.requestPermissionsRepo = requestPermissionsRepo;
+        this.logRepo = logRepo;
     }
 
     @Override
@@ -113,7 +107,20 @@ public class MainViewInteractor implements Interactor<MainViewAction, MainViewRe
                                             .ofType(RequestPermissionsRepo.Yes.class)
                                             .map((Function<RequestPermissionsRepo.Yes, MainViewResult>) yes -> {
                                                 return new MainView.RequestPermissionsResult(yes.permissions);
+                                            }),
+                                    logRepo
+                                            .observe()
+                                            .ofType(LogRepo.Message.class)
+                                            .map((Function<LogRepo.Message, MainViewResult>) message -> {
+                                                return new MessageLogResult(message.message);
+                                            }),
+                                    logRepo
+                                            .observe()
+                                            .ofType(LogRepo.Error.class)
+                                            .map((Function<LogRepo.Error, MainViewResult>) message -> {
+                                                return new ErrorLogResult(message.error);
                                             })
+
                             ));
                 });
     }
