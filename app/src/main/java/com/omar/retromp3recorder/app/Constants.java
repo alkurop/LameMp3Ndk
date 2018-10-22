@@ -7,10 +7,6 @@ import android.media.AudioFormat;
  */
 public class Constants {
 
-
-
-    /*------------------STRINGS--------------*/
-
     public static final String KBPS = "kbps";
     public static final String HZ = "Hz";
     public static final String KB = "kb";
@@ -23,9 +19,6 @@ public class Constants {
     public static final String DATA = "data";
 
     public static final String MP3_LAME_LIB = "mp3lame";
-
-
-    /*------------------NUMBERS--------------*/
 
 
     public static final int[] BIT_RATE_PRESETS = new int[]{320, 192, 160, 128};

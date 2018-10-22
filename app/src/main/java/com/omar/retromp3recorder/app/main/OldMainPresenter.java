@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.presenters;
+package com.omar.retromp3recorder.app.main;
 
 import android.content.Context;
 import android.os.Parcel;
@@ -13,15 +13,17 @@ import com.omar.retromp3recorder.app.controllers.AudioStatesController;
 import com.omar.retromp3recorder.app.controllers.IAudioStatesEvents;
 import com.omar.retromp3recorder.app.controllers.ILsdDisplay;
 import com.omar.retromp3recorder.app.controllers.StateSelector;
+import com.omar.retromp3recorder.app.presenters.IMainEvents;
+import com.omar.retromp3recorder.app.presenters.IRadioGroupEvents;
+import com.omar.retromp3recorder.app.presenters.RadioGroupPresenter;
 import com.omar.retromp3recorder.app.share.IShadingModule;
 import com.omar.retromp3recorder.app.share.OldSharingModule;
 import com.omar.retromp3recorder.app.utils.ContextHelper;
-import com.omar.retromp3recorder.app.main.IMainView;
 
 /**
  * Created by omar on 17.08.15.
  */
-public class MainPresenter implements IMainEvents, ILsdDisplay {
+public class OldMainPresenter implements IMainEvents, ILsdDisplay {
 
     private Context context;
 
@@ -102,7 +104,6 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
 
             @Override
             public void onRecorderStoped() {
-
                 stateSelector.callbackStop();
             }
 
@@ -113,7 +114,7 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
 
             @Override
             public void onPlayerError(String s) {
-                MainPresenter.this.setText(s);
+                OldMainPresenter.this.setText(s);
 
                 view.stopVisualizer();
                 stateSelector.callbackStop();
@@ -121,7 +122,7 @@ public class MainPresenter implements IMainEvents, ILsdDisplay {
 
             @Override
             public void onRecorderError(String s) {
-                MainPresenter.this.setText(s);
+                OldMainPresenter.this.setText(s);
                 stateSelector.callbackStop();
             }
         });

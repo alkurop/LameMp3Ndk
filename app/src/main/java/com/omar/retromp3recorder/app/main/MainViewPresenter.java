@@ -12,9 +12,9 @@ import io.reactivex.functions.BiFunction;
 import static com.omar.retromp3recorder.app.main.MainView.BitrateChangedResult;
 import static com.omar.retromp3recorder.app.main.MainView.*;
 
-public class MainViewPresenter implements Presenter<MainViewAction, MainViewResult, MainViewModel> {
+public class MainViewPresenter implements Presenter<Action, Result, MainViewModel> {
 
-    private final Interactor<MainViewAction, MainViewResult> interactor;
+    private final Interactor<Action, Result> interactor;
 
     @Inject
     public MainViewPresenter(MainViewInteractor interactor) {
@@ -22,15 +22,14 @@ public class MainViewPresenter implements Presenter<MainViewAction, MainViewResu
     }
 
     @Override
-    public ObservableTransformer<MainViewAction, MainViewModel> process() {
+    public ObservableTransformer<Action, MainViewModel> process() {
         return upstream -> upstream
                 .compose(interactor.process())
                 .scan(getDefaultViewModel(), getMapper());
     }
 
-    private BiFunction<MainViewModel, MainViewResult, MainViewModel> getMapper() {
+    private BiFunction<MainViewModel, Result, MainViewModel> getMapper() {
         return (oldState, result) -> {
-
             if (result instanceof MessageLogResult) {
                 return new MainViewModel(
                         oldState.state,
@@ -38,8 +37,8 @@ public class MainViewPresenter implements Presenter<MainViewAction, MainViewResu
                         oldState.bitRate,
                         ((MessageLogResult) result).message,
                         null,
-                        null
-                );
+                        null,
+                        null);
             }
             if (result instanceof ErrorLogResult) {
                 return new MainViewModel(
@@ -48,8 +47,8 @@ public class MainViewPresenter implements Presenter<MainViewAction, MainViewResu
                         oldState.bitRate,
                         null,
                         ((ErrorLogResult) result).error,
-                        null
-                );
+                        null,
+                        null);
             }
             if (result instanceof BitrateChangedResult) {
                 return new MainViewModel(
@@ -58,8 +57,8 @@ public class MainViewPresenter implements Presenter<MainViewAction, MainViewResu
                         ((BitrateChangedResult) result).bitRate,
                         null,
                         null,
-                        null
-                );
+                        null,
+                        null);
             }
             if (result instanceof SampleRateChangeResult) {
                 return new MainViewModel(
@@ -68,8 +67,8 @@ public class MainViewPresenter implements Presenter<MainViewAction, MainViewResu
                         oldState.bitRate,
                         null,
                         null,
-                        null
-                );
+                        null,
+                        null);
             }
             if (result instanceof StateChangedResult) {
                 return new MainViewModel(
@@ -78,8 +77,8 @@ public class MainViewPresenter implements Presenter<MainViewAction, MainViewResu
                         oldState.bitRate,
                         null,
                         null,
-                        null
-                );
+                        null,
+                        null);
             }
             if (result instanceof RequestPermissionsResult) {
                 return new MainViewModel(
@@ -88,8 +87,18 @@ public class MainViewPresenter implements Presenter<MainViewAction, MainViewResu
                         oldState.bitRate,
                         null,
                         null,
-                        ((RequestPermissionsResult) result).permissionsToRequest
-                );
+                        ((RequestPermissionsResult) result).permissionsToRequest,
+                        null);
+            }
+            if (result instanceof  SetPlayerId) {
+                return new MainViewModel(
+                        oldState.state,
+                        oldState.sampleRate,
+                        oldState.bitRate,
+                        null,
+                        null,
+                        null,
+                        ((SetPlayerId) result).playerId);
             }
             throw new IllegalStateException("Unable to map results");
         };
@@ -103,7 +112,7 @@ public class MainViewPresenter implements Presenter<MainViewAction, MainViewResu
                 VoiceRecorder.BitRate._320,
                 null,
                 null,
-                null
-        );
+                null,
+                null);
     }
 }

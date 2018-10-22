@@ -28,9 +28,9 @@ public class StopPlaybackAndRecordUC {
     public Completable execute() {
         return Completable
                 .fromAction(() -> {
+                    stateRepo.newValue(MainView.State.Idle);
                     voiceRecorder.stopRecord();
                     audioPlayer.playerStop();
-                    stateRepo.newValue(MainView.State.Idle);
                 });
     }
 }

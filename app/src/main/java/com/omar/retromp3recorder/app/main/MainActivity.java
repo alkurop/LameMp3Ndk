@@ -19,14 +19,11 @@ import com.omar.retromp3recorder.app.App;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.customviews.VisualizerView;
 import com.omar.retromp3recorder.app.presenters.IMainEvents;
-import com.omar.retromp3recorder.app.presenters.MainPresenter;
 import com.omar.retromp3recorder.app.utils.TouchController;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.inject.Inject;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, IMainView {
@@ -41,14 +38,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private PermissionsManager permissionManager;
     private ImageView background;
 
-    @Inject MainViewPresenter mainPresenter;
+     OldMainPresenter mainPresenter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.appComponent.inject(this);
-        presenter = new MainPresenter();
+        presenter = new OldMainPresenter();
         presenter.init(this);
         permissionManager = new PermissionsManager(this);
         HashMap<String, PermissionOptionalDetails> permissions = new HashMap<>();
@@ -239,8 +236,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /*FOR TESTING ONLY*/
-    public MainPresenter getMainPresenter() {
-        return new MainPresenter();
+    public OldMainPresenter getMainPresenter() {
+        return new OldMainPresenter();
     }
 
     public void setMainPresenter() {

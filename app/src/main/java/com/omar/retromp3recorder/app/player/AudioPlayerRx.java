@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.stringer.StringProvider;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.inject.Inject;
@@ -55,6 +56,10 @@ public class AudioPlayerRx implements
     }
 
     private void setupMediaPlayer(String voiceURL) {
+        if (!new File(voiceURL).exists()) {
+            events.onNext(new Error(stringProvider.getString(R.string.player_cannot_find_file)));
+            return;
+        }
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setOnCompletionListener(this);
         mediaPlayer.setOnPreparedListener(this);

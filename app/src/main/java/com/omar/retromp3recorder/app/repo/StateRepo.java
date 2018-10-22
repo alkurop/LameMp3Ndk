@@ -10,7 +10,8 @@ import io.reactivex.subjects.BehaviorSubject;
 
 @Singleton
 public class StateRepo {
-    private final BehaviorSubject<MainView.State> stateSubject = BehaviorSubject.create();
+    private final BehaviorSubject<MainView.State> stateSubject = BehaviorSubject
+            .createDefault(MainView.State.Idle);
 
     @Inject
     public StateRepo(){}

@@ -21,6 +21,7 @@ public interface MainView extends MviView<MainView.MainViewModel> {
         @Nullable final String message;
         @Nullable final String error;
         @Nullable final Set<String> requestForPermissions;
+        @Nullable final Integer playerId;
 
         MainViewModel(
                 State state,
@@ -28,23 +29,24 @@ public interface MainView extends MviView<MainView.MainViewModel> {
                 BitRate bitRate,
                 String message,
                 String error,
-                Set<String> requestForPermissions
-        ) {
+                Set<String> requestForPermissions,
+                Integer playerId) {
             this.state = state;
             this.sampleRate = sampleRate;
             this.bitRate = bitRate;
             this.message = message;
             this.error = error;
             this.requestForPermissions = requestForPermissions;
+            this.playerId = playerId;
         }
     }
     //endregion
 
     //region Action
 
-    interface MainViewAction { }
+    interface Action { }
 
-    final class SampleRateChangeAction implements MainViewAction {
+    final class SampleRateChangeAction implements Action {
         final SampleRate sampleRate;
 
         public SampleRateChangeAction(SampleRate sampleRate) {
@@ -52,7 +54,7 @@ public interface MainView extends MviView<MainView.MainViewModel> {
         }
     }
 
-    final class BitRateChangeAction implements MainViewAction {
+    final class BitRateChangeAction implements Action {
         final BitRate bitRate;
 
         public BitRateChangeAction(BitRate bitRate) {
@@ -60,21 +62,21 @@ public interface MainView extends MviView<MainView.MainViewModel> {
         }
     }
 
-     final class PlayAction implements MainViewAction { }
+     final class PlayAction implements Action { }
 
-     final class RecordAction implements MainViewAction { }
+     final class RecordAction implements Action { }
 
-     final class ShareAction implements MainViewAction { }
+     final class ShareAction implements Action { }
 
-     final class StopAction implements MainViewAction { }
+     final class StopAction implements Action { }
 
     //endregion
 
     //Region result
 
-    interface MainViewResult { }
+    interface Result { }
 
-    final class MessageLogResult implements MainViewResult {
+    final class MessageLogResult implements Result {
         final String message;
 
         MessageLogResult(String message) {
@@ -82,7 +84,7 @@ public interface MainView extends MviView<MainView.MainViewModel> {
         }
     }
 
-    final class ErrorLogResult implements MainViewResult {
+    final class ErrorLogResult implements Result {
         final String error;
 
         ErrorLogResult(String error) {
@@ -90,7 +92,7 @@ public interface MainView extends MviView<MainView.MainViewModel> {
         }
     }
 
-    final class BitrateChangedResult implements MainViewResult {
+    final class BitrateChangedResult implements Result {
         final BitRate bitRate;
 
         BitrateChangedResult(BitRate bitRate) {
@@ -98,7 +100,7 @@ public interface MainView extends MviView<MainView.MainViewModel> {
         }
     }
 
-    final class SampleRateChangeResult implements MainViewResult {
+    final class SampleRateChangeResult implements Result {
         final SampleRate sampleRate;
 
           SampleRateChangeResult(SampleRate sampleRate) {
@@ -106,19 +108,27 @@ public interface MainView extends MviView<MainView.MainViewModel> {
         }
     }
 
-    final class StateChangedResult implements MainViewResult {
+    final class StateChangedResult implements Result {
         final State state;
 
-        public StateChangedResult(State state) {
+        StateChangedResult(State state) {
             this.state = state;
         }
     }
 
-    final class RequestPermissionsResult implements MainViewResult {
+    final class RequestPermissionsResult implements Result {
         final Set<String> permissionsToRequest;
 
-        public RequestPermissionsResult(Set<String> permissionsToRequest) {
+        RequestPermissionsResult(Set<String> permissionsToRequest) {
             this.permissionsToRequest = permissionsToRequest;
+        }
+    }
+
+    final class SetPlayerId implements Result {
+        public final int playerId;
+
+        public SetPlayerId(int playerId) {
+            this.playerId = playerId;
         }
     }
     //endregion

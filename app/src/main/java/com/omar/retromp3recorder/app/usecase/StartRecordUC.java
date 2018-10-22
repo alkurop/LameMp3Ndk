@@ -88,8 +88,8 @@ public class StartRecordUC {
                         ))
                 .flatMapCompletable(props -> Completable
                         .fromAction(() -> {
-                            voiceRecorder.record(props);
                             stateRepo.newValue(MainView.State.Recording);
+                            voiceRecorder.record(props);
                         })
                 );
 
