@@ -24,6 +24,7 @@ public class RequestPermissionsRepo {
         state.onNext(newValue);
     }
 
+    //region events
     public interface ShouldRequestPermissions { }
 
     public static class No implements ShouldRequestPermissions { }
@@ -35,4 +36,5 @@ public class RequestPermissionsRepo {
             this.permissions = permissions;
         }
     }
+    //endregion
 }

@@ -12,7 +12,7 @@ import io.reactivex.functions.BiFunction;
 import static com.omar.retromp3recorder.app.main.MainView.BitrateChangedResult;
 import static com.omar.retromp3recorder.app.main.MainView.*;
 
-public class MainViewPresenter implements Presenter<Action, Result, MainViewModel> {
+public class MainViewPresenter implements Presenter<Action, MainViewModel> {
 
     private final Interactor<Action, Result> interactor;
 
@@ -28,6 +28,7 @@ public class MainViewPresenter implements Presenter<Action, Result, MainViewMode
                 .scan(getDefaultViewModel(), getMapper());
     }
 
+    //region mapper
     private BiFunction<MainViewModel, Result, MainViewModel> getMapper() {
         return (oldState, result) -> {
             if (result instanceof MessageLogResult) {
@@ -102,8 +103,8 @@ public class MainViewPresenter implements Presenter<Action, Result, MainViewMode
             }
             throw new IllegalStateException("Unable to map results");
         };
-
     }
+    //endregion
 
     private MainViewModel getDefaultViewModel() {
         return new MainViewModel(

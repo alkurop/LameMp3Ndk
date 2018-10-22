@@ -72,7 +72,7 @@ public interface MainView extends MviView<MainView.MainViewModel> {
 
     //endregion
 
-    //Region result
+    //region result
 
     interface Result { }
 

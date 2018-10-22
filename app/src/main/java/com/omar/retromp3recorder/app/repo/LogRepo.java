@@ -23,8 +23,8 @@ public class LogRepo {
         events.onNext(event);
     }
 
-    public interface Event {
-    }
+    //region models
+    public interface Event { }
 
     public static final class Message implements LogRepo.Event {
         public final String message;
@@ -41,4 +41,5 @@ public class LogRepo {
             this.error = error;
         }
     }
+    //endregion
 }

@@ -10,10 +10,12 @@ import javax.inject.Inject;
 import io.reactivex.Completable;
 
 public class StopPlaybackAndRecordUC {
+
     private final AudioPlayer audioPlayer;
     private final VoiceRecorder voiceRecorder;
     private final StateRepo stateRepo;
 
+    //region constructor
     @Inject
     public StopPlaybackAndRecordUC(
             AudioPlayer audioPlayer,
@@ -24,6 +26,7 @@ public class StopPlaybackAndRecordUC {
         this.voiceRecorder = voiceRecorder;
         this.stateRepo = stateRepo;
     }
+    //endregion
 
     public Completable execute() {
         return Completable

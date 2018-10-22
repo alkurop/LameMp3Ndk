@@ -24,13 +24,16 @@ public class StartPlaybackUC {
     );
 
     private final FileNameRepo fileNameRepo;
-    private final AudioPlayer audioPlayer;
-    private final VoiceRecorder voiceRecorder;
     private final StateRepo stateRepo;
-    private final StopPlaybackAndRecordUC stopUC;
-    private final CheckPermissionsUC checkPermissionsUC;
     private final RequestPermissionsRepo requestPermissionsRepo;
 
+    private final AudioPlayer audioPlayer;
+    private final VoiceRecorder voiceRecorder;
+
+    private final StopPlaybackAndRecordUC stopUC;
+    private final CheckPermissionsUC checkPermissionsUC;
+
+    //region constructor
     @Inject
     public StartPlaybackUC(
             FileNameRepo fileNameRepo,
@@ -49,14 +52,15 @@ public class StartPlaybackUC {
         this.checkPermissionsUC = checkPermissionsUC;
         this.requestPermissionsRepo = requestPermissionsRepo;
     }
+    //endregion
 
     public Completable execute() {
-        Observable<RequestPermissionsRepo.ShouldRequestPermissions> shouldRequestPermissionsObservable =
-                requestPermissionsRepo.observe()
+        Observable<RequestPermissionsRepo.ShouldRequestPermissions>
+                shouldRequestPermissionsObservable = requestPermissionsRepo.observe()
                         .take(1)
                         .share();
 
-        Completable beg = shouldRequestPermissionsObservable
+        Completable begForPermissions = shouldRequestPermissionsObservable
                 .ofType(RequestPermissionsRepo.Yes.class)
                 .flatMapCompletable(answer -> Completable.complete());
 
@@ -77,7 +81,7 @@ public class StartPlaybackUC {
         return stopUC.execute()
                 .andThen(
                         Completable.merge(createLinkedList(
-                                beg,
+                                begForPermissions,
                                 execute
                         ))
                 )

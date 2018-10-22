@@ -21,7 +21,7 @@ import static com.omar.retromp3recorder.app.utils.VarargHelper.createHashSet;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
 public class StartRecordUC {
-    private static final Set<String> recordPermissions = createHashSet(
+    private static final Set<String> voiceRecordPermissions = createHashSet(
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.RECORD_AUDIO
     );
@@ -36,6 +36,7 @@ public class StartRecordUC {
     private final RequestPermissionsRepo requestPermissionsRepo;
     private final FilePathGenerator filePathGenerator;
 
+    //region constructor
     @Inject
     public StartRecordUC(
             FileNameRepo fileNameRepo,
@@ -57,6 +58,7 @@ public class StartRecordUC {
         this.requestPermissionsRepo = requestPermissionsRepo;
         this.filePathGenerator = filePathGenerator;
     }
+    //endregion
 
     public Completable execute() {
         Observable<RequestPermissionsRepo.ShouldRequestPermissions> share =
@@ -69,7 +71,7 @@ public class StartRecordUC {
                 VoiceRecorder.SampleRate,
                 VoiceRecorder.RecorderProps> propsZipper = VoiceRecorder.RecorderProps::new;
 
-        Completable beg = share
+        Completable begForPermissions = share
                 .ofType(RequestPermissionsRepo.Yes.class)
                 .flatMapCompletable(answer -> Completable.complete());
 
@@ -98,11 +100,11 @@ public class StartRecordUC {
                 .andThen(Completable
                         .merge(createLinkedList(
                                 execute,
-                                beg
+                                begForPermissions
                         ))
                 )
                 .andThen(
-                        checkPermissionsUC.execute(recordPermissions)
+                        checkPermissionsUC.execute(voiceRecordPermissions)
                 );
     }
 }

@@ -58,19 +58,23 @@ public class MainViewInteractor implements Interactor<Action, Result> {
     private final AudioPlayer audioPlayer;
     private final VoiceRecorder voiceRecorder;
 
+    //region constructor
     @Inject
     public MainViewInteractor(
             Scheduler scheduler,
             ChangeBitrateUC changeBitrateUC,
             ChangeSampleRateUC changeSampleRateUC,
-            StartRecordUC startRecordUC, ShareUC shareUC,
+            StartRecordUC startRecordUC,
+            ShareUC shareUC,
             StartPlaybackUC startPlaybackUC,
             StopPlaybackAndRecordUC stopPlaybackAndRecordUC,
             BitRateRepo bitRateRepo,
             SampleRateRepo sampleRateRepo,
             StateRepo stateRepo,
             RequestPermissionsRepo requestPermissionsRepo,
-            LogRepo logRepo, AudioPlayer audioPlayer, VoiceRecorder voiceRecorder) {
+            LogRepo logRepo,
+            AudioPlayer audioPlayer,
+            VoiceRecorder voiceRecorder) {
         this.scheduler = scheduler;
         this.changeBitrateUC = changeBitrateUC;
         this.changeSampleRateUC = changeSampleRateUC;
@@ -86,6 +90,7 @@ public class MainViewInteractor implements Interactor<Action, Result> {
         this.audioPlayer = audioPlayer;
         this.voiceRecorder = voiceRecorder;
     }
+    //endregion
 
     @Override
     public ObservableTransformer<Action, Result> process() {
