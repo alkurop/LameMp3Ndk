@@ -8,7 +8,7 @@ import android.support.v4.util.Pair;
 
 import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
-import com.omar.retromp3recorder.app.stringer.StringProvider;
+import com.omar.retromp3recorder.app.stringer.Stringer;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,20 +29,20 @@ import io.reactivex.subjects.Subject;
 /**
  * Created by omar on 17.08.15.
  */
-public class VoiceRecorderRX implements VoiceRecorder {
+public final class VoiceRecorderRX implements VoiceRecorder {
 
     private static final short channelConfig = Constants.CHANNEL_PRESETS[0];
     private static final int quality = Constants.QUALITY_PRESETS[1];
     private static final short audioFormat = Constants.AUDIO_FORMAT_PRESETS[1];
-    private final StringProvider stringProvider;
+    private final Stringer stringer;
     private final Scheduler scheduler;
     private final Subject<Event> events = PublishSubject.create();
     private final AtomicLong elapsed = new AtomicLong(0);
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
-    public VoiceRecorderRX(StringProvider stringProvider, Scheduler scheduler) {
-        this.stringProvider = stringProvider;
+    public VoiceRecorderRX(Stringer stringer, Scheduler scheduler) {
+        this.stringer = stringer;
         this.scheduler = scheduler;
     }
 
@@ -155,15 +155,15 @@ public class VoiceRecorderRX implements VoiceRecorder {
         long counter = System.currentTimeMillis() - elapsed.get();
         String absolutePath = outFile.getAbsolutePath();
         if (outFile.exists()) {
-            events.onNext(new Message(stringProvider.getString(R.string.file_saved_to) + absolutePath));
-            events.onNext(new Message(String.format(stringProvider.getString(R.string.audio_length) +
-                    "= %.1f" + stringProvider.getString(R.string.seconds), ((float) counter) / 1000)));
+            events.onNext(new Message(stringer.getString(R.string.file_saved_to) + absolutePath));
+            events.onNext(new Message(String.format(stringer.getString(R.string.audio_length) +
+                    "= %.1f" + stringer.getString(R.string.seconds), ((float) counter) / 1000)));
 
-            events.onNext(new Message(String.format(stringProvider.getString(R.string.file_size) + " = %.1f " + Constants.KB, ((float) outFile.length()) / 1000)));
-            events.onNext(new Message(String.format("%.1f " + Constants.KB + stringProvider.getString(R.string.compression_rate), (outFile.length()) / counter)));
+            events.onNext(new Message(String.format(stringer.getString(R.string.file_size) + " = %.1f " + Constants.KB, ((float) outFile.length()) / 1000)));
+            events.onNext(new Message(String.format("%.1f " + Constants.KB + stringer.getString(R.string.compression_rate), (outFile.length()) / counter)));
 
         } else
-            events.onNext(new Error(stringProvider.getString(R.string.error_saving_file_to) + absolutePath));
+            events.onNext(new Error(stringer.getString(R.string.error_saving_file_to) + absolutePath));
     }
 
 
@@ -174,19 +174,19 @@ public class VoiceRecorderRX implements VoiceRecorder {
             try {
                 LameModule.init(sampleRate, 1, sampleRate, bitRate, quality);
             } catch (Exception e) {
-                throw new Exception(stringProvider.getString(R.string.error_init_recorder));
+                throw new Exception(stringer.getString(R.string.error_init_recorder));
             }
             if (recorder.getState() == AudioRecord.STATE_INITIALIZED) {
-                String logMessage = String.format(stringProvider.getString(R.string.recording_mp3_at) + " %d " + Constants.KBPS + " , %d " + Constants.HZ, bitRate, sampleRate);
+                String logMessage = String.format(stringer.getString(R.string.recording_mp3_at) + " %d " + Constants.KBPS + " , %d " + Constants.HZ, bitRate, sampleRate);
                 events.onNext(new Message(logMessage));
                 return recorder;
 
             } else {
-                throw new Exception(stringProvider.getString(R.string.error_init_recorder));
+                throw new Exception(stringer.getString(R.string.error_init_recorder));
             }
 
         } else {
-            throw new Exception(stringProvider.getString(R.string.audioRecord_bad_value));
+            throw new Exception(stringer.getString(R.string.audioRecord_bad_value));
         }
     }
 }

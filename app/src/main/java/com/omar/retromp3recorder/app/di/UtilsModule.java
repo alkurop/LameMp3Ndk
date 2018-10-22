@@ -2,8 +2,8 @@ package com.omar.retromp3recorder.app.di;
 
 import android.content.Context;
 
-import com.omar.retromp3recorder.app.stringer.ContextStringProvider;
-import com.omar.retromp3recorder.app.stringer.StringProvider;
+import com.omar.retromp3recorder.app.stringer.ContextStringer;
+import com.omar.retromp3recorder.app.stringer.Stringer;
 
 import dagger.Module;
 import dagger.Provides;
@@ -31,7 +31,7 @@ public class UtilsModule {
     }
 
     @Provides
-    StringProvider providerStringer(Context context) {
-        return new ContextStringProvider(context);
+    Stringer providerStringer(Context context) {
+        return new ContextStringer(context);
     }
 }

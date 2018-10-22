@@ -9,7 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-class ConfigModule {
+public class ConfigModule {
     @Singleton
     @Provides
     RecorderDefaults provideRecorderDefaults() {

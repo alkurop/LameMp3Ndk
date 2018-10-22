@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.omar.retromp3recorder.app.R;
-import com.omar.retromp3recorder.app.stringer.StringProvider;
+import com.omar.retromp3recorder.app.stringer.Stringer;
 import com.omar.retromp3recorder.app.repo.FileNameRepo;
 
 import java.io.File;
@@ -21,10 +21,10 @@ import io.reactivex.subjects.PublishSubject;
 
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 
-public class SharingModuleRX implements SharingModule {
+public final class SharingModuleRX implements SharingModule {
     private final Context context;
     private final FileNameRepo fileNameRepo;
-    private final StringProvider stringProvider;
+    private final Stringer stringer;
     private final Scheduler scheduler;
     private final PublishSubject<Event> events = PublishSubject.create();
 
@@ -32,12 +32,12 @@ public class SharingModuleRX implements SharingModule {
     public SharingModuleRX(
             Context context,
             FileNameRepo fileNameRepo,
-            StringProvider stringProvider,
+            Stringer stringer,
             Scheduler scheduler
     ) {
         this.context = context;
         this.fileNameRepo = fileNameRepo;
-        this.stringProvider = stringProvider;
+        this.stringer = stringer;
         this.scheduler = scheduler;
     }
 
@@ -51,7 +51,7 @@ public class SharingModuleRX implements SharingModule {
                                 return
                                         Completable.fromAction(() ->
                                                 events.onNext(
-                                                        new SharingError(stringProvider.getString(R.string.trying_to_share)))
+                                                        new SharingError(stringer.getString(R.string.trying_to_share)))
                                         );
                             } else {
                                 return
@@ -66,13 +66,13 @@ public class SharingModuleRX implements SharingModule {
                                                                 Intent
                                                                         .createChooser(
                                                                                 intent,
-                                                                                stringProvider.getString(R.string.select)
+                                                                                stringer.getString(R.string.select)
                                                                         )
                                                                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))))
                                                 .subscribeOn(mainThread())
                                                 .andThen(Completable.fromAction(() ->
                                                         events.onNext(
-                                                                new SharingOk(stringProvider.getString(R.string.trying_to_share))
+                                                                new SharingOk(stringer.getString(R.string.trying_to_share))
                                                         ))
                                                 );
                             }

@@ -9,6 +9,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 13
         versionName "1.3"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -21,6 +22,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    packagingOptions {
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+    }
 }
 
 dependencies {
@@ -32,4 +36,9 @@ dependencies {
     implementation "com.google.dagger:dagger:$versions.dagger"
     implementation "com.jakewharton.rxbinding3:rxbinding:$versions.rxView"
     annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
+
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
+    testImplementation 'org.assertj:assertj-core:2.9.0'
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-core:2.+"
 }

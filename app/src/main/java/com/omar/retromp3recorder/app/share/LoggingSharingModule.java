@@ -12,12 +12,12 @@ import io.reactivex.Scheduler;
 import static com.omar.retromp3recorder.app.di.AppComponent.INTERNAL;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
-public class LogginSharingModule implements SharingModule {
+public final class LoggingSharingModule implements SharingModule {
 
     private final SharingModule sharingModule;
 
     @Inject
-    public LogginSharingModule(
+    public LoggingSharingModule(
             @Named(INTERNAL) SharingModule sharingModule,
             LogRepo logRepo,
             Scheduler scheduler

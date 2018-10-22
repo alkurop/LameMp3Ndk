@@ -3,10 +3,10 @@ package com.omar.retromp3recorder.app.stringer;
 import android.content.Context;
 import android.support.annotation.StringRes;
 
-public class ContextStringProvider implements StringProvider {
+public class ContextStringer implements Stringer {
     private final Context context;
 
-    public ContextStringProvider(Context context) {
+    public ContextStringer(Context context) {
         this.context = context;
     }
 

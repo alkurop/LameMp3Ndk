@@ -1,27 +1,28 @@
 package com.omar.retromp3recorder.app.di;
 
 import com.omar.retromp3recorder.app.player.AudioPlayer;
-import com.omar.retromp3recorder.app.player.AudioPlayerRx;
 import com.omar.retromp3recorder.app.player.LoggingAudioPlayer;
 import com.omar.retromp3recorder.app.recorder.LoggingVoiceRecorder;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
-import com.omar.retromp3recorder.app.recorder.VoiceRecorderRX;
 import com.omar.retromp3recorder.app.share.LoggingSharingModule;
 import com.omar.retromp3recorder.app.share.SharingModule;
-import com.omar.retromp3recorder.app.share.SharingModuleRX;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.omar.retromp3recorder.app.player.TestAudioPlayer;
+import com.omar.retromp3recorder.app.recorder.TestVoiceRecorder;
+import com.omar.retromp3recorder.app.share.TestSharingModule;
 import dagger.Binds;
 import dagger.Module;
 
 import static com.omar.retromp3recorder.app.di.AppComponent.INTERNAL;
 
+
 @Module(
         subcomponents = {ConfigSubComponent.class}
 )
-abstract class FunctionalityModule {
+abstract class TestFunctionalityModule {
 
     @Singleton
     @Binds
@@ -34,17 +35,17 @@ abstract class FunctionalityModule {
     @Singleton
     @Named(INTERNAL)
     @Binds
-    abstract AudioPlayer provideAudioPlayerInternal(AudioPlayerRx clazz);
+    abstract AudioPlayer provideAudioPlayerInternal(TestAudioPlayer clazz);
 
     @Singleton
     @Named(INTERNAL)
     @Binds
-    abstract VoiceRecorder provideVoiceRecorderInternal(VoiceRecorderRX clazz);
+    abstract VoiceRecorder provideVoiceRecorderInternal(TestVoiceRecorder clazz);
 
     @Singleton
     @Named(INTERNAL)
     @Binds
-    abstract SharingModule provideSharingModuleInternal(SharingModuleRX clazz);
+    abstract SharingModule provideSharingModuleInternal(TestSharingModule clazz);
 
     @Singleton
     @Binds

@@ -12,7 +12,7 @@ import io.reactivex.Scheduler;
 import static com.omar.retromp3recorder.app.di.AppComponent.INTERNAL;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
-public class LoggingAudioPlayer implements AudioPlayer {
+public final class LoggingAudioPlayer implements AudioPlayer {
     private final AudioPlayer audioPlayer;
 
     @Inject
