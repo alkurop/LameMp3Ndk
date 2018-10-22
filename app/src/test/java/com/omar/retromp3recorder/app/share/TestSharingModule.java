@@ -13,11 +13,11 @@ public class TestSharingModule implements SharingModule {
 
     @Override
     public Completable share() {
-        return null;
+        return Completable.complete();
     }
 
     @Override
     public Observable<Event> observeEvents() {
-        return null;
+        return Observable.never();
     }
 }

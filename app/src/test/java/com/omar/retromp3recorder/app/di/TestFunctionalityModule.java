@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 import com.omar.retromp3recorder.app.player.TestAudioPlayer;
 import com.omar.retromp3recorder.app.recorder.TestVoiceRecorder;
 import com.omar.retromp3recorder.app.share.TestSharingModule;
+
 import dagger.Binds;
 import dagger.Module;
 
@@ -22,7 +23,11 @@ import static com.omar.retromp3recorder.app.di.AppComponent.INTERNAL;
 @Module(
         subcomponents = {ConfigSubComponent.class}
 )
-abstract class TestFunctionalityModule {
+public abstract class TestFunctionalityModule {
+
+    public static final String PLAYER_BUS = "PALYER_BUS";
+    public static final String RECORDER_BUS = "RECORDER_BUS";
+    public static final String SHARING_BUS = "SHARING_BUS";
 
     @Singleton
     @Binds
@@ -50,5 +55,6 @@ abstract class TestFunctionalityModule {
     @Singleton
     @Binds
     abstract SharingModule provideSharingModule(LoggingSharingModule clazz);
+
 
 }

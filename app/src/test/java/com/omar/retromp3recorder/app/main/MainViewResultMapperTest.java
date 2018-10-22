@@ -7,14 +7,15 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-public class MainViewPresenterTest {
+public class MainViewResultMapperTest {
     @Inject
-    MainViewPresenter presenter;
+    MainViewResultMapper presenter;
 
     @Before
     public void setUp() {
         DaggerTestAppComponent.builder().build().inject(this);
     }
+
     @Test
     public void test() {
         int i = 10;

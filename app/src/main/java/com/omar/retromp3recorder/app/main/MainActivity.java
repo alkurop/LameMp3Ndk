@@ -63,13 +63,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         Bundle b = outState == null ? new Bundle() : outState;
-        b.putParcelable("presenter", presenter.saveState());
+        b.putParcelable("resultMapper", presenter.saveState());
         super.onSaveInstanceState(b);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        presenter.restoreState(savedInstanceState.getParcelable("presenter"));
+        presenter.restoreState(savedInstanceState.getParcelable("resultMapper"));
         super.onRestoreInstanceState(savedInstanceState);
     }
 
