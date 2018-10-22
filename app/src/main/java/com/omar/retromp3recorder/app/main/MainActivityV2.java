@@ -139,14 +139,17 @@ public class MainActivityV2 extends AppCompatActivity implements MainView {
     }
 
     private RadioButton addCheckBox(ViewGroup container, String text) {
-        RadioButton cb = (RadioButton) layoutInflater.inflate(R.layout.checkbox, container);
+        @SuppressLint("InflateParams")
+        RadioButton cb  = (RadioButton) layoutInflater.inflate(R.layout.checkbox, null);
         cb.setText(text);
         cb.setHeight(this.getResources().getDimensionPixelSize(R.dimen.cb_height));
+        container.addView(cb);
         return cb;
     }
 
     private void addTitleView(ViewGroup container, String title) {
-        TextView titleView = (TextView) layoutInflater.inflate(R.layout.container_title, container);
+        layoutInflater.inflate(R.layout.container_title, container);
+        TextView titleView = container.findViewById(R.id.title);
         titleView.setText(title);
     }
 
@@ -283,6 +286,9 @@ public class MainActivityV2 extends AppCompatActivity implements MainView {
     }
 
     private void renderPermissions(@Nullable Set<String> requestForPermissions) {
+        if (requestForPermissions == null) {
+            return;
+        }
         HashMap<String, PermissionOptionalDetails> permissionRequests = new HashMap<>();
         for (String permissionName : requestForPermissions) {
             permissionRequests.put(permissionName, permissionsMap.get(permissionName));
