@@ -17,7 +17,7 @@ import com.omar.retromp3recorder.app.share.TestSharingModule;
 import dagger.Binds;
 import dagger.Module;
 
-import static com.omar.retromp3recorder.app.di.AppComponent.INTERNAL;
+import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_ALPHA;
 
 
 @Module(
@@ -38,17 +38,17 @@ public abstract class TestFunctionalityModule {
     abstract AudioPlayer provideAudioPlayer(LoggingAudioPlayer clazz);
 
     @Singleton
-    @Named(INTERNAL)
+    @Named(DECORATOR_ALPHA)
     @Binds
     abstract AudioPlayer provideAudioPlayerInternal(TestAudioPlayer clazz);
 
     @Singleton
-    @Named(INTERNAL)
+    @Named(DECORATOR_ALPHA)
     @Binds
     abstract VoiceRecorder provideVoiceRecorderInternal(TestVoiceRecorder clazz);
 
     @Singleton
-    @Named(INTERNAL)
+    @Named(DECORATOR_ALPHA)
     @Binds
     abstract SharingModule provideSharingModuleInternal(TestSharingModule clazz);
 

@@ -9,7 +9,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 
-import static com.omar.retromp3recorder.app.di.AppComponent.INTERNAL;
+import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_ALPHA;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
 public final class LoggingVoiceRecorder implements VoiceRecorder {
@@ -17,7 +17,7 @@ public final class LoggingVoiceRecorder implements VoiceRecorder {
 
     @Inject
     public LoggingVoiceRecorder(
-            @Named(INTERNAL) VoiceRecorder recorder,
+            @Named(DECORATOR_ALPHA) VoiceRecorder recorder,
             LogRepo logRepo,
             Scheduler scheduler) {
         this.recorder = recorder;

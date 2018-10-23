@@ -3,10 +3,10 @@ package com.omar.retromp3recorder.app.main;
 
 import com.omar.retromp3recorder.app.mvi.Interactor;
 import com.omar.retromp3recorder.app.mvi.OneShot;
-import com.omar.retromp3recorder.app.player.AudioPlayer;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.repo.BitRateRepo;
 import com.omar.retromp3recorder.app.repo.LogRepo;
+import com.omar.retromp3recorder.app.repo.PlayerIdRepo;
 import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;
 import com.omar.retromp3recorder.app.repo.SampleRateRepo;
 import com.omar.retromp3recorder.app.repo.StateRepo;
@@ -24,6 +24,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Scheduler;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 
 import static com.omar.retromp3recorder.app.main.MainView.Action;
 import static com.omar.retromp3recorder.app.main.MainView.BitRateChangeAction;
@@ -43,21 +44,19 @@ public class MainViewInteractor implements Interactor<Action, Result> {
 
     private final Scheduler scheduler;
 
+    private final ChangeBitrateUC changeBitrateUC;
     private final ChangeSampleRateUC changeSampleRateUC;
-    private final StartRecordUC startRecordUC;
     private final ShareUC shareUC;
     private final StartPlaybackUC startPlaybackUC;
+    private final StartRecordUC startRecordUC;
     private final StopPlaybackAndRecordUC stopPlaybackAndRecordUC;
-    private final ChangeBitrateUC changeBitrateUC;
 
     private final BitRateRepo bitRateRepo;
-    private final SampleRateRepo sampleRateRepo;
-    private final StateRepo stateRepo;
-    private final RequestPermissionsRepo requestPermissionsRepo;
     private final LogRepo logRepo;
-
-    private final AudioPlayer audioPlayer;
-    private final VoiceRecorder voiceRecorder;
+    private final PlayerIdRepo playerIdRepo;
+    private final RequestPermissionsRepo requestPermissionsRepo;
+    private final StateRepo stateRepo;
+    private final SampleRateRepo sampleRateRepo;
 
     //region constructor
     @Inject
@@ -74,8 +73,7 @@ public class MainViewInteractor implements Interactor<Action, Result> {
             StateRepo stateRepo,
             RequestPermissionsRepo requestPermissionsRepo,
             LogRepo logRepo,
-            AudioPlayer audioPlayer,
-            VoiceRecorder voiceRecorder) {
+            PlayerIdRepo playerIdRepo) {
         this.scheduler = scheduler;
         this.changeBitrateUC = changeBitrateUC;
         this.changeSampleRateUC = changeSampleRateUC;
@@ -88,8 +86,7 @@ public class MainViewInteractor implements Interactor<Action, Result> {
         this.stateRepo = stateRepo;
         this.requestPermissionsRepo = requestPermissionsRepo;
         this.logRepo = logRepo;
-        this.audioPlayer = audioPlayer;
-        this.voiceRecorder = voiceRecorder;
+        this.playerIdRepo = playerIdRepo;
     }
     //endregion
 
@@ -101,9 +98,7 @@ public class MainViewInteractor implements Interactor<Action, Result> {
                     return Observable.merge(
                             createLinkedList(
                                     actionsMapper(actions).toObservable(),
-                                    repoMapper(),
-                                    audioPlayerMapper(),
-                                    voiceRecorderMapper()
+                                    repoMapper()
                             ));
                 });
     }
@@ -183,36 +178,12 @@ public class MainViewInteractor implements Interactor<Action, Result> {
                         .observe()
                         .map((Function<MainView.State, Result>)
                                 MainView.StateChangedResult::new
-                        )
-        ));
-    }
-
-    private Observable<MainView.Result> audioPlayerMapper() {
-        return Observable.merge(createLinkedList(
-                audioPlayer.observeEvents()
-                        .ofType(AudioPlayer.Error.class)
-                        .map((Function<AudioPlayer.Error, Result>) error ->
-                                new MainView.StateChangedResult(MainView.State.Idle)
                         ),
-                audioPlayer.observeEvents()
-                        .ofType(AudioPlayer.PlaybackEnded.class)
-                        .map((Function<AudioPlayer.PlaybackEnded, Result>) error ->
-                                new MainView.StateChangedResult(MainView.State.Idle)
-                        ),
-                audioPlayer.observeEvents()
-                        .ofType(AudioPlayer.SendPlayerId.class)
-                        .map((Function<AudioPlayer.SendPlayerId, Result>) id ->
-                                new MainView.SetPlayerId(id.playerId)
-                        )
-        ));
-    }
-
-    private Observable<MainView.Result> voiceRecorderMapper() {
-        return Observable.merge(createLinkedList(
-                voiceRecorder.observeEvents().ofType(VoiceRecorder.Error.class)
-                        .map((Function<VoiceRecorder.Error, Result>) error ->
-                                new MainView.StateChangedResult(MainView.State.Idle)
-                        )
+                playerIdRepo
+                        .observe()
+                        .filter(integerOneShot -> !integerOneShot.isShot())
+                        .map(OneShot::getValueOnce)
+                        .map(MainView.PlayerIdResult::new)
         ));
     }
 }

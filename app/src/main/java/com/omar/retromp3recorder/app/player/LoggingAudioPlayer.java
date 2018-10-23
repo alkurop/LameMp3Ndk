@@ -9,7 +9,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 
-import static com.omar.retromp3recorder.app.di.AppComponent.INTERNAL;
+import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_ALPHA;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
 public final class LoggingAudioPlayer implements AudioPlayer {
@@ -17,7 +17,7 @@ public final class LoggingAudioPlayer implements AudioPlayer {
 
     @Inject
     public LoggingAudioPlayer(
-            @Named(INTERNAL) AudioPlayer audioPlayer,
+            @Named(DECORATOR_ALPHA) AudioPlayer audioPlayer,
             Scheduler scheduler,
             LogRepo logRepo
     ) {

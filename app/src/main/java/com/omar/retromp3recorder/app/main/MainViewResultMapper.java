@@ -12,7 +12,7 @@ import static com.omar.retromp3recorder.app.main.MainView.MessageLogResult;
 import static com.omar.retromp3recorder.app.main.MainView.RequestPermissionsResult;
 import static com.omar.retromp3recorder.app.main.MainView.Result;
 import static com.omar.retromp3recorder.app.main.MainView.SampleRateChangeResult;
-import static com.omar.retromp3recorder.app.main.MainView.SetPlayerId;
+import static com.omar.retromp3recorder.app.main.MainView.PlayerIdResult;
 import static com.omar.retromp3recorder.app.main.MainView.StateChangedResult;
 
 public class MainViewResultMapper   {
@@ -85,7 +85,7 @@ public class MainViewResultMapper   {
                         ((RequestPermissionsResult) result).permissionsToRequest,
                         null);
             }
-            if (result instanceof  SetPlayerId) {
+            if (result instanceof PlayerIdResult) {
                 return new MainViewModel(
                         oldState.state,
                         oldState.sampleRate,
@@ -93,7 +93,7 @@ public class MainViewResultMapper   {
                         null,
                         null,
                         null,
-                        ((SetPlayerId) result).playerId);
+                        ((PlayerIdResult) result).playerId);
             }
             throw new IllegalStateException("Unable to map result" + result.getClass().getCanonicalName());
         };

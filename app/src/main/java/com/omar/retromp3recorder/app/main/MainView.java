@@ -124,10 +124,10 @@ public interface MainView extends MviView<MainView.MainViewModel> {
         }
     }
 
-    final class SetPlayerId implements Result {
+    final class PlayerIdResult implements Result {
         public final int playerId;
 
-        public SetPlayerId(int playerId) {
+        public PlayerIdResult(int playerId) {
             this.playerId = playerId;
         }
     }

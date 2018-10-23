@@ -13,7 +13,8 @@ import dagger.Component;
 })
 public interface AppComponent {
 
-    String INTERNAL = "INTERNAL";
+    String DECORATOR_ALPHA = "DECORATOR_ALPHA";
+    String DECORATOR_BETA = "DECORATOR_BETA";
     String MAIN_THREAD = "MAIN_THREAD";
 
     void inject(MainActivity mainActivity);
