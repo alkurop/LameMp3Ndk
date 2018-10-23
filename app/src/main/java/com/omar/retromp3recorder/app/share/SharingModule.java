@@ -9,6 +9,7 @@ public interface SharingModule {
 
     Observable<Event> observeEvents();
 
+    //region events
     interface Event { }
 
     final class SharingOk implements Event {
@@ -26,4 +27,5 @@ public interface SharingModule {
             this.error = error;
         }
     }
+    //endregion
 }

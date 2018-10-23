@@ -6,13 +6,13 @@ import javax.inject.Named;
 import io.reactivex.Observable;
 import io.reactivex.subjects.Subject;
 
-import static com.omar.retromp3recorder.app.di.MockModule.RECORDER_SUBJECT;
+import static com.omar.retromp3recorder.app.di.MockSubComponent.MockModule.RECORDER_SUBJECT;
 
 public class TestVoiceRecorder implements VoiceRecorder {
     private final Subject<Event> bus;
 
     @Inject
-    public TestVoiceRecorder(@Named(RECORDER_SUBJECT) Subject<Event> audioBus) {
+    TestVoiceRecorder(@Named(RECORDER_SUBJECT) Subject<Event> audioBus) {
         this.bus = audioBus;
     }
 

@@ -15,7 +15,7 @@ public class BitRateRepo {
     private final BehaviorSubject<VoiceRecorder.BitRate> stateSubject = BehaviorSubject.create();
 
     @Inject
-    public BitRateRepo(RecorderDefaults defaults){
+    BitRateRepo(RecorderDefaults defaults){
         stateSubject.onNext(defaults.bitRate);
     }
 

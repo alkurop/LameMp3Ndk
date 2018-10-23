@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.repo;
 
-import com.omar.retromp3recorder.app.mvi.OneShot;
+import com.omar.retromp3recorder.app.utils.OneShot;
 
 import java.util.Set;
 
@@ -9,7 +9,6 @@ import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.PublishSubject;
 
 @Singleton
 public class RequestPermissionsRepo {

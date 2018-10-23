@@ -10,6 +10,7 @@ public interface AudioPlayer {
 
     Observable<Event> observeEvents();
 
+    //region events
     interface Event { }
 
     final class Message implements Event {
@@ -37,4 +38,5 @@ public interface AudioPlayer {
     }
 
     final class PlaybackEnded implements Event { }
+    //endregion
 }

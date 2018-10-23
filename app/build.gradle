@@ -38,7 +38,6 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
 
     testAnnotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
-    testImplementation 'org.assertj:assertj-core:2.9.0'
     testImplementation 'junit:junit:4.12'
     testImplementation "org.mockito:mockito-core:2.+"
 }

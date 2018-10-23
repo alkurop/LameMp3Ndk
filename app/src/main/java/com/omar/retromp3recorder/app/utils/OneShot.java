@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.mvi;
+package com.omar.retromp3recorder.app.utils;
 
 import io.reactivex.annotations.NonNull;
 

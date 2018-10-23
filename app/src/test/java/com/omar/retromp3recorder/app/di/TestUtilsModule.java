@@ -11,7 +11,7 @@ import io.reactivex.Scheduler;
 import static io.reactivex.schedulers.Schedulers.trampoline;
 
 @Module
-public class TestUtilsModule {
+class TestUtilsModule {
 
     @Provides
     Scheduler provideScheduler() {

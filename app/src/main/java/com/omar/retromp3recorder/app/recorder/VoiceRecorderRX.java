@@ -53,8 +53,6 @@ public final class VoiceRecorderRX implements VoiceRecorder {
 
     @Override
     public void record(RecorderProps props) {
-        stopRecord();
-
         int minBufferSize = AudioRecord.getMinBufferSize(props.sampleRate.value, channelConfig, audioFormat);
 
         Single<Pair<File, AudioRecord>> recorderParams = Single

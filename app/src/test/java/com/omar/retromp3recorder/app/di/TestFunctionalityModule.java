@@ -22,7 +22,7 @@ import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_ALPHA;
 @Module(
         subcomponents = {ConfigSubComponent.class, MockSubComponent.class}
 )
-public abstract class TestFunctionalityModule {
+abstract class TestFunctionalityModule {
 
     @Singleton
     @Binds

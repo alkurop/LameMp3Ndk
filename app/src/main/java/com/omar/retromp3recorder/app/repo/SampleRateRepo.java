@@ -14,7 +14,7 @@ public class SampleRateRepo {
     private final BehaviorSubject<VoiceRecorder.SampleRate> stateSubject = BehaviorSubject.create();
 
     @Inject
-    public SampleRateRepo(RecorderDefaults defaults){
+    SampleRateRepo(RecorderDefaults defaults){
         stateSubject.onNext(defaults.sampleRate);
     }
 

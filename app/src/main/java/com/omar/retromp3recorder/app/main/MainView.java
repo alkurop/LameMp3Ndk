@@ -1,15 +1,14 @@
 package com.omar.retromp3recorder.app.main;
 
-import com.omar.retromp3recorder.app.mvi.MviView;
-
 import java.util.Set;
-
-import static com.omar.retromp3recorder.app.recorder.VoiceRecorder.*;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
 
-public interface MainView extends MviView<MainView.MainViewModel> {
+import static com.omar.retromp3recorder.app.recorder.VoiceRecorder.BitRate;
+import static com.omar.retromp3recorder.app.recorder.VoiceRecorder.SampleRate;
+
+public interface MainView {
 
     enum State {Recording, Playing, Idle}
 

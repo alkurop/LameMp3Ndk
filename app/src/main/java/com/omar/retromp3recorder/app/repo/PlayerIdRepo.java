@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.repo;
 
 
-import com.omar.retromp3recorder.app.mvi.OneShot;
+import com.omar.retromp3recorder.app.utils.OneShot;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -15,7 +15,7 @@ public class PlayerIdRepo {
     private final Subject<OneShot<Integer>> events = ReplaySubject.create();
 
     @Inject
-    public PlayerIdRepo(){}
+    PlayerIdRepo(){}
 
     public Observable<OneShot<Integer>> observe() {
         return events;

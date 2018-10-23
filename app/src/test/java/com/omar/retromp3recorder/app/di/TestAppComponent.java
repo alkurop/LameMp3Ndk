@@ -10,6 +10,6 @@ import dagger.Component;
         TestFunctionalityModule.class,
         TestUtilsModule.class
 })
-public interface TestAppComponent {
+interface TestAppComponent {
 
 }

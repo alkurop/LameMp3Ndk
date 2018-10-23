@@ -10,11 +10,10 @@ public interface VoiceRecorder {
 
     void stopRecord();
 
+    //region settings
+
     enum SampleRate {
-        _44100(44100),
-        _22050(22050),
-        _11025(11025),
-        _8000(8000);
+        _44100(44100), _22050(22050), _11025(11025), _8000(8000);
 
         public final int value;
 
@@ -25,13 +24,16 @@ public interface VoiceRecorder {
 
     enum BitRate {
         _320(320), _192(192), _160(160), _128(128);
+
         public final int value;
 
         BitRate(int value) {
             this.value = value;
         }
     }
+    //endregion
 
+    //region events
     interface Event {
     }
 
@@ -62,4 +64,5 @@ public interface VoiceRecorder {
             this.sampleRate = sampleRate;
         }
     }
+    //endregion
 }

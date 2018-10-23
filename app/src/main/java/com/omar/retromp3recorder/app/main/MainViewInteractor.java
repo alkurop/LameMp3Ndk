@@ -1,8 +1,7 @@
 package com.omar.retromp3recorder.app.main;
 
 
-import com.omar.retromp3recorder.app.mvi.Interactor;
-import com.omar.retromp3recorder.app.mvi.OneShot;
+import com.omar.retromp3recorder.app.utils.OneShot;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.repo.BitRateRepo;
 import com.omar.retromp3recorder.app.repo.LogRepo;
@@ -39,8 +38,9 @@ import static com.omar.retromp3recorder.app.main.MainView.ShareAction;
 import static com.omar.retromp3recorder.app.main.MainView.StopAction;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
-public class MainViewInteractor implements Interactor<Action, Result> {
+public class MainViewInteractor {
 
+    //region fields
     private final Scheduler scheduler;
 
     private final ChangeBitrateUC changeBitrateUC;
@@ -56,6 +56,8 @@ public class MainViewInteractor implements Interactor<Action, Result> {
     private final RequestPermissionsRepo requestPermissionsRepo;
     private final StateRepo stateRepo;
     private final SampleRateRepo sampleRateRepo;
+
+    //endregion
 
     //region constructor
     @Inject
@@ -89,14 +91,14 @@ public class MainViewInteractor implements Interactor<Action, Result> {
     }
     //endregion
 
-    @Override
-    public ObservableTransformer<Action, Result> process() {
+    ObservableTransformer<Action, Result> process() {
         return upstream -> upstream
                 .observeOn(scheduler)
                 .compose((ObservableTransformer<Action, Result>) actions -> {
                     return Observable.merge(
                             createLinkedList(
-                                    actionsMapper(actions).toObservable(),
+                                    actionsMapper(actions)
+                                            .toObservable(),
                                     repoMapper()
                             ));
                 });

@@ -10,12 +10,12 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class SharebleFileUriCreator {
+public class SharableFileUriCreator {
 
     private final Context context;
 
     @Inject
-    SharebleFileUriCreator(Context context) {
+    SharableFileUriCreator(Context context) {
         this.context = context;
     }
 

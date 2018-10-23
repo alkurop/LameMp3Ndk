@@ -25,7 +25,7 @@ import static com.omar.retromp3recorder.app.di.AppComponent.MAIN_THREAD;
 
 public final class SharingModuleRX implements SharingModule {
 
-    private final SharebleFileUriCreator sharebleFileUriCreator;
+    private final SharableFileUriCreator sharableFileUriCreator;
     private final Context context;
     private final FileNameRepo fileNameRepo;
     private final Stringer stringer;
@@ -35,14 +35,14 @@ public final class SharingModuleRX implements SharingModule {
 
     @Inject
     SharingModuleRX(
-            SharebleFileUriCreator sharebleFileUriCreator,
+            SharableFileUriCreator sharableFileUriCreator,
             Context context,
             FileNameRepo fileNameRepo,
             Stringer stringer,
             Scheduler scheduler,
             @Named(MAIN_THREAD) Scheduler mainThreadScheduler
     ) {
-        this.sharebleFileUriCreator = sharebleFileUriCreator;
+        this.sharableFileUriCreator = sharableFileUriCreator;
         this.context = context;
         this.fileNameRepo = fileNameRepo;
         this.stringer = stringer;
@@ -96,7 +96,7 @@ public final class SharingModuleRX implements SharingModule {
     @SuppressLint("SetWorldReadable")
     private Uri collectForShare(File file) {
         boolean success = file.setReadable(true, false);
-        return sharebleFileUriCreator.createSharableUri(file);
+        return sharableFileUriCreator.createSharableUri(file);
     }
 
     private Intent initShareIntent(Uri uri) {

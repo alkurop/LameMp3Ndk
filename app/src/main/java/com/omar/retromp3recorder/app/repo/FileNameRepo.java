@@ -13,7 +13,7 @@ public class FileNameRepo {
     private final BehaviorSubject<String> stateSubject = BehaviorSubject.create();
 
     @Inject
-    public FileNameRepo(RecorderDefaults defaults){
+    FileNameRepo(RecorderDefaults defaults){
         stateSubject.onNext(defaults.filePath);
     }
 
