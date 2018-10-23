@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.omar.retromp3recorder.app.R;
-import com.omar.retromp3recorder.app.stringer.Stringer;
 import com.omar.retromp3recorder.app.repo.FileNameRepo;
+import com.omar.retromp3recorder.app.stringer.Stringer;
 
 import java.io.File;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -20,7 +21,7 @@ import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import io.reactivex.subjects.PublishSubject;
 
-import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
+import static com.omar.retromp3recorder.app.di.AppComponent.MAIN_THREAD;
 
 public final class SharingModuleRX implements SharingModule {
 
@@ -29,6 +30,7 @@ public final class SharingModuleRX implements SharingModule {
     private final FileNameRepo fileNameRepo;
     private final Stringer stringer;
     private final Scheduler scheduler;
+    private final Scheduler mainThreadScheduler;
     private final PublishSubject<Event> events = PublishSubject.create();
 
     @Inject
@@ -37,13 +39,15 @@ public final class SharingModuleRX implements SharingModule {
             Context context,
             FileNameRepo fileNameRepo,
             Stringer stringer,
-            Scheduler scheduler
+            Scheduler scheduler,
+            @Named(MAIN_THREAD) Scheduler mainThreadScheduler
     ) {
         this.sharebleFileUriCreator = sharebleFileUriCreator;
         this.context = context;
         this.fileNameRepo = fileNameRepo;
         this.stringer = stringer;
         this.scheduler = scheduler;
+        this.mainThreadScheduler = mainThreadScheduler;
     }
 
     @Override
@@ -53,33 +57,32 @@ public final class SharingModuleRX implements SharingModule {
                         {
                             File file = new File(fileName);
                             if (!file.exists()) {
-                                return
-                                        Completable.fromAction(() ->
+                                return Completable
+                                        .fromAction(() ->
                                                 events.onNext(
                                                         new SharingError(stringer.getString(R.string.trying_to_share)))
                                         );
                             } else {
-                                return
-                                        Single
-                                                .fromCallable(() -> {
-                                                    Uri uri = collectForShare(file);
-                                                    return initShareIntent(uri);
-                                                })
-                                                .subscribeOn(scheduler)
-                                                .flatMapCompletable(intent -> Completable.fromAction(() ->
-                                                        context.startActivity(
-                                                                Intent
-                                                                        .createChooser(
-                                                                                intent,
-                                                                                stringer.getString(R.string.select)
-                                                                        )
-                                                                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))))
-                                                .subscribeOn(mainThread())
-                                                .andThen(Completable.fromAction(() ->
-                                                        events.onNext(
-                                                                new SharingOk(stringer.getString(R.string.trying_to_share))
-                                                        ))
-                                                );
+                                return Single
+                                        .fromCallable(() -> {
+                                            Uri uri = collectForShare(file);
+                                            return initShareIntent(uri);
+                                        })
+                                        .subscribeOn(scheduler)
+                                        .flatMapCompletable(intent -> Completable.fromAction(() ->
+                                                context.startActivity(
+                                                        Intent
+                                                                .createChooser(
+                                                                        intent,
+                                                                        stringer.getString(R.string.select)
+                                                                )
+                                                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))))
+                                        .subscribeOn(mainThreadScheduler)
+                                        .andThen(Completable.fromAction(() ->
+                                                events.onNext(
+                                                        new SharingOk(stringer.getString(R.string.trying_to_share))
+                                                ))
+                                        );
                             }
                         }
                 );
