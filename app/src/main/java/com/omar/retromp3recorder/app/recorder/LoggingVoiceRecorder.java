@@ -16,7 +16,7 @@ public final class LoggingVoiceRecorder implements VoiceRecorder {
     private final VoiceRecorder recorder;
 
     @Inject
-    public LoggingVoiceRecorder(
+    LoggingVoiceRecorder(
             @Named(DECORATOR_ALPHA) VoiceRecorder recorder,
             LogRepo logRepo,
             Scheduler scheduler) {

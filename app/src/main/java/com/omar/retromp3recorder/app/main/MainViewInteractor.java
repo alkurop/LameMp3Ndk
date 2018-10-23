@@ -24,7 +24,6 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Scheduler;
 import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 
 import static com.omar.retromp3recorder.app.main.MainView.Action;
 import static com.omar.retromp3recorder.app.main.MainView.BitRateChangeAction;

@@ -19,7 +19,7 @@ public class StateLoggingVoiceRecorder implements VoiceRecorder {
     private final VoiceRecorder voiceRecorder;
 
     @Inject
-    public StateLoggingVoiceRecorder(
+    StateLoggingVoiceRecorder(
             @Named(DECORATOR_BETA) VoiceRecorder voiceRecorder,
             Scheduler scheduler,
             StateRepo stateRepo

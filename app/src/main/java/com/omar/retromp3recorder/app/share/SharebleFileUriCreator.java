@@ -15,11 +15,11 @@ public class SharebleFileUriCreator {
     private final Context context;
 
     @Inject
-    public SharebleFileUriCreator(Context context) {
+    SharebleFileUriCreator(Context context) {
         this.context = context;
     }
 
-    public Uri createSharableUri(File file) {
+    Uri createSharableUri(File file) {
         return FileProvider.getUriForFile(context,
                 context.getApplicationContext().getPackageName() +
                         ".com.omar.retromp3recorder.app.provider",

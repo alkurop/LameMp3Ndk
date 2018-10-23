@@ -14,7 +14,7 @@ public interface SharingModule {
     final class SharingOk implements Event {
         public final String message;
 
-        public SharingOk(String message) {
+        SharingOk(String message) {
             this.message = message;
         }
     }
@@ -22,7 +22,7 @@ public interface SharingModule {
     final class SharingError implements Event {
         public final String error;
 
-        public SharingError(String error) {
+        SharingError(String error) {
             this.error = error;
         }
     }

@@ -16,7 +16,7 @@ public final class LoggingAudioPlayer implements AudioPlayer {
     private final AudioPlayer audioPlayer;
 
     @Inject
-    public LoggingAudioPlayer(
+    LoggingAudioPlayer(
             @Named(DECORATOR_ALPHA) AudioPlayer audioPlayer,
             Scheduler scheduler,
             LogRepo logRepo

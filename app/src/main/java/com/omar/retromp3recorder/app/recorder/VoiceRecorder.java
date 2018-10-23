@@ -52,9 +52,9 @@ public interface VoiceRecorder {
     }
 
     final class RecorderProps {
-        public final String filepath;
-        public final BitRate bitRate;
-        public final SampleRate sampleRate;
+        final String filepath;
+        final BitRate bitRate;
+        final SampleRate sampleRate;
 
         public RecorderProps(String filepath, BitRate bitRate, SampleRate sampleRate) {
             this.filepath = filepath;

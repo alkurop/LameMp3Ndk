@@ -1,9 +1,9 @@
 package com.omar.retromp3recorder.app.usecase;
 
+import com.omar.retromp3recorder.app.main.MainView;
 import com.omar.retromp3recorder.app.mvi.OneShot;
 import com.omar.retromp3recorder.app.player.AudioPlayer;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
-import com.omar.retromp3recorder.app.main.MainView;
 import com.omar.retromp3recorder.app.repo.FileNameRepo;
 import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;
 import com.omar.retromp3recorder.app.repo.StateRepo;
@@ -13,9 +13,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.CompletableSource;
 import io.reactivex.Observable;
-import io.reactivex.functions.Function;
 
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createHashSet;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;

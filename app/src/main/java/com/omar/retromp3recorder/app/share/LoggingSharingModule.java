@@ -17,7 +17,7 @@ public final class LoggingSharingModule implements SharingModule {
     private final SharingModule sharingModule;
 
     @Inject
-    public LoggingSharingModule(
+    LoggingSharingModule(
             @Named(DECORATOR_ALPHA) SharingModule sharingModule,
             LogRepo logRepo,
             Scheduler scheduler

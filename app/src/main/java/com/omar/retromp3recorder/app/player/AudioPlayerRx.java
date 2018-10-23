@@ -13,9 +13,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
-/**
- * Created by omar on 18.08.15.
- */
+
 public final class AudioPlayerRx implements
         MediaPlayer.OnCompletionListener,
         MediaPlayer.OnPreparedListener,
@@ -26,7 +24,7 @@ public final class AudioPlayerRx implements
     private MediaPlayer mediaPlayer;
 
     @Inject
-    public AudioPlayerRx(Stringer stringer) {
+    AudioPlayerRx(Stringer stringer) {
         this.stringer = stringer;
     }
 
@@ -41,7 +39,7 @@ public final class AudioPlayerRx implements
     }
 
     @Override
-    public Observable<Event> observeEvents(){
+    public Observable<Event> observeEvents() {
         return events;
     }
 

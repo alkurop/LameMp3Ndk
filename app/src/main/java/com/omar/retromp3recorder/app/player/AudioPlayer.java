@@ -29,9 +29,9 @@ public interface AudioPlayer {
     }
 
     final class SendPlayerId implements Event {
-        public final int playerId;
+        final int playerId;
 
-        public SendPlayerId(int playerId) {
+        SendPlayerId(int playerId) {
             this.playerId = playerId;
         }
     }

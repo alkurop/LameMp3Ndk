@@ -20,7 +20,7 @@ public class StateLoggingAudioPlayer implements AudioPlayer {
     private final AudioPlayer audioPlayer;
 
     @Inject
-    public StateLoggingAudioPlayer(
+    StateLoggingAudioPlayer(
             StateRepo stateRepo,
             @Named(DECORATOR_BETA) AudioPlayer audioPlayer,
             PlayerIdRepo playerIdRepo,

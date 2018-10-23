@@ -24,7 +24,7 @@ import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_BETA;
 @Module(
         subcomponents = {ConfigSubComponent.class}
 )
-public abstract class FunctionalityModule {
+abstract class FunctionalityModule {
 
     //region audio player
     @Singleton

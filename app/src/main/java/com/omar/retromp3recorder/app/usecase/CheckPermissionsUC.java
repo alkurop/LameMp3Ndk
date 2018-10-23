@@ -24,7 +24,7 @@ public class CheckPermissionsUC {
         this.requestPermissionsRepo = requestPermissionsRepo;
     }
 
-    public Completable execute(Set<String> permissions) {
+    Completable execute(Set<String> permissions) {
         return Observable
                 .fromCallable(() -> {
                     Set<String> requestPermissions = new HashSet<>();

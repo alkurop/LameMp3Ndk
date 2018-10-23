@@ -49,7 +49,7 @@ public interface MainView extends MviView<MainView.MainViewModel> {
     final class SampleRateChangeAction implements Action {
         final SampleRate sampleRate;
 
-        public SampleRateChangeAction(SampleRate sampleRate) {
+        SampleRateChangeAction(SampleRate sampleRate) {
             this.sampleRate = sampleRate;
         }
     }
@@ -57,7 +57,7 @@ public interface MainView extends MviView<MainView.MainViewModel> {
     final class BitRateChangeAction implements Action {
         final BitRate bitRate;
 
-        public BitRateChangeAction(BitRate bitRate) {
+        BitRateChangeAction(BitRate bitRate) {
             this.bitRate = bitRate;
         }
     }
@@ -125,9 +125,9 @@ public interface MainView extends MviView<MainView.MainViewModel> {
     }
 
     final class PlayerIdResult implements Result {
-        public final int playerId;
+        final int playerId;
 
-        public PlayerIdResult(int playerId) {
+        PlayerIdResult(int playerId) {
             this.playerId = playerId;
         }
     }
