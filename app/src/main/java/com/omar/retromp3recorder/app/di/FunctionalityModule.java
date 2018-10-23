@@ -21,7 +21,7 @@ import static com.omar.retromp3recorder.app.di.AppComponent.INTERNAL;
 @Module(
         subcomponents = {ConfigSubComponent.class}
 )
-abstract class FunctionalityModule {
+public abstract class FunctionalityModule {
 
     @Singleton
     @Binds

@@ -1,8 +1,5 @@
 package com.omar.retromp3recorder.app.customviews;
 
-/**
- * Created by omar on 18.08.15.
- */
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -37,7 +34,7 @@ public class VisualizerView extends View {
         mBytes = null;
         mForePaint.setStrokeWidth(1f);
         mForePaint.setAntiAlias(true);
-        mForePaint.setColor(Color.rgb(0, 255,  000));
+        mForePaint.setColor(Color.rgb(0, 255,  0));
     }
 
     public void updateVisualizer(byte[] bytes) {

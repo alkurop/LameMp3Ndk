@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.share;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,6 +23,8 @@ import io.reactivex.subjects.PublishSubject;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 
 public final class SharingModuleRX implements SharingModule {
+
+    private final SharebleFileUriCreator sharebleFileUriCreator;
     private final Context context;
     private final FileNameRepo fileNameRepo;
     private final Stringer stringer;
@@ -29,12 +32,14 @@ public final class SharingModuleRX implements SharingModule {
     private final PublishSubject<Event> events = PublishSubject.create();
 
     @Inject
-    public SharingModuleRX(
+    SharingModuleRX(
+            SharebleFileUriCreator sharebleFileUriCreator,
             Context context,
             FileNameRepo fileNameRepo,
             Stringer stringer,
             Scheduler scheduler
     ) {
+        this.sharebleFileUriCreator = sharebleFileUriCreator;
         this.context = context;
         this.fileNameRepo = fileNameRepo;
         this.stringer = stringer;
@@ -85,16 +90,18 @@ public final class SharingModuleRX implements SharingModule {
         return events;
     }
 
+    @SuppressLint("SetWorldReadable")
     private Uri collectForShare(File file) {
-        file.setReadable(true, false);
-        return Uri.fromFile(file);
+        boolean success = file.setReadable(true, false);
+        return sharebleFileUriCreator.createSharableUri(file);
     }
 
     private Intent initShareIntent(Uri uri) {
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        shareIntent.setType("audio/mpeg4-generic");
-        return shareIntent;
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.setType("audio/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        return intent;
     }
 }
