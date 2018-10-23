@@ -1,6 +1,7 @@
 package com.omar.retromp3recorder.app.usecase;
 
 import com.omar.retromp3recorder.app.main.MainView;
+import com.omar.retromp3recorder.app.mvi.OneShot;
 import com.omar.retromp3recorder.app.recorder.FilePathGenerator;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.repo.BitRateRepo;
@@ -62,9 +63,11 @@ public class StartRecordUC {
 
     public Completable execute() {
         Observable<RequestPermissionsRepo.ShouldRequestPermissions> share =
-                requestPermissionsRepo.observe()
-                        .take(1)
-                        .share();
+                checkPermissionsUC.execute(voiceRecordPermissions)
+                        .andThen(requestPermissionsRepo.observe()
+                                .take(1)
+                                .share())
+                        .map(OneShot::checkValue);
 
         final Function3<String,
                 VoiceRecorder.BitRate,
@@ -102,9 +105,6 @@ public class StartRecordUC {
                                 execute,
                                 begForPermissions
                         ))
-                )
-                .andThen(
-                        checkPermissionsUC.execute(voiceRecordPermissions)
                 );
     }
 }

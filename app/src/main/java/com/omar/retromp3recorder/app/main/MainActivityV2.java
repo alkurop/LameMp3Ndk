@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.customviews.VisualizerView;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +61,7 @@ public class MainActivityV2 extends AppCompatActivity implements MainView {
     private List<RadioButton> bitRateGroup;
     private ScrollView scrollView;
     private VisualizerView visualizerView;
+    private ImageView background;
 
     @Nullable
     private Visualizer visualizer;
@@ -79,6 +82,7 @@ public class MainActivityV2 extends AppCompatActivity implements MainView {
         findViews();
         setListeners();
         createPermissionsMap();
+        Picasso.with(this).load(R.drawable.bg).fit().into(background);
         Disposable disposable = actionPublishSubject
                 .compose(interactor.process())
                 .compose(MainViewResultMapper.map())
@@ -114,6 +118,7 @@ public class MainActivityV2 extends AppCompatActivity implements MainView {
         visualizerView = findViewById(R.id.visualizer);
         sampleRateContainer = findViewById(R.id.ll_radio_container1);
         bitRateContainer = findViewById(R.id.ll_radio_container2);
+        background = findViewById(R.id.background);
         prefillRadioButtons();
     }
 
@@ -140,7 +145,7 @@ public class MainActivityV2 extends AppCompatActivity implements MainView {
 
     private RadioButton addCheckBox(ViewGroup container, String text) {
         @SuppressLint("InflateParams")
-        RadioButton cb  = (RadioButton) layoutInflater.inflate(R.layout.checkbox, null);
+        RadioButton cb = (RadioButton) layoutInflater.inflate(R.layout.checkbox, null);
         cb.setText(text);
         cb.setHeight(this.getResources().getDimensionPixelSize(R.dimen.cb_height));
         container.addView(cb);
@@ -205,9 +210,9 @@ public class MainActivityV2 extends AppCompatActivity implements MainView {
             compositeDisposable.add(disposableRadio);
         }
 
-        for (int i = 0; i < bitRateGroup.size(); i++) {
+        for (int i = 0; i < sampleRateGroup.size(); i++) {
             final int index = i;
-            RadioButton radioButton = bitRateGroup.get(index);
+            RadioButton radioButton = sampleRateGroup.get(index);
             Disposable disposableRadio = RxView.clicks(radioButton)
                     .subscribe(unit -> {
                         VoiceRecorder.SampleRate sampleRate = VoiceRecorder
@@ -248,16 +253,16 @@ public class MainActivityV2 extends AppCompatActivity implements MainView {
     }
 
     private void stopVisualizer() {
-        if (visualizer != null) {
-            Disposable disposable = Completable
-                    .fromAction(() -> {
+        Disposable disposable = Completable
+                .fromAction(() -> {
+                    if (visualizer != null) {
                         visualizer.release();
                         visualizer = null;
-                    })
-                    .subscribeOn(computation())
-                    .subscribe();
-            compositeDisposable.add(disposable);
-        }
+                    }
+                })
+                .subscribeOn(computation())
+                .subscribe();
+        compositeDisposable.add(disposable);
     }
 
     private void renderState(State state) {
@@ -267,8 +272,8 @@ public class MainActivityV2 extends AppCompatActivity implements MainView {
                 R.drawable.ic_action_play);
 
         recordButton.setImageResource(state == State.Recording ?
-                R.drawable.ic_action_rec :
-                R.drawable.ic_action_stop);
+                R.drawable.ic_action_stop :
+                R.drawable.ic_action_rec);
         if (state == State.Idle) stopVisualizer();
     }
 
@@ -276,13 +281,23 @@ public class MainActivityV2 extends AppCompatActivity implements MainView {
         if (message == null) {
             return;
         }
-        TextView inflate = (TextView) getLayoutInflater().inflate(R.layout.log_view, logContainerView);
+        @SuppressLint("InflateParams")
+        TextView inflate = (TextView) getLayoutInflater().inflate(R.layout.log_view, null);
+        logContainerView.addView(inflate);
         inflate.setText(message);
         scrollDownHandler.postDelayed(() -> scrollView.fullScroll(View.FOCUS_DOWN), 150);
     }
 
     private void renderError(@Nullable String error) {
-        renderMessage(error);
+        if (error == null) {
+            return;
+        }
+        @SuppressLint("InflateParams")
+        TextView inflate = (TextView) getLayoutInflater().inflate(R.layout.log_view, null);
+        logContainerView.addView(inflate);
+        inflate.setText("Error: " + error);
+        inflate.setTextColor(ContextCompat.getColor(this, android.R.color.holo_orange_light));
+        scrollDownHandler.postDelayed(() -> scrollView.fullScroll(View.FOCUS_DOWN), 150);
     }
 
     private void renderPermissions(@Nullable Set<String> requestForPermissions) {

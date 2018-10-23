@@ -1,27 +1,30 @@
 package com.omar.retromp3recorder.app.repo;
 
+import com.omar.retromp3recorder.app.mvi.OneShot;
+
 import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 
 @Singleton
 public class RequestPermissionsRepo {
 
-    private final PublishSubject<ShouldRequestPermissions> state = PublishSubject.create();
+    private final BehaviorSubject<OneShot<ShouldRequestPermissions>> state = BehaviorSubject.create();
 
     @Inject
     public RequestPermissionsRepo(){}
 
-    public Observable<ShouldRequestPermissions> observe() {
+    public Observable<OneShot<ShouldRequestPermissions>> observe() {
         return state;
     }
 
     public void newValue(ShouldRequestPermissions newValue) {
-        state.onNext(newValue);
+        state.onNext(new OneShot<>(newValue));
     }
 
     //region events

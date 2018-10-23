@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.usecase;
 
+import com.omar.retromp3recorder.app.mvi.OneShot;
 import com.omar.retromp3recorder.app.player.AudioPlayer;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.main.MainView;
@@ -12,7 +13,9 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.CompletableSource;
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createHashSet;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
@@ -56,13 +59,16 @@ public class StartPlaybackUC {
 
     public Completable execute() {
         Observable<RequestPermissionsRepo.ShouldRequestPermissions>
-                shouldRequestPermissionsObservable = requestPermissionsRepo.observe()
-                        .take(1)
-                        .share();
+                shouldRequestPermissionsObservable =
+                checkPermissionsUC.execute(playbackPermissions)
+                        .andThen(requestPermissionsRepo.observe()
+                                .take(1)
+                                .share())
+                .map(OneShot::checkValue);
 
         Completable begForPermissions = shouldRequestPermissionsObservable
                 .ofType(RequestPermissionsRepo.Yes.class)
-                .flatMapCompletable(answer -> Completable.complete());
+                .flatMapCompletable(yes -> Completable.complete());
 
         Completable execute = shouldRequestPermissionsObservable
                 .ofType(RequestPermissionsRepo.No.class)
@@ -84,7 +90,6 @@ public class StartPlaybackUC {
                                 begForPermissions,
                                 execute
                         ))
-                )
-                .andThen(checkPermissionsUC.execute(playbackPermissions));
+                );
     }
 }

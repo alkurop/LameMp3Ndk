@@ -78,8 +78,6 @@ public final class AudioPlayerRx implements
             mediaPlayer = null;
             events.onNext(new Message(stringer.getString(R.string.stopped_playing)));
             events.onNext(new PlaybackEnded());
-        } else {
-            events.onNext(new Error(stringer.getString(R.string.player_error_on_stop)));
         }
     }
 

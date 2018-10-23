@@ -27,7 +27,7 @@ public final class LoggingSharingModule implements SharingModule {
         Observable<LogRepo.Event> message = share.ofType(SharingModule.SharingOk.class)
                 .map(answer -> new LogRepo.Message(answer.message));
         Observable<LogRepo.Event> error = share.ofType(SharingModule.SharingError.class)
-                .map(answer -> new LogRepo.Message(answer.error));
+                .map(answer -> new LogRepo.Error(answer.error));
 
         Observable
                 .merge(createLinkedList(

@@ -74,6 +74,7 @@ public final class VoiceRecorderRX implements VoiceRecorder {
         Disposable disposable = recorderCompletable
                 .onErrorResumeNext(throwable -> {
                     events.onNext(new Error(throwable.getMessage()));
+                    throwable.printStackTrace();
                     return Completable.complete();
                 })
                 .subscribeOn(scheduler)
@@ -160,7 +161,7 @@ public final class VoiceRecorderRX implements VoiceRecorder {
                     "= %.1f" + stringer.getString(R.string.seconds), ((float) counter) / 1000)));
 
             events.onNext(new Message(String.format(stringer.getString(R.string.file_size) + " = %.1f " + Constants.KB, ((float) outFile.length()) / 1000)));
-            events.onNext(new Message(String.format("%.1f " + Constants.KB + stringer.getString(R.string.compression_rate), (outFile.length()) / counter)));
+            events.onNext(new Message(String.format("%.1f " + Constants.KB + stringer.getString(R.string.compression_rate), (float) (outFile.length()) / counter)));
 
         } else
             events.onNext(new Error(stringer.getString(R.string.error_saving_file_to) + absolutePath));

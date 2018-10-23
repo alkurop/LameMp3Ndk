@@ -13,8 +13,8 @@ public interface VoiceRecorder {
     enum SampleRate {
         _44100(44100),
         _22050(22050),
-        _11052(11052),
-        _8000(8800);
+        _11025(11025),
+        _8000(8000);
 
         public final int value;
 

@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.app.main;
 
 
 import com.omar.retromp3recorder.app.mvi.Interactor;
+import com.omar.retromp3recorder.app.mvi.OneShot;
 import com.omar.retromp3recorder.app.player.AudioPlayer;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.repo.BitRateRepo;
@@ -160,6 +161,8 @@ public class MainViewInteractor implements Interactor<Action, Result> {
                         ),
                 requestPermissionsRepo
                         .observe()
+                        .filter(shouldRequestPermissionsOneShot -> !shouldRequestPermissionsOneShot.isShot())
+                        .map(OneShot::getValueOnce)
                         .ofType(RequestPermissionsRepo.Yes.class)
                         .map((Function<RequestPermissionsRepo.Yes, Result>) yes ->
                                 new MainView.RequestPermissionsResult(yes.permissions)

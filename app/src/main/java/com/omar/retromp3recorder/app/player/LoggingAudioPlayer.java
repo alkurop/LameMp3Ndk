@@ -26,7 +26,7 @@ public final class LoggingAudioPlayer implements AudioPlayer {
         Observable<LogRepo.Event> message = share.ofType(AudioPlayer.Message.class)
                 .map(answer -> new LogRepo.Message(answer.message));
         Observable<LogRepo.Event> error = share.ofType(AudioPlayer.Error.class)
-                .map(answer -> new LogRepo.Message(answer.error));
+                .map(answer -> new LogRepo.Error(answer.error));
 
         Observable
                 .merge(createLinkedList(
