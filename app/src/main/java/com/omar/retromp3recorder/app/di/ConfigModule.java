@@ -14,6 +14,6 @@ public class ConfigModule {
     @Singleton
     @Provides
     RecorderDefaults provideRecorderDefaults(FilePathGenerator filePathGenerator) {
-        return new RecorderDefaults(VoiceRecorder.BitRate._320, VoiceRecorder.SampleRate._44100, filePathGenerator.genrateFilePath());
+        return new RecorderDefaults(VoiceRecorder.BitRate._320, VoiceRecorder.SampleRate._44100, filePathGenerator.generateFilePath());
     }
 }

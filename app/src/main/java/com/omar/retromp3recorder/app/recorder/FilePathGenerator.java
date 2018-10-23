@@ -14,7 +14,7 @@ public class FilePathGenerator {
         this.context = context;
     }
 
-    public String genrateFilePath() {
+    public String generateFilePath() {
         String name = Constants.VOICE_RECORD;
         String fileName = name + Constants.MP3_EXTENTION;
         return context.getExternalCacheDir() + "/" + fileName;

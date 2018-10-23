@@ -81,7 +81,7 @@ public class StartRecordUC {
         Completable execute = share
                 .ofType(RequestPermissionsRepo.No.class)
                 .flatMapCompletable(answer -> Completable.fromAction(() -> {
-                    String filePath = filePathGenerator.genrateFilePath();
+                    String filePath = filePathGenerator.generateFilePath();
                     fileNameRepo.newValue(filePath);
                 }))
                 .andThen(Observable
