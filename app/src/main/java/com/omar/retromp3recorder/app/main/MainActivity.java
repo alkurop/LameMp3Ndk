@@ -1,246 +1,334 @@
 package com.omar.retromp3recorder.app.main;
 
 import android.Manifest;
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.os.Handler;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.alkurop.jpermissionmanager.PermissionOptionalDetails;
 import com.github.alkurop.jpermissionmanager.PermissionRequiredDetails;
 import com.github.alkurop.jpermissionmanager.PermissionsManager;
+import com.jakewharton.rxbinding3.view.RxView;
 import com.omar.retromp3recorder.app.App;
+import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.customviews.VisualizerView;
-import com.omar.retromp3recorder.app.presenters.IMainEvents;
-import com.omar.retromp3recorder.app.utils.TouchController;
+import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Set;
+
+import javax.inject.Inject;
+
+import io.reactivex.Completable;
+import io.reactivex.annotations.Nullable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
+
+import static com.omar.retromp3recorder.app.utils.VarargHelper.createHashMap;
+import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
+import static io.reactivex.schedulers.Schedulers.computation;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, IMainView {
+public class MainActivity extends AppCompatActivity implements MainView {
 
-    private ImageView btn_Play, btn_Record, btn_Share;
-    private LinearLayout llLogHolder, radioContainer1, radioContainer2;
-    private IMainEvents presenter;
+    private final PublishSubject<Action> actionPublishSubject = PublishSubject.create();
+    private final Subject<State> stateSubject = BehaviorSubject.create();
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private final Handler scrollDownHandler = new Handler();
+
+    private ImageView playButton, recordButton, shareButton;
+    private LinearLayout logContainerView, sampleRateContainer, bitRateContainer;
+    private List<RadioButton> sampleRateGroup;
+    private List<RadioButton> bitRateGroup;
     private ScrollView scrollView;
-    private TextView tv_Timer;
-    private VisualizerView mVisualizerView;
-    private Visualizer mVisualizer;
-    private PermissionsManager permissionManager;
+    private VisualizerView visualizerView;
     private ImageView background;
 
-     OldMainPresenter mainPresenter;
+    @Nullable
+    private Visualizer visualizer;
+    private PermissionsManager permissionsManager;
+    private HashMap<String, PermissionOptionalDetails> permissionsMap;
+    private LayoutInflater layoutInflater;
 
+    @Inject
+    MainViewInteractor interactor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.appComponent.inject(this);
-        presenter = new OldMainPresenter();
-        presenter.init(this);
-        permissionManager = new PermissionsManager(this);
-        HashMap<String, PermissionOptionalDetails> permissions = new HashMap<>();
-        permissions.put(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                new PermissionRequiredDetails(getString(R.string.write_permission_title),
-                        getString(R.string.write_permission_message),
-                        getString(R.string.write_required_message)));
-        permissions.put(Manifest.permission.RECORD_AUDIO,
-                new PermissionRequiredDetails(getString(R.string.write_permission_title),
-                        getString(R.string.write_permission_message),
-                        getString(R.string.write_required_message)));
-        permissionManager.addPermissions(permissions);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        Bundle b = outState == null ? new Bundle() : outState;
-        b.putParcelable("resultMapper", presenter.saveState());
-        super.onSaveInstanceState(b);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        presenter.restoreState(savedInstanceState.getParcelable("resultMapper"));
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        permissionManager.addPermissionsListener(new PermissionsManager.PermissionListener() {
-            @Override
-            public void onPermissionResult(HashMap<String, Boolean> stringBooleanMap) {
-                permissionManager.clearPermissionsListeners();
-                for (Map.Entry<String, Boolean> entry : stringBooleanMap.entrySet()) {
-                    if (!entry.getValue()) {
-                        return;
-                    }
-                }
-            }
-        });
-        permissionManager.makePermissionRequest(true);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        hardFixRestorePresenter();
-    }
-
-    private void hardFixRestorePresenter() {
-        presenter.hardfixRestoreState();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        permissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        permissionManager.onActivityResult(requestCode);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (TouchController.allowClick())
-            switch (view.getId()) {
-                case R.id.iv_play:
-                    presenter.playClicked();
-                    break;
-                case R.id.iv_record:
-                    presenter.recordClicked();
-                    break;
-                case R.id.iv_share:
-                    presenter.shareClicked();
-                    break;
-            }
-    }
-
-    @Override
-    public void setUI() {
         setContentView(R.layout.activity_main);
-        btn_Play = findViewById(R.id.iv_play);
-        btn_Record = findViewById(R.id.iv_record);
-        btn_Share = findViewById(R.id.iv_share);
-        llLogHolder = findViewById(R.id.ll_logHolder);
-        scrollView = findViewById(R.id.scrollView);
-        mVisualizerView = findViewById(R.id.visualizer);
-        radioContainer1 = findViewById(R.id.ll_radio_container1);
-        radioContainer2 = findViewById(R.id.ll_radio_container2);
-        background = findViewById(R.id.background);
+        layoutInflater = LayoutInflater.from(this);
+        App.appComponent.inject(this);
+        permissionsManager = new PermissionsManager(this);
+        findViews();
+        setListeners();
+        createPermissionsMap();
         Picasso.with(this).load(R.drawable.bg).fit().into(background);
+        Disposable disposable = actionPublishSubject
+                .compose(interactor.process())
+                .compose(MainViewResultMapper.map())
+                .observeOn(mainThread())
+                .subscribe(this::renderView);
+        compositeDisposable.add(disposable);
+    }
 
-        btn_Play.setOnClickListener(this);
-        btn_Record.setOnClickListener(this);
-        btn_Share.setOnClickListener(this);
+    private void createPermissionsMap() {
+        permissionsMap = createHashMap(
+                new Pair<>(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        new PermissionRequiredDetails(
+                                getString(R.string.write_permission_title),
+                                getString(R.string.write_permission_message),
+                                getString(R.string.write_required_message))
+                ),
+                new Pair<>(Manifest.permission.RECORD_AUDIO,
+                        new PermissionRequiredDetails(
+                                getString(R.string.write_permission_title),
+                                getString(R.string.write_permission_message),
+                                getString(R.string.write_required_message)
+                        )
+                )
+        );
+    }
+
+    private void findViews() {
+        playButton = findViewById(R.id.iv_play);
+        recordButton = findViewById(R.id.iv_record);
+        shareButton = findViewById(R.id.iv_share);
+        logContainerView = findViewById(R.id.ll_logHolder);
+        scrollView = findViewById(R.id.scrollView);
+        visualizerView = findViewById(R.id.visualizer);
+        sampleRateContainer = findViewById(R.id.ll_radio_container1);
+        bitRateContainer = findViewById(R.id.ll_radio_container2);
+        background = findViewById(R.id.background);
+        prefillRadioButtons();
+    }
+
+    @SuppressLint("DefaultLocale")
+    private void prefillRadioButtons() {
+        addTitleView(bitRateContainer, getString(R.string.bit_rate));
+        addTitleView(sampleRateContainer, getString(R.string.sample_rate));
+
+        sampleRateGroup = new ArrayList<>();
+        bitRateGroup = new ArrayList<>();
+
+        for (VoiceRecorder.SampleRate sampleRate : VoiceRecorder.SampleRate.values()) {
+            String title = String.format("%d %s", sampleRate.value, Constants.KB);
+            RadioButton radioButton = addCheckBox(sampleRateContainer, title);
+            sampleRateGroup.add(radioButton);
+        }
+
+        for (VoiceRecorder.BitRate bitRate : VoiceRecorder.BitRate.values()) {
+            String title = String.format("%d %s", bitRate.value, Constants.KBPS);
+            RadioButton radioButton = addCheckBox(bitRateContainer, title);
+            bitRateGroup.add(radioButton);
+        }
+    }
+
+    private RadioButton addCheckBox(ViewGroup container, String text) {
+        @SuppressLint("InflateParams")
+        RadioButton cb = (RadioButton) layoutInflater.inflate(R.layout.checkbox, null);
+        cb.setText(text);
+        cb.setHeight(this.getResources().getDimensionPixelSize(R.dimen.cb_height));
+        container.addView(cb);
+        return cb;
+    }
+
+    private void addTitleView(ViewGroup container, String title) {
+        layoutInflater.inflate(R.layout.container_title, container);
+        TextView titleView = container.findViewById(R.id.title);
+        titleView.setText(title);
+    }
+
+    private void setListeners() {
+        Disposable disposable = RxView.clicks(playButton)
+                .map(unit -> stateSubject.blockingFirst())
+                .subscribe(state -> {
+                    switch (state) {
+                        case Idle:
+                        case Recording: {
+                            actionPublishSubject.onNext(new PlayAction());
+                            break;
+                        }
+                        case Playing: {
+                            actionPublishSubject.onNext(new StopAction());
+                            break;
+                        }
+                    }
+                });
+
+        Disposable disposable1 = RxView.clicks(recordButton)
+                .map(unit -> stateSubject.blockingFirst())
+                .subscribe(state -> {
+                    switch (state) {
+                        case Idle:
+                        case Playing: {
+                            actionPublishSubject.onNext(new RecordAction());
+                            break;
+                        }
+                        case Recording: {
+                            actionPublishSubject.onNext(new StopAction());
+                            break;
+                        }
+                    }
+                });
+
+        Disposable disposable2 = RxView.clicks(shareButton)
+                .subscribe(unit ->
+                        actionPublishSubject.onNext(new ShareAction())
+                );
+
+        compositeDisposable.addAll(disposable, disposable1, disposable2);
+
+        for (int i = 0; i < bitRateGroup.size(); i++) {
+            final int index = i;
+            RadioButton radioButton = bitRateGroup.get(index);
+            Disposable disposableRadio = RxView.clicks(radioButton)
+                    .subscribe(unit -> {
+                        VoiceRecorder.BitRate bitRate = VoiceRecorder
+                                .BitRate.values()[index];
+                        actionPublishSubject.onNext(new BitRateChangeAction(bitRate));
+                    });
+            compositeDisposable.add(disposableRadio);
+        }
+
+        for (int i = 0; i < sampleRateGroup.size(); i++) {
+            final int index = i;
+            RadioButton radioButton = sampleRateGroup.get(index);
+            Disposable disposableRadio = RxView.clicks(radioButton)
+                    .subscribe(unit -> {
+                        VoiceRecorder.SampleRate sampleRate = VoiceRecorder
+                                .SampleRate.values()[index];
+                        actionPublishSubject.onNext(new SampleRateChangeAction(sampleRate));
+
+                    });
+            compositeDisposable.add(disposableRadio);
+        }
     }
 
     @Override
-    public void setRecordBtnImg(int drawable) {
-        btn_Record.setImageResource(drawable);
+    public void renderView(MainViewModel mainViewModel) {
+        renderPermissions(mainViewModel.requestForPermissions);
+        renderBitrate(mainViewModel.bitRate);
+        renderSampleRate(mainViewModel.sampleRate);
+        renderError(mainViewModel.error);
+        renderMessage(mainViewModel.message);
+        renderState(mainViewModel.state);
+        renderPlayerId(mainViewModel.playerId);
     }
 
-    @Override
-    public void setPlayBtnImg(int drawable) {
-        btn_Play.setImageResource(drawable);
-    }
-
-    @Override
-    public void startVisualizer(int playerId) {
-        mVisualizer = new Visualizer(playerId);
-        mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
-        mVisualizer.setDataCaptureListener(new Visualizer.OnDataCaptureListener() {
+    private void renderPlayerId(@Nullable Integer playerId) {
+        if (playerId == null) {
+            return;
+        }
+        visualizer = new Visualizer(playerId);
+        visualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
+        visualizer.setDataCaptureListener(new Visualizer.OnDataCaptureListener() {
             public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
-                mVisualizerView.updateVisualizer(bytes);
+                visualizerView.updateVisualizer(bytes);
             }
 
             public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
             }
         }, Visualizer.getMaxCaptureRate() / 2, true, false);
-        mVisualizer.setEnabled(true);
+        visualizer.setEnabled(true);
+    }
+
+    private void stopVisualizer() {
+        Disposable disposable = Completable
+                .fromAction(() -> {
+                    if (visualizer != null) {
+                        visualizer.release();
+                        visualizer = null;
+                    }
+                })
+                .subscribeOn(computation())
+                .subscribe();
+        compositeDisposable.add(disposable);
+    }
+
+    private void renderState(State state) {
+        stateSubject.onNext(state);
+        playButton.setImageResource(state == State.Playing ?
+                R.drawable.ic_action_stop :
+                R.drawable.ic_action_play);
+
+        recordButton.setImageResource(state == State.Recording ?
+                R.drawable.ic_action_stop :
+                R.drawable.ic_action_rec);
+        if (state == State.Idle) stopVisualizer();
+    }
+
+    private void renderMessage(@Nullable String message) {
+        if (message == null) {
+            return;
+        }
+        @SuppressLint("InflateParams")
+        TextView inflate = (TextView) getLayoutInflater().inflate(R.layout.log_view, null);
+        logContainerView.addView(inflate);
+        inflate.setText(message);
+        scrollDownHandler.postDelayed(() -> scrollView.fullScroll(View.FOCUS_DOWN), 150);
+    }
+
+    private void renderError(@Nullable String error) {
+        if (error == null) {
+            return;
+        }
+        @SuppressLint("InflateParams")
+        TextView inflate = (TextView) getLayoutInflater().inflate(R.layout.log_view, null);
+        logContainerView.addView(inflate);
+        inflate.setText("Error: " + error);
+        inflate.setTextColor(ContextCompat.getColor(this, android.R.color.holo_orange_light));
+        scrollDownHandler.postDelayed(() -> scrollView.fullScroll(View.FOCUS_DOWN), 150);
+    }
+
+    private void renderPermissions(@Nullable Set<String> requestForPermissions) {
+        if (requestForPermissions == null) {
+            return;
+        }
+        HashMap<String, PermissionOptionalDetails> permissionRequests = new HashMap<>();
+        for (String permissionName : requestForPermissions) {
+            permissionRequests.put(permissionName, permissionsMap.get(permissionName));
+        }
+        permissionsManager.addPermissions(permissionRequests);
+        permissionsManager.makePermissionRequest(true);
+    }
+
+    private void renderSampleRate(VoiceRecorder.SampleRate sampleRate) {
+        for (int i = 0; i < sampleRateGroup.size(); i++) {
+            sampleRateGroup.get(i).setChecked(sampleRate.ordinal() == i);
+        }
+    }
+
+    private void renderBitrate(VoiceRecorder.BitRate bitRate) {
+        for (int i = 0; i < bitRateGroup.size(); i++) {
+            bitRateGroup.get(i).setChecked(bitRate.ordinal() == i);
+        }
     }
 
     @Override
-    public void stopVisualizer() {
-        if (mVisualizer != null) new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mVisualizer.release();
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-
-                }
-            }
-        }).start();
-    }
-
-    @Override
-    public void setLabelText(String s) {
-
-        tv_Timer = (TextView) getLayoutInflater().inflate(R.layout.log_view, null);
-        tv_Timer.setText(s);
-        llLogHolder.addView(tv_Timer);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(150);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            scrollView.fullScroll(View.FOCUS_DOWN);
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }).start();
-
-    }
-
-    @Override
-    public LinearLayout getRadioContainer1() {
-        return radioContainer1;
-    }
-
-    @Override
-    public LinearLayout getRadioContainer2() {
-        return radioContainer2;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        presenter.stopAll();
-    }
-
-    /*FOR TESTING ONLY*/
-    public OldMainPresenter getMainPresenter() {
-        return new OldMainPresenter();
-    }
-
-    public void setMainPresenter() {
-        presenter = getMainPresenter();
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+        scrollDownHandler.removeCallbacksAndMessages(null);
+        stopVisualizer();
     }
 }

@@ -1,7 +1,6 @@
 package com.omar.retromp3recorder.app.di;
 
 import com.omar.retromp3recorder.app.main.MainActivity;
-import com.omar.retromp3recorder.app.main.MainActivityV2;
 
 import javax.inject.Singleton;
 
@@ -18,5 +17,4 @@ public interface AppComponent {
 
     void inject(MainActivity mainActivity);
 
-    void inject(MainActivityV2 mainActivityV2);
 }
