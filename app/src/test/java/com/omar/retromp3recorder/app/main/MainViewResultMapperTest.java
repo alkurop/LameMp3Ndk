@@ -5,9 +5,13 @@ import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashSet;
+
 import io.reactivex.observers.TestObserver;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
+
+import static com.omar.retromp3recorder.app.utils.VarargHelper.createHashSet;
 
 public class MainViewResultMapperTest {
 
@@ -83,25 +87,85 @@ public class MainViewResultMapperTest {
 
     @Test
     public void test_SampleRateChangeResult_Mapped() {
+        MainView.SampleRateChangeResult bitrateChangedResult
+                = new MainView.SampleRateChangeResult(VoiceRecorder.SampleRate._22050);
+
+        //When
+        resultPublisher.onNext(bitrateChangedResult);
+
+        //Then
+        test.assertNoErrors()
+                .assertNotComplete()
+                .assertNoErrors()
+                .assertValueCount(2)
+                .assertValueAt(1, mainViewModel ->
+                        mainViewModel.sampleRate == VoiceRecorder.SampleRate._22050)
+        ;
     }
 
     @Test
     public void test_StateChangedResult_Mapped() {
+        MainView.StateChangedResult stateChangedResult =
+                new MainView.StateChangedResult(MainView.State.Playing);
+
+        //When
+        resultPublisher.onNext(stateChangedResult);
+
+        //Then
+        test.assertNoErrors()
+                .assertNotComplete()
+                .assertNoErrors()
+                .assertValueCount(2)
+                .assertValueAt(1, mainViewModel ->
+                        mainViewModel.state == MainView.State.Playing)
+        ;
     }
 
     @Test
     public void test_RequestPermissionsResult_Mapped() {
+        HashSet<String> permissionsToRequest = createHashSet("test");
+        MainView.RequestPermissionsResult requestPermissionsResult =
+                new MainView.RequestPermissionsResult(permissionsToRequest);
+
+        //When
+        resultPublisher.onNext(requestPermissionsResult);
+
+        //Then
+        test.assertNoErrors()
+                .assertNotComplete()
+                .assertNoErrors()
+                .assertValueCount(2)
+                .assertValueAt(1, mainViewModel ->
+                        mainViewModel.requestForPermissions == permissionsToRequest)
+        ;
     }
 
     @Test
     public void test_PlayerIdResult_Mapped() {
+        int playerId = 28;
+        MainView.PlayerIdResult playerIdResult = new MainView.PlayerIdResult(playerId);
+
+        //When
+        resultPublisher.onNext(playerIdResult);
+
+        //Then
+        test.assertNoErrors()
+                .assertNotComplete()
+                .assertNoErrors()
+                .assertValueCount(2)
+                .assertValueAt(1, mainViewModel ->
+                        mainViewModel.playerId == playerId)
+        ;
     }
 
     @Test
     public void test_UnknownResult_crash() {
-    }
+        class UnknownResult implements MainView.Result{}
 
-    @Test
-    public void test_State_Reducer_Combines_ViewModels() {
+        //When
+        resultPublisher.onNext(new UnknownResult());
+
+        //Then
+        test.assertError(IllegalStateException.class);
     }
 }
