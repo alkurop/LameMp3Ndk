@@ -3,6 +3,9 @@ package com.omar.retromp3recorder.app.stringer;
 import android.content.Context;
 import android.support.annotation.StringRes;
 
+import com.omar.retromp3recorder.app.utils.NotUnitTestable;
+
+@NotUnitTestable
 public class ContextStringer implements Stringer {
     private final Context context;
 

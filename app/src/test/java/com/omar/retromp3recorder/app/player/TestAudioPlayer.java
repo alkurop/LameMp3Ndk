@@ -6,7 +6,7 @@ import javax.inject.Named;
 import io.reactivex.Observable;
 import io.reactivex.subjects.Subject;
 
-import static com.omar.retromp3recorder.app.di.MockSubComponent.MockModule.PLAYER_SUBJECT;
+import static com.omar.retromp3recorder.app.di.MockModule.PLAYER_SUBJECT;
 
 public class TestAudioPlayer implements AudioPlayer {
 

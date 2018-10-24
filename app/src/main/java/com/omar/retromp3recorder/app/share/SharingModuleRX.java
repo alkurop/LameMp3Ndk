@@ -8,6 +8,7 @@ import android.net.Uri;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.repo.FileNameRepo;
 import com.omar.retromp3recorder.app.stringer.Stringer;
+import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 
 import java.io.File;
 
@@ -23,6 +24,7 @@ import io.reactivex.subjects.PublishSubject;
 
 import static com.omar.retromp3recorder.app.di.AppComponent.MAIN_THREAD;
 
+@NotUnitTestable
 public final class SharingModuleRX implements SharingModule {
 
     private final SharableFileUriCreator sharableFileUriCreator;

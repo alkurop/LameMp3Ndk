@@ -1,5 +1,7 @@
 package com.omar.retromp3recorder.app.di;
 
+import com.omar.retromp3recorder.app.main.MainViewInteractorRepoTest;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -8,8 +10,10 @@ import dagger.Component;
 @Component(modules = {
         ConfigModule.class,
         TestFunctionalityModule.class,
-        TestUtilsModule.class
+        TestUtilsModule.class,
+        MockModule.class
 })
-interface TestAppComponent {
+public interface TestAppComponent {
 
+    void inject(MainViewInteractorRepoTest mainViewInteractorRepoTest);
 }

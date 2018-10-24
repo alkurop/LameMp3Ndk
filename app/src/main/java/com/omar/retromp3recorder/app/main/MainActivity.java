@@ -26,6 +26,7 @@ import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.customviews.VisualizerView;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
+import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ import static com.omar.retromp3recorder.app.utils.VarargHelper.createHashMap;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.computation;
 
-
+@NotUnitTestable
 public class MainActivity extends AppCompatActivity implements MainView {
 
     private final PublishSubject<Action> actionPublishSubject = PublishSubject.create();

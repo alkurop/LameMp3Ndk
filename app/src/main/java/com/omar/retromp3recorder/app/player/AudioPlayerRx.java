@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.stringer.Stringer;
+import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +14,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
-
+@NotUnitTestable
 public final class AudioPlayerRx implements
         MediaPlayer.OnCompletionListener,
         MediaPlayer.OnPreparedListener,

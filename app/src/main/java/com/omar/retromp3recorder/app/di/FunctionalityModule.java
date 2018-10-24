@@ -30,7 +30,7 @@ abstract class FunctionalityModule {
     @Singleton
     @Named(DECORATOR_ALPHA)
     @Binds
-    abstract AudioPlayer provideAudioPlayerInternal(AudioPlayerRx clazz);
+    abstract AudioPlayer provideAudioPlayerBase(AudioPlayerRx clazz);
 
     @Singleton
     @Named(DECORATOR_BETA)
@@ -40,15 +40,13 @@ abstract class FunctionalityModule {
     @Singleton
     @Binds
     abstract AudioPlayer provideAudioLoggingPlayer(StateLoggingAudioPlayer clazz);
-
     //endregion
 
     //region voice recorder
-
     @Singleton
     @Named(DECORATOR_ALPHA)
     @Binds
-    abstract VoiceRecorder provideVoiceRecorderInternal(VoiceRecorderRX clazz);
+    abstract VoiceRecorder provideVoiceRecorderBase(VoiceRecorderRX clazz);
 
     @Singleton
     @Named(DECORATOR_BETA)
@@ -61,15 +59,13 @@ abstract class FunctionalityModule {
     //endregion
 
     //region share
-
     @Singleton
     @Named(DECORATOR_ALPHA)
     @Binds
-    abstract SharingModule provideSharingModuleInternal(SharingModuleRX clazz);
+    abstract SharingModule provideSharingModuleBase(SharingModuleRX clazz);
 
     @Singleton
     @Binds
     abstract SharingModule provideSharingLoggingModule(LoggingSharingModule clazz);
-
     //endregion
 }

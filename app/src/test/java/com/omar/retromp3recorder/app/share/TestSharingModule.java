@@ -7,7 +7,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.subjects.Subject;
 
-import static com.omar.retromp3recorder.app.di.MockSubComponent.MockModule.SHARING_SUBJECT;
+import static com.omar.retromp3recorder.app.di.MockModule.SHARING_SUBJECT;
 
 public class TestSharingModule implements SharingModule {
 

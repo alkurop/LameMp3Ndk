@@ -8,6 +8,9 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.omar.retromp3recorder.app.utils.NotUnitTestable;
+
+@NotUnitTestable
 public class VisualizerView extends View {
 
     private byte[] mBytes;

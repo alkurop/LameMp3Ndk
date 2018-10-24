@@ -9,6 +9,7 @@ import android.support.v4.util.Pair;
 import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.stringer.Stringer;
+import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,6 +30,8 @@ import io.reactivex.subjects.Subject;
 /**
  * Created by omar on 17.08.15.
  */
+
+@NotUnitTestable
 public final class VoiceRecorderRX implements VoiceRecorder {
 
     private static final short channelConfig = Constants.CHANNEL_PRESETS[0];
@@ -41,7 +44,7 @@ public final class VoiceRecorderRX implements VoiceRecorder {
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
-    public VoiceRecorderRX(Stringer stringer, Scheduler scheduler) {
+    VoiceRecorderRX(Stringer stringer, Scheduler scheduler) {
         this.stringer = stringer;
         this.scheduler = scheduler;
     }

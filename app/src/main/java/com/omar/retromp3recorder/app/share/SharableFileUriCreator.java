@@ -4,12 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 
+import com.omar.retromp3recorder.app.utils.NotUnitTestable;
+
 import java.io.File;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
+@NotUnitTestable
 public class SharableFileUriCreator {
 
     private final Context context;
