@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.di;
 
+import com.omar.retromp3recorder.app.main.MainViewInteractorActionsTest;
 import com.omar.retromp3recorder.app.main.MainViewInteractorRepoTest;
 
 import javax.inject.Singleton;
@@ -16,4 +17,6 @@ import dagger.Component;
 public interface TestAppComponent {
 
     void inject(MainViewInteractorRepoTest mainViewInteractorRepoTest);
+
+    void inject(MainViewInteractorActionsTest mainViewInteractorActionsTest);
 }

@@ -9,7 +9,8 @@ import dagger.Component;
 @Component(modules = {
         ConfigModule.class,
         FunctionalityModule.class,
-        UtilsModule.class
+        UtilsModule.class,
+        UseCaseModule.class
 })
 public interface AppComponent {
 
