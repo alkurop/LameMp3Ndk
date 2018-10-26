@@ -87,9 +87,9 @@ public class StartRecordUCImpl implements StartRecordUC {
                                 propsZipper
                         ))
                 .flatMapCompletable(props -> Completable
-                        .fromAction(() -> {
-                            voiceRecorder.record(props);
-                        })
+                        .fromAction(() ->
+                                voiceRecorder.record(props)
+                        )
                 );
 
         return stopPlaybackAndRecordUC
