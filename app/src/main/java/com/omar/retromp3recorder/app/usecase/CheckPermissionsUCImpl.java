@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 
 import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;
+import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +15,7 @@ import javax.inject.Inject;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 
+@NotUnitTestable
 public class CheckPermissionsUCImpl implements CheckPermissionsUC {
     private final Context context;
     private final RequestPermissionsRepo requestPermissionsRepo;

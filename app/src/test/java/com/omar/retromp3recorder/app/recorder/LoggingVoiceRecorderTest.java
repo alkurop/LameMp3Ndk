@@ -30,15 +30,15 @@ public class LoggingVoiceRecorderTest {
     @Named(RECORDER_SUBJECT)
     Subject<VoiceRecorder.Event> recorderEvents;
 
-    private VoiceRecorder spyVoiceRecoreder;
+    private VoiceRecorder spyVoiceRecorder;
 
     private LoggingVoiceRecorder loggingVoiceRecorder;
 
     @Before
     public void setUp() {
         DaggerTestAppComponent.create().inject(this);
-        spyVoiceRecoreder = spy(baseVoiceRecorder);
-        loggingVoiceRecorder = new LoggingVoiceRecorder(spyVoiceRecoreder, logRepo, scheduler);
+        spyVoiceRecorder = spy(baseVoiceRecorder);
+        loggingVoiceRecorder = new LoggingVoiceRecorder(spyVoiceRecorder, logRepo, scheduler);
     }
 
     @Test
@@ -49,20 +49,23 @@ public class LoggingVoiceRecorderTest {
                 VoiceRecorder.SampleRate._8000);
         loggingVoiceRecorder.record(recorderProps);
 
-        verify(spyVoiceRecoreder).record(recorderProps);
+        //Then
+        verify(spyVoiceRecorder).record(recorderProps);
     }
 
     @Test
     public void test_DidDecorateStopRecord() {
         loggingVoiceRecorder.stopRecord();
 
-        verify(spyVoiceRecoreder).stopRecord();
+        //Then
+        verify(spyVoiceRecorder).stopRecord();
     }
 
     @Test
     public void test_OnPlayerMessage_PostLog() {
         recorderEvents.onNext(new VoiceRecorder.Message("test"));
 
+        //Then
         logRepo.observe()
                 .test()
                 .assertValue(event ->
@@ -74,6 +77,7 @@ public class LoggingVoiceRecorderTest {
     public void test_OnPlayerError_PostLog() {
         recorderEvents.onNext(new VoiceRecorder.Error("test"));
 
+        //Then
         logRepo.observe()
                 .test()
                 .assertValue(event ->

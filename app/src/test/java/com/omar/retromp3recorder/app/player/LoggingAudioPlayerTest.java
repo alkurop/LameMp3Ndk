@@ -45,6 +45,7 @@ public class LoggingAudioPlayerTest {
     public void test_DidDecorateStartPlay() {
         loggingAudioPlayer.playerStart("test");
 
+        //Then
         verify(spyAudioPlayer).playerStart("test");
     }
 
@@ -52,6 +53,7 @@ public class LoggingAudioPlayerTest {
     public void test_DidDecorateStopPlay() {
         loggingAudioPlayer.playerStop();
 
+        //Then
         verify(spyAudioPlayer).playerStop();
     }
 
@@ -59,6 +61,7 @@ public class LoggingAudioPlayerTest {
     public void test_OnPlayerMessage_PostLog() {
         audioEvents.onNext(new AudioPlayer.Message("test"));
 
+        //Then
         logRepo.observe()
                 .test()
                 .assertValue(event ->
@@ -70,6 +73,7 @@ public class LoggingAudioPlayerTest {
     public void test_OnPlayerError_PostLog() {
         audioEvents.onNext(new AudioPlayer.Error("test"));
 
+        //Then
         logRepo.observe()
                 .test()
                 .assertValue(event ->

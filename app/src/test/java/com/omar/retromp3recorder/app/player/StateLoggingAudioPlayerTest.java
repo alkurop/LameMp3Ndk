@@ -21,7 +21,6 @@ import static org.mockito.Mockito.verify;
 
 public class StateLoggingAudioPlayerTest {
 
-
     @Inject
     StateRepo stateRepo;
     @Inject
@@ -48,6 +47,7 @@ public class StateLoggingAudioPlayerTest {
     public void test_DidDecorateStartPlay() {
         stateLoggingAudioPlayer.playerStart("test");
 
+        //Then
         verify(spy).playerStart("test");
     }
 
@@ -55,6 +55,7 @@ public class StateLoggingAudioPlayerTest {
     public void test_DidDecorateStopPlay() {
         stateLoggingAudioPlayer.playerStop();
 
+        //Then
         verify(spy).playerStop();
     }
 
@@ -82,6 +83,7 @@ public class StateLoggingAudioPlayerTest {
     public void test_PlayerId_PostToRepo() {
         audioEvents.onNext(new AudioPlayer.SendPlayerId(10));
 
+        //Then
         playerIdRepo.observe().test()
                 .assertValue(integerOneShot ->
                         integerOneShot.getValueOnce() == 10
@@ -92,6 +94,7 @@ public class StateLoggingAudioPlayerTest {
     public void test_OnPlayerError_PostIdleState() {
         audioEvents.onNext(new AudioPlayer.Error("test"));
 
+        //Then
         stateRepo.observe().test()
                 .assertValue(state ->
                         state == MainView.State.Idle
