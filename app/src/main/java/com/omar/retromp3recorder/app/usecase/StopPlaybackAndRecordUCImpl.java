@@ -13,25 +13,21 @@ public class StopPlaybackAndRecordUCImpl implements StopPlaybackAndRecordUC {
 
     private final AudioPlayer audioPlayer;
     private final VoiceRecorder voiceRecorder;
-    private final StateRepo stateRepo;
 
     //region constructor
     @Inject
     public StopPlaybackAndRecordUCImpl(
             AudioPlayer audioPlayer,
-            VoiceRecorder voiceRecorder,
-            StateRepo stateRepo
+            VoiceRecorder voiceRecorder
     ) {
         this.audioPlayer = audioPlayer;
         this.voiceRecorder = voiceRecorder;
-        this.stateRepo = stateRepo;
     }
     //endregion
 
     public Completable execute() {
         return Completable
                 .fromAction(() -> {
-                    stateRepo.newValue(MainView.State.Idle);
                     voiceRecorder.stopRecord();
                     audioPlayer.playerStop();
                 });

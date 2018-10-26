@@ -84,6 +84,11 @@ public final class VoiceRecorderRX implements VoiceRecorder {
     }
 
     @Override
+    public boolean isRecording() {
+        return compositeDisposable.size() > 0;
+    }
+
+    @Override
     public void stopRecord() {
         compositeDisposable.clear();
     }

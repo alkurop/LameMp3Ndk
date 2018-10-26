@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
@@ -71,7 +72,7 @@ public final class AudioPlayerRx implements
     }
 
     private void stopMedia() {
-        if (mediaPlayer != null) {
+        if (isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
@@ -88,5 +89,10 @@ public final class AudioPlayerRx implements
         } else {
             events.onNext(new Error(stringer.getString(R.string.player_erro_on_stop)));
         }
+    }
+
+    @Override
+    public boolean isPlaying(){
+        return mediaPlayer != null && mediaPlayer.isPlaying();
     }
 }

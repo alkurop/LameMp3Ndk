@@ -41,7 +41,9 @@ public final class LoggingAudioPlayer implements AudioPlayer {
 
     @Override
     public void playerStop() {
-        audioPlayer.playerStop();
+        if (audioPlayer.isPlaying()) {
+            audioPlayer.playerStop();
+        }
     }
 
     @Override
@@ -52,5 +54,10 @@ public final class LoggingAudioPlayer implements AudioPlayer {
     @Override
     public Observable<Event> observeEvents() {
         return audioPlayer.observeEvents();
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return audioPlayer.isPlaying();
     }
 }

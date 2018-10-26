@@ -10,6 +10,8 @@ public interface VoiceRecorder {
 
     void stopRecord();
 
+    boolean isRecording();
+
     //region settings
 
     enum SampleRate {

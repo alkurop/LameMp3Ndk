@@ -31,4 +31,9 @@ public class TestAudioPlayer implements AudioPlayer {
     public Observable<Event> observeEvents() {
         return audioBus;
     }
+
+    @Override
+    public boolean isPlaying() {
+        return true;
+    }
 }

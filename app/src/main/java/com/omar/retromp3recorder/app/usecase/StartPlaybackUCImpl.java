@@ -25,7 +25,6 @@ public class StartPlaybackUCImpl implements StartPlaybackUC {
     );
 
     private final FileNameRepo fileNameRepo;
-    private final StateRepo stateRepo;
     private final RequestPermissionsRepo requestPermissionsRepo;
 
     private final AudioPlayer audioPlayer;
@@ -40,7 +39,6 @@ public class StartPlaybackUCImpl implements StartPlaybackUC {
             FileNameRepo fileNameRepo,
             AudioPlayer audioPlayer,
             VoiceRecorder voiceRecorder,
-            StateRepo stateRepo,
             StopPlaybackAndRecordUC stopUC,
             CheckPermissionsUC checkPermissionsUC,
             RequestPermissionsRepo requestPermissionsRepo
@@ -48,7 +46,6 @@ public class StartPlaybackUCImpl implements StartPlaybackUC {
         this.fileNameRepo = fileNameRepo;
         this.audioPlayer = audioPlayer;
         this.voiceRecorder = voiceRecorder;
-        this.stateRepo = stateRepo;
         this.stopUC = stopUC;
         this.checkPermissionsUC = checkPermissionsUC;
         this.requestPermissionsRepo = requestPermissionsRepo;
@@ -78,7 +75,6 @@ public class StartPlaybackUCImpl implements StartPlaybackUC {
                         .fromAction(() -> {
                             voiceRecorder.stopRecord();
                             audioPlayer.playerStart(fileName);
-                            stateRepo.newValue(MainView.State.Playing);
                         })
                 );
 

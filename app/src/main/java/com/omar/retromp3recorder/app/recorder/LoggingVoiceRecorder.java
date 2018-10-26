@@ -53,4 +53,9 @@ public final class LoggingVoiceRecorder implements VoiceRecorder {
     public void stopRecord() {
         recorder.stopRecord();
     }
+
+    @Override
+    public boolean isRecording() {
+        return recorder.isRecording();
+    }
 }

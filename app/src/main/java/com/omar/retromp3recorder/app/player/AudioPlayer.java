@@ -10,6 +10,8 @@ public interface AudioPlayer {
 
     Observable<Event> observeEvents();
 
+    boolean isPlaying();
+
     //region events
     interface Event { }
 

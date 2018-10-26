@@ -17,6 +17,7 @@ import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_BETA;
 public class StateLoggingVoiceRecorder implements VoiceRecorder {
 
     private final VoiceRecorder voiceRecorder;
+    private final StateRepo stateRepo;
 
     @Inject
     StateLoggingVoiceRecorder(
@@ -25,7 +26,7 @@ public class StateLoggingVoiceRecorder implements VoiceRecorder {
             StateRepo stateRepo
     ) {
         this.voiceRecorder = voiceRecorder;
-
+        this.stateRepo = stateRepo;
         voiceRecorder.observeEvents()
                 .ofType(VoiceRecorder.Error.class)
                 .map(error -> MainView.State.Idle)
@@ -44,11 +45,20 @@ public class StateLoggingVoiceRecorder implements VoiceRecorder {
 
     @Override
     public void record(RecorderProps props) {
+        stateRepo.newValue(MainView.State.Recording);
         voiceRecorder.record(props);
     }
 
     @Override
     public void stopRecord() {
-        voiceRecorder.stopRecord();
+        if (isRecording()) {
+            stateRepo.newValue(MainView.State.Idle);
+            voiceRecorder.stopRecord();
+        }
+    }
+
+    @Override
+    public boolean isRecording() {
+        return voiceRecorder.isRecording();
     }
 }

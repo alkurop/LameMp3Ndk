@@ -18,6 +18,7 @@ import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 @Singleton
 public class StateLoggingAudioPlayer implements AudioPlayer {
     private final AudioPlayer audioPlayer;
+    private final StateRepo stateRepo;
 
     @Inject
     StateLoggingAudioPlayer(
@@ -26,6 +27,7 @@ public class StateLoggingAudioPlayer implements AudioPlayer {
             PlayerIdRepo playerIdRepo,
             Scheduler scheduler) {
         this.audioPlayer = audioPlayer;
+        this.stateRepo = stateRepo;
 
         Completable stateCompletable = Observable
                 .merge(createLinkedList(
@@ -55,16 +57,25 @@ public class StateLoggingAudioPlayer implements AudioPlayer {
 
     @Override
     public void playerStop() {
-        audioPlayer.playerStop();
+        if (audioPlayer.isPlaying()) {
+            stateRepo.newValue(MainView.State.Idle);
+            audioPlayer.playerStop();
+        }
     }
 
     @Override
     public void playerStart(String voiceURL) {
+        stateRepo.newValue(MainView.State.Playing);
         audioPlayer.playerStart(voiceURL);
     }
 
     @Override
     public Observable<Event> observeEvents() {
         return audioPlayer.observeEvents();
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return audioPlayer.isPlaying();
     }
 }

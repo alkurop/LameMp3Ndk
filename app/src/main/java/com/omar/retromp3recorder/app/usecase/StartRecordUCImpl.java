@@ -1,14 +1,12 @@
 package com.omar.retromp3recorder.app.usecase;
 
-import com.omar.retromp3recorder.app.main.MainView;
-import com.omar.retromp3recorder.app.utils.OneShot;
 import com.omar.retromp3recorder.app.recorder.FilePathGenerator;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.repo.BitRateRepo;
 import com.omar.retromp3recorder.app.repo.FileNameRepo;
 import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;
 import com.omar.retromp3recorder.app.repo.SampleRateRepo;
-import com.omar.retromp3recorder.app.repo.StateRepo;
+import com.omar.retromp3recorder.app.utils.OneShot;
 
 import java.util.Set;
 
@@ -28,7 +26,6 @@ public class StartRecordUCImpl implements StartRecordUC {
     );
 
     private final FileNameRepo fileNameRepo;
-    private final StateRepo stateRepo;
     private final BitRateRepo bitRateRepo;
     private final SampleRateRepo sampleRateRepo;
     private final VoiceRecorder voiceRecorder;
@@ -41,7 +38,6 @@ public class StartRecordUCImpl implements StartRecordUC {
     @Inject
     public StartRecordUCImpl(
             FileNameRepo fileNameRepo,
-            StateRepo stateRepo,
             BitRateRepo bitRateRepo,
             SampleRateRepo sampleRateRepo,
             VoiceRecorder voiceRecorder,
@@ -50,7 +46,6 @@ public class StartRecordUCImpl implements StartRecordUC {
             RequestPermissionsRepo requestPermissionsRepo,
             FilePathGenerator filePathGenerator) {
         this.fileNameRepo = fileNameRepo;
-        this.stateRepo = stateRepo;
         this.bitRateRepo = bitRateRepo;
         this.sampleRateRepo = sampleRateRepo;
         this.voiceRecorder = voiceRecorder;
@@ -93,7 +88,6 @@ public class StartRecordUCImpl implements StartRecordUC {
                         ))
                 .flatMapCompletable(props -> Completable
                         .fromAction(() -> {
-                            stateRepo.newValue(MainView.State.Recording);
                             voiceRecorder.record(props);
                         })
                 );

@@ -30,4 +30,9 @@ public class TestVoiceRecorder implements VoiceRecorder {
     public void stopRecord() {
 
     }
+
+    @Override
+    public boolean isRecording() {
+        return true;
+    }
 }
