@@ -81,4 +81,9 @@ public class LoggingVoiceRecorderTest {
                 );
     }
 
+    @Test
+    public void test_DidDecorateIsRecording(){
+        assert loggingVoiceRecorder.isRecording();
+    }
+
 }

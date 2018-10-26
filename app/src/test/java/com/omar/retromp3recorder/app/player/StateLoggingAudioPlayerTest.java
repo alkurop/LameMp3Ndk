@@ -59,6 +59,26 @@ public class StateLoggingAudioPlayerTest {
     }
 
     @Test
+    public void test_OnStartPlay_PostState() {
+        stateLoggingAudioPlayer.playerStart("test");
+
+        //Then
+        stateRepo.observe()
+                .test()
+                .assertValue(state -> state == MainView.State.Playing);
+    }
+
+    @Test
+    public void test_OnStopPlayPostState(){
+        stateLoggingAudioPlayer.playerStop();
+
+        //Then
+        stateRepo.observe()
+                .test()
+                .assertValue(state -> state == MainView.State.Idle);
+    }
+
+    @Test
     public void test_PlayerId_PostToRepo() {
         audioEvents.onNext(new AudioPlayer.SendPlayerId(10));
 
@@ -78,4 +98,8 @@ public class StateLoggingAudioPlayerTest {
                 );
     }
 
+    @Test
+    public void test_DidDecorateIsPlaying(){
+        assert stateLoggingAudioPlayer.isPlaying();
+    }
 }

@@ -77,4 +77,9 @@ public class LoggingAudioPlayerTest {
                 );
     }
 
+    @Test
+    public void test_DidDecorateIsPlaying(){
+        assert loggingAudioPlayer.isPlaying();
+    }
+
 }

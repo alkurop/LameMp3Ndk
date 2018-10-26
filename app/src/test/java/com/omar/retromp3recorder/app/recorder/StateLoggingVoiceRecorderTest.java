@@ -51,8 +51,11 @@ public class StateLoggingVoiceRecorderTest {
                 "test",
                 VoiceRecorder.BitRate._160,
                 VoiceRecorder.SampleRate._8000);
+
+        //When
         stateLoggingVoiceRecorder.record(recorderProps);
 
+        //Then
         verify(spy).record(recorderProps);
     }
 
@@ -60,15 +63,48 @@ public class StateLoggingVoiceRecorderTest {
     public void test_DidDecorateStopPlay() {
         stateLoggingVoiceRecorder.stopRecord();
 
+        //Then
         verify(spy).stopRecord();
     }
 
     @Test
-    public void test_OnRecorderError_PostLog() {
-        recorderEvents.onNext(new VoiceRecorder.Error("test"));
+    public void test_OnStartRecord_PostState() {
+        VoiceRecorder.RecorderProps recorderProps = new VoiceRecorder.RecorderProps(
+                "test",
+                VoiceRecorder.BitRate._160,
+                VoiceRecorder.SampleRate._8000);
 
+        //When
+        stateLoggingVoiceRecorder.record(recorderProps);
+
+        //Then
+        stateRepo.observe()
+                .test()
+                .assertValue(state -> state == MainView.State.Recording);
+    }
+
+    @Test
+    public void test_OnStopRecordPostState(){
+        stateLoggingVoiceRecorder.stopRecord();
+
+        //Then
         stateRepo.observe()
                 .test()
                 .assertValue(state -> state == MainView.State.Idle);
+    }
+
+    @Test
+    public void test_OnRecorderError_PostState() {
+        recorderEvents.onNext(new VoiceRecorder.Error("test"));
+
+        //Then
+        stateRepo.observe()
+                .test()
+                .assertValue(state -> state == MainView.State.Idle);
+    }
+
+    @Test
+    public void test_DidDecorateIsRecording(){
+        assert stateLoggingVoiceRecorder.isRecording();
     }
 }
