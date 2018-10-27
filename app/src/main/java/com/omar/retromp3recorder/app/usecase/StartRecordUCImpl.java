@@ -29,8 +29,8 @@ public class StartRecordUCImpl implements StartRecordUC {
     private final BitRateRepo bitRateRepo;
     private final SampleRateRepo sampleRateRepo;
     private final VoiceRecorder voiceRecorder;
-    private final StopPlaybackAndRecordUCImpl stopPlaybackAndRecordUC;
-    private final CheckPermissionsUCImpl checkPermissionsUC;
+    private final StopPlaybackAndRecordUC stopPlaybackAndRecordUC;
+    private final CheckPermissionsUC checkPermissionsUC;
     private final RequestPermissionsRepo requestPermissionsRepo;
     private final FilePathGenerator filePathGenerator;
 
@@ -41,8 +41,8 @@ public class StartRecordUCImpl implements StartRecordUC {
             BitRateRepo bitRateRepo,
             SampleRateRepo sampleRateRepo,
             VoiceRecorder voiceRecorder,
-            StopPlaybackAndRecordUCImpl stopPlaybackAndRecordUC,
-            CheckPermissionsUCImpl checkPermissionsUC,
+            StopPlaybackAndRecordUC stopPlaybackAndRecordUC,
+            CheckPermissionsUC checkPermissionsUC,
             RequestPermissionsRepo requestPermissionsRepo,
             FilePathGenerator filePathGenerator) {
         this.fileNameRepo = fileNameRepo;

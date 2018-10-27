@@ -24,10 +24,13 @@ import javax.inject.Singleton;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Completable;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @Module
 public class MockModule {
@@ -60,42 +63,56 @@ public class MockModule {
     @Singleton
     @Provides
     ChangeBitrateUC provideChangeBitrateUC() {
-        return mock(ChangeBitrateUC.class);
+        ChangeBitrateUC mock = mock(ChangeBitrateUC.class);
+        when(mock.execute(any())).thenReturn(Completable.complete());
+        return mock;
     }
 
     @Singleton
     @Provides
     ChangeSampleRateUC provideChangeSampleRateUC() {
-        return mock(ChangeSampleRateUC.class);
+        ChangeSampleRateUC mock = mock(ChangeSampleRateUC.class);
+        when(mock.execute(any())).thenReturn(Completable.complete());
+        return mock;
     }
 
     @Singleton
     @Provides
     CheckPermissionsUC provideCheckPermissionsUC() {
-        return mock(CheckPermissionsUC.class);
+        CheckPermissionsUC mock = mock(CheckPermissionsUC.class);
+        when(mock.execute(any())).thenReturn(Completable.complete());
+        return mock;
     }
 
     @Singleton
     @Provides
     ShareUC provideShareUC() {
-        return mock(ShareUC.class);
+        ShareUC mock = mock(ShareUC.class);
+        when(mock.execute()).thenReturn(Completable.complete());
+        return mock;
     }
 
     @Singleton
     @Provides
     StartRecordUC provideStartRecordUC() {
-        return mock(StartRecordUC.class);
+        StartRecordUC mock = mock(StartRecordUC.class);
+        when(mock.execute()).thenReturn(Completable.complete());
+        return mock;
     }
 
     @Singleton
     @Provides
     StartPlaybackUC provideStartPlaybackUC() {
-        return mock(StartPlaybackUC.class);
+        StartPlaybackUC mock = mock(StartPlaybackUC.class);
+        when(mock.execute()).thenReturn(Completable.complete());
+        return mock;
     }
 
     @Singleton
     @Provides
     StopPlaybackAndRecordUC provideStopPlaybackAndRecordUC() {
-        return mock(StopPlaybackAndRecordUC.class);
+        StopPlaybackAndRecordUC mock = mock(StopPlaybackAndRecordUC.class);
+        when(mock.execute()).thenReturn(Completable.complete());
+        return mock;
     }
 }
