@@ -2,9 +2,11 @@ package com.omar.retromp3recorder.app.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -92,6 +94,18 @@ public class MainActivity extends AppCompatActivity implements MainView {
         compositeDisposable.add(disposable);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @android.support.annotation.Nullable Intent data) {
+        permissionsManager.onActivityResult(requestCode);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private void createPermissionsMap() {
         permissionsMap = createHashMap(
                 new Pair<>(Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -102,9 +116,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 ),
                 new Pair<>(Manifest.permission.RECORD_AUDIO,
                         new PermissionRequiredDetails(
-                                getString(R.string.write_permission_title),
-                                getString(R.string.write_permission_message),
-                                getString(R.string.write_required_message)
+                                getString(R.string.record_permission_title),
+                                getString(R.string.record_permission_message),
+                                getString(R.string.record_required_message)
                         )
                 )
         );
@@ -295,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         @SuppressLint("InflateParams")
         TextView inflate = (TextView) getLayoutInflater().inflate(R.layout.log_view, null);
         logContainerView.addView(inflate);
-        inflate.setText("Error: " + error);
+        inflate.setText(getString(R.string.error_string, error));
         inflate.setTextColor(ContextCompat.getColor(this, android.R.color.holo_orange_light));
         scrollDownHandler.postDelayed(() -> scrollView.fullScroll(View.FOCUS_DOWN), 150);
     }

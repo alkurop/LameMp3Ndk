@@ -114,7 +114,7 @@ public final class VoiceRecorderRX implements VoiceRecorder {
                     }
                     boolean fileWasCreated = outFile.createNewFile();
                     if (!fileWasCreated) {
-                        throw new IOException(String.format("File %s was not created", filePath));
+                        throw new IOException(stringer.getString(R.string.file_was_not_created, filePath));
                     }
                     return outFile;
                 }
@@ -129,10 +129,10 @@ public final class VoiceRecorderRX implements VoiceRecorder {
                         Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO);
                         FileOutputStream output = new FileOutputStream(outFile);
                         emitter.setCancellable(() -> {
-                            output.close();
                             recorder.stop();
                             recorder.release();
                             LameModule.close();
+                            output.close();
                             sendFinishLog(outFile);
 
                         });
@@ -162,7 +162,7 @@ public final class VoiceRecorderRX implements VoiceRecorder {
         long counter = System.currentTimeMillis() - elapsed.get();
         String absolutePath = outFile.getAbsolutePath();
         if (outFile.exists()) {
-            events.onNext(new Message(stringer.getString(R.string.file_saved_to) + absolutePath));
+            events.onNext(new Message(stringer.getString(R.string.file_saved_to, absolutePath)));
             events.onNext(new Message(String.format(stringer.getString(R.string.audio_length) +
                     "= %.1f" + stringer.getString(R.string.seconds), ((float) counter) / 1000)));
 
@@ -170,7 +170,7 @@ public final class VoiceRecorderRX implements VoiceRecorder {
             events.onNext(new Message(String.format("%.1f " + Constants.KB + stringer.getString(R.string.compression_rate), (float) (outFile.length()) / counter)));
 
         } else
-            events.onNext(new Error(stringer.getString(R.string.error_saving_file_to) + absolutePath));
+            events.onNext(new Error(stringer.getString(R.string.error_saving_file_to, absolutePath)));
     }
 
 

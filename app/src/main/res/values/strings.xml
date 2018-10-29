@@ -10,8 +10,8 @@
     <string name="cannot_share">Cannot share: file not detected</string>
     <string name="player_cannot_find_file">Player cannot find file</string>
     <string name="recorder_stopped">recorder stopped</string>
-    <string name="file_saved_to">"file saved to "</string>
-    <string name="error_saving_file_to">"error saving file to "</string>
+    <string name="file_saved_to">"file saved to %1$s"</string>
+    <string name="error_saving_file_to">"error saving file to %1$s"</string>
     <string name="audio_length">audio length</string>
     <string name="seconds">seconds</string>
     <string name="file_size">file size </string>
@@ -23,9 +23,8 @@
     <string name="voice_record">voice_record</string>
     <string name="not_recorder_yet">Not recorded yet</string>
     <string name="stopped_playing">stopped playing</string>
-    <string name="player_error_on_stop">player error onStop</string>
     <string name="started_playing">started playing</string>
-    <string name="player_erro_on_stop">player error onPlay</string>
+    <string name="player_error_on_stop">player error onPlay</string>
     <string name="select">Share</string>
     <string name="bit_rate">Bit Rate</string>
     <string name="sample_rate">Sample Rate</string>
@@ -34,5 +33,8 @@
     <string name="write_required_message">Saving mp3 is required. Go to settings and let this app Write Internal Storage</string>
     <string name="record_permission_title">Record Audio</string>
     <string name="record_permission_message">This app is going to record audio files using your mic.</string>
-    <string name="record_required_message">Recording audio is required. Go to settings let this app Record Audio</string>
+    <string name="record_required_message">Recording audio is required. Go to settings let this app use Microphone</string>
+
+    <string name="error_string">Error: %1$s</string>
+    <string name="file_was_not_created">File %1$s was not created</string>
 </resources>

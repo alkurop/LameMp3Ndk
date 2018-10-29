@@ -13,7 +13,9 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.CompletableSource;
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createHashSet;
@@ -57,28 +59,20 @@ public class StartRecordUCImpl implements StartRecordUC {
     //endregion
 
     public Completable execute() {
-        Observable<RequestPermissionsRepo.ShouldRequestPermissions> share =
-                checkPermissionsUC.execute(voiceRecordPermissions)
-                        .andThen(requestPermissionsRepo.observe()
-                                .take(1)
-                                .share())
-                        .map(OneShot::checkValue);
+
 
         final Function3<String,
                 VoiceRecorder.BitRate,
                 VoiceRecorder.SampleRate,
                 VoiceRecorder.RecorderProps> propsZipper = VoiceRecorder.RecorderProps::new;
 
-        Completable begForPermissions = share
-                .ofType(RequestPermissionsRepo.Yes.class)
-                .flatMapCompletable(answer -> Completable.complete());
+        Completable begForPermissions = Completable.complete();
 
-        Completable execute = share
-                .ofType(RequestPermissionsRepo.No.class)
-                .flatMapCompletable(answer -> Completable.fromAction(() -> {
+        Completable execute = Completable
+                .fromAction(() -> {
                     String filePath = filePathGenerator.generateFilePath();
                     fileNameRepo.newValue(filePath);
-                }))
+                })
                 .andThen(Observable
                         .zip(
                                 fileNameRepo.observe().take(1),
@@ -92,13 +86,21 @@ public class StartRecordUCImpl implements StartRecordUC {
                         )
                 );
 
+
+        Completable merge =
+                checkPermissionsUC.execute(voiceRecordPermissions)
+                        .andThen(requestPermissionsRepo.observe()
+                                .take(1)
+                                .share())
+                        .map(OneShot::checkValue)
+                        .flatMapCompletable(shouldAskPermissions ->
+                                (shouldAskPermissions instanceof RequestPermissionsRepo.No)
+                                        ? execute
+                                        : begForPermissions
+                        );
+
         return stopPlaybackAndRecordUC
                 .execute()
-                .andThen(Completable
-                        .merge(createLinkedList(
-                                execute,
-                                begForPermissions
-                        ))
-                );
+                .andThen(merge);
     }
 }

@@ -11,7 +11,9 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.CompletableSource;
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createHashSet;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
@@ -51,37 +53,32 @@ public class StartPlaybackUCImpl implements StartPlaybackUC {
     //endregion
 
     public Completable execute() {
-        Observable<RequestPermissionsRepo.ShouldRequestPermissions>
-                shouldRequestPermissionsObservable =
+
+        Completable begForPermissions = Completable.complete();
+
+        Completable execute =
+                fileNameRepo.observe()
+                        .take(1)
+                        .flatMapCompletable(fileName -> Completable
+                                .fromAction(() -> {
+                                    voiceRecorder.stopRecord();
+                                    audioPlayer.playerStart(fileName);
+                                })
+                        );
+
+        Completable merge =
                 checkPermissionsUC.execute(playbackPermissions)
                         .andThen(requestPermissionsRepo.observe()
                                 .take(1)
                                 .share())
-                        .map(OneShot::checkValue);
-
-        Completable begForPermissions = shouldRequestPermissionsObservable
-                .ofType(RequestPermissionsRepo.Yes.class)
-                .flatMapCompletable(yes -> Completable.complete());
-
-        Completable execute = shouldRequestPermissionsObservable
-                .ofType(RequestPermissionsRepo.No.class)
-                .flatMap(answer ->
-                        fileNameRepo.observe()
-                )
-                .take(1)
-                .flatMapCompletable(fileName -> Completable
-                        .fromAction(() -> {
-                            voiceRecorder.stopRecord();
-                            audioPlayer.playerStart(fileName);
-                        })
-                );
+                        .map(OneShot::checkValue)
+                        .flatMapCompletable(shouldAskPermissions ->
+                                (shouldAskPermissions instanceof RequestPermissionsRepo.No)
+                                        ? execute
+                                        : begForPermissions
+                        );
 
         return stopUC.execute()
-                .andThen(
-                        Completable.merge(createLinkedList(
-                                begForPermissions,
-                                execute
-                        ))
-                );
+                .andThen(merge);
     }
 }
