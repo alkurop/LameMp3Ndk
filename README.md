@@ -33,4 +33,8 @@ The components are combined together with **Dagger2 DI**.
 
 The data flow is controlled with **RxJava2** functional streams.
 
-The unit tests cover **UseCases**, **Interactors** and **Mappers**. They can be found in **test** folder. The app is also integratable into **Travis CI**.
+The unit tests cover **UseCases**, **Interactors** and **Mappers**. They can be found in **test** folder.
+
+The app is also integrated into **Travis CI**.
+
+![travis icon](https://travis-ci.org/alkurop/LameMp3Ndk.svg?branch=master)
