@@ -5,6 +5,7 @@ import com.omar.retromp3recorder.app.main.MainActivity;
 import javax.inject.Singleton;
 
 import dagger.Component;
+
 @Singleton
 @Component(modules = {
         ConfigModule.class,

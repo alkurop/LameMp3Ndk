@@ -1,6 +1,5 @@
 package com.omar.retromp3recorder.app.recorder;
 
-import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 
 /**
@@ -10,7 +9,7 @@ import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 public class LameModule {
 
     static {
-        System.loadLibrary(Constants.MP3_LAME_LIB);
+        System.loadLibrary("mp3lame");
     }
 
     /**

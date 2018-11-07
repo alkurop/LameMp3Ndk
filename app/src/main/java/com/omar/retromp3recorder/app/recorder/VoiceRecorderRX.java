@@ -1,12 +1,10 @@
 package com.omar.retromp3recorder.app.recorder;
 
-import android.annotation.SuppressLint;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Process;
 import android.support.v4.util.Pair;
 
-import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.stringer.Stringer;
 import com.omar.retromp3recorder.app.utils.NotUnitTestable;
@@ -27,16 +25,12 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
-/**
- * Created by omar on 17.08.15.
- */
-
 @NotUnitTestable
 public final class VoiceRecorderRX implements VoiceRecorder {
 
-    private static final short channelConfig = Constants.CHANNEL_PRESETS[0];
-    private static final int quality = Constants.QUALITY_PRESETS[1];
-    private static final short audioFormat = Constants.AUDIO_FORMAT_PRESETS[1];
+    private static final short channelConfig = CHANNEL_PRESETS[0];
+    private static final int quality = QUALITY_PRESETS[1];
+    private static final short audioFormat = AUDIO_FORMAT_PRESETS[1];
     private final Stringer stringer;
     private final Scheduler scheduler;
     private final Subject<Event> events = PublishSubject.create();
@@ -56,12 +50,20 @@ public final class VoiceRecorderRX implements VoiceRecorder {
 
     @Override
     public void record(RecorderProps props) {
-        int minBufferSize = AudioRecord.getMinBufferSize(props.sampleRate.value, channelConfig, audioFormat);
+        int minBufferSize = AudioRecord.getMinBufferSize(
+                props.sampleRate.value,
+                channelConfig,
+                audioFormat
+        );
 
         Single<Pair<File, AudioRecord>> recorderParams = Single
                 .zip(
                         createOutputFile(props.filepath),
-                        createRecorder(minBufferSize, props.sampleRate.value, props.bitRate.value),
+                        createRecorder(
+                                minBufferSize,
+                                props.sampleRate.value,
+                                props.bitRate.value
+                        ),
                         Pair::new
                 );
 
@@ -101,20 +103,29 @@ public final class VoiceRecorderRX implements VoiceRecorder {
         return new byte[(int) (7200 + buffer.length * 2 * 1.25)];
     }
 
-    private Single<AudioRecord> createRecorder(int minBufferSize, int sampleRate, int bitRate) {
-        return Single.fromCallable(() -> findAudioRecord(minBufferSize, sampleRate, bitRate));
+    private Single<AudioRecord> createRecorder(
+            int minBufferSize,
+            int sampleRate,
+            int bitRate
+    ) {
+        return Single.fromCallable(() -> findAudioRecord(
+                minBufferSize,
+                sampleRate, bitRate
+        ));
     }
 
     private Single<File> createOutputFile(String filePath) {
         return Single.fromCallable(() -> {
                     File outFile = new File(filePath);
                     if (outFile.exists()) {
-                        @SuppressLint("UNUSED")
-                        boolean delete = outFile.delete();
+                        @SuppressWarnings("unused") boolean delete = outFile.delete();
                     }
                     boolean fileWasCreated = outFile.createNewFile();
                     if (!fileWasCreated) {
-                        throw new IOException(stringer.getString(R.string.file_was_not_created, filePath));
+                        throw new IOException(stringer.getString(
+                                R.string.file_was_not_created,
+                                filePath
+                        ));
                     }
                     return outFile;
                 }
@@ -139,13 +150,26 @@ public final class VoiceRecorderRX implements VoiceRecorder {
 
                         short[] buffer = createBuffer(sampleRate);
                         byte[] mp3Buffer = createMp3Buffer(buffer);
-                        int minBufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat);
+                        int minBufferSize = AudioRecord.getMinBufferSize(
+                                sampleRate,
+                                channelConfig,
+                                audioFormat
+                        );
                         recorder.startRecording();
 
                         int readSize;
                         while (!emitter.isDisposed()) {
-                            readSize = recorder.read(buffer, 0, minBufferSize);
-                            int encResult = LameModule.encode(buffer, buffer, readSize, mp3Buffer);
+                            readSize = recorder.read(
+                                    buffer,
+                                    0,
+                                    minBufferSize
+                            );
+                            int encResult = LameModule.encode(
+                                    buffer,
+                                    buffer,
+                                    readSize,
+                                    mp3Buffer
+                            );
                             output.write(mp3Buffer, 0, encResult);
                         }
                         int flushResult = LameModule.flush(mp3Buffer);
@@ -162,38 +186,82 @@ public final class VoiceRecorderRX implements VoiceRecorder {
         long counter = System.currentTimeMillis() - elapsed.get();
         String absolutePath = outFile.getAbsolutePath();
         if (outFile.exists()) {
-            events.onNext(new Message(stringer.getString(R.string.file_saved_to, absolutePath)));
-            events.onNext(new Message(String.format(stringer.getString(R.string.audio_length) +
-                    "= %.1f" + stringer.getString(R.string.seconds), ((float) counter) / 1000)));
+            String[] messages = new String[]{
+                    stringer.getString(
+                            R.string.file_saved_to,
+                            absolutePath
+                    ),
+                    stringer.getString(
+                            R.string.audio_length,
+                            ((float) counter) / 1000
+                    ),
+                    stringer.getString(
+                            R.string.file_size,
+                            ((float) outFile.length()) / 1000
+                    ),
+                    stringer.getString(
+                            R.string.compression_rate,
+                            (float) (outFile.length()) / counter
+                    )
+            };
 
-            events.onNext(new Message(String.format(stringer.getString(R.string.file_size) + " = %.1f " + Constants.KB, ((float) outFile.length()) / 1000)));
-            events.onNext(new Message(String.format("%.1f " + Constants.KB + stringer.getString(R.string.compression_rate), (float) (outFile.length()) / counter)));
+            for (String message : messages) {
+                events.onNext(new Message(message));
 
+            }
         } else
-            events.onNext(new Error(stringer.getString(R.string.error_saving_file_to, absolutePath)));
+            events.onNext(new Error(stringer.getString(
+                    R.string.error_saving_file_to,
+                    absolutePath
+            )));
     }
 
 
-    private AudioRecord findAudioRecord(int minBufferSize, int sampleRate, int bitRate) throws Exception {
+    private AudioRecord findAudioRecord(
+            int minBufferSize,
+            int sampleRate,
+            int bitRate
+    ) throws Exception {
         if (minBufferSize != AudioRecord.ERROR_BAD_VALUE) {
-
-            AudioRecord recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, sampleRate, channelConfig, audioFormat, minBufferSize * 4);
+            AudioRecord recorder = new AudioRecord(
+                    MediaRecorder.AudioSource.DEFAULT,
+                    sampleRate,
+                    channelConfig,
+                    audioFormat,
+                    minBufferSize * 4
+            );
             try {
-                LameModule.init(sampleRate, 1, sampleRate, bitRate, quality);
+                LameModule.init(
+                        sampleRate,
+                        1,
+                        sampleRate,
+                        bitRate,
+                        quality
+                );
             } catch (Exception e) {
-                throw new Exception(stringer.getString(R.string.error_init_recorder));
+                throw new Exception(stringer.getString(
+                        R.string.error_init_recorder
+                ));
             }
             if (recorder.getState() == AudioRecord.STATE_INITIALIZED) {
-                String logMessage = String.format(stringer.getString(R.string.recording_mp3_at) + " %d " + Constants.KBPS + " , %d " + Constants.HZ, bitRate, sampleRate);
+                String logMessage = stringer.getString(
+                        R.string.recording_mp3_at,
+                        bitRate,
+                        sampleRate
+                );
                 events.onNext(new Message(logMessage));
                 return recorder;
 
             } else {
-                throw new Exception(stringer.getString(R.string.error_init_recorder));
+                throw new Exception(stringer.getString(
+                        R.string.error_init_recorder
+                ));
             }
 
         } else {
-            throw new Exception(stringer.getString(R.string.audioRecord_bad_value));
+            throw new Exception(stringer.getString(
+                    R.string.audioRecord_bad_value
+            ));
         }
     }
 }

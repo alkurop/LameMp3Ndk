@@ -24,7 +24,6 @@ import com.github.alkurop.jpermissionmanager.PermissionRequiredDetails;
 import com.github.alkurop.jpermissionmanager.PermissionsManager;
 import com.jakewharton.rxbinding3.view.RxView;
 import com.omar.retromp3recorder.app.App;
-import com.omar.retromp3recorder.app.Constants;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.customviews.VisualizerView;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
@@ -146,13 +145,19 @@ public class MainActivity extends AppCompatActivity implements MainView {
         bitRateGroup = new ArrayList<>();
 
         for (VoiceRecorder.SampleRate sampleRate : VoiceRecorder.SampleRate.values()) {
-            String title = String.format("%d %s", sampleRate.value, Constants.KB);
+            String title = getString(
+                    R.string.sample_rate_format,
+                    sampleRate.value
+            );
             RadioButton radioButton = addCheckBox(sampleRateContainer, title);
             sampleRateGroup.add(radioButton);
         }
 
         for (VoiceRecorder.BitRate bitRate : VoiceRecorder.BitRate.values()) {
-            String title = String.format("%d %s", bitRate.value, Constants.KBPS);
+            String title = getString(
+                    R.string.bit_rate_format,
+                    bitRate.value
+            );
             RadioButton radioButton = addCheckBox(bitRateContainer, title);
             bitRateGroup.add(radioButton);
         }
@@ -296,7 +301,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
             return;
         }
         @SuppressLint("InflateParams")
-        TextView inflate = (TextView) getLayoutInflater().inflate(R.layout.log_view, null);
+        TextView inflate = (TextView) getLayoutInflater().inflate(
+                R.layout.log_view,
+                null
+        );
         logContainerView.addView(inflate);
         inflate.setText(message);
         scrollDownHandler.postDelayed(() -> scrollView.fullScroll(View.FOCUS_DOWN), 150);
@@ -309,9 +317,17 @@ public class MainActivity extends AppCompatActivity implements MainView {
         @SuppressLint("InflateParams")
         TextView inflate = (TextView) getLayoutInflater().inflate(R.layout.log_view, null);
         logContainerView.addView(inflate);
-        inflate.setText(getString(R.string.error_string, error));
-        inflate.setTextColor(ContextCompat.getColor(this, android.R.color.holo_orange_light));
-        scrollDownHandler.postDelayed(() -> scrollView.fullScroll(View.FOCUS_DOWN), 150);
+        inflate.setText(getString(
+                R.string.error_string,
+                error
+        ));
+        inflate.setTextColor(ContextCompat.getColor(this,
+                android.R.color.holo_orange_light
+        ));
+        scrollDownHandler.postDelayed(() ->
+                        scrollView.fullScroll(View.FOCUS_DOWN),
+                150
+        );
     }
 
     private void renderPermissions(@Nullable Set<String> requestForPermissions) {

@@ -1,5 +1,7 @@
 package com.omar.retromp3recorder.app.recorder;
 
+import android.media.AudioFormat;
+
 import io.reactivex.Observable;
 
 public interface VoiceRecorder {
@@ -33,6 +35,23 @@ public interface VoiceRecorder {
             this.value = value;
         }
     }
+
+    short[] AUDIO_FORMAT_PRESETS = new short[]{
+            AudioFormat.ENCODING_PCM_8BIT,
+            AudioFormat.ENCODING_PCM_16BIT
+    };
+
+    int[] QUALITY_PRESETS = new int[]{
+            2,
+            5,
+            7
+    };  // the lower the better
+
+    short[] CHANNEL_PRESETS = new short[]{
+            AudioFormat.CHANNEL_IN_MONO,
+            AudioFormat.CHANNEL_IN_STEREO
+    };
+
     //endregion
 
     //region events
