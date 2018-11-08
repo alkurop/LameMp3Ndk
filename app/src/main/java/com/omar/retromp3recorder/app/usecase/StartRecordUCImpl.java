@@ -13,13 +13,10 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.CompletableSource;
 import io.reactivex.Observable;
-import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createHashSet;
-import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
 public class StartRecordUCImpl implements StartRecordUC {
     private static final Set<String> voiceRecordPermissions = createHashSet(
@@ -94,7 +91,7 @@ public class StartRecordUCImpl implements StartRecordUC {
                                 .share())
                         .map(OneShot::checkValue)
                         .flatMapCompletable(shouldAskPermissions ->
-                                (shouldAskPermissions instanceof RequestPermissionsRepo.No)
+                                (shouldAskPermissions instanceof RequestPermissionsRepo.Granted)
                                         ? execute
                                         : begForPermissions
                         );

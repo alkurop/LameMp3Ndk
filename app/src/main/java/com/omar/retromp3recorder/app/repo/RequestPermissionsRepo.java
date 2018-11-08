@@ -29,12 +29,12 @@ public class RequestPermissionsRepo {
     //region events
     public interface ShouldRequestPermissions { }
 
-    public static class No implements ShouldRequestPermissions { }
+    public static class Granted implements ShouldRequestPermissions { }
 
-    public static class Yes implements ShouldRequestPermissions {
+    public static class Denied implements ShouldRequestPermissions {
         public final Set<String> permissions;
 
-        public Yes(Set<String> permissions) {
+        public Denied(Set<String> permissions) {
             this.permissions = permissions;
         }
     }

@@ -47,7 +47,7 @@ public class StartPlaybackUCImplTest {
         spyAudioPlayer = spy(audioPlayer);
         when(checkPermissionsUC.execute(any()))
                 .thenAnswer(invocation -> {
-                    requestPermissionsRepo.newValue(new RequestPermissionsRepo.No());
+                    requestPermissionsRepo.newValue(new RequestPermissionsRepo.Granted());
                     return Completable.complete();
                 });
         startPlaybackUC = new StartPlaybackUCImpl(

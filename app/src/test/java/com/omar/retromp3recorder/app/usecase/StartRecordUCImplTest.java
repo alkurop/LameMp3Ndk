@@ -53,7 +53,7 @@ public class StartRecordUCImplTest {
         spyVoiceRecorder = spy(voiceRecorder);
         when(checkPermissionsUC.execute(any()))
                 .thenAnswer(invocation -> {
-                    requestPermissionsRepo.newValue(new RequestPermissionsRepo.No());
+                    requestPermissionsRepo.newValue(new RequestPermissionsRepo.Granted());
                     return Completable.complete();
                 });
         when(filePathGenerator.generateFilePath()).thenReturn("test");

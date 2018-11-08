@@ -159,9 +159,9 @@ public class MainViewInteractor {
                         .observe()
                         .filter(shouldRequestPermissionsOneShot -> !shouldRequestPermissionsOneShot.isShot())
                         .map(OneShot::getValueOnce)
-                        .ofType(RequestPermissionsRepo.Yes.class)
-                        .map((Function<RequestPermissionsRepo.Yes, Result>) yes ->
-                                new MainView.RequestPermissionsResult(yes.permissions)
+                        .ofType(RequestPermissionsRepo.Denied.class)
+                        .map((Function<RequestPermissionsRepo.Denied, Result>) denied ->
+                                new MainView.RequestPermissionsResult(denied.permissions)
                         ),
                 logRepo
                         .observe()

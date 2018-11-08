@@ -89,7 +89,7 @@ public class MainViewInteractorRepoTest {
     @Test
     public void test_Listening_RequestPermissionsRepo() {
         RequestPermissionsRepo.ShouldRequestPermissions shouldRequestPermissions
-                = new RequestPermissionsRepo.Yes(createHashSet("test"));
+                = new RequestPermissionsRepo.Denied(createHashSet("test"));
 
         //When
         requestPermissionsRepo.newValue(shouldRequestPermissions);

@@ -37,8 +37,8 @@ public class CheckPermissionsUCImpl implements CheckPermissionsUC {
                             requestPermissions.add(permission);
                         }
                     }
-                    return requestPermissions.isEmpty() ? new RequestPermissionsRepo.No()
-                            : new RequestPermissionsRepo.Yes(requestPermissions);
+                    return requestPermissions.isEmpty() ? new RequestPermissionsRepo.Granted()
+                            : new RequestPermissionsRepo.Denied(requestPermissions);
                 })
                 .flatMapCompletable(shouldRequestPermissions -> Completable.fromAction(() ->
                         requestPermissionsRepo.newValue(shouldRequestPermissions))
