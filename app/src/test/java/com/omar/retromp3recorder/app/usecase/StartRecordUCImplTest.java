@@ -35,7 +35,7 @@ public class StartRecordUCImplTest {
     @Named(DECORATOR_ALPHA)
     VoiceRecorder voiceRecorder;
     @Inject
-    StopPlaybackAndRecordUCImpl stopPlaybackAndRecordUC;
+    StopPlaybackAndRecordUC stopPlaybackAndRecordUC;
     @Inject
     CheckPermissionsUC checkPermissionsUC;
     @Inject
@@ -44,7 +44,7 @@ public class StartRecordUCImplTest {
     FilePathGenerator filePathGenerator;
 
     private VoiceRecorder spyVoiceRecorder;
-    private StartRecordUCImpl startRecordUC;
+    private StartRecordUC startRecordUC;
 
     @Before
     public void setUp() {
@@ -57,7 +57,7 @@ public class StartRecordUCImplTest {
                     return Completable.complete();
                 });
         when(filePathGenerator.generateFilePath()).thenReturn("test");
-        startRecordUC = new StartRecordUCImpl(
+        startRecordUC = new StartRecordUC(
                 fileNameRepo,
                 bitRateRepo,
                 sampleRateRepo,

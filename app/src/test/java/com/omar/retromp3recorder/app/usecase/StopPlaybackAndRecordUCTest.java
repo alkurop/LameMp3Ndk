@@ -15,7 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-public class StopPlaybackAndRecordUCImplTest {
+public class StopPlaybackAndRecordUCTest {
     @Inject
     @Named(DECORATOR_ALPHA)
     AudioPlayer baseAudioPlayer;
@@ -33,7 +33,7 @@ public class StopPlaybackAndRecordUCImplTest {
         DaggerTestAppComponent.create().inject(this);
         audioPlayer = spy(baseAudioPlayer);
         voiceRecorder = spy(baseVoiceRecorder);
-        stopPlaybackAndRecordUC = new StopPlaybackAndRecordUCImpl(audioPlayer, voiceRecorder);
+        stopPlaybackAndRecordUC = new StopPlaybackAndRecordUC(audioPlayer, voiceRecorder);
     }
 
     @Test

@@ -9,17 +9,17 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-public class ChangeBitrateUCImplTest {
+public class ChangeBitrateUCTest {
 
     @Inject
     BitRateRepo bitRateRepo;
 
-    private ChangeBitrateUCImpl changeBitrateUC;
+    private ChangeBitrateUC changeBitrateUC;
 
     @Before
     public void setUp() {
         DaggerTestAppComponent.create().inject(this);
-        changeBitrateUC = new ChangeBitrateUCImpl(bitRateRepo);
+        changeBitrateUC = new ChangeBitrateUC(bitRateRepo);
     }
 
     @Test

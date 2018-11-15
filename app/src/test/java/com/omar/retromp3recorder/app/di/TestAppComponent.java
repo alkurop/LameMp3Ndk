@@ -7,11 +7,11 @@ import com.omar.retromp3recorder.app.player.StateLoggingAudioPlayerTest;
 import com.omar.retromp3recorder.app.recorder.LoggingVoiceRecorderTest;
 import com.omar.retromp3recorder.app.recorder.StateLoggingVoiceRecorderTest;
 import com.omar.retromp3recorder.app.share.LoggingSharingModuleTest;
-import com.omar.retromp3recorder.app.usecase.ChangeBitrateUCImplTest;
+import com.omar.retromp3recorder.app.usecase.ChangeBitrateUCTest;
 import com.omar.retromp3recorder.app.usecase.ChangeSampleRateUCImplTest;
 import com.omar.retromp3recorder.app.usecase.StartPlaybackUCImplTest;
 import com.omar.retromp3recorder.app.usecase.StartRecordUCImplTest;
-import com.omar.retromp3recorder.app.usecase.StopPlaybackAndRecordUCImplTest;
+import com.omar.retromp3recorder.app.usecase.StopPlaybackAndRecordUCTest;
 
 import javax.inject.Singleton;
 
@@ -38,7 +38,7 @@ public interface TestAppComponent {
 
     void inject(StateLoggingVoiceRecorderTest stateLoggingVoiceRecorderTest);
 
-    void inject(ChangeBitrateUCImplTest changeBitrateUCImplTest);
+    void inject(ChangeBitrateUCTest changeBitrateUCImplTest);
 
     void inject(ChangeSampleRateUCImplTest changeSampleRateUCImplTest);
 
@@ -48,5 +48,5 @@ public interface TestAppComponent {
 
     void inject(StartRecordUCImplTest startRecordUCImplTest);
 
-    void inject(StopPlaybackAndRecordUCImplTest stopPlaybackAndRecordUCImplTest);
+    void inject(StopPlaybackAndRecordUCTest stopPlaybackAndRecordUCImplTest);
 }

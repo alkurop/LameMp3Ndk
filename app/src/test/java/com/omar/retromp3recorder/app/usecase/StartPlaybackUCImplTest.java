@@ -38,7 +38,7 @@ public class StartPlaybackUCImplTest {
     @Inject
     StopPlaybackAndRecordUC stopPlaybackAndRecordUC;
 
-    private StartPlaybackUCImpl startPlaybackUC;
+    private StartPlaybackUC startPlaybackUC;
     private AudioPlayer spyAudioPlayer;
 
     @Before
@@ -50,7 +50,7 @@ public class StartPlaybackUCImplTest {
                     requestPermissionsRepo.newValue(new RequestPermissionsRepo.Granted());
                     return Completable.complete();
                 });
-        startPlaybackUC = new StartPlaybackUCImpl(
+        startPlaybackUC = new StartPlaybackUC(
                 fileNameRepo,
                 spyAudioPlayer,
                 voiceRecorder,

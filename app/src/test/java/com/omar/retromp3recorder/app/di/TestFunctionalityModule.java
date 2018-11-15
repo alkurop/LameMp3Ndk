@@ -2,8 +2,10 @@ package com.omar.retromp3recorder.app.di;
 
 import com.omar.retromp3recorder.app.player.AudioPlayer;
 import com.omar.retromp3recorder.app.player.LoggingAudioPlayer;
+import com.omar.retromp3recorder.app.player.StateLoggingAudioPlayer;
 import com.omar.retromp3recorder.app.player.TestAudioPlayer;
 import com.omar.retromp3recorder.app.recorder.LoggingVoiceRecorder;
+import com.omar.retromp3recorder.app.recorder.StateLoggingVoiceRecorder;
 import com.omar.retromp3recorder.app.recorder.TestVoiceRecorder;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.share.LoggingSharingModule;
@@ -17,6 +19,7 @@ import dagger.Binds;
 import dagger.Module;
 
 import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_ALPHA;
+import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_BETA;
 
 
 @Module(
@@ -25,12 +28,22 @@ import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_ALPHA;
 abstract class TestFunctionalityModule {
 
     @Singleton
+    @Named(DECORATOR_BETA)
     @Binds
-    abstract VoiceRecorder provideVoiceRecorder(LoggingVoiceRecorder clazz);
+    abstract VoiceRecorder provideLoggingVoiceRecorder(LoggingVoiceRecorder clazz);
+
+    @Singleton
+    @Named(DECORATOR_BETA)
+    @Binds
+    abstract AudioPlayer provideLoggingAudioPlayer(LoggingAudioPlayer clazz);
 
     @Singleton
     @Binds
-    abstract AudioPlayer provideAudioPlayer(LoggingAudioPlayer clazz);
+    abstract VoiceRecorder provideStateVoiceRecorder(StateLoggingVoiceRecorder clazz);
+
+    @Singleton
+    @Binds
+    abstract AudioPlayer provideStateAudioPlayer(StateLoggingAudioPlayer clazz);
 
     @Singleton
     @Named(DECORATOR_ALPHA)

@@ -1,41 +1,50 @@
 package com.omar.retromp3recorder.app.main;
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
+import com.omar.retromp3recorder.app.player.AudioPlayer;
 import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
-import com.omar.retromp3recorder.app.usecase.ChangeBitrateUC;
-import com.omar.retromp3recorder.app.usecase.ChangeSampleRateUC;
+import com.omar.retromp3recorder.app.repo.BitRateRepo;
+import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;
+import com.omar.retromp3recorder.app.repo.SampleRateRepo;
+import com.omar.retromp3recorder.app.repo.StateRepo;
+import com.omar.retromp3recorder.app.usecase.CheckPermissionsUC;
 import com.omar.retromp3recorder.app.usecase.ShareUC;
-import com.omar.retromp3recorder.app.usecase.StartPlaybackUC;
-import com.omar.retromp3recorder.app.usecase.StartRecordUC;
-import com.omar.retromp3recorder.app.usecase.StopPlaybackAndRecordUC;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.observers.TestObserver;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class MainViewInteractorActionsTest {
 
     @Inject
     MainViewInteractor interactor;
     @Inject
-    ChangeSampleRateUC changeSampleRateUC;
+    BitRateRepo bitRateRepo;
     @Inject
-    ChangeBitrateUC changeBitrateUC;
+    SampleRateRepo sampleRateRepo;
     @Inject
     ShareUC shareUC;
     @Inject
-    StartPlaybackUC startPlaybackUC;
+    StateRepo stateRepo;
+
     @Inject
-    StartRecordUC startRecordUC;
+    CheckPermissionsUC permissionsUC;
+
     @Inject
-    StopPlaybackAndRecordUC stopPlaybackAndRecordUC;
+    RequestPermissionsRepo requestPermissionsRepo;
 
     private final Subject<MainView.Action> actionSubject = PublishSubject.create();
     private TestObserver<MainView.Result> test;
@@ -43,6 +52,10 @@ public class MainViewInteractorActionsTest {
     @Before
     public void setUp() {
         DaggerTestAppComponent.create().inject(this);
+        when(permissionsUC.execute(any())).thenAnswer(invocation -> {
+            requestPermissionsRepo.newValue(new RequestPermissionsRepo.Granted());
+            return Completable.complete();
+        });
         test = actionSubject.compose(interactor.process()).test();
     }
 
@@ -56,7 +69,7 @@ public class MainViewInteractorActionsTest {
         ));
 
         //Then
-        verify(changeBitrateUC).execute(bitRate);
+        bitRateRepo.observe().test().assertValue(bitRate);
     }
 
     @Test
@@ -69,7 +82,7 @@ public class MainViewInteractorActionsTest {
         ));
 
         //Then
-        verify(changeSampleRateUC).execute(sampleRate);
+        sampleRateRepo.observe().test().assertValue(sampleRate);
     }
 
 
@@ -92,7 +105,7 @@ public class MainViewInteractorActionsTest {
         actionSubject.onNext(action);
 
         //then
-        verify(startPlaybackUC).execute();
+        stateRepo.observe().test().assertValue(MainView.State.Playing);
 
     }
 
@@ -104,7 +117,7 @@ public class MainViewInteractorActionsTest {
         actionSubject.onNext(action);
 
         //then
-        verify(stopPlaybackAndRecordUC).execute();
+        stateRepo.observe().test().assertValue(MainView.State.Idle);
     }
 
     @Test
@@ -115,6 +128,6 @@ public class MainViewInteractorActionsTest {
         actionSubject.onNext(action);
 
         //then
-        verify(startRecordUC).execute();
+        stateRepo.observe().test().assertValue(MainView.State.Recording);
     }
 }

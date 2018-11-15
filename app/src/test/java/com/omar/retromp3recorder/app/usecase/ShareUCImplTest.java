@@ -15,7 +15,7 @@ public class ShareUCImplTest {
     public void test_UC_Executed(){
         SharingModule sharingModule = mock(SharingModule.class);
         when(sharingModule.share()).thenReturn(Completable.complete());
-        ShareUCImpl shareUC = new ShareUCImpl(sharingModule);
+        ShareUC shareUC = new ShareUC(sharingModule);
 
         //When
         shareUC.execute().subscribe();

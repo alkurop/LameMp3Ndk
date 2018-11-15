@@ -13,12 +13,12 @@ public class ChangeSampleRateUCImplTest {
 
     @Inject
     SampleRateRepo sampleRateRepo;
-    private ChangeSampleRateUCImpl changeSampleRateUC;
+    private ChangeSampleRateUC changeSampleRateUC;
 
     @Before
     public void setUp() {
         DaggerTestAppComponent.create().inject(this);
-        changeSampleRateUC = new ChangeSampleRateUCImpl(sampleRateRepo);
+        changeSampleRateUC = new ChangeSampleRateUC(sampleRateRepo);
     }
 
     @Test
