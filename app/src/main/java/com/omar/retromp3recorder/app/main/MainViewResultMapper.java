@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.main;
 
-import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
+import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
 
 import io.reactivex.ObservableTransformer;
 import io.reactivex.functions.BiFunction;
@@ -9,10 +9,10 @@ import static com.omar.retromp3recorder.app.main.MainView.BitrateChangedResult;
 import static com.omar.retromp3recorder.app.main.MainView.ErrorLogResult;
 import static com.omar.retromp3recorder.app.main.MainView.MainViewModel;
 import static com.omar.retromp3recorder.app.main.MainView.MessageLogResult;
+import static com.omar.retromp3recorder.app.main.MainView.PlayerIdResult;
 import static com.omar.retromp3recorder.app.main.MainView.RequestPermissionsResult;
 import static com.omar.retromp3recorder.app.main.MainView.Result;
 import static com.omar.retromp3recorder.app.main.MainView.SampleRateChangeResult;
-import static com.omar.retromp3recorder.app.main.MainView.PlayerIdResult;
 import static com.omar.retromp3recorder.app.main.MainView.StateChangedResult;
 
 public class MainViewResultMapper   {

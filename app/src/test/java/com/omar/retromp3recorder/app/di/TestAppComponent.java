@@ -2,16 +2,16 @@ package com.omar.retromp3recorder.app.di;
 
 import com.omar.retromp3recorder.app.main.MainViewInteractorActionsTest;
 import com.omar.retromp3recorder.app.main.MainViewInteractorRepoTest;
-import com.omar.retromp3recorder.app.player.LoggingAudioPlayerTest;
-import com.omar.retromp3recorder.app.player.StateLoggingAudioPlayerTest;
-import com.omar.retromp3recorder.app.recorder.LoggingVoiceRecorderTest;
-import com.omar.retromp3recorder.app.recorder.StateLoggingVoiceRecorderTest;
+import com.omar.retromp3recorder.app.playback.player.LoggingAudioPlayerTest;
+import com.omar.retromp3recorder.app.playback.player.StateLoggingAudioPlayerTest;
+import com.omar.retromp3recorder.app.recording.recorder.LoggingVoiceRecorderTest;
+import com.omar.retromp3recorder.app.recording.recorder.StateLoggingVoiceRecorderTest;
 import com.omar.retromp3recorder.app.share.LoggingSharingModuleTest;
-import com.omar.retromp3recorder.app.usecase.ChangeBitrateUCTest;
-import com.omar.retromp3recorder.app.usecase.ChangeSampleRateUCImplTest;
-import com.omar.retromp3recorder.app.usecase.StartPlaybackUCImplTest;
-import com.omar.retromp3recorder.app.usecase.StartRecordUCImplTest;
-import com.omar.retromp3recorder.app.usecase.StopPlaybackAndRecordUCTest;
+import com.omar.retromp3recorder.app.shared.usecase.ChangeBitrateUCTest;
+import com.omar.retromp3recorder.app.shared.usecase.ChangeSampleRateUCImplTest;
+import com.omar.retromp3recorder.app.shared.usecase.StartPlaybackUCImplTest;
+import com.omar.retromp3recorder.app.shared.usecase.StartRecordUCImplTest;
+import com.omar.retromp3recorder.app.shared.usecase.StopPlaybackAndRecordUCTest;
 
 import javax.inject.Singleton;
 

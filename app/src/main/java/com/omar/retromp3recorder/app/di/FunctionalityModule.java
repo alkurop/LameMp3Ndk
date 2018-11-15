@@ -1,13 +1,13 @@
 package com.omar.retromp3recorder.app.di;
 
-import com.omar.retromp3recorder.app.player.AudioPlayer;
-import com.omar.retromp3recorder.app.player.AudioPlayerRx;
-import com.omar.retromp3recorder.app.player.LoggingAudioPlayer;
-import com.omar.retromp3recorder.app.player.StateLoggingAudioPlayer;
-import com.omar.retromp3recorder.app.recorder.LoggingVoiceRecorder;
-import com.omar.retromp3recorder.app.recorder.StateLoggingVoiceRecorder;
-import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
-import com.omar.retromp3recorder.app.recorder.VoiceRecorderRX;
+import com.omar.retromp3recorder.app.playback.player.AudioPlayer;
+import com.omar.retromp3recorder.app.playback.player.AudioPlayerRx;
+import com.omar.retromp3recorder.app.playback.player.LoggingAudioPlayer;
+import com.omar.retromp3recorder.app.playback.player.StateLoggingAudioPlayer;
+import com.omar.retromp3recorder.app.recording.recorder.LoggingVoiceRecorder;
+import com.omar.retromp3recorder.app.recording.recorder.StateLoggingVoiceRecorder;
+import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
+import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorderRX;
 import com.omar.retromp3recorder.app.share.LoggingSharingModule;
 import com.omar.retromp3recorder.app.share.SharingModule;
 import com.omar.retromp3recorder.app.share.SharingModuleRX;

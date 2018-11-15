@@ -1,19 +1,19 @@
 package com.omar.retromp3recorder.app.main;
 
 
-import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
-import com.omar.retromp3recorder.app.repo.BitRateRepo;
-import com.omar.retromp3recorder.app.repo.LogRepo;
-import com.omar.retromp3recorder.app.repo.PlayerIdRepo;
-import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;
-import com.omar.retromp3recorder.app.repo.SampleRateRepo;
-import com.omar.retromp3recorder.app.repo.StateRepo;
-import com.omar.retromp3recorder.app.usecase.ChangeBitrateUC;
-import com.omar.retromp3recorder.app.usecase.ChangeSampleRateUC;
-import com.omar.retromp3recorder.app.usecase.ShareUC;
-import com.omar.retromp3recorder.app.usecase.StartPlaybackUC;
-import com.omar.retromp3recorder.app.usecase.StartRecordUC;
-import com.omar.retromp3recorder.app.usecase.StopPlaybackAndRecordUC;
+import com.omar.retromp3recorder.app.playback.repo.PlayerIdRepo;
+import com.omar.retromp3recorder.app.playback.usecase.StartPlaybackUC;
+import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
+import com.omar.retromp3recorder.app.recording.repo.BitRateRepo;
+import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo;
+import com.omar.retromp3recorder.app.recording.usecase.ChangeBitrateUC;
+import com.omar.retromp3recorder.app.recording.usecase.ChangeSampleRateUC;
+import com.omar.retromp3recorder.app.recording.usecase.StartRecordUC;
+import com.omar.retromp3recorder.app.shared.repo.LogRepo;
+import com.omar.retromp3recorder.app.shared.repo.RequestPermissionsRepo;
+import com.omar.retromp3recorder.app.shared.repo.StateRepo;
+import com.omar.retromp3recorder.app.share.ShareUC;
+import com.omar.retromp3recorder.app.shared.usecase.StopPlaybackAndRecordUC;
 import com.omar.retromp3recorder.app.utils.OneShot;
 
 import javax.inject.Inject;

@@ -1,13 +1,13 @@
 package com.omar.retromp3recorder.app.main;
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
-import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
-import com.omar.retromp3recorder.app.repo.BitRateRepo;
-import com.omar.retromp3recorder.app.repo.LogRepo;
-import com.omar.retromp3recorder.app.repo.PlayerIdRepo;
-import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;
-import com.omar.retromp3recorder.app.repo.SampleRateRepo;
-import com.omar.retromp3recorder.app.repo.StateRepo;
+import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
+import com.omar.retromp3recorder.app.recording.repo.BitRateRepo;
+import com.omar.retromp3recorder.app.shared.repo.LogRepo;
+import com.omar.retromp3recorder.app.playback.repo.PlayerIdRepo;
+import com.omar.retromp3recorder.app.shared.repo.RequestPermissionsRepo;
+import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo;
+import com.omar.retromp3recorder.app.shared.repo.StateRepo;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import javax.inject.Inject;
 import io.reactivex.observers.TestObserver;
 import io.reactivex.subjects.PublishSubject;
 
-import static com.omar.retromp3recorder.app.recorder.VoiceRecorder.SampleRate._8000;
+import static com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.SampleRate._8000;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createHashSet;
 
 public class MainViewInteractorRepoTest {

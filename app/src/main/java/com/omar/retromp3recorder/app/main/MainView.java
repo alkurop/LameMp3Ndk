@@ -5,8 +5,8 @@ import java.util.Set;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
 
-import static com.omar.retromp3recorder.app.recorder.VoiceRecorder.BitRate;
-import static com.omar.retromp3recorder.app.recorder.VoiceRecorder.SampleRate;
+import static com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.BitRate;
+import static com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.SampleRate;
 
 public interface MainView {
 

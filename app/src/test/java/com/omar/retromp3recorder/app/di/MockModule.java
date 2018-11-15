@@ -1,10 +1,10 @@
 package com.omar.retromp3recorder.app.di;
 
-import com.omar.retromp3recorder.app.player.AudioPlayer;
-import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
+import com.omar.retromp3recorder.app.playback.player.AudioPlayer;
+import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.share.SharingModule;
-import com.omar.retromp3recorder.app.usecase.CheckPermissionsUC;
-import com.omar.retromp3recorder.app.usecase.ShareUC;
+import com.omar.retromp3recorder.app.recording.usecase.CheckPermissionsUC;
+import com.omar.retromp3recorder.app.share.ShareUC;
 
 import javax.inject.Named;
 import javax.inject.Singleton;

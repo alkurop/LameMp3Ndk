@@ -2,8 +2,8 @@ package com.omar.retromp3recorder.app.di;
 
 import android.content.Context;
 
-import com.omar.retromp3recorder.app.stringer.ContextStringer;
-import com.omar.retromp3recorder.app.stringer.Stringer;
+import com.omar.retromp3recorder.app.utils.ContextStringer;
+import com.omar.retromp3recorder.app.utils.Stringer;
 
 import javax.inject.Named;
 

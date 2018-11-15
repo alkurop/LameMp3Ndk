@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.main;
 
-import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
+import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
 
 import org.junit.Before;
 import org.junit.Test;

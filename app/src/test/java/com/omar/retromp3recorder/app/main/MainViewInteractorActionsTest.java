@@ -1,19 +1,16 @@
 package com.omar.retromp3recorder.app.main;
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
-import com.omar.retromp3recorder.app.player.AudioPlayer;
-import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
-import com.omar.retromp3recorder.app.repo.BitRateRepo;
-import com.omar.retromp3recorder.app.repo.RequestPermissionsRepo;
-import com.omar.retromp3recorder.app.repo.SampleRateRepo;
-import com.omar.retromp3recorder.app.repo.StateRepo;
-import com.omar.retromp3recorder.app.usecase.CheckPermissionsUC;
-import com.omar.retromp3recorder.app.usecase.ShareUC;
+import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
+import com.omar.retromp3recorder.app.recording.repo.BitRateRepo;
+import com.omar.retromp3recorder.app.shared.repo.RequestPermissionsRepo;
+import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo;
+import com.omar.retromp3recorder.app.shared.repo.StateRepo;
+import com.omar.retromp3recorder.app.recording.usecase.CheckPermissionsUC;
+import com.omar.retromp3recorder.app.share.ShareUC;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import javax.inject.Inject;
 
@@ -23,7 +20,6 @@ import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

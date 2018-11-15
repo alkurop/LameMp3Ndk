@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.omar.retromp3recorder.app.R;
-import com.omar.retromp3recorder.app.repo.FileNameRepo;
-import com.omar.retromp3recorder.app.stringer.Stringer;
+import com.omar.retromp3recorder.app.shared.repo.FileNameRepo;
+import com.omar.retromp3recorder.app.utils.Stringer;
 import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 
 import java.io.File;

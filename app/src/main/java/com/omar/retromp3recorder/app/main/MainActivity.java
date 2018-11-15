@@ -26,7 +26,7 @@ import com.jakewharton.rxbinding3.view.RxView;
 import com.omar.retromp3recorder.app.App;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.customviews.VisualizerView;
-import com.omar.retromp3recorder.app.recorder.VoiceRecorder;
+import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 import com.squareup.picasso.Picasso;
 
