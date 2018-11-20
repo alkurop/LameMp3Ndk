@@ -1,6 +1,9 @@
 package com.omar.retromp3recorder.app.di;
 
+import com.omar.retromp3recorder.app.files.FilesFragment;
 import com.omar.retromp3recorder.app.main.MainActivity;
+
+import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Singleton;
 
@@ -21,4 +24,5 @@ public interface AppComponent {
 
     void inject(MainActivity mainActivity);
 
+    void inject(@NotNull FilesFragment filesFragment);
 }

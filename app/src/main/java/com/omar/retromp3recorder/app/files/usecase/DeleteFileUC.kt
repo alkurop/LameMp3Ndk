@@ -6,7 +6,7 @@ import io.reactivex.Single
 import java.io.File
 import javax.inject.Inject
 
-class DeleteFIleUC @Inject constructor(
+class DeleteFileUC @Inject constructor(
         private val lookForFilesUC: LookForFilesUC,
         private val currentFileRepo: CurrentFileRepo,
         private val selectLastFileUsecase: SelectLastFileUsecase

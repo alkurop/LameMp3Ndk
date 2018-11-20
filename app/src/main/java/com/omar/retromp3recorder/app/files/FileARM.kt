@@ -6,7 +6,11 @@ sealed class FilesAction {
 }
 
 sealed class FilesResult {
-    data class FileSelectedTesult(val fileName: String) : FilesResult()
+    data class FileSelectedResult(val fileName: String) : FilesResult()
+    data class FilesListResult(val files: List<String>) : FilesResult()
 }
 
-data class FilesModel(val files: List<String>)
+data class FilesViewModel(
+        val files: List<String>,
+        val selectedFile: String
+)
