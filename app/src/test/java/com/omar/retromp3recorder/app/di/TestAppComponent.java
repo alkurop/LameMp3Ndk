@@ -7,11 +7,11 @@ import com.omar.retromp3recorder.app.playback.player.StateLoggingAudioPlayerTest
 import com.omar.retromp3recorder.app.recording.recorder.LoggingVoiceRecorderTest;
 import com.omar.retromp3recorder.app.recording.recorder.StateLoggingVoiceRecorderTest;
 import com.omar.retromp3recorder.app.share.LoggingSharingModuleTest;
-import com.omar.retromp3recorder.app.shared.usecase.ChangeBitrateUCTest;
-import com.omar.retromp3recorder.app.shared.usecase.ChangeSampleRateUCImplTest;
-import com.omar.retromp3recorder.app.shared.usecase.StartPlaybackUCImplTest;
-import com.omar.retromp3recorder.app.shared.usecase.StartRecordUCImplTest;
-import com.omar.retromp3recorder.app.shared.usecase.StopPlaybackAndRecordUCTest;
+import com.omar.retromp3recorder.app.common.usecase.ChangeBitrateUCTest;
+import com.omar.retromp3recorder.app.common.usecase.ChangeSampleRateUCImplTest;
+import com.omar.retromp3recorder.app.common.usecase.StartPlaybackUCImplTest;
+import com.omar.retromp3recorder.app.common.usecase.StartRecordUCImplTest;
+import com.omar.retromp3recorder.app.common.usecase.StopPlaybackAndRecordUCTest;
 
 import javax.inject.Singleton;
 

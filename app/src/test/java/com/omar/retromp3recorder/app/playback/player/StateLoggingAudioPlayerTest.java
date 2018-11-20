@@ -3,7 +3,7 @@ package com.omar.retromp3recorder.app.playback.player;
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
 import com.omar.retromp3recorder.app.main.MainView;
 import com.omar.retromp3recorder.app.playback.repo.PlayerIdRepo;
-import com.omar.retromp3recorder.app.shared.repo.StateRepo;
+import com.omar.retromp3recorder.app.common.repo.StateRepo;
 
 import org.junit.Before;
 import org.junit.Test;

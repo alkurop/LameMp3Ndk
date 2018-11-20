@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.playback.player;
 
-import com.omar.retromp3recorder.app.shared.repo.LogRepo;
+import com.omar.retromp3recorder.app.common.repo.LogRepo;
 
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -1,0 +1,23 @@
+package com.omar.retromp3recorder.app.files.repo
+
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class FileListRepo @Inject constructor() {
+    private val stateSubject = BehaviorSubject.create<List<String>>()
+
+    fun hasValue(): Boolean {
+        return stateSubject.hasValue()
+    }
+
+    fun newValue(fileNames: List<String>) {
+        stateSubject.onNext(fileNames)
+    }
+
+    fun observe(): Observable<List<String>> {
+        return stateSubject
+    }
+}

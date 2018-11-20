@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.shared.repo;
+package com.omar.retromp3recorder.app.common.repo;
 
 import com.omar.retromp3recorder.app.utils.OneShot;
 

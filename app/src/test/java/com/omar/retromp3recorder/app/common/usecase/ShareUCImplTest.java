@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.shared.usecase;
+package com.omar.retromp3recorder.app.common.usecase;
 
 import com.omar.retromp3recorder.app.share.ShareUC;
 import com.omar.retromp3recorder.app.share.SharingModule;

@@ -6,6 +6,7 @@ import android.os.Process;
 import android.support.v4.util.Pair;
 
 import com.omar.retromp3recorder.app.R;
+import com.omar.retromp3recorder.app.recorder.LameModule;
 import com.omar.retromp3recorder.app.utils.Stringer;
 import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 

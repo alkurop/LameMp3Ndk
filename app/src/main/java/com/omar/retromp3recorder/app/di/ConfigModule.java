@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.di;
 
-import com.omar.retromp3recorder.app.recording.recorder.FilePathGenerator;
+import com.omar.retromp3recorder.app.files.FilePathGenerator;
 import com.omar.retromp3recorder.app.recording.recorder.RecorderDefaults;
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
 

@@ -1,12 +1,13 @@
 package com.omar.retromp3recorder.app.recording.usecase;
 
-import com.omar.retromp3recorder.app.recording.recorder.FilePathGenerator;
+import com.omar.retromp3recorder.app.files.repo.CurrentFileRepo;
+import com.omar.retromp3recorder.app.files.FilePathGenerator;
+import com.omar.retromp3recorder.app.files.usecase.GenerateNewFilenameForRecorderUC;
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.recording.repo.BitRateRepo;
 import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo;
-import com.omar.retromp3recorder.app.shared.repo.FileNameRepo;
-import com.omar.retromp3recorder.app.shared.repo.RequestPermissionsRepo;
-import com.omar.retromp3recorder.app.shared.usecase.StopPlaybackAndRecordUC;
+import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo;
+import com.omar.retromp3recorder.app.common.usecase.StopPlaybackAndRecordUC;
 import com.omar.retromp3recorder.app.utils.OneShot;
 
 import java.util.Set;
@@ -25,34 +26,35 @@ public class StartRecordUC {
             android.Manifest.permission.RECORD_AUDIO
     );
 
-    private final FileNameRepo fileNameRepo;
+    private final CurrentFileRepo currentFileRepo;
     private final BitRateRepo bitRateRepo;
     private final SampleRateRepo sampleRateRepo;
     private final VoiceRecorder voiceRecorder;
     private final StopPlaybackAndRecordUC stopPlaybackAndRecordUC;
     private final CheckPermissionsUC checkPermissionsUC;
     private final RequestPermissionsRepo requestPermissionsRepo;
-    private final FilePathGenerator filePathGenerator;
+    private final GenerateNewFilenameForRecorderUC generateNewFilenameForRecorderUC;
 
     //region constructor
     @Inject
     public StartRecordUC(
-            FileNameRepo fileNameRepo,
+            CurrentFileRepo currentFileRepo,
             BitRateRepo bitRateRepo,
             SampleRateRepo sampleRateRepo,
             VoiceRecorder voiceRecorder,
             StopPlaybackAndRecordUC stopPlaybackAndRecordUC,
             CheckPermissionsUC checkPermissionsUC,
             RequestPermissionsRepo requestPermissionsRepo,
-            FilePathGenerator filePathGenerator) {
-        this.fileNameRepo = fileNameRepo;
+            GenerateNewFilenameForRecorderUC generateNewFilenameForRecorderUC
+            ) {
+        this.generateNewFilenameForRecorderUC = generateNewFilenameForRecorderUC;
+        this.currentFileRepo = currentFileRepo;
         this.bitRateRepo = bitRateRepo;
         this.sampleRateRepo = sampleRateRepo;
         this.voiceRecorder = voiceRecorder;
         this.stopPlaybackAndRecordUC = stopPlaybackAndRecordUC;
         this.checkPermissionsUC = checkPermissionsUC;
         this.requestPermissionsRepo = requestPermissionsRepo;
-        this.filePathGenerator = filePathGenerator;
     }
     //endregion
 
@@ -66,14 +68,11 @@ public class StartRecordUC {
 
         Completable begForPermissions = Completable.complete();
 
-        Completable execute = Completable
-                .fromAction(() -> {
-                    String filePath = filePathGenerator.generateFilePath();
-                    fileNameRepo.newValue(filePath);
-                })
+        Completable execute = generateNewFilenameForRecorderUC
+                .execute()
                 .andThen(Observable
                         .zip(
-                                fileNameRepo.observe().take(1),
+                                currentFileRepo.observe().take(1),
                                 bitRateRepo.observe().take(1),
                                 sampleRateRepo.observe().take(1),
                                 propsZipper

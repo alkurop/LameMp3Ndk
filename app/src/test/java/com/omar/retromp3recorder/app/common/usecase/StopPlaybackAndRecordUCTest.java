@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.shared.usecase;
+package com.omar.retromp3recorder.app.common.usecase;
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
 import com.omar.retromp3recorder.app.playback.player.AudioPlayer;
@@ -33,7 +33,7 @@ public class StopPlaybackAndRecordUCTest {
         DaggerTestAppComponent.create().inject(this);
         audioPlayer = spy(baseAudioPlayer);
         voiceRecorder = spy(baseVoiceRecorder);
-        stopPlaybackAndRecordUC = new StopPlaybackAndRecordUC(audioPlayer, voiceRecorder);
+        stopPlaybackAndRecordUC = new StopPlaybackAndRecordUC(audioPlayer, voiceRecorder, stateRepo);
     }
 
     @Test

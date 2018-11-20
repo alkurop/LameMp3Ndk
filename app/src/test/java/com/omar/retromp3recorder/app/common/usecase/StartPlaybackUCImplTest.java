@@ -1,12 +1,12 @@
-package com.omar.retromp3recorder.app.shared.usecase;
+package com.omar.retromp3recorder.app.common.usecase;
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
 import com.omar.retromp3recorder.app.playback.player.AudioPlayer;
 import com.omar.retromp3recorder.app.playback.usecase.StartPlaybackUC;
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.recording.usecase.CheckPermissionsUC;
-import com.omar.retromp3recorder.app.shared.repo.FileNameRepo;
-import com.omar.retromp3recorder.app.shared.repo.RequestPermissionsRepo;
+import com.omar.retromp3recorder.app.files.repo.CurrentFileRepo;
+import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class StartPlaybackUCImplTest {
 
     @Inject
-    FileNameRepo fileNameRepo;
+    CurrentFileRepo currentFileRepo;
     @Inject
     RequestPermissionsRepo requestPermissionsRepo;
 
@@ -53,7 +53,7 @@ public class StartPlaybackUCImplTest {
                     return Completable.complete();
                 });
         startPlaybackUC = new StartPlaybackUC(
-                fileNameRepo,
+                currentFileRepo,
                 spyAudioPlayer,
                 voiceRecorder,
                 stopPlaybackAndRecordUC,

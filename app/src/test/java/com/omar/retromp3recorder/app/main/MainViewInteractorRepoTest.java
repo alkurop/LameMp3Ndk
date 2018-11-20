@@ -3,11 +3,11 @@ package com.omar.retromp3recorder.app.main;
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.recording.repo.BitRateRepo;
-import com.omar.retromp3recorder.app.shared.repo.LogRepo;
+import com.omar.retromp3recorder.app.common.repo.LogRepo;
 import com.omar.retromp3recorder.app.playback.repo.PlayerIdRepo;
-import com.omar.retromp3recorder.app.shared.repo.RequestPermissionsRepo;
+import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo;
 import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo;
-import com.omar.retromp3recorder.app.shared.repo.StateRepo;
+import com.omar.retromp3recorder.app.common.repo.StateRepo;
 
 import org.junit.Before;
 import org.junit.Test;

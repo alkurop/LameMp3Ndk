@@ -1,11 +1,11 @@
 package com.omar.retromp3recorder.app.playback.usecase;
 
+import com.omar.retromp3recorder.app.files.repo.CurrentFileRepo;
 import com.omar.retromp3recorder.app.playback.player.AudioPlayer;
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.recording.usecase.CheckPermissionsUC;
-import com.omar.retromp3recorder.app.shared.repo.FileNameRepo;
-import com.omar.retromp3recorder.app.shared.repo.RequestPermissionsRepo;
-import com.omar.retromp3recorder.app.shared.usecase.StopPlaybackAndRecordUC;
+import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo;
+import com.omar.retromp3recorder.app.common.usecase.StopPlaybackAndRecordUC;
 import com.omar.retromp3recorder.app.utils.OneShot;
 
 import java.util.Set;
@@ -21,7 +21,7 @@ public class StartPlaybackUC {
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE
     );
 
-    private final FileNameRepo fileNameRepo;
+    private final CurrentFileRepo currentFileRepo;
     private final RequestPermissionsRepo requestPermissionsRepo;
 
     private final AudioPlayer audioPlayer;
@@ -33,14 +33,14 @@ public class StartPlaybackUC {
     //region constructor
     @Inject
     public StartPlaybackUC(
-            FileNameRepo fileNameRepo,
+            CurrentFileRepo currentFileRepo,
             AudioPlayer audioPlayer,
             VoiceRecorder voiceRecorder,
             StopPlaybackAndRecordUC stopUC,
             CheckPermissionsUC checkPermissionsUC,
             RequestPermissionsRepo requestPermissionsRepo
     ) {
-        this.fileNameRepo = fileNameRepo;
+        this.currentFileRepo = currentFileRepo;
         this.audioPlayer = audioPlayer;
         this.voiceRecorder = voiceRecorder;
         this.stopUC = stopUC;
@@ -54,7 +54,7 @@ public class StartPlaybackUC {
         Completable begForPermissions = Completable.complete();
 
         Completable execute =
-                fileNameRepo.observe()
+                currentFileRepo.observe()
                         .take(1)
                         .flatMapCompletable(fileName -> Completable
                                 .fromAction(() -> {

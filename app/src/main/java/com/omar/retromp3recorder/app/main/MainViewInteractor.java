@@ -9,11 +9,11 @@ import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo;
 import com.omar.retromp3recorder.app.recording.usecase.ChangeBitrateUC;
 import com.omar.retromp3recorder.app.recording.usecase.ChangeSampleRateUC;
 import com.omar.retromp3recorder.app.recording.usecase.StartRecordUC;
-import com.omar.retromp3recorder.app.shared.repo.LogRepo;
-import com.omar.retromp3recorder.app.shared.repo.RequestPermissionsRepo;
-import com.omar.retromp3recorder.app.shared.repo.StateRepo;
+import com.omar.retromp3recorder.app.common.repo.LogRepo;
+import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo;
+import com.omar.retromp3recorder.app.common.repo.StateRepo;
 import com.omar.retromp3recorder.app.share.ShareUC;
-import com.omar.retromp3recorder.app.shared.usecase.StopPlaybackAndRecordUC;
+import com.omar.retromp3recorder.app.common.usecase.StopPlaybackAndRecordUC;
 import com.omar.retromp3recorder.app.utils.OneShot;
 
 import javax.inject.Inject;

@@ -1,8 +1,10 @@
-package com.omar.retromp3recorder.app.recording.recorder;
+package com.omar.retromp3recorder.app.files;
 
 import android.content.Context;
 
 import com.omar.retromp3recorder.app.utils.NotUnitTestable;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -19,7 +21,11 @@ public class FilePathGenerator {
     }
 
     public String generateFilePath() {
-        String fileName = VOICE_RECORD + MP3_EXTENSION;
-        return context.getExternalCacheDir() + "/" + fileName;
+        String fileName = VOICE_RECORD + "_" + String.valueOf(System.currentTimeMillis()) + MP3_EXTENSION;
+        return getFileDir() + "/" + fileName;
+    }
+
+    public String getFileDir() {
+        return context.getExternalCacheDir().toString();
     }
 }

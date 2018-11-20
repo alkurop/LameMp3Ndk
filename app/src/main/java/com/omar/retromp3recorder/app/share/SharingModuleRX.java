@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.omar.retromp3recorder.app.R;
-import com.omar.retromp3recorder.app.shared.repo.FileNameRepo;
+import com.omar.retromp3recorder.app.files.repo.CurrentFileRepo;
 import com.omar.retromp3recorder.app.utils.Stringer;
 import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 
@@ -29,7 +29,7 @@ public final class SharingModuleRX implements SharingModule {
 
     private final SharableFileUriCreator sharableFileUriCreator;
     private final Context context;
-    private final FileNameRepo fileNameRepo;
+    private final CurrentFileRepo currentFileRepo;
     private final Stringer stringer;
     private final Scheduler scheduler;
     private final Scheduler mainThreadScheduler;
@@ -39,14 +39,14 @@ public final class SharingModuleRX implements SharingModule {
     SharingModuleRX(
             SharableFileUriCreator sharableFileUriCreator,
             Context context,
-            FileNameRepo fileNameRepo,
+            CurrentFileRepo currentFileRepo,
             Stringer stringer,
             Scheduler scheduler,
             @Named(MAIN_THREAD) Scheduler mainThreadScheduler
     ) {
         this.sharableFileUriCreator = sharableFileUriCreator;
         this.context = context;
-        this.fileNameRepo = fileNameRepo;
+        this.currentFileRepo = currentFileRepo;
         this.stringer = stringer;
         this.scheduler = scheduler;
         this.mainThreadScheduler = mainThreadScheduler;
@@ -54,7 +54,7 @@ public final class SharingModuleRX implements SharingModule {
 
     @Override
     public Completable share() {
-        return fileNameRepo.observe().take(1)
+        return currentFileRepo.observe().take(1)
                 .flatMapCompletable((Function<String, Completable>) fileName ->
                         {
                             File file = new File(fileName);

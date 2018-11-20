@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.recording.recorder;
 
-import com.omar.retromp3recorder.app.shared.repo.LogRepo;
+import com.omar.retromp3recorder.app.common.repo.LogRepo;
 
 import javax.inject.Inject;
 import javax.inject.Named;

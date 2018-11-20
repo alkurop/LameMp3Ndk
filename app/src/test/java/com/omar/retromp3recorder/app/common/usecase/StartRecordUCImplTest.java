@@ -1,13 +1,13 @@
-package com.omar.retromp3recorder.app.shared.usecase;
+package com.omar.retromp3recorder.app.common.usecase;
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
-import com.omar.retromp3recorder.app.recording.recorder.FilePathGenerator;
+import com.omar.retromp3recorder.app.files.repo.CurrentFileRepo;
+import com.omar.retromp3recorder.app.files.FilePathGenerator;
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.recording.repo.BitRateRepo;
 import com.omar.retromp3recorder.app.recording.usecase.CheckPermissionsUC;
 import com.omar.retromp3recorder.app.recording.usecase.StartRecordUC;
-import com.omar.retromp3recorder.app.shared.repo.FileNameRepo;
-import com.omar.retromp3recorder.app.shared.repo.RequestPermissionsRepo;
+import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo;
 import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo;
 
 import org.junit.Before;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 public class StartRecordUCImplTest {
     @Inject
-    FileNameRepo fileNameRepo;
+    CurrentFileRepo currentFileRepo;
     @Inject
     BitRateRepo bitRateRepo;
     @Inject
@@ -60,7 +60,7 @@ public class StartRecordUCImplTest {
                 });
         when(filePathGenerator.generateFilePath()).thenReturn("test");
         startRecordUC = new StartRecordUC(
-                fileNameRepo,
+                currentFileRepo,
                 bitRateRepo,
                 sampleRateRepo,
                 spyVoiceRecorder,

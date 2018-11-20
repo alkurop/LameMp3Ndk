@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.share;
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
-import com.omar.retromp3recorder.app.shared.repo.LogRepo;
+import com.omar.retromp3recorder.app.common.repo.LogRepo;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import io.reactivex.Scheduler;
-import io.reactivex.functions.Predicate;
 import io.reactivex.subjects.Subject;
 
 import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_ALPHA;

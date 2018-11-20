@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.recording.recorder;
+package com.omar.retromp3recorder.app.recorder;
 
 import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 
