@@ -50,7 +50,10 @@ class FilesViewHolder(
         private val onItemSelectListener: (String) -> Unit,
         itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(data: FilesAdapterModel) {
-        itemView.textView.text = data.fileName
+        itemView.setOnClickListener { onItemSelectListener.invoke(data.fileName) }
+        val last = data.fileName.split("/").last()
+        itemView.textView.text = last
         itemView.closeBtn.setOnClickListener { onDeleteListener.invoke(data.fileName) }
+        itemView.alpha = if (data.isSelected) 0.1f else 1.0f
     }
 }

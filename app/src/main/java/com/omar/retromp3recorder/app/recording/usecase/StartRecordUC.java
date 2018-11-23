@@ -59,8 +59,6 @@ public class StartRecordUC {
     //endregion
 
     public Completable execute() {
-
-
         final Function3<String,
                 VoiceRecorder.BitRate,
                 VoiceRecorder.SampleRate,

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.omar.retromp3recorder.app.App
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.utils.disposedBy
+import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_files.*
@@ -44,8 +45,11 @@ class FilesFragment : Fragment() {
         )
         recyclerView.adapter = filesAdapter
         actionsBus
+                .startWith(FilesAction.InitAction)
                 .compose(interactor.process())
                 .compose(map())
+                .distinctUntilChanged()
+                .observeOn(mainThread())
                 .subscribe { renderView(it) }
                 .disposedBy(compositeDisposable)
     }
