@@ -178,44 +178,45 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     private void setListeners() {
-        Disposable disposable = RxView.clicks(playButton)
-                .map(unit -> stateSubject.blockingFirst())
-                .subscribe(state -> {
-                    switch (state) {
-                        case Idle:
-                        case Recording: {
-                            actionPublishSubject.onNext(new PlayAction());
-                            break;
-                        }
-                        case Playing: {
-                            actionPublishSubject.onNext(new StopAction());
-                            break;
-                        }
-                    }
-                });
+        compositeDisposable.addAll(
+                RxView.clicks(playButton)
+                        .map(unit -> stateSubject.blockingFirst())
+                        .subscribe(state -> {
+                            switch (state) {
+                                case Idle:
+                                case Recording: {
+                                    actionPublishSubject.onNext(new PlayAction());
+                                    break;
+                                }
+                                case Playing: {
+                                    actionPublishSubject.onNext(new StopAction());
+                                    break;
+                                }
+                            }
+                        }),
 
-        Disposable disposable1 = RxView.clicks(recordButton)
-                .map(unit -> stateSubject.blockingFirst())
-                .subscribe(state -> {
-                    switch (state) {
-                        case Idle:
-                        case Playing: {
-                            actionPublishSubject.onNext(new RecordAction());
-                            break;
-                        }
-                        case Recording: {
-                            actionPublishSubject.onNext(new StopAction());
-                            break;
-                        }
-                    }
-                });
+                RxView.clicks(recordButton)
+                        .map(unit -> stateSubject.blockingFirst())
+                        .subscribe(state -> {
+                            switch (state) {
+                                case Idle:
+                                case Playing: {
+                                    actionPublishSubject.onNext(new RecordAction());
+                                    break;
+                                }
+                                case Recording: {
+                                    actionPublishSubject.onNext(new StopAction());
+                                    break;
+                                }
+                            }
+                        }),
 
-        Disposable disposable2 = RxView.clicks(shareButton)
-                .subscribe(unit ->
-                        actionPublishSubject.onNext(new ShareAction())
-                );
+                RxView.clicks(shareButton)
+                        .subscribe(unit ->
+                                actionPublishSubject.onNext(new ShareAction())
+                        )
+        );
 
-        compositeDisposable.addAll(disposable, disposable1, disposable2);
 
         for (int i = 0; i < bitRateGroup.size(); i++) {
             final int index = i;
@@ -324,7 +325,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 android.R.color.holo_orange_light
         ));
         scrollDownHandler.postDelayed(() ->
-                        scrollView.fullScroll(View.FOCUS_DOWN), DELAY_MILLIS
+                scrollView.fullScroll(View.FOCUS_DOWN), DELAY_MILLIS
         );
     }
 
