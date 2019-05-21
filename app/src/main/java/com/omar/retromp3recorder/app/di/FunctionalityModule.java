@@ -18,8 +18,8 @@ import javax.inject.Singleton;
 import dagger.Binds;
 import dagger.Module;
 
-import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_ALPHA;
-import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_BETA;
+import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_A;
+import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_B;
 
 @Module(
         subcomponents = {ConfigSubComponent.class}
@@ -28,12 +28,12 @@ abstract class FunctionalityModule {
 
     //region audio player
     @Singleton
-    @Named(DECORATOR_ALPHA)
+    @Named(DECORATOR_A)
     @Binds
     abstract AudioPlayer provideAudioPlayerBase(AudioPlayerRx clazz);
 
     @Singleton
-    @Named(DECORATOR_BETA)
+    @Named(DECORATOR_B)
     @Binds
     abstract AudioPlayer provideAudioStateLoggingPlayer(LoggingAudioPlayer clazz);
 
@@ -44,12 +44,12 @@ abstract class FunctionalityModule {
 
     //region voice recorder
     @Singleton
-    @Named(DECORATOR_ALPHA)
+    @Named(DECORATOR_A)
     @Binds
     abstract VoiceRecorder provideVoiceRecorderBase(VoiceRecorderRX clazz);
 
     @Singleton
-    @Named(DECORATOR_BETA)
+    @Named(DECORATOR_B)
     @Binds
     abstract VoiceRecorder provideVoiceLoggingRecorder(LoggingVoiceRecorder clazz);
 
@@ -60,7 +60,7 @@ abstract class FunctionalityModule {
 
     //region share
     @Singleton
-    @Named(DECORATOR_ALPHA)
+    @Named(DECORATOR_A)
     @Binds
     abstract SharingModule provideSharingModuleBase(SharingModuleRX clazz);
 

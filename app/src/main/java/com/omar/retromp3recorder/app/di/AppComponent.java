@@ -18,8 +18,8 @@ import dagger.Component;
 })
 public interface AppComponent {
 
-    String DECORATOR_ALPHA = "DECORATOR_ALPHA";
-    String DECORATOR_BETA = "DECORATOR_BETA";
+    String DECORATOR_A = "DECORATOR_A";
+    String DECORATOR_B = "DECORATOR_B";
     String MAIN_THREAD = "MAIN_THREAD";
 
     void inject(MainActivity mainActivity);

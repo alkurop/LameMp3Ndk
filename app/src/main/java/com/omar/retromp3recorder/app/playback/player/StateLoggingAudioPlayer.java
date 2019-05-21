@@ -12,7 +12,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 
-import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_BETA;
+import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_B;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
 @Singleton
@@ -23,7 +23,7 @@ public class StateLoggingAudioPlayer implements AudioPlayer {
     @Inject
     StateLoggingAudioPlayer(
             StateRepo stateRepo,
-            @Named(DECORATOR_BETA) AudioPlayer audioPlayer,
+            @Named(DECORATOR_B) AudioPlayer audioPlayer,
             PlayerIdRepo playerIdRepo,
             Scheduler scheduler) {
         this.audioPlayer = audioPlayer;

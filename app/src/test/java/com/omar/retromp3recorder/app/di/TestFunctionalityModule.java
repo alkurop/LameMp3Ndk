@@ -18,8 +18,8 @@ import javax.inject.Singleton;
 import dagger.Binds;
 import dagger.Module;
 
-import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_ALPHA;
-import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_BETA;
+import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_A;
+import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_B;
 
 
 @Module(
@@ -28,12 +28,12 @@ import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_BETA;
 abstract class TestFunctionalityModule {
 
     @Singleton
-    @Named(DECORATOR_BETA)
+    @Named(DECORATOR_B)
     @Binds
     abstract VoiceRecorder provideLoggingVoiceRecorder(LoggingVoiceRecorder clazz);
 
     @Singleton
-    @Named(DECORATOR_BETA)
+    @Named(DECORATOR_B)
     @Binds
     abstract AudioPlayer provideLoggingAudioPlayer(LoggingAudioPlayer clazz);
 
@@ -46,17 +46,17 @@ abstract class TestFunctionalityModule {
     abstract AudioPlayer provideStateAudioPlayer(StateLoggingAudioPlayer clazz);
 
     @Singleton
-    @Named(DECORATOR_ALPHA)
+    @Named(DECORATOR_A)
     @Binds
     abstract AudioPlayer provideAudioPlayerInternal(TestAudioPlayer clazz);
 
     @Singleton
-    @Named(DECORATOR_ALPHA)
+    @Named(DECORATOR_A)
     @Binds
     abstract VoiceRecorder provideVoiceRecorderInternal(TestVoiceRecorder clazz);
 
     @Singleton
-    @Named(DECORATOR_ALPHA)
+    @Named(DECORATOR_A)
     @Binds
     abstract SharingModule provideSharingModuleInternal(TestSharingModule clazz);
 

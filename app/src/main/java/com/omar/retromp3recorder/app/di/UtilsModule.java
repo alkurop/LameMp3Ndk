@@ -2,6 +2,8 @@ package com.omar.retromp3recorder.app.di;
 
 import android.content.Context;
 
+import com.omar.retromp3recorder.app.files.FilePathGenerator;
+import com.omar.retromp3recorder.app.files.FilePathGeneratorImpl;
 import com.omar.retromp3recorder.app.utils.ContextStringer;
 import com.omar.retromp3recorder.app.utils.Stringer;
 
@@ -43,5 +45,10 @@ public class UtilsModule {
     @Provides
     Stringer providerStringer(Context context) {
         return new ContextStringer(context);
+    }
+
+    @Provides
+    FilePathGenerator filePathGenerator(Context context){
+        return new FilePathGeneratorImpl(context);
     }
 }

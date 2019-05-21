@@ -2,6 +2,8 @@ package com.omar.retromp3recorder.app.di;
 
 import android.content.Context;
 
+import com.omar.retromp3recorder.app.files.FilePathGenerator;
+
 import org.mockito.Mockito;
 
 import dagger.Module;
@@ -19,8 +21,23 @@ class TestUtilsModule {
     }
 
     @Provides
-    Context context (){
+    Context context() {
         return Mockito.mock(Context.class);
+    }
+
+    @Provides
+    FilePathGenerator filePathGenerator() {
+        return new FilePathGenerator() {
+            @Override
+            public String generateFilePath() {
+                return "test";
+            }
+
+            @Override
+            public String getFileDir() {
+                return "test";
+            }
+        };
     }
 
 }

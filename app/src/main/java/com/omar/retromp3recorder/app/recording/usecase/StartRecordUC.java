@@ -1,7 +1,6 @@
 package com.omar.retromp3recorder.app.recording.usecase;
 
 import com.omar.retromp3recorder.app.files.repo.CurrentFileRepo;
-import com.omar.retromp3recorder.app.files.FilePathGenerator;
 import com.omar.retromp3recorder.app.files.usecase.GenerateNewFilenameForRecorderUC;
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
 import com.omar.retromp3recorder.app.recording.repo.BitRateRepo;

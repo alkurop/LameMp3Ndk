@@ -49,9 +49,8 @@ import static com.omar.retromp3recorder.app.utils.VarargHelper.createHashMap;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.computation;
 
-@NotUnitTestable
 public class MainActivity extends AppCompatActivity implements MainView {
-
+    private static final int DELAY_MILLIS = 150;
     private final PublishSubject<Action> actionPublishSubject = PublishSubject.create();
     private final Subject<State> stateSubject = BehaviorSubject.create();
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -130,8 +129,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
         logContainerView = findViewById(R.id.ll_logHolder);
         scrollView = findViewById(R.id.scrollView);
         visualizerView = findViewById(R.id.visualizer);
-        sampleRateContainer = findViewById(R.id.ll_radio_container1);
-        bitRateContainer = findViewById(R.id.ll_radio_container2);
+        sampleRateContainer = findViewById(R.id.left_radio_container);
+        bitRateContainer = findViewById(R.id.right_radio_container);
         background = findViewById(R.id.background);
         prefillRadioButtons();
     }
@@ -307,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         );
         logContainerView.addView(inflate);
         inflate.setText(message);
-        scrollDownHandler.postDelayed(() -> scrollView.fullScroll(View.FOCUS_DOWN), 150);
+        scrollDownHandler.postDelayed(() -> scrollView.fullScroll(View.FOCUS_DOWN), DELAY_MILLIS);
     }
 
     private void renderError(@Nullable String error) {
@@ -325,8 +324,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 android.R.color.holo_orange_light
         ));
         scrollDownHandler.postDelayed(() ->
-                        scrollView.fullScroll(View.FOCUS_DOWN),
-                150
+                        scrollView.fullScroll(View.FOCUS_DOWN), DELAY_MILLIS
         );
     }
 

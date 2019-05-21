@@ -2,4 +2,7 @@
 <resources>
     <color name="files_bg">#0018fc</color>
     <color name="files_selected_bg">#0018fc</color>
+    <color name="log_text_color">#9900ff00</color>
+    <color name="color_white">#fff</color>
+    <color name="color_visualizer_bg">#55000000</color>
 </resources>

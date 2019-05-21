@@ -15,15 +15,15 @@
         android:layout_centerVertical="true"
         android:lines="1"
         android:layout_toStartOf="@id/closeBtn"
-        android:textSize="12sp"
+        android:textSize="@dimen/text_size_small"
         android:padding="4dp"
-        android:textColor="#fff"
+        android:textColor="@color/color_white"
         tools:text="Text" />
 
     <ImageView
         android:id="@+id/closeBtn"
-        android:layout_width="25sp"
-        android:layout_height="25sp"
+        android:layout_width="@dimen/close_button_size"
+        android:layout_height="@dimen/close_button_size"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         app:srcCompat="@drawable/ic_close_black_24dp" />

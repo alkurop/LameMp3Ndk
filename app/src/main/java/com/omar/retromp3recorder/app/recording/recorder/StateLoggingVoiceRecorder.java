@@ -11,7 +11,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 
-import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_BETA;
+import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_B;
 
 @Singleton
 public class StateLoggingVoiceRecorder implements VoiceRecorder {
@@ -21,7 +21,7 @@ public class StateLoggingVoiceRecorder implements VoiceRecorder {
 
     @Inject
     StateLoggingVoiceRecorder(
-            @Named(DECORATOR_BETA) VoiceRecorder voiceRecorder,
+            @Named(DECORATOR_B) VoiceRecorder voiceRecorder,
             Scheduler scheduler,
             StateRepo stateRepo
     ) {

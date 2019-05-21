@@ -13,7 +13,7 @@ import javax.inject.Named;
 import io.reactivex.Scheduler;
 import io.reactivex.subjects.Subject;
 
-import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_ALPHA;
+import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_A;
 import static com.omar.retromp3recorder.app.di.MockModule.RECORDER_SUBJECT;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -26,7 +26,7 @@ public class StateLoggingVoiceRecorderTest {
     @Inject
     Scheduler scheduler;
     @Inject
-    @Named(DECORATOR_ALPHA)
+    @Named(DECORATOR_A)
     VoiceRecorder baseVoiceRecorder;
     @Inject
     @Named(RECORDER_SUBJECT)

@@ -17,12 +17,10 @@ class FilesAdapter(
     private var data = listOf<FilesAdapterModel>()
 
     fun setData(fileNames: List<String>, selectedFileName: String) {
-        val newData = fileNames.map { name ->
+        data = fileNames.map { name ->
             FilesAdapterModel(name, name == selectedFileName)
         }
-        val calculateDiff = DiffUtil.calculateDiff(FilesDiffUtilCallback(data, newData))
-        data = newData
-        calculateDiff.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

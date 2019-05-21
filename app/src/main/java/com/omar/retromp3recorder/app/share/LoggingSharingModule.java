@@ -9,7 +9,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 
-import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_ALPHA;
+import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_A;
 import static com.omar.retromp3recorder.app.utils.VarargHelper.createLinkedList;
 
 public final class LoggingSharingModule implements SharingModule {
@@ -18,7 +18,7 @@ public final class LoggingSharingModule implements SharingModule {
 
     @Inject
     LoggingSharingModule(
-            @Named(DECORATOR_ALPHA) SharingModule sharingModule,
+            @Named(DECORATOR_A) SharingModule sharingModule,
             LogRepo logRepo,
             Scheduler scheduler
     ) {

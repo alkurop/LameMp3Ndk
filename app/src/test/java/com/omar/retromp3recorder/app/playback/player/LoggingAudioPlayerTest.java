@@ -12,7 +12,7 @@ import javax.inject.Named;
 import io.reactivex.Scheduler;
 import io.reactivex.subjects.Subject;
 
-import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_ALPHA;
+import static com.omar.retromp3recorder.app.di.AppComponent.DECORATOR_A;
 import static com.omar.retromp3recorder.app.di.MockModule.PLAYER_SUBJECT;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -24,7 +24,7 @@ public class LoggingAudioPlayerTest {
     @Inject
     Scheduler scheduler;
     @Inject
-    @Named(DECORATOR_ALPHA)
+    @Named(DECORATOR_A)
     AudioPlayer baseAudioPlayer;
     @Inject
     @Named(PLAYER_SUBJECT)
