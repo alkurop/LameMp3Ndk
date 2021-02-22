@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.utils;
 
-import android.support.v4.util.Pair;
+import androidx.core.util.Pair;
 
 import java.util.Collections;
 import java.util.HashMap;

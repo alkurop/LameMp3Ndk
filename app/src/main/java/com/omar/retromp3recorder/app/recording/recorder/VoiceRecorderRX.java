@@ -3,12 +3,13 @@ package com.omar.retromp3recorder.app.recording.recorder;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Process;
-import android.support.v4.util.Pair;
+
+import androidx.core.util.Pair;
 
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.recorder.LameModule;
-import com.omar.retromp3recorder.app.utils.Stringer;
 import com.omar.retromp3recorder.app.utils.NotUnitTestable;
+import com.omar.retromp3recorder.app.utils.Stringer;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -2,7 +2,8 @@ package com.omar.retromp3recorder.app.share;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.v4.content.FileProvider;
+
+import androidx.core.content.FileProvider;
 
 import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 

@@ -2,7 +2,8 @@ package com.omar.retromp3recorder.app.recording.usecase;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.content.ContextCompat;
 
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo;
 import com.omar.retromp3recorder.app.utils.NotUnitTestable;

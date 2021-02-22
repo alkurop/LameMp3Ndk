@@ -3,18 +3,18 @@
 buildscript {
     apply from: 'libs.gradle'
 
-    ext.compileSdkVersion = 28
-    ext.buildToolsVersion = "28.0.3"
+    ext.compileSdkVersion = 30
+    ext.buildToolsVersion = "30.0.3"
     ext.minSdkVersion = 19
-    ext.targetSdkVersion = 28
+    ext.targetSdkVersion = 30
 
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.uber:okbuck:0.45.3'
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.uber:okbuck:0.52.3'
+        classpath "com.android.tools.build:gradle:4.1.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -29,6 +29,3 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}

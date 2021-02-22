@@ -6,10 +6,6 @@ import android.content.Intent;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +15,11 @@ import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.util.Pair;
+
 import com.github.alkurop.jpermissionmanager.PermissionOptionalDetails;
 import com.github.alkurop.jpermissionmanager.PermissionRequiredDetails;
 import com.github.alkurop.jpermissionmanager.PermissionsManager;
@@ -27,7 +28,6 @@ import com.omar.retromp3recorder.app.App;
 import com.omar.retromp3recorder.app.R;
 import com.omar.retromp3recorder.app.customviews.VisualizerView;
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder;
-import com.omar.retromp3recorder.app.utils.NotUnitTestable;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @android.support.annotation.Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         permissionsManager.onActivityResult(requestCode);
         super.onActivityResult(requestCode, resultCode, data);
     }

@@ -1,10 +1,11 @@
 package com.omar.retromp3recorder.app.files
 
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
+
 
 class FilesDiffUtilCallback(
-        val oldList: List<FilesAdapterModel>,
-        val newList: List<FilesAdapterModel>
+    val oldList: List<FilesAdapterModel>,
+    val newList: List<FilesAdapterModel>
 ) : DiffUtil.Callback() {
     override fun areItemsTheSame(index1: Int, index2: Int): Boolean {
         return oldList[index1].fileName == newList[index2].fileName
