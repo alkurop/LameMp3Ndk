@@ -3,9 +3,9 @@ package com.omar.retromp3recorder.app.files
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.omar.retromp3recorder.app.R
-import kotlinx.android.synthetic.main.item_file.view.*
 
 class FilesAdapter(
         private val onDeleteListener: (String) -> Unit,
@@ -49,8 +49,8 @@ class FilesViewHolder(
     fun bind(data: FilesAdapterModel) {
         itemView.setOnClickListener { onItemSelectListener.invoke(data.fileName) }
         val last = data.fileName.split("/").last()
-        itemView.textView.text = last
-        itemView.closeBtn.setOnClickListener { onDeleteListener.invoke(data.fileName) }
+        itemView.findViewById<TextView>(R.id.textView).text = last
+        itemView.findViewById<View>(R.id.closeBtn).setOnClickListener { onDeleteListener.invoke(data.fileName) }
         itemView.alpha = if (data.isSelected) 0.1f else 1.0f
     }
 }
