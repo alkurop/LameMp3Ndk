@@ -22,7 +22,8 @@ public interface AppComponent {
     String DECORATOR_B = "DECORATOR_B";
     String MAIN_THREAD = "MAIN_THREAD";
 
-    void inject(MainActivity mainActivity);
 
     void inject(@NotNull FilesFragment filesFragment);
+
+    void inject(@NotNull MainActivity mainActivity);
 }
