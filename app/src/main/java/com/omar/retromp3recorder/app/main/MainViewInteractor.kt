@@ -3,6 +3,7 @@ package com.omar.retromp3recorder.app.main
 import com.omar.retromp3recorder.app.common.repo.LogRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.Denied
+import com.omar.retromp3recorder.app.common.repo.StateRepo
 import com.omar.retromp3recorder.app.common.usecase.StopPlaybackAndRecordUC
 import com.omar.retromp3recorder.app.main.MainView.Result
 import com.omar.retromp3recorder.app.playback.repo.PlayerIdRepo
@@ -29,7 +30,7 @@ class MainViewInteractor @Inject constructor(
     private val stopPlaybackAndRecordUC: StopPlaybackAndRecordUC,
     private val bitRateRepo: BitRateRepo,
     private val sampleRateRepo: SampleRateRepo,
-    private val stateRepo: MainViewStateRepo,
+    private val stateRepo: StateRepo,
     private val requestPermissionsRepo: RequestPermissionsRepo,
     private val logRepo: LogRepo,
     private val playerIdRepo: PlayerIdRepo

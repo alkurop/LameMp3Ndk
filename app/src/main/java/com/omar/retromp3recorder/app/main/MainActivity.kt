@@ -285,13 +285,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun renderSampleRate(sampleRate: SampleRate) {
         sampleRateGroup.forEachIndexed { index, radioButton ->
-            radioButton.isChecked = sampleRate.value == index
+            radioButton.isChecked = sampleRate.ordinal == index
         }
     }
 
     private fun renderBitrate(bitRate: VoiceRecorder.BitRate) {
         bitRateGroup.forEachIndexed { index, radioButton ->
-            radioButton.isChecked = bitRate.value == index
+            radioButton.isChecked = bitRate.ordinal == index
         }
     }
 
