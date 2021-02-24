@@ -24,6 +24,11 @@ android {
         jvmTarget = '1.8'
     }
 
+    externalNativeBuild {
+        ndkBuild {
+            path file('src/main/jni/Android.mk')
+        }
+    }
 }
 
 dependencies {
@@ -44,4 +49,3 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     testImplementation "org.mockito:mockito-core:3.4.6"
 }
-
