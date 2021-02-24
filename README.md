@@ -49,3 +49,4 @@ The app is also integrated into **Travis CI**.
 6. log in ( google only cuz every android user posed to hav)e a google account
 7. migrate to rxjava3
 8. convert backgrounds to webp
+9. migrate to mockk
