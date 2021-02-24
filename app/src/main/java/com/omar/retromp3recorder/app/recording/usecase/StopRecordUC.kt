@@ -12,7 +12,7 @@ class StopRecordUC @Inject constructor(
     private val voiceRecorder: VoiceRecorder,
     private val lookForFilesUC: LookForFilesUC
 ) : NoParamsUseCase {
-    override fun execute() = Completable
+    override fun execute(): Completable = Completable
         .fromAction {
             voiceRecorder.stopRecord()
             audioPlayer.playerStop()
