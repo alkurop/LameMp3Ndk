@@ -2,7 +2,6 @@ package com.omar.retromp3recorder.app.main
 
 import com.omar.retromp3recorder.app.common.repo.LogRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
-import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.Denied
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.ShouldRequestPermissions
 import com.omar.retromp3recorder.app.common.repo.StateRepo
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
@@ -68,7 +67,7 @@ class MainViewInteractorRepoTest {
     @Test
     fun test_Listening_LogRepo() {
         //When
-        logRepo.newValue(LogRepo.Message("test"))
+        logRepo.newValue(LogRepo.Event.Message("test"))
 
         //Then
         test.assertValueAt(
@@ -96,7 +95,7 @@ class MainViewInteractorRepoTest {
     @Test
     fun test_Listening_RequestPermissionsRepo() {
         val shouldRequestPermissions: ShouldRequestPermissions =
-            Denied(VarargHelper.createHashSet("test"))
+            ShouldRequestPermissions.Denied(VarargHelper.createHashSet("test"))
 
         //When
         requestPermissionsRepo.newValue(shouldRequestPermissions)

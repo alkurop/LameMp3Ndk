@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.app.main
 
 import com.omar.retromp3recorder.app.common.repo.LogRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
-import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.Denied
+import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.ShouldRequestPermissions.Denied
 import com.omar.retromp3recorder.app.common.repo.StateRepo
 import com.omar.retromp3recorder.app.common.usecase.StopPlaybackAndRecordUC
 import com.omar.retromp3recorder.app.main.MainView.Result
@@ -77,10 +77,10 @@ class MainViewInteractor @Inject constructor(
             .ofType(Denied::class.java)
             .map { denied -> Result.RequestPermissionsResult(denied.permissions) },
         logRepo.observe()
-            .ofType(LogRepo.Message::class.java)
+            .ofType(LogRepo.Event.Message::class.java)
             .map { message -> Result.MessageLogResult(message.message) },
         logRepo.observe()
-            .ofType(LogRepo.Error::class.java)
+            .ofType(LogRepo.Event.Error::class.java)
             .map { message -> Result.ErrorLogResult(message.error) },
         stateRepo.observe()
             .map { state -> Result.StateChangedResult(state) },

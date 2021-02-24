@@ -6,6 +6,7 @@ import android.media.audiofx.Visualizer
 import android.media.audiofx.Visualizer.OnDataCaptureListener
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -34,7 +35,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val actionPublishSubject = PublishSubject.create<MainView.Action>()
     private val compositeDisposable = CompositeDisposable()
-    private val scrollDownHandler = Handler()
+    private val scrollDownHandler = Handler(Looper.getMainLooper())
     private val stateSubject: Subject<MainView.State> = BehaviorSubject.create()
 
     private val playButton: ImageView by lazy { findViewById(R.id.iv_play) }
@@ -177,7 +178,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         sampleRateGroup.mapIndexed { index, radioButton ->
             radioButton.clicks()
-                .subscribe { unit: Unit ->
+                .subscribe {
                     val sampleRate = SampleRate.values()[index]
                     actionPublishSubject.onNext(MainView.Action.SampleRateChange(sampleRate))
                 }

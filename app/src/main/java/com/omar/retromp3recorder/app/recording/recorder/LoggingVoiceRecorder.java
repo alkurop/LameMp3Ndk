@@ -25,9 +25,9 @@ public final class LoggingVoiceRecorder implements VoiceRecorder {
         Observable<Event> share = recorder.observeEvents().share();
 
         Observable<LogRepo.Event> message = share.ofType(Message.class)
-                .map(answer -> new LogRepo.Message(answer.message));
+                .map(answer -> new LogRepo.Event.Message(answer.message));
         Observable<LogRepo.Event> error = share.ofType(Error.class)
-                .map(answer -> new LogRepo.Error(answer.error));
+                .map(answer -> new LogRepo.Event.Error(answer.error));
 
         Observable
                 .merge(createLinkedList(

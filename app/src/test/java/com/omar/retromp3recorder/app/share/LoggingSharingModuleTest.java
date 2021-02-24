@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.share;
 
-import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
 import com.omar.retromp3recorder.app.common.repo.LogRepo;
+import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +53,7 @@ public class LoggingSharingModuleTest {
 
         //Then
         logRepo.observe().test().assertValue(event ->
-                "test".equals(((LogRepo.Message) event).message)
+                "test".equals(((LogRepo.Event.Message) event).getMessage())
         );
     }
 
@@ -63,7 +63,7 @@ public class LoggingSharingModuleTest {
 
         //Then
         logRepo.observe().test().assertValue(event ->
-                "test".equals(((LogRepo.Error) event).error)
+                "test".equals(((LogRepo.Event.Error) event).getError())
         );
     }
 }

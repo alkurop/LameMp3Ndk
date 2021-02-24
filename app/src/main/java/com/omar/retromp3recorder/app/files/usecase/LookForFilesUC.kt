@@ -14,7 +14,7 @@ class LookForFilesUC @Inject constructor(
         return Completable.fromAction {
             val fileDir = filePathGenerator.fileDir
             val file = File(fileDir)
-            val list = file.listFiles().map { it.absolutePath }.sorted()
+            val list = file.listFiles()?.map { it.absolutePath }?.sorted()?: emptyList()
             fileListRepo.newValue(list)
         }
     }

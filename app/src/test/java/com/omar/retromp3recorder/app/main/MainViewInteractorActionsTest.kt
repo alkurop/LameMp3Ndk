@@ -1,7 +1,6 @@
 package com.omar.retromp3recorder.app.main
 
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
-import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.Granted
 import com.omar.retromp3recorder.app.common.repo.StateRepo
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.BitRate
@@ -50,7 +49,7 @@ class MainViewInteractorActionsTest {
         DaggerTestAppComponent.create().inject(this)
         Mockito.`when`(permissionsUC.execute(ArgumentMatchers.any()))
             .thenAnswer {
-                requestPermissionsRepo.newValue(Granted())
+                requestPermissionsRepo.newValue(RequestPermissionsRepo.ShouldRequestPermissions.Granted)
                 Completable.complete()
             }
         test = actionSubject.compose(interactor.process()).test()
