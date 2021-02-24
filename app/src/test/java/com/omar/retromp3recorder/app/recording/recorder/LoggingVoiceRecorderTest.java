@@ -63,7 +63,7 @@ public class LoggingVoiceRecorderTest {
 
     @Test
     public void test_OnPlayerMessage_PostLog() {
-        recorderEvents.onNext(new VoiceRecorder.Message("test"));
+        recorderEvents.onNext(new VoiceRecorder.Event.Message("test"));
 
         //Then
         logRepo.observe()
@@ -75,7 +75,7 @@ public class LoggingVoiceRecorderTest {
 
     @Test
     public void test_OnPlayerError_PostLog() {
-        recorderEvents.onNext(new VoiceRecorder.Error("test"));
+        recorderEvents.onNext(new VoiceRecorder.Event.Error("test"));
 
         //Then
         logRepo.observe()

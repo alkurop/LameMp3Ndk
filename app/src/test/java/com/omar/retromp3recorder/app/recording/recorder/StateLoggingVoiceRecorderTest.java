@@ -91,7 +91,7 @@ public class StateLoggingVoiceRecorderTest {
 
     @Test
     public void test_OnRecorderError_PostState() {
-        recorderEvents.onNext(new VoiceRecorder.Error("test"));
+        recorderEvents.onNext(new VoiceRecorder.Event.Error("test"));
 
         //Then
         stateRepo.observe()

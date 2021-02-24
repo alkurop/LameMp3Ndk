@@ -16,7 +16,7 @@ public class BitRateRepo {
 
     @Inject
     BitRateRepo(RecorderDefaults defaults){
-        stateSubject.onNext(defaults.bitRate);
+        stateSubject.onNext(defaults.getBitRate());
     }
 
     public void newValue(VoiceRecorder.BitRate bitRate) {

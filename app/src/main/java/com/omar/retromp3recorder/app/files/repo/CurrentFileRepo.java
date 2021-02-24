@@ -14,7 +14,7 @@ public class CurrentFileRepo {
 
     @Inject
     CurrentFileRepo(RecorderDefaults defaults) {
-        stateSubject.onNext(defaults.filePath);
+        stateSubject.onNext(defaults.getFilePath());
     }
 
     public void newValue(String bitRate) {

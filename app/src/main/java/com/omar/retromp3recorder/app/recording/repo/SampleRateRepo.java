@@ -15,7 +15,7 @@ public class SampleRateRepo {
 
     @Inject
     SampleRateRepo(RecorderDefaults defaults){
-        stateSubject.onNext(defaults.sampleRate);
+        stateSubject.onNext(defaults.getSampleRate());
     }
 
     public void newValue( VoiceRecorder.SampleRate bitRate) {

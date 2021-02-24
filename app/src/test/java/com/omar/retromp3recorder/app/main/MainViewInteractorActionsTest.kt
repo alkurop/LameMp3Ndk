@@ -1,5 +1,7 @@
 package com.omar.retromp3recorder.app.main
 
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
 import com.omar.retromp3recorder.app.common.repo.StateRepo
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
@@ -15,7 +17,6 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import javax.inject.Inject
 
@@ -47,7 +48,7 @@ class MainViewInteractorActionsTest {
     @Before
     fun setUp() {
         DaggerTestAppComponent.create().inject(this)
-        Mockito.`when`(permissionsUC.execute(ArgumentMatchers.any()))
+        whenever(permissionsUC.execute(any()))
             .thenAnswer {
                 requestPermissionsRepo.newValue(RequestPermissionsRepo.ShouldRequestPermissions.Granted)
                 Completable.complete()

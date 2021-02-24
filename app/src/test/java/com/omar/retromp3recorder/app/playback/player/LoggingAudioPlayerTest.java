@@ -59,7 +59,7 @@ public class LoggingAudioPlayerTest {
 
     @Test
     public void test_OnPlayerMessage_PostLog() {
-        audioEvents.onNext(new AudioPlayer.Message("test"));
+        audioEvents.onNext(new AudioPlayer.Event.Message("test"));
 
         //Then
         logRepo.observe()
@@ -71,7 +71,7 @@ public class LoggingAudioPlayerTest {
 
     @Test
     public void test_OnPlayerError_PostLog() {
-        audioEvents.onNext(new AudioPlayer.Error("test"));
+        audioEvents.onNext(new AudioPlayer.Event.Error("test"));
 
         //Then
         logRepo.observe()

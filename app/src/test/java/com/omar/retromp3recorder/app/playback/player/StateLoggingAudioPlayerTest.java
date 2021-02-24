@@ -81,7 +81,7 @@ public class StateLoggingAudioPlayerTest {
 
     @Test
     public void test_PlayerId_PostToRepo() {
-        audioEvents.onNext(new AudioPlayer.SendPlayerId(10));
+        audioEvents.onNext(new AudioPlayer.Event.SendPlayerId(10));
 
         //Then
         playerIdRepo.observe().test()
@@ -92,7 +92,7 @@ public class StateLoggingAudioPlayerTest {
 
     @Test
     public void test_OnPlayerError_PostIdleState() {
-        audioEvents.onNext(new AudioPlayer.Error("test"));
+        audioEvents.onNext(new AudioPlayer.Event.Error("test"));
 
         //Then
         stateRepo.observe().test()
