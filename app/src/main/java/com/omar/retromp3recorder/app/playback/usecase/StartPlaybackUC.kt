@@ -23,7 +23,7 @@ class StartPlaybackUC @Inject constructor(
         val begForPermissions = Completable.complete()
         val execute = currentFileRepo.observe()
             .take(1)
-            .flatMapCompletable { fileName: String? ->
+            .flatMapCompletable { fileName ->
                 Completable
                     .fromAction {
                         voiceRecorder.stopRecord()
@@ -37,7 +37,10 @@ class StartPlaybackUC @Inject constructor(
                     .share()
             )
             .map { it.checkValue() }
-            .flatMapCompletable { shouldAskPermissions: ShouldRequestPermissions? -> if (shouldAskPermissions is ShouldRequestPermissions.Granted) execute else begForPermissions }
+            .flatMapCompletable { shouldAskPermissions ->
+                if (shouldAskPermissions is ShouldRequestPermissions.Granted) execute
+                else begForPermissions
+            }
         return stopUC.execute()
             .andThen(merge)
     }
