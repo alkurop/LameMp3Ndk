@@ -83,13 +83,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun renderView(mainViewModel: MainView.MainViewModel) {
-        renderPermissions(mainViewModel.requestForPermissions)
+        renderPermissions(mainViewModel.requestForPermissions.ghost)
         renderBitrate(mainViewModel.bitRate)
         renderSampleRate(mainViewModel.sampleRate)
-        renderError(mainViewModel.error)
-        renderMessage(mainViewModel.message)
+        renderError(mainViewModel.error.ghost)
+        renderMessage(mainViewModel.message.ghost)
         renderState(mainViewModel.state)
-        renderPlayerId(mainViewModel.playerId)
+        renderPlayerId(mainViewModel.playerId.ghost)
     }
 
 

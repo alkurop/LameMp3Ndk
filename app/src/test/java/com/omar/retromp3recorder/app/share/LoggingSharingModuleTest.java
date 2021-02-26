@@ -49,7 +49,7 @@ public class LoggingSharingModuleTest {
 
     @Test
     public void test_PostOKEvents() {
-        eventSubject.onNext(new SharingModule.SharingOk("test"));
+        eventSubject.onNext(new SharingModule.Event.SharingOk("test"));
 
         //Then
         logRepo.observe().test().assertValue(event ->
@@ -59,7 +59,7 @@ public class LoggingSharingModuleTest {
 
     @Test
     public void test_PostErorEvents() {
-        eventSubject.onNext(new SharingModule.SharingError("test"));
+        eventSubject.onNext(new SharingModule.Event.SharingError("test"));
 
         //Then
         logRepo.observe().test().assertValue(event ->

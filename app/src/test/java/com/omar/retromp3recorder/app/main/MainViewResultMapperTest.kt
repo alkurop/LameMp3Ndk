@@ -42,7 +42,7 @@ class MainViewResultMapperTest {
             .assertValueAt(
                 1
             ) { (_, _, message) ->
-                "test".equals(message, ignoreCase = true)
+                "test".equals(message.ghost, ignoreCase = true)
             }
     }
 
@@ -61,7 +61,7 @@ class MainViewResultMapperTest {
             .assertValueAt(
                 1
             ) { (_, error) ->
-                "test".equals(error, ignoreCase = true)
+                "test".equals(error.ghost, ignoreCase = true)
             }
     }
 
@@ -132,7 +132,7 @@ class MainViewResultMapperTest {
             .assertValueCount(2)
             .assertValueAt(
                 1
-            ) { (_, _, _, _, requestForPermissions) -> requestForPermissions === permissionsToRequest }
+            ) { (_, _, _, _, requestForPermissions) -> requestForPermissions.ghost === permissionsToRequest }
     }
 
     @Test
@@ -150,6 +150,6 @@ class MainViewResultMapperTest {
             .assertValueCount(2)
             .assertValueAt(
                 1
-            ) { (_, _, _, playerId1) -> playerId1 == playerId }
+            ) { (_, _, _, playerId1) -> playerId1.ghost == playerId }
     }
 }

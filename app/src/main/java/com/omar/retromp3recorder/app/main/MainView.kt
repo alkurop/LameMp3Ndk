@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.main
 
+import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.BitRate
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.SampleRate
 
@@ -12,10 +13,10 @@ object MainView {
 
     data class MainViewModel(
         val bitRate: BitRate,
-        val error: String?,
-        val message: String?,
-        val playerId: Int?,
-        val requestForPermissions: Set<String>?,
+        val error: Shell<String>,
+        val message: Shell<String>,
+        val playerId: Shell<Int>,
+        val requestForPermissions: Shell<Set<String>>,
         val state: State,
         val sampleRate: SampleRate
     )
