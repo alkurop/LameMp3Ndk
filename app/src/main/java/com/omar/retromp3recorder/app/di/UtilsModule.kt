@@ -3,8 +3,6 @@ package com.omar.retromp3recorder.app.di
 import android.content.Context
 import com.omar.retromp3recorder.app.files.FilePathGenerator
 import com.omar.retromp3recorder.app.files.FilePathGeneratorImpl
-import com.omar.retromp3recorder.app.utils.ContextStringer
-import com.omar.retromp3recorder.app.utils.Stringer
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -28,11 +26,6 @@ class UtilsModule(private val context: Context) {
     @Provides
     fun context(): Context {
         return context
-    }
-
-    @Provides
-    fun providerStringer(context: Context): Stringer {
-        return ContextStringer(context)
     }
 
     @Provides

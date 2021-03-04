@@ -44,6 +44,7 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:2.0.4"
     implementation "com.jakewharton.rxbinding3:rxbinding:$versions.rxView"
     implementation "com.github.alkurop:ghostinshell:0.1"
+    implementation "com.github.alkurop:stringerbell:0.3"
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"

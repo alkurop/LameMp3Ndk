@@ -3,9 +3,9 @@ package com.omar.retromp3recorder.app.playback.player
 import android.media.MediaPlayer
 import android.media.MediaPlayer.OnCompletionListener
 import android.media.MediaPlayer.OnPreparedListener
+import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.utils.NotUnitTestable
-import com.omar.retromp3recorder.app.utils.Stringer
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.io.File
@@ -13,7 +13,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 @NotUnitTestable
-class AudioPlayerRx @Inject constructor(private val stringer: Stringer) :
+class AudioPlayerRx @Inject constructor() :
     OnCompletionListener,
     OnPreparedListener, AudioPlayer {
     private val events = PublishSubject.create<AudioPlayer.Event>()
@@ -41,7 +41,7 @@ class AudioPlayerRx @Inject constructor(private val stringer: Stringer) :
 
     private fun setupMediaPlayer(voiceURL: String) {
         if (!File(voiceURL).exists()) {
-            events.onNext(AudioPlayer.Event.Error(stringer.getString(R.string.player_cannot_find_file)))
+            events.onNext(AudioPlayer.Event.Error(Stringer(R.string.player_cannot_find_file)))
             return
         }
         mediaPlayer = MediaPlayer().apply {
@@ -51,7 +51,7 @@ class AudioPlayerRx @Inject constructor(private val stringer: Stringer) :
                 setDataSource(voiceURL)
                 prepareAsync()
             } catch (e: IOException) {
-                events.onNext(AudioPlayer.Event.Error(stringer.getString(R.string.not_recorder_yet)))
+                events.onNext(AudioPlayer.Event.Error(Stringer(R.string.not_recorder_yet)))
             }
         }
 
@@ -62,7 +62,7 @@ class AudioPlayerRx @Inject constructor(private val stringer: Stringer) :
             it.stop()
             it.release()
             mediaPlayer = null
-            events.onNext(AudioPlayer.Event.Message(stringer.getString(R.string.stopped_playing)))
+            events.onNext(AudioPlayer.Event.Message(Stringer(R.string.stopped_playing)))
             events.onNext(AudioPlayer.Event.PlaybackEnded)
         }
     }
@@ -72,9 +72,9 @@ class AudioPlayerRx @Inject constructor(private val stringer: Stringer) :
         if (mediaPlayer != null && !mediaPlayer.isPlaying) {
             mediaPlayer.start()
             events.onNext(AudioPlayer.Event.SendPlayerId(mediaPlayer.audioSessionId))
-            events.onNext(AudioPlayer.Event.Message(stringer.getString(R.string.started_playing)))
+            events.onNext(AudioPlayer.Event.Message(Stringer(R.string.started_playing)))
         } else {
-            events.onNext(AudioPlayer.Event.Error(stringer.getString(R.string.player_error_on_stop)))
+            events.onNext(AudioPlayer.Event.Error(Stringer(R.string.player_error_on_stop)))
         }
     }
 

@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.common.repo
 
+import com.github.alkurop.stringerbell.Stringer
 import io.reactivex.Observable
 import io.reactivex.subjects.ReplaySubject
 import io.reactivex.subjects.Subject
@@ -18,7 +19,7 @@ class LogRepo @Inject constructor() {
     }
 
     sealed class Event {
-        data class Message(val message: String) : Event()
-        data class Error(val error: String) : Event()
+        data class Message(val message: Stringer) : Event()
+        data class Error(val error: Stringer) : Event()
     }
 }

@@ -86,12 +86,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         renderPermissions(mainViewModel.requestForPermissions.ghost)
         renderBitrate(mainViewModel.bitRate)
         renderSampleRate(mainViewModel.sampleRate)
-        renderError(mainViewModel.error.ghost)
-        renderMessage(mainViewModel.message.ghost)
+        renderError(mainViewModel.error.ghost?.bell(this))
+        renderMessage(mainViewModel.message.ghost?.bell(this))
         renderState(mainViewModel.state)
         renderPlayerId(mainViewModel.playerId.ghost)
     }
-
 
     private fun addTitleView(container: ViewGroup, title: String) {
         layoutInflater.inflate(R.layout.container_title, container)

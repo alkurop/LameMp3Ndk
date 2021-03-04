@@ -1,6 +1,7 @@
 package com.omar.retromp3recorder.app.recording.recorder
 
 import android.media.AudioFormat
+import com.github.alkurop.stringerbell.Stringer
 import io.reactivex.Observable
 
 interface VoiceRecorder {
@@ -18,8 +19,8 @@ interface VoiceRecorder {
     }
 
     sealed class Event {
-        data class Message(val message: String) : Event()
-        data class Error(val error: String) : Event()
+        data class Message(val message: Stringer) : Event()
+        data class Error(val error: Stringer) : Event()
     }
 
     data class RecorderProps(

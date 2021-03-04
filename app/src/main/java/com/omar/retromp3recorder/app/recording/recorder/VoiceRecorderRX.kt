@@ -1,8 +1,10 @@
 package com.omar.retromp3recorder.app.recording.recorder
 
+import android.content.Context
 import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Process
+import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.recorder.LameModule
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.Companion.AUDIO_FORMAT_PRESETS
@@ -10,7 +12,6 @@ import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.Companion.
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.Companion.QUALITY_PRESETS
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.RecorderProps
 import com.omar.retromp3recorder.app.utils.NotUnitTestable
-import com.omar.retromp3recorder.app.utils.Stringer
 import io.reactivex.*
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
@@ -23,8 +24,8 @@ import javax.inject.Inject
 
 @NotUnitTestable
 class VoiceRecorderRX @Inject internal constructor(
-    private val stringer: Stringer,
-    private val scheduler: Scheduler
+    private val scheduler: Scheduler,
+    private val context: Context
 ) :
     VoiceRecorder {
     private val events: Subject<VoiceRecorder.Event> = PublishSubject.create()
@@ -55,7 +56,13 @@ class VoiceRecorderRX @Inject internal constructor(
             }
         val disposable = recorderCompletable
             .onErrorResumeNext { throwable ->
-                events.onNext(VoiceRecorder.Event.Error(throwable.message ?: throwable.toString()))
+                events.onNext(
+                    VoiceRecorder.Event.Error(
+                        Stringer.ofString(
+                            throwable.message ?: throwable.toString()
+                        )
+                    )
+                )
                 throwable.printStackTrace()
                 Completable.complete()
             }
@@ -102,7 +109,7 @@ class VoiceRecorderRX @Inject internal constructor(
             val fileWasCreated = outFile.createNewFile()
             if (!fileWasCreated) {
                 throw IOException(
-                    stringer.getString(
+                    context.getString(
                         R.string.file_was_not_created,
                         filePath
                     )
@@ -164,17 +171,17 @@ class VoiceRecorderRX @Inject internal constructor(
         val absolutePath = outFile!!.absolutePath
         if (outFile.exists()) {
             val messages = arrayOf(
-                stringer.getString(R.string.file_saved_to, absolutePath),
-                stringer.getString(R.string.audio_length, counter.toFloat() / 1000),
-                stringer.getString(R.string.file_size, outFile.length().toFloat() / 1000),
-                stringer.getString(R.string.compression_rate, outFile.length().toFloat() / counter)
+                Stringer(R.string.file_saved_to, absolutePath),
+                Stringer(R.string.audio_length, counter.toFloat() / 1000),
+                Stringer(R.string.file_size, outFile.length().toFloat() / 1000),
+                Stringer(R.string.compression_rate, outFile.length().toFloat() / counter)
             )
             for (message in messages) {
                 events.onNext(VoiceRecorder.Event.Message(message))
             }
         } else events.onNext(
             VoiceRecorder.Event.Error(
-                stringer.getString(R.string.error_saving_file_to, absolutePath)
+                Stringer(R.string.error_saving_file_to, absolutePath)
             )
         )
     }
@@ -203,13 +210,13 @@ class VoiceRecorderRX @Inject internal constructor(
                 )
             } catch (e: Exception) {
                 throw Exception(
-                    stringer.getString(
+                    context.getString(
                         R.string.error_init_recorder
                     )
                 )
             }
             if (recorder.state == AudioRecord.STATE_INITIALIZED) {
-                val logMessage = stringer.getString(
+                val logMessage = Stringer(
                     R.string.recording_mp3_at,
                     bitRate,
                     sampleRate
@@ -218,14 +225,14 @@ class VoiceRecorderRX @Inject internal constructor(
                 recorder
             } else {
                 throw Exception(
-                    stringer.getString(
+                    context.getString(
                         R.string.error_init_recorder
                     )
                 )
             }
         } else {
             throw Exception(
-                stringer.getString(
+                context.getString(
                     R.string.audioRecord_bad_value
                 )
             )

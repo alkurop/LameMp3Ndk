@@ -4,13 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.files.repo.CurrentFileRepo
 import com.omar.retromp3recorder.app.share.SharingModule.Event.SharingError
 import com.omar.retromp3recorder.app.share.SharingModule.Event.SharingOk
 import com.omar.retromp3recorder.app.utils.NotUnitTestable
-import com.omar.retromp3recorder.app.utils.Stringer
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -25,7 +25,6 @@ class SharingModuleRX @Inject internal constructor(
     private val sharableFileUriCreator: SharableFileUriCreator,
     private val context: Context,
     private val currentFileRepo: CurrentFileRepo,
-    private val stringer: Stringer,
     private val scheduler: Scheduler,
     @param:Named(AppComponent.MAIN_THREAD) private val mainThreadScheduler: Scheduler
 ) : SharingModule {
@@ -36,7 +35,7 @@ class SharingModuleRX @Inject internal constructor(
                 val file = File(fileName)
                 if (!file.exists()) {
                     Completable.fromAction {
-                        events.onNext(SharingError(stringer.getString(R.string.trying_to_share)))
+                        events.onNext(SharingError(Stringer(R.string.trying_to_share)))
                     }
                 } else Single
                     .fromCallable {
@@ -50,7 +49,7 @@ class SharingModuleRX @Inject internal constructor(
                                 context.startActivity(
                                     Intent.createChooser(
                                         intent,
-                                        stringer.getString(R.string.select)
+                                        context.getString(R.string.select)
                                     ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                 )
                             }
@@ -59,7 +58,7 @@ class SharingModuleRX @Inject internal constructor(
                     .andThen(
                         Completable.fromAction {
                             events.onNext(
-                                SharingOk(stringer.getString(R.string.trying_to_share))
+                                SharingOk(Stringer(R.string.trying_to_share))
                             )
                         }
                     )

@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.playback.player
 
+import com.github.alkurop.stringerbell.Stringer
 import io.reactivex.Observable
 
 interface AudioPlayer {
@@ -10,8 +11,8 @@ interface AudioPlayer {
 
     //region events
     sealed class Event {
-        data class Message(val message: String) : Event()
-        data class Error(val error: String) : Event()
+        data class Message(val message: Stringer) : Event()
+        data class Error(val error: Stringer) : Event()
         data class SendPlayerId internal constructor(val playerId: Int) : Event()
         object PlaybackEnded : Event()
     }
