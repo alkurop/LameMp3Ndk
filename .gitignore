@@ -4,6 +4,7 @@
 /LameMp3Ndk.iml
 /gradle.properties
 /app/build
+/app/.cxx
 /app/app.iml
 /.gradle
 /.cxx
