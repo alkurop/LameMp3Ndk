@@ -1,7 +1,6 @@
 # Retro MP3 Recorder
 
-Implemented by Oleksii Kuropiatnyk
-
+https://play.google.com/store/apps/details?id=com.omar.retromp3recorder.app&hl=en&gl=US
 ### Implementation choice
 
 Retro MP3 Recorder:
