@@ -1,9 +1,10 @@
 package com.omar.retromp3recorder.app.playback.player;
 
+import com.github.alkurop.stringerbell.Stringer;
+import com.omar.retromp3recorder.app.common.repo.StateRepo;
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
 import com.omar.retromp3recorder.app.main.MainView;
 import com.omar.retromp3recorder.app.playback.repo.PlayerIdRepo;
-import com.omar.retromp3recorder.app.common.repo.StateRepo;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -92,7 +93,7 @@ public class StateLoggingAudioPlayerTest {
 
     @Test
     public void test_OnPlayerError_PostIdleState() {
-        audioEvents.onNext(new AudioPlayer.Event.Error("test"));
+        audioEvents.onNext(new AudioPlayer.Event.Error(Stringer.Companion.ofString("test")));
 
         //Then
         stateRepo.observe().test()

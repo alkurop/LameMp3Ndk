@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.playback.player;
 
+import com.github.alkurop.stringerbell.Stringer;
 import com.omar.retromp3recorder.app.common.repo.LogRepo;
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
 
@@ -59,25 +60,25 @@ public class LoggingAudioPlayerTest {
 
     @Test
     public void test_OnPlayerMessage_PostLog() {
-        audioEvents.onNext(new AudioPlayer.Event.Message("test"));
+        audioEvents.onNext(new AudioPlayer.Event.Message(Stringer.Companion.ofString("test")));
 
         //Then
         logRepo.observe()
                 .test()
                 .assertValue(event ->
-                        "test".equals(((LogRepo.Event.Message) event).getMessage())
+                        Stringer.Companion.ofString("test").equals(((LogRepo.Event.Message) event).getMessage())
                 );
     }
 
     @Test
     public void test_OnPlayerError_PostLog() {
-        audioEvents.onNext(new AudioPlayer.Event.Error("test"));
+        audioEvents.onNext(new AudioPlayer.Event.Error(Stringer.Companion.ofString("test")));
 
         //Then
         logRepo.observe()
                 .test()
                 .assertValue(event ->
-                        "test".equals(((LogRepo.Event.Error) event).getError())
+                       Stringer.Companion.ofString("test").equals(((LogRepo.Event.Error) event).getError())
                 );
     }
 

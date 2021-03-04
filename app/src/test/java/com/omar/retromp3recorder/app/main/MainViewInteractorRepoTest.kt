@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.main
 
+import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.common.repo.LogRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.ShouldRequestPermissions
@@ -10,7 +11,6 @@ import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.SampleRate
 import com.omar.retromp3recorder.app.recording.repo.BitRateRepo
 import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo
-import com.omar.retromp3recorder.app.utils.VarargHelper
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import org.junit.Before
@@ -67,14 +67,14 @@ class MainViewInteractorRepoTest {
     @Test
     fun test_Listening_LogRepo() {
         //When
-        logRepo.newValue(LogRepo.Event.Message("test"))
+        logRepo.newValue(LogRepo.Event.Message(Stringer.ofString("test")))
 
         //Then
         test.assertValueAt(
             FIRST_EVENT_INDEX
         ) { result: MainView.Result ->
-            val message: String = (result as MainView.Result.MessageLogResult).message
-            "test" == message
+            val message  = (result as MainView.Result.MessageLogResult).message
+            Stringer.ofString("test") == message
         }
     }
 
@@ -95,7 +95,7 @@ class MainViewInteractorRepoTest {
     @Test
     fun test_Listening_RequestPermissionsRepo() {
         val shouldRequestPermissions: ShouldRequestPermissions =
-            ShouldRequestPermissions.Denied(VarargHelper.createHashSet("test"))
+            ShouldRequestPermissions.Denied(setOf("test"))
 
         //When
         requestPermissionsRepo.newValue(shouldRequestPermissions)
@@ -120,7 +120,8 @@ class MainViewInteractorRepoTest {
         test.assertValueAt(
             FIRST_EVENT_INDEX
         ) { result: MainView.Result ->
-            val stateChangedResult: MainView.Result.StateChangedResult = result as MainView.Result.StateChangedResult
+            val stateChangedResult: MainView.Result.StateChangedResult =
+                result as MainView.Result.StateChangedResult
             val state: MainView.State =
                 stateChangedResult.state
             state === MainView.State.Recording
@@ -135,7 +136,8 @@ class MainViewInteractorRepoTest {
         test.assertValueAt(
             FIRST_EVENT_INDEX
         ) { result: MainView.Result ->
-            val stateChangedResult: MainView.Result.SampleRateChangeResult = result as MainView.Result.SampleRateChangeResult
+            val stateChangedResult: MainView.Result.SampleRateChangeResult =
+                result as MainView.Result.SampleRateChangeResult
             val sampleRate: SampleRate = stateChangedResult.sampleRate
             sampleRate == SampleRate._8000
         }

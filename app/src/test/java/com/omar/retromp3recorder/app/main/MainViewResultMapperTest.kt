@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.main
 
+import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.main.MainView.MainViewModel
 import com.omar.retromp3recorder.app.main.MainViewResultMapper.map
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
@@ -29,7 +30,7 @@ class MainViewResultMapperTest {
 
     @Test
     fun test_MessageLogResult_Mapped() {
-        val messageLogResult = MainView.Result.MessageLogResult("test")
+        val messageLogResult = MainView.Result.MessageLogResult(Stringer.ofString("test"))
 
         //When
         resultPublisher.onNext(messageLogResult)
@@ -42,13 +43,13 @@ class MainViewResultMapperTest {
             .assertValueAt(
                 1
             ) { (_, _, message) ->
-                "test".equals(message.ghost, ignoreCase = true)
+                Stringer.ofString("test") == message.ghost
             }
     }
 
     @Test
     fun test_ErrorLogResult_Mapped() {
-        val errorLogResult = MainView.Result.ErrorLogResult("test")
+        val errorLogResult = MainView.Result.ErrorLogResult(Stringer.ofString("test"))
 
         //When
         resultPublisher.onNext(errorLogResult)
@@ -61,7 +62,7 @@ class MainViewResultMapperTest {
             .assertValueAt(
                 1
             ) { (_, error) ->
-                "test".equals(error.ghost, ignoreCase = true)
+                Stringer.ofString("test") == error.ghost
             }
     }
 

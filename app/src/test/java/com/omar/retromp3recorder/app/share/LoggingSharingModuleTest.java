@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.share;
 
+import com.github.alkurop.stringerbell.Stringer;
 import com.omar.retromp3recorder.app.common.repo.LogRepo;
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
 
@@ -49,21 +50,21 @@ public class LoggingSharingModuleTest {
 
     @Test
     public void test_PostOKEvents() {
-        eventSubject.onNext(new SharingModule.Event.SharingOk("test"));
+        eventSubject.onNext(new SharingModule.Event.SharingOk(Stringer.Companion.ofString("test")));
 
         //Then
         logRepo.observe().test().assertValue(event ->
-                "test".equals(((LogRepo.Event.Message) event).getMessage())
+                Stringer.Companion.ofString("test").equals(((LogRepo.Event.Message) event).getMessage())
         );
     }
 
     @Test
     public void test_PostErorEvents() {
-        eventSubject.onNext(new SharingModule.Event.SharingError("test"));
+        eventSubject.onNext(new SharingModule.Event.SharingError(Stringer.Companion.ofString("test")));
 
         //Then
         logRepo.observe().test().assertValue(event ->
-                "test".equals(((LogRepo.Event.Error) event).getError())
+                Stringer.Companion.ofString("test").equals(((LogRepo.Event.Error) event).getError())
         );
     }
 }

@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.recording.recorder;
 
+import com.github.alkurop.stringerbell.Stringer;
 import com.omar.retromp3recorder.app.common.repo.LogRepo;
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent;
 
@@ -63,30 +64,30 @@ public class LoggingVoiceRecorderTest {
 
     @Test
     public void test_OnPlayerMessage_PostLog() {
-        recorderEvents.onNext(new VoiceRecorder.Event.Message("test"));
+        recorderEvents.onNext(new VoiceRecorder.Event.Message(Stringer.Companion.ofString("test")));
 
         //Then
         logRepo.observe()
                 .test()
                 .assertValue(event ->
-                        "test".equals(((LogRepo.Event.Message) event).getMessage())
+                        Stringer.Companion.ofString("test").equals(((LogRepo.Event.Message) event).getMessage())
                 );
     }
 
     @Test
     public void test_OnPlayerError_PostLog() {
-        recorderEvents.onNext(new VoiceRecorder.Event.Error("test"));
+        recorderEvents.onNext(new VoiceRecorder.Event.Error(Stringer.Companion.ofString("test")));
 
         //Then
         logRepo.observe()
                 .test()
                 .assertValue(event ->
-                        "test".equals(((LogRepo.Event.Error) event).getError())
+                        Stringer.Companion.ofString("test").equals(((LogRepo.Event.Error) event).getError())
                 );
     }
 
     @Test
-    public void test_DidDecorateIsRecording(){
+    public void test_DidDecorateIsRecording() {
         assert loggingVoiceRecorder.isRecording();
     }
 
