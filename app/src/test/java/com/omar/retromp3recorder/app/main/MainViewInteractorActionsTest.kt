@@ -87,7 +87,7 @@ class MainViewInteractorActionsTest {
     }
 
     //todo need to fix this sharing test
-    @Ignore("turned out to be broken, although the app functionality works.")
+    @Ignore("turned out to be broken")
     @Test
     fun test_Share_Action_UC_Executed() {
         //When
