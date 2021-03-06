@@ -36,7 +36,7 @@ The unit tests cover **UseCases**, **Interactors** and **Mappers**. They can be 
 
 The app is also integrated into **Travis CI**.
 
-![travis icon](https://travis-ci.org/alkurop/LameMp3Ndk.svg?branch=master)
+![travis icon](https://travis-ci.com/alkurop/LameMp3Ndk.svg?branch=master)
 
 
 //todo 
