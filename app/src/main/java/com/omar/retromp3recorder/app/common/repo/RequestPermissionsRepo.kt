@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.common.repo
 
-import com.omar.retromp3recorder.app.utils.OneShot
+import com.github.alkurop.ghostinshell.Shell
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
@@ -8,13 +8,13 @@ import javax.inject.Singleton
 
 @Singleton
 class RequestPermissionsRepo @Inject constructor() {
-    private val state: BehaviorSubject<OneShot<ShouldRequestPermissions>> = BehaviorSubject.create()
-    fun observe(): Observable<OneShot<ShouldRequestPermissions>> {
+    private val state: BehaviorSubject<Shell<ShouldRequestPermissions>> = BehaviorSubject.create()
+    fun observe(): Observable<Shell<ShouldRequestPermissions>> {
         return state
     }
 
     fun newValue(newValue: ShouldRequestPermissions) {
-        state.onNext(OneShot(newValue))
+        state.onNext(Shell(newValue))
     }
 
     sealed class ShouldRequestPermissions {

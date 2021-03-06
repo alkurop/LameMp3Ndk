@@ -72,8 +72,7 @@ class MainViewInteractor @Inject constructor(
         sampleRateRepo.observe()
             .map { sampleRate -> Result.SampleRateChangeResult(sampleRate) },
         requestPermissionsRepo.observe()
-            .filter { shouldRequestPermissionsOneShot -> !shouldRequestPermissionsOneShot.isShot }
-            .map { it.valueOnce }
+            .map { it.ghost }
             .ofType(Denied::class.java)
             .map { denied -> Result.RequestPermissionsResult(denied.permissions) },
         logRepo.observe()
@@ -85,8 +84,7 @@ class MainViewInteractor @Inject constructor(
         stateRepo.observe()
             .map { state -> Result.StateChangedResult(state) },
         playerIdRepo.observe()
-            .filter { !it.isShot }
-            .map { it.valueOnce }
+            .map { it.ghost }
             .map { playerId -> Result.PlayerIdResult(playerId) }
     ))
 }

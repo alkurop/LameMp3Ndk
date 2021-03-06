@@ -4,7 +4,6 @@ import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.main.MainView.MainViewModel
 import com.omar.retromp3recorder.app.main.MainViewResultMapper.map
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
-import com.omar.retromp3recorder.app.utils.VarargHelper
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -119,7 +118,7 @@ class MainViewResultMapperTest {
 
     @Test
     fun test_RequestPermissionsResult_Mapped() {
-        val permissionsToRequest = VarargHelper.createHashSet("test")
+        val permissionsToRequest = setOf("test")
         val requestPermissionsResult =
             MainView.Result.RequestPermissionsResult(permissionsToRequest)
 

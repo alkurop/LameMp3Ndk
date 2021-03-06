@@ -3,7 +3,6 @@ package com.omar.retromp3recorder.app.recording.recorder
 import com.omar.retromp3recorder.app.common.repo.LogRepo
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.RecorderProps
-import com.omar.retromp3recorder.app.utils.VarargHelper
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler

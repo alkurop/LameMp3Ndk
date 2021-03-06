@@ -41,11 +41,8 @@ The app is also integrated into **Travis CI**.
 
 //todo 
 1. split main activity into fragments
-2. refactor the string getter into (ResInt) -> String
 3. refactor activity component into non-static
-4. set up and test buck
 5. add file perisistance in amazon clod s3
 6. log in ( google only cuz every android user posed to hav)e a google account
 7. migrate to rxjava3
-8. convert backgrounds to webp
 9. migrate to mockk

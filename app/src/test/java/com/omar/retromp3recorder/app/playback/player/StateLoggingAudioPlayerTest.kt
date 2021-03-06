@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.playback.player
 
+import com.github.alkurop.ghostinshell.Shell
 import com.github.alkurop.stringerbell.Stringer.Companion.ofString
 import com.omar.retromp3recorder.app.common.repo.StateRepo
 import com.omar.retromp3recorder.app.di.AppComponent
@@ -8,7 +9,6 @@ import com.omar.retromp3recorder.app.di.MockModule
 import com.omar.retromp3recorder.app.main.MainView
 import com.omar.retromp3recorder.app.playback.player.AudioPlayer.Event.SendPlayerId
 import com.omar.retromp3recorder.app.playback.repo.PlayerIdRepo
-import com.omar.retromp3recorder.app.utils.OneShot
 import io.reactivex.Scheduler
 import io.reactivex.subjects.Subject
 import org.junit.Before
@@ -89,7 +89,7 @@ class StateLoggingAudioPlayerTest {
 
         //Then
         playerIdRepo.observe().test()
-            .assertValue { integerOneShot: OneShot<Int> -> integerOneShot.valueOnce == 10 }
+            .assertValue { integerOneShot: Shell<Int> -> integerOneShot.ghost == 10 }
     }
 
     @Test

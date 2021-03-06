@@ -36,7 +36,7 @@ class StartPlaybackUC @Inject constructor(
                     .take(1)
                     .share()
             )
-            .map { it.checkValue() }
+            .map { it.ghost }
             .flatMapCompletable { shouldAskPermissions ->
                 if (shouldAskPermissions is ShouldRequestPermissions.Granted) execute
                 else begForPermissions

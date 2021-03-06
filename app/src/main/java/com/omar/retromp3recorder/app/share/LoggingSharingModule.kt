@@ -7,7 +7,9 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 import javax.inject.Inject
 import javax.inject.Named
+import javax.inject.Singleton
 
+@Singleton
 class LoggingSharingModule @Inject internal constructor(
     @param:Named(AppComponent.DECORATOR_A) private val sharingModule: SharingModule,
     logRepo: LogRepo,
