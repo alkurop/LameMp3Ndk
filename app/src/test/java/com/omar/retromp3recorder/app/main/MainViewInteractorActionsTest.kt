@@ -16,7 +16,6 @@ import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import javax.inject.Inject
 
@@ -86,8 +85,6 @@ class MainViewInteractorActionsTest {
         sampleRateRepo.observe().test().assertValue(sampleRate)
     }
 
-    //todo need to fix this sharing test
-    @Ignore("turned out to be broken")
     @Test
     fun test_Share_Action_UC_Executed() {
         //When

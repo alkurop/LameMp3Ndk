@@ -6,7 +6,7 @@ import io.reactivex.subjects.Subject
 import javax.inject.Inject
 import javax.inject.Named
 
-class TestAudioPlayer @Inject internal constructor(
+open class TestAudioPlayer @Inject internal constructor(
     @param:Named(MockModule.PLAYER_SUBJECT) private val audioBus: Subject<AudioPlayer.Event>
 ) :
     AudioPlayer {

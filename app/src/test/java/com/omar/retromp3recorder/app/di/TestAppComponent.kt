@@ -15,13 +15,13 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [ConfigModule::class, TestFunctionalityModule::class, TestUtilsModule::class, MockModule::class])
 interface TestAppComponent {
-    fun inject(mainViewInteractorRepoTest: MainViewInteractorRepoTest?)
-    fun inject(mainViewInteractorActionsTest: MainViewInteractorActionsTest?)
-    fun inject(loggingAudioPlayerTest: LoggingAudioPlayerTest?)
-    fun inject(stateLoggingAudioPlayerTest: StateLoggingAudioPlayerTest?)
-    fun inject(loggingVoiceRecorderTest: LoggingVoiceRecorderTest?)
-    fun inject(stateLoggingVoiceRecorderTest: StateLoggingVoiceRecorderTest?)
-    fun inject(changeBitrateUCImplTest: ChangeBitrateUCTest?)
-    fun inject(changeSampleRateUCImplTest: ChangeSampleRateUCImplTest?)
-    fun inject(loggingSharingModuleTest: LoggingSharingModuleTest?)
+    fun inject(mainViewInteractorRepoTest: MainViewInteractorRepoTest)
+    fun inject(mainViewInteractorActionsTest: MainViewInteractorActionsTest)
+    fun inject(loggingAudioPlayerTest: LoggingAudioPlayerTest)
+    fun inject(stateLoggingAudioPlayerTest: StateLoggingAudioPlayerTest)
+    fun inject(loggingVoiceRecorderTest: LoggingVoiceRecorderTest)
+    fun inject(stateLoggingVoiceRecorderTest: StateLoggingVoiceRecorderTest)
+    fun inject(changeBitrateUCImplTest: ChangeBitrateUCTest)
+    fun inject(changeSampleRateUCImplTest: ChangeSampleRateUCImplTest)
+    fun inject(loggingSharingModuleTest: LoggingSharingModuleTest)
 }

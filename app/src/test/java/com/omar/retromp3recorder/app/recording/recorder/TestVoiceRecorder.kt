@@ -7,7 +7,7 @@ import io.reactivex.subjects.Subject
 import javax.inject.Inject
 import javax.inject.Named
 
-class TestVoiceRecorder @Inject internal constructor(
+open class TestVoiceRecorder @Inject internal constructor(
     @param:Named(MockModule.RECORDER_SUBJECT) private val bus: Subject<VoiceRecorder.Event>
 ) :
     VoiceRecorder {

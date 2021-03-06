@@ -7,7 +7,7 @@ import io.reactivex.subjects.Subject
 import javax.inject.Inject
 import javax.inject.Named
 
-class TestSharingModule @Inject internal constructor(
+open class TestSharingModule @Inject internal constructor(
     @param:Named(MockModule.SHARING_SUBJECT) private val events: Subject<SharingModule.Event>
 ) :
     SharingModule {
