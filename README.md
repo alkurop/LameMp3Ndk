@@ -38,10 +38,12 @@ Master build ![travis icon](https://travis-ci.com/alkurop/LameMp3Ndk.svg?branch=
 Develop build ![travis icon](https://travis-ci.com/alkurop/LameMp3Ndk.svg?branch=develop)
 
 
-//todo 
-1. split main activity into fragments
-3. refactor activity component into non-static
-5. add file perisistance in amazon clod s3
-6. log in ( google only cuz every android user posed to hav)e a google account
-7. migrate to rxjava3
-9. migrate to mockk
+//todo
+# proguard rules 
+# configure bundle
+# split main activity into fragments
+# refactor activity component into non-static
+# add file perisistance in amazon clod s3
+# log in ( google only cuz every android user posed to hav)e a google account
+# migrate to rxjava3
+# migrate to mockk
