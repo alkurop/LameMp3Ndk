@@ -34,9 +34,8 @@ The data flow is controlled with **RxJava2** functional streams.
 
 The unit tests cover **UseCases**, **Interactors** and **Mappers**. They can be found in **test** folder.
 
-The app is also integrated into **Travis CI**.
-
-![travis icon](https://travis-ci.com/alkurop/LameMp3Ndk.svg?branch=master)
+Master build ![travis icon](https://travis-ci.com/alkurop/LameMp3Ndk.svg?branch=master)
+Develop build ![travis icon](https://travis-ci.com/alkurop/LameMp3Ndk.svg?branch=develop)
 
 
 //todo 
