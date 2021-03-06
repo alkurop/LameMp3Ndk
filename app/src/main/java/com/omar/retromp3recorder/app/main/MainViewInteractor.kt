@@ -14,6 +14,7 @@ import com.omar.retromp3recorder.app.recording.usecase.ChangeBitrateUC
 import com.omar.retromp3recorder.app.recording.usecase.ChangeSampleRateUC
 import com.omar.retromp3recorder.app.recording.usecase.StartRecordUC
 import com.omar.retromp3recorder.app.share.ShareUC
+import com.omar.retromp3recorder.app.utils.flatMapGhost
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
@@ -72,9 +73,10 @@ class MainViewInteractor @Inject constructor(
         sampleRateRepo.observe()
             .map { sampleRate -> Result.SampleRateChangeResult(sampleRate) },
         requestPermissionsRepo.observe()
-            .map { it.ghost }
             .ofType(Denied::class.java)
-            .map { denied -> Result.RequestPermissionsResult(denied.permissions) },
+            .map { it.permissions }
+            .flatMapGhost()
+            .map { denied -> Result.RequestPermissionsResult(denied) },
         logRepo.observe()
             .ofType(LogRepo.Event.Message::class.java)
             .map { message -> Result.MessageLogResult(message.message) },
@@ -84,7 +86,7 @@ class MainViewInteractor @Inject constructor(
         stateRepo.observe()
             .map { state -> Result.StateChangedResult(state) },
         playerIdRepo.observe()
-            .map { it.ghost }
+            .flatMapGhost()
             .map { playerId -> Result.PlayerIdResult(playerId) }
     ))
 }

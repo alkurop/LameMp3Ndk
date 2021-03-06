@@ -8,17 +8,17 @@ import javax.inject.Singleton
 
 @Singleton
 class RequestPermissionsRepo @Inject constructor() {
-    private val state: BehaviorSubject<Shell<ShouldRequestPermissions>> = BehaviorSubject.create()
-    fun observe(): Observable<Shell<ShouldRequestPermissions>> {
+    private val state: BehaviorSubject<ShouldRequestPermissions> = BehaviorSubject.create()
+    fun observe(): Observable<ShouldRequestPermissions> {
         return state
     }
 
     fun newValue(newValue: ShouldRequestPermissions) {
-        state.onNext(Shell(newValue))
+        state.onNext(newValue)
     }
 
     sealed class ShouldRequestPermissions {
         object Granted : ShouldRequestPermissions()
-        data class Denied(val permissions: Set<String>) : ShouldRequestPermissions()
+        data class Denied(val permissions: Shell<Set<String>>) : ShouldRequestPermissions()
     }
 }

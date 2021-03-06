@@ -3,6 +3,7 @@ package com.omar.retromp3recorder.app.recording.usecase
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
+import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.ShouldRequestPermissions.Denied
 import com.omar.retromp3recorder.app.utils.NotUnitTestable
@@ -31,7 +32,7 @@ class CheckPermissionsUCImpl @Inject constructor(
                         if (hasPermission) null else permission
                     }.toSet()
                 if (requestPermissions.isEmpty()) RequestPermissionsRepo.ShouldRequestPermissions.Granted else Denied(
-                    requestPermissions
+                    Shell(requestPermissions)
                 )
             }
             .flatMapCompletable { shouldRequestPermissions ->

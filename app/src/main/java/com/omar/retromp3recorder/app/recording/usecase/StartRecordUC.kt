@@ -29,7 +29,7 @@ class StartRecordUC @Inject constructor(
         val propsZipper = Function3 { filepath: String, bitRate: BitRate, sampleRate: SampleRate ->
             RecorderProps(filepath, bitRate, sampleRate)
         }
-        val begForPermissions = Completable.complete()
+        val abort = Completable.complete()
         val execute = generateNewFilenameForRecorderUC
             .execute()
             .andThen(
@@ -50,9 +50,8 @@ class StartRecordUC @Inject constructor(
                     .take(1)
                     .share()
             )
-            .flatMapCompletable { shell ->
-                val shouldAskPermissions = shell.ghost
-                if (shouldAskPermissions is ShouldRequestPermissions.Granted) execute else begForPermissions
+            .flatMapCompletable { shouldAskPermissions ->
+                if (shouldAskPermissions is ShouldRequestPermissions.Granted) execute else abort
             }
         return stopPlaybackAndRecordUC
             .execute()

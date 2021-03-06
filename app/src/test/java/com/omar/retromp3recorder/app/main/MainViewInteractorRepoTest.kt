@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.main
 
+import com.github.alkurop.ghostinshell.Shell
 import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.common.repo.LogRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
@@ -95,7 +96,7 @@ class MainViewInteractorRepoTest {
     @Test
     fun test_Listening_RequestPermissionsRepo() {
         val shouldRequestPermissions: ShouldRequestPermissions =
-            ShouldRequestPermissions.Denied(setOf("test"))
+            ShouldRequestPermissions.Denied(Shell(setOf("test")))
 
         //When
         requestPermissionsRepo.newValue(shouldRequestPermissions)

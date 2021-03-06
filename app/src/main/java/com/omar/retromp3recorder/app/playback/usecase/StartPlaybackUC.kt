@@ -20,7 +20,7 @@ class StartPlaybackUC @Inject constructor(
     private val requestPermissionsRepo: RequestPermissionsRepo
 ) {
     fun execute(): Completable {
-        val begForPermissions = Completable.complete()
+        val abort = Completable.complete()
         val execute = currentFileRepo.observe()
             .take(1)
             .flatMapCompletable { fileName ->
@@ -36,10 +36,9 @@ class StartPlaybackUC @Inject constructor(
                     .take(1)
                     .share()
             )
-            .flatMapCompletable { shell ->
-                val shouldAskPermissions = shell.ghost
+            .flatMapCompletable { shouldAskPermissions ->
                 if (shouldAskPermissions is ShouldRequestPermissions.Granted) execute
-                else begForPermissions
+                else abort
             }
         return stopUC.execute()
             .andThen(merge)
