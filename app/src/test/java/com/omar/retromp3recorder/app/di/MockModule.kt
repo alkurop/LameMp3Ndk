@@ -9,6 +9,7 @@ import com.omar.retromp3recorder.app.share.SharingModule
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Completable
+import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import org.mockito.Mockito
@@ -35,7 +36,7 @@ class MockModule {
     @Provides
     @Named(SHARING_SUBJECT)
     fun provideSharingSubject(): Subject<SharingModule.Event> {
-        return PublishSubject.create()
+        return BehaviorSubject.create()
     }
 
     @Singleton

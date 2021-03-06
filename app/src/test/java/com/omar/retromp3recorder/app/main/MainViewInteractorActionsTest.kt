@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.main
 
+import com.github.alkurop.stringerbell.Stringer
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
@@ -91,7 +92,9 @@ class MainViewInteractorActionsTest {
         actionSubject.onNext(MainView.Action.Share)
 
         //Then
-        println(sharingModule.observeEvents().blockingFirst())
+       sharingModule.observeEvents().test().assertValue(
+           SharingModule.Event.SharingOk(Stringer.ofString("test"))
+       )
     }
 
     @Test
