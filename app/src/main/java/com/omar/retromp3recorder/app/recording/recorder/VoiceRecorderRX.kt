@@ -12,8 +12,10 @@ import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.Companion.
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.Companion.QUALITY_PRESETS
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.RecorderProps
 import com.omar.retromp3recorder.app.utils.NotUnitTestable
+import com.omar.retromp3recorder.app.utils.disposedBy
 import io.reactivex.*
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import java.io.File
@@ -26,11 +28,17 @@ import javax.inject.Inject
 class VoiceRecorderRX @Inject internal constructor(
     private val scheduler: Scheduler,
     private val context: Context
-) :
-    VoiceRecorder {
+) : VoiceRecorder, StatefulVoiceRecorder {
     private val events: Subject<VoiceRecorder.Event> = PublishSubject.create()
     private val elapsed = AtomicLong(0)
     private val compositeDisposable = CompositeDisposable()
+
+    private val state = BehaviorSubject.createDefault(StatefulVoiceRecorder.State.Idle)
+
+    override fun observeState(): Observable<StatefulVoiceRecorder.State> =
+        state.distinctUntilChanged()
+
+
     override fun observeEvents(): Observable<VoiceRecorder.Event> {
         return events
     }
@@ -41,12 +49,11 @@ class VoiceRecorderRX @Inject internal constructor(
             channelConfig.toInt(),
             audioFormat.toInt()
         )
-        val recorderParams = Single
-            .zip(
-                createOutputFile(props.filepath),
+        createOutputFile(props.filepath)
+            .zipWith(
                 createRecorder(minBufferSize, props.sampleRate.value, props.bitRate.value),
-                { file, audioRecord -> Pair(file, audioRecord) })
-        val recorderCompletable = recorderParams
+                { file, audioRecord -> Pair(file, audioRecord) }
+            )
             .flatMapCompletable { fileAudioRecordPair ->
                 record(
                     fileAudioRecordPair.first,
@@ -54,7 +61,6 @@ class VoiceRecorderRX @Inject internal constructor(
                     props.sampleRate.value
                 )
             }
-        val disposable = recorderCompletable
             .onErrorResumeNext { throwable ->
                 events.onNext(
                     VoiceRecorder.Event.Error(
@@ -67,16 +73,17 @@ class VoiceRecorderRX @Inject internal constructor(
                 Completable.complete()
             }
             .subscribeOn(scheduler)
+            .doOnSubscribe { state.onNext(StatefulVoiceRecorder.State.Recording) }
+            .doFinally { state.onNext(StatefulVoiceRecorder.State.Idle) }
             .subscribe()
-        compositeDisposable.add(disposable)
+            .disposedBy(compositeDisposable)
     }
 
-    override fun isRecording(): Boolean {
-        return compositeDisposable.size() > 0
-    }
+    override fun isRecording(): Boolean = state.blockingFirst() == StatefulVoiceRecorder.State.Recording
 
     override fun stopRecord() {
         compositeDisposable.clear()
+        state.onNext(StatefulVoiceRecorder.State.Idle)
     }
 
     private fun createBuffer(sampleRate: Int): ShortArray {
