@@ -1,12 +1,11 @@
 package com.omar.retromp3recorder.app.playback.player
 
 import android.media.MediaPlayer
-import android.media.MediaPlayer.OnCompletionListener
-import android.media.MediaPlayer.OnPreparedListener
 import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.utils.NotUnitTestable
 import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import java.io.File
 import java.io.IOException
@@ -14,10 +13,15 @@ import javax.inject.Inject
 
 @NotUnitTestable
 class AudioPlayerRx @Inject constructor() :
-    OnCompletionListener,
-    OnPreparedListener, AudioPlayer {
+    AudioPlayer,
+    StatefulAudioPlayer {
+
     private val events = PublishSubject.create<AudioPlayer.Event>()
-    private var mediaPlayer: MediaPlayer? = null
+    private var mediaPlayer: MediaPlayer = MediaPlayer()
+    private val state = BehaviorSubject.createDefault(StatefulAudioPlayer.State.Idle)
+
+    override fun observeState(): Observable<StatefulAudioPlayer.State> =
+        state.distinctUntilChanged()
 
     override fun playerStop() {
         stopMedia()
@@ -31,22 +35,14 @@ class AudioPlayerRx @Inject constructor() :
         return events
     }
 
-    override fun onCompletion(mediaPlayer: MediaPlayer) {
-        stopMedia()
-    }
-
-    override fun onPrepared(mediaPlayer: MediaPlayer) {
-        playMedia()
-    }
-
     private fun setupMediaPlayer(voiceURL: String) {
         if (!File(voiceURL).exists()) {
             events.onNext(AudioPlayer.Event.Error(Stringer(R.string.player_cannot_find_file)))
             return
         }
-        mediaPlayer = MediaPlayer().apply {
-            setOnCompletionListener(this@AudioPlayerRx)
-            setOnPreparedListener(this@AudioPlayerRx)
+        mediaPlayer.apply {
+            setOnCompletionListener { stopMedia() }
+            setOnPreparedListener { playMedia() }
             try {
                 setDataSource(voiceURL)
                 prepareAsync()
@@ -58,19 +54,22 @@ class AudioPlayerRx @Inject constructor() :
     }
 
     private fun stopMedia() {
-        mediaPlayer?.let {
-            it.stop()
-            it.release()
-            mediaPlayer = null
-            events.onNext(AudioPlayer.Event.Message(Stringer(R.string.stopped_playing)))
-            events.onNext(AudioPlayer.Event.PlaybackEnded)
-        }
+        mediaPlayer
+            .takeIf { it.isPlaying }
+            ?.let {
+                state.onNext(StatefulAudioPlayer.State.Idle)
+                it.stop()
+                it.release()
+                events.onNext(AudioPlayer.Event.Message(Stringer(R.string.stopped_playing)))
+                events.onNext(AudioPlayer.Event.PlaybackEnded)
+            }
     }
 
     private fun playMedia() {
         val mediaPlayer = mediaPlayer
-        if (mediaPlayer != null && !mediaPlayer.isPlaying) {
+        if (!mediaPlayer.isPlaying) {
             mediaPlayer.start()
+            state.onNext(StatefulAudioPlayer.State.Playing)
             events.onNext(AudioPlayer.Event.SendPlayerId(mediaPlayer.audioSessionId))
             events.onNext(AudioPlayer.Event.Message(Stringer(R.string.started_playing)))
         } else {
@@ -78,7 +77,9 @@ class AudioPlayerRx @Inject constructor() :
         }
     }
 
+    //exposing internal state instead of the mediaplayer's state
+    //to have single source of truth
     override val isPlaying: Boolean
-        get() = mediaPlayer != null && mediaPlayer?.isPlaying == true
+        get() = state.blockingFirst() == StatefulAudioPlayer.State.Playing
 
 }

@@ -3,6 +3,7 @@
 /build
 /LameMp3Ndk.iml
 /app/build
+/app/release
 /app/.cxx
 /app/app.iml
 /.gradle
