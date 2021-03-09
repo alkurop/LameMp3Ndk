@@ -18,6 +18,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -69,7 +70,7 @@ class VoiceRecorderRX @Inject internal constructor(
                         )
                     )
                 )
-                throwable.printStackTrace()
+                Timber.e(throwable)
                 Completable.complete()
             }
             .subscribeOn(scheduler)

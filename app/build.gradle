@@ -71,6 +71,8 @@ dependencies {
     implementation "com.github.alkurop:ghostinshell:0.1"
     implementation "com.github.alkurop:stringerbell:0.4"
     implementation 'com.akaita.java:rxjava2-debug:1.4.0'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"

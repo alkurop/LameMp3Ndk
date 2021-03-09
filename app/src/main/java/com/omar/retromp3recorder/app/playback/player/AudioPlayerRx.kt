@@ -7,6 +7,7 @@ import com.omar.retromp3recorder.app.utils.NotUnitTestable
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import javax.inject.Inject
@@ -54,7 +55,7 @@ class AudioPlayerRx @Inject constructor() :
                 events.onNext(AudioPlayer.Event.Error(Stringer(R.string.not_recorder_yet)))
             } catch (e: Exception) {
                 events.onNext(AudioPlayer.Event.Error(Stringer(R.string.something_went_wrong)))
-                e.printStackTrace()
+                Timber.e(e)
             }
         }
     }
