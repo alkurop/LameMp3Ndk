@@ -47,3 +47,6 @@ Develop build ![travis icon](https://travis-ci.com/alkurop/LameMp3Ndk.svg?branch
 # log in ( google only cuz every android user posed to hav)e a google account
 # migrate to rxjava3
 # migrate to mockk
+# add timber
+# add viewModel
+# add liveData
