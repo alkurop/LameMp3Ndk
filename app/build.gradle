@@ -26,7 +26,7 @@ android {
         jvmTarget = '1.8'
     }
 
-    ndkVersion '23.0.7123448'
+    //ndkVersion '23.0.7123448' this makes travis ci fail
 
     externalNativeBuild {
         ndkBuild {
