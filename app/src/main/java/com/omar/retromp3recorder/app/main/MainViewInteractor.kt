@@ -86,7 +86,6 @@ class MainViewInteractor @Inject constructor(
         stateRepo.observe()
             .map { state -> Result.StateChangedResult(state.map()) },
         playerIdRepo.observe()
-            .flatMapGhost()
             .map { playerId -> Result.PlayerIdResult(playerId) }
     ))
 }

@@ -1,7 +1,6 @@
 package com.omar.retromp3recorder.app.recording.recorder
 
 import com.github.alkurop.stringerbell.Stringer.Companion.ofString
-import com.omar.retromp3recorder.app.common.repo.LogRepo
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.di.MockModule

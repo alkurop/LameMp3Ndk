@@ -1,56 +1,29 @@
 package com.omar.retromp3recorder.app.di
 
-import com.omar.retromp3recorder.app.playback.player.*
-import com.omar.retromp3recorder.app.recording.recorder.*
-import com.omar.retromp3recorder.app.share.LoggingSharingModule
-import com.omar.retromp3recorder.app.share.SharingModule
-import com.omar.retromp3recorder.app.share.SharingModuleRX
+import com.omar.retromp3recorder.app.playback.player.AudioPlayer
+import com.omar.retromp3recorder.app.playback.player.AudioPlayerRx
+import com.omar.retromp3recorder.app.playback.player.StatefulAudioPlayer
+import com.omar.retromp3recorder.app.recording.recorder.StatefulVoiceRecorder
+import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
+import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorderIO
+import com.omar.retromp3recorder.app.share.Sharer
+import com.omar.retromp3recorder.app.share.SharerIO
 import dagger.Binds
 import dagger.Module
-import javax.inject.Named
-import javax.inject.Singleton
 
 @Module
 internal interface FunctionalityModule {
-    @Singleton
-    @Named(AppComponent.DECORATOR_A)
     @Binds
     fun provideAudioPlayerBase(clazz: AudioPlayerRx): AudioPlayer
 
-    @Singleton
-    @Named(AppComponent.DECORATOR_B)
     @Binds
-    fun provideAudioStateLoggingPlayer(clazz: LoggingAudioPlayer): AudioPlayer
-
-    @Singleton
-    @Binds
-    fun provideAudioLoggingPlayer(clazz: StateLoggingAudioPlayer): AudioPlayer
-
-    @Singleton
-    @Named(AppComponent.DECORATOR_A)
-    @Binds
-    fun provideVoiceRecorderBase(clazz: VoiceRecorderRX): VoiceRecorder
-
-    @Singleton
-    @Named(AppComponent.DECORATOR_B)
-    @Binds
-    fun provideVoiceLoggingRecorder(clazz: LoggingVoiceRecorder): VoiceRecorder
-
-    @Singleton
-    @Binds
-    fun provideVoiceStateLoggingRecorder(clazz: StateLoggingVoiceRecorder): VoiceRecorder
-
-    @Singleton
-    @Named(AppComponent.DECORATOR_A)
-    @Binds
-    fun provideSharingModuleBase(clazz: SharingModuleRX): SharingModule
-
-    @Singleton
-    @Binds
-    fun provideSharingLoggingModule(clazz: LoggingSharingModule): SharingModule
+    fun provideVoiceRecorderBase(clazz: VoiceRecorderIO): VoiceRecorder
 
     @Binds
-    fun provideStatefulAudioRecorder(clazz: VoiceRecorderRX): StatefulVoiceRecorder
+    fun provideSharingModuleBase(clazz: SharerIO): Sharer
+
+    @Binds
+    fun provideStatefulAudioRecorder(clazz: VoiceRecorderIO): StatefulVoiceRecorder
 
     @Binds
     fun provideStatefulAudioPlayer(clazz: AudioPlayerRx): StatefulAudioPlayer

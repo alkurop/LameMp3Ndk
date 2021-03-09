@@ -2,12 +2,11 @@ package com.omar.retromp3recorder.app.playback.player
 
 import com.github.alkurop.ghostinshell.Shell
 import com.github.alkurop.stringerbell.Stringer.Companion.ofString
-import com.omar.retromp3recorder.app.common.repo.StateRepo
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.di.MockModule
 import com.omar.retromp3recorder.app.main.MainView
-import com.omar.retromp3recorder.app.playback.player.AudioPlayer.Event.SendPlayerId
+import com.omar.retromp3recorder.app.playback.player.AudioPlayer.Event.PlayerId
 import com.omar.retromp3recorder.app.playback.repo.PlayerIdRepo
 import io.reactivex.Scheduler
 import io.reactivex.subjects.Subject
@@ -18,8 +17,6 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class StateLoggingAudioPlayerTest {
-    @Inject
-    lateinit var stateRepo: StateRepo
 
     @Inject
     lateinit var playerIdRepo: PlayerIdRepo
@@ -85,7 +82,7 @@ class StateLoggingAudioPlayerTest {
 
     @Test
     fun test_PlayerId_PostToRepo() {
-        audioEvents.onNext(SendPlayerId(10))
+        audioEvents.onNext(PlayerId(10))
 
         //Then
         playerIdRepo.observe().test()

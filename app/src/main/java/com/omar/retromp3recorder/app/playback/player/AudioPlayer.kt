@@ -13,7 +13,6 @@ interface AudioPlayer {
     sealed class Event {
         data class Message(val message: Stringer) : Event()
         data class Error(val error: Stringer) : Event()
-        data class SendPlayerId internal constructor(val playerId: Int) : Event()
-        object PlaybackEnded : Event()
+        data class PlayerId internal constructor(val playerId: Int) : Event()
     }
 }

@@ -28,7 +28,7 @@ import javax.inject.Singleton
 
 @Singleton
 @NotUnitTestable
-class VoiceRecorderRX @Inject internal constructor(
+class VoiceRecorderIO @Inject internal constructor(
     private val scheduler: Scheduler,
     private val context: Context
 ) : VoiceRecorder, StatefulVoiceRecorder {

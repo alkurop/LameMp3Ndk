@@ -9,15 +9,15 @@ import javax.inject.Inject
 import javax.inject.Named
 
 open class TestSharingModule @Inject internal constructor(
-    @param:Named(MockModule.SHARING_SUBJECT) private val events: Subject<SharingModule.Event>
+    @param:Named(MockModule.SHARING_SUBJECT) private val events: Subject<Sharer.Event>
 ) :
-    SharingModule {
+    Sharer {
     override fun share(): Completable {
 
-        return Completable.fromAction { events.onNext(SharingModule.Event.SharingOk(Stringer.ofString("test"))) }
+        return Completable.fromAction { events.onNext(Sharer.Event.SharingOk(Stringer.ofString("test"))) }
     }
 
-    override fun observeEvents(): Observable<SharingModule.Event> {
+    override fun observeEvents(): Observable<Sharer.Event> {
         return events
     }
 }

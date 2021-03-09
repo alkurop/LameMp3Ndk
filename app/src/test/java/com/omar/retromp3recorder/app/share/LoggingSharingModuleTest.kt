@@ -1,12 +1,11 @@
 package com.omar.retromp3recorder.app.share
 
 import com.github.alkurop.stringerbell.Stringer.Companion.ofString
-import com.omar.retromp3recorder.app.common.repo.LogRepo
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.di.MockModule
-import com.omar.retromp3recorder.app.share.SharingModule.Event.SharingError
-import com.omar.retromp3recorder.app.share.SharingModule.Event.SharingOk
+import com.omar.retromp3recorder.app.share.Sharer.Event.SharingError
+import com.omar.retromp3recorder.app.share.Sharer.Event.SharingOk
 import io.reactivex.Scheduler
 import io.reactivex.subjects.Subject
 import org.junit.Before
@@ -24,13 +23,13 @@ class LoggingSharingModuleTest {
 
     @Inject
     @Named(AppComponent.DECORATOR_A)
-    lateinit var sharingModule: SharingModule
-    lateinit var spy: SharingModule
+    lateinit var sharingModule: Sharer
+    lateinit var spy: Sharer
     lateinit var loggingSharingModule: LoggingSharingModule
 
     @Inject
     @Named(MockModule.SHARING_SUBJECT)
-    lateinit var eventSubject: Subject<SharingModule.Event>
+    lateinit var eventSubject: Subject<Sharer.Event>
 
     @Before
     fun setUp() {

@@ -6,9 +6,7 @@ import androidx.core.content.FileProvider
 import com.omar.retromp3recorder.app.utils.NotUnitTestable
 import java.io.File
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 @NotUnitTestable
 class SharableFileUriCreator @Inject constructor(private val context: Context) {
     fun createSharableUri(file: File): Uri {

@@ -4,7 +4,7 @@ import com.github.alkurop.stringerbell.Stringer
 import io.reactivex.Completable
 import io.reactivex.Observable
 
-interface SharingModule {
+interface Sharer {
     fun share(): Completable
     fun observeEvents(): Observable<Event>
 

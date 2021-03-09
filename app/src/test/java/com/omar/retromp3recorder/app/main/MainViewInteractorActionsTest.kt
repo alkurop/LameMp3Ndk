@@ -4,14 +4,13 @@ import com.github.alkurop.stringerbell.Stringer
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
-import com.omar.retromp3recorder.app.common.repo.StateRepo
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.BitRate
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.SampleRate
 import com.omar.retromp3recorder.app.recording.repo.BitRateRepo
 import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo
 import com.omar.retromp3recorder.app.recording.usecase.CheckPermissionsUC
-import com.omar.retromp3recorder.app.share.SharingModule
+import com.omar.retromp3recorder.app.share.Sharer
 import io.reactivex.Completable
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
@@ -31,10 +30,7 @@ class MainViewInteractorActionsTest {
     lateinit var sampleRateRepo: SampleRateRepo
 
     @Inject
-    lateinit var sharingModule: SharingModule
-
-    @Inject
-    lateinit var stateRepo: StateRepo
+    lateinit var sharingModule: Sharer
 
     @Inject
     lateinit var permissionsUC: CheckPermissionsUC
@@ -93,7 +89,7 @@ class MainViewInteractorActionsTest {
 
         //Then
        sharingModule.observeEvents().test().assertValue(
-           SharingModule.Event.SharingOk(Stringer.ofString("test"))
+           Sharer.Event.SharingOk(Stringer.ofString("test"))
        )
     }
 

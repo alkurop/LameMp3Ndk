@@ -5,7 +5,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.app.playback.player.AudioPlayer
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
 import com.omar.retromp3recorder.app.recording.usecase.CheckPermissionsUC
-import com.omar.retromp3recorder.app.share.SharingModule
+import com.omar.retromp3recorder.app.share.Sharer
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Completable
@@ -35,7 +35,7 @@ class MockModule {
     @Singleton
     @Provides
     @Named(SHARING_SUBJECT)
-    fun provideSharingSubject(): Subject<SharingModule.Event> {
+    fun provideSharingSubject(): Subject<Sharer.Event> {
         return BehaviorSubject.create()
     }
 

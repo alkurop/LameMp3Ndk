@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.di
 
+import android.app.Application
 import android.content.Context
 import com.omar.retromp3recorder.app.files.FilePathGenerator
 import com.omar.retromp3recorder.app.files.FilePathGeneratorImpl
@@ -11,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Named
 
 @Module
-class UtilsModule(private val context: Context) {
+class UtilsModule(private val app: Application) {
     @Provides
     fun provideScheduler(): Scheduler {
         return Schedulers.io()
@@ -25,7 +26,7 @@ class UtilsModule(private val context: Context) {
 
     @Provides
     fun context(): Context {
-        return context
+        return app
     }
 
     @Provides

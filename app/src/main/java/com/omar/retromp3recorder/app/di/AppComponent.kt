@@ -12,8 +12,6 @@ interface AppComponent {
     fun inject(mainActivity: MainActivity)
 
     companion object {
-        const val DECORATOR_A = "DECORATOR_A"
-        const val DECORATOR_B = "DECORATOR_B"
         const val MAIN_THREAD = "MAIN_THREAD"
     }
 }

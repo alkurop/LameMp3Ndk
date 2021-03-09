@@ -2,10 +2,8 @@ package com.omar.retromp3recorder.app.main
 
 import com.github.alkurop.ghostinshell.Shell
 import com.github.alkurop.stringerbell.Stringer
-import com.omar.retromp3recorder.app.common.repo.LogRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.ShouldRequestPermissions
-import com.omar.retromp3recorder.app.common.repo.StateRepo
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.playback.repo.PlayerIdRepo
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
@@ -33,9 +31,6 @@ class MainViewInteractorRepoTest {
 
     @Inject
     lateinit var requestPermissionsRepo: RequestPermissionsRepo
-
-    @Inject
-    lateinit var stateRepo: StateRepo
 
     @Inject
     lateinit var sampleRateRepo: SampleRateRepo

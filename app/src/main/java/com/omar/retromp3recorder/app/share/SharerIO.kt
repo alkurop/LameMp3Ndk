@@ -8,8 +8,8 @@ import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.files.repo.CurrentFileRepo
-import com.omar.retromp3recorder.app.share.SharingModule.Event.SharingError
-import com.omar.retromp3recorder.app.share.SharingModule.Event.SharingOk
+import com.omar.retromp3recorder.app.share.Sharer.Event.SharingError
+import com.omar.retromp3recorder.app.share.Sharer.Event.SharingOk
 import com.omar.retromp3recorder.app.utils.NotUnitTestable
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -19,16 +19,18 @@ import io.reactivex.subjects.PublishSubject
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Named
+import javax.inject.Singleton
 
+@Singleton
 @NotUnitTestable
-class SharingModuleRX @Inject internal constructor(
+class SharerIO @Inject internal constructor(
     private val sharableFileUriCreator: SharableFileUriCreator,
     private val context: Context,
     private val currentFileRepo: CurrentFileRepo,
     private val scheduler: Scheduler,
     @param:Named(AppComponent.MAIN_THREAD) private val mainThreadScheduler: Scheduler
-) : SharingModule {
-    private val events = PublishSubject.create<SharingModule.Event>()
+) : Sharer {
+    private val events = PublishSubject.create<Sharer.Event>()
     override fun share(): Completable {
         return currentFileRepo.observe().take(1)
             .flatMapCompletable { fileName ->
@@ -65,7 +67,7 @@ class SharingModuleRX @Inject internal constructor(
             }
     }
 
-    override fun observeEvents(): Observable<SharingModule.Event> {
+    override fun observeEvents(): Observable<Sharer.Event> {
         return events
     }
 

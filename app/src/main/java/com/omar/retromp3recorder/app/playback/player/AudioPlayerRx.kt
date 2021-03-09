@@ -69,7 +69,6 @@ class AudioPlayerRx @Inject constructor() :
                 it.release()
                 mediaPlayer = null
                 events.onNext(AudioPlayer.Event.Message(Stringer(R.string.stopped_playing)))
-                events.onNext(AudioPlayer.Event.PlaybackEnded)
             }
     }
 
@@ -78,7 +77,7 @@ class AudioPlayerRx @Inject constructor() :
         if (!mediaPlayer.isPlaying) {
             mediaPlayer.start()
             state.onNext(StatefulAudioPlayer.State.Playing)
-            events.onNext(AudioPlayer.Event.SendPlayerId(mediaPlayer.audioSessionId))
+            events.onNext(AudioPlayer.Event.PlayerId(mediaPlayer.audioSessionId))
             events.onNext(AudioPlayer.Event.Message(Stringer(R.string.started_playing)))
         } else {
             events.onNext(AudioPlayer.Event.Error(Stringer(R.string.player_error_on_stop)))
