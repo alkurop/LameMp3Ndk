@@ -21,6 +21,7 @@
     <string name="audioRecord_bad_value">AudioRecord.ERROR_BAD_VALUE</string>
     <string name="voice_record">voice_record</string>
     <string name="not_recorder_yet">Not recorded yet</string>
+    <string name="something_went_wrong">Something went wrong</string>
     <string name="stopped_playing">stopped playing</string>
     <string name="started_playing">started playing</string>
     <string name="player_error_on_stop">player error onPlay</string>

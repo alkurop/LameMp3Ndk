@@ -74,7 +74,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-core:3.4.6"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
 }

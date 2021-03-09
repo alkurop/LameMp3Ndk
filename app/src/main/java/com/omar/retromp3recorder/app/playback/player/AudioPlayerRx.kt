@@ -17,18 +17,22 @@ class AudioPlayerRx @Inject constructor() :
     StatefulAudioPlayer {
 
     private val events = PublishSubject.create<AudioPlayer.Event>()
-    private var mediaPlayer: MediaPlayer = MediaPlayer()
     private val state = BehaviorSubject.createDefault(StatefulAudioPlayer.State.Idle)
+
+    //should be nullable, because after MediaPlayer.release() becomes useless
+    private var mediaPlayer: MediaPlayer? = null
 
     override fun observeState(): Observable<StatefulAudioPlayer.State> =
         state.distinctUntilChanged()
 
     override fun playerStop() {
-        stopMedia()
+        if (isPlaying)
+            stopMedia()
     }
 
     override fun playerStart(voiceURL: String) {
-        setupMediaPlayer(voiceURL)
+        if (!isPlaying)
+            setupMediaPlayer(voiceURL)
     }
 
     override fun observeEvents(): Observable<AudioPlayer.Event> {
@@ -40,7 +44,7 @@ class AudioPlayerRx @Inject constructor() :
             events.onNext(AudioPlayer.Event.Error(Stringer(R.string.player_cannot_find_file)))
             return
         }
-        mediaPlayer.apply {
+        mediaPlayer = MediaPlayer().apply {
             setOnCompletionListener { stopMedia() }
             setOnPreparedListener { playMedia() }
             try {
@@ -48,6 +52,9 @@ class AudioPlayerRx @Inject constructor() :
                 prepareAsync()
             } catch (e: IOException) {
                 events.onNext(AudioPlayer.Event.Error(Stringer(R.string.not_recorder_yet)))
+            } catch (e: Exception) {
+                events.onNext(AudioPlayer.Event.Error(Stringer(R.string.something_went_wrong)))
+                e.printStackTrace()
             }
         }
 
@@ -55,18 +62,18 @@ class AudioPlayerRx @Inject constructor() :
 
     private fun stopMedia() {
         mediaPlayer
-            .takeIf { it.isPlaying }
             ?.let {
                 state.onNext(StatefulAudioPlayer.State.Idle)
                 it.stop()
                 it.release()
+                mediaPlayer = null
                 events.onNext(AudioPlayer.Event.Message(Stringer(R.string.stopped_playing)))
                 events.onNext(AudioPlayer.Event.PlaybackEnded)
             }
     }
 
     private fun playMedia() {
-        val mediaPlayer = mediaPlayer
+        val mediaPlayer = mediaPlayer ?: return
         if (!mediaPlayer.isPlaying) {
             mediaPlayer.start()
             state.onNext(StatefulAudioPlayer.State.Playing)
