@@ -5,11 +5,9 @@ import com.omar.retromp3recorder.app.recording.recorder.RecorderDefaults
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 internal class ConfigModule {
-    @Singleton
     @Provides
     fun provideRecorderDefaults(filePathGenerator: FilePathGenerator): RecorderDefaults {
         return RecorderDefaults(

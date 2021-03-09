@@ -11,7 +11,9 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 @NotUnitTestable
 class AudioPlayerRx @Inject constructor() :
     AudioPlayer,
@@ -23,8 +25,7 @@ class AudioPlayerRx @Inject constructor() :
     //should be nullable, because after MediaPlayer.release() becomes useless
     private var mediaPlayer: MediaPlayer? = null
 
-    override fun observeState(): Observable<StatefulAudioPlayer.State> =
-        state.distinctUntilChanged()
+    override fun observeState(): Observable<StatefulAudioPlayer.State> = state
 
     override fun playerStop() {
         if (isPlaying)

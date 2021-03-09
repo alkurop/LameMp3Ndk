@@ -24,7 +24,9 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicLong
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 @NotUnitTestable
 class VoiceRecorderRX @Inject internal constructor(
     private val scheduler: Scheduler,
@@ -36,9 +38,7 @@ class VoiceRecorderRX @Inject internal constructor(
 
     private val state = BehaviorSubject.createDefault(StatefulVoiceRecorder.State.Idle)
 
-    override fun observeState(): Observable<StatefulVoiceRecorder.State> =
-        state.distinctUntilChanged()
-
+    override fun observeState(): Observable<StatefulVoiceRecorder.State> = state
 
     override fun observeEvents(): Observable<VoiceRecorder.Event> {
         return events

@@ -1,9 +1,9 @@
 package com.omar.retromp3recorder.app.main
 
+import com.omar.retromp3recorder.app.common.repo.AudioStateRepo
 import com.omar.retromp3recorder.app.common.repo.LogRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.ShouldRequestPermissions.Denied
-import com.omar.retromp3recorder.app.common.repo.StateRepo
 import com.omar.retromp3recorder.app.common.usecase.StopPlaybackAndRecordUC
 import com.omar.retromp3recorder.app.main.MainView.Result
 import com.omar.retromp3recorder.app.playback.repo.PlayerIdRepo
@@ -31,7 +31,7 @@ class MainViewInteractor @Inject constructor(
     private val stopPlaybackAndRecordUC: StopPlaybackAndRecordUC,
     private val bitRateRepo: BitRateRepo,
     private val sampleRateRepo: SampleRateRepo,
-    private val stateRepo: StateRepo,
+    private val stateRepo: AudioStateRepo,
     private val requestPermissionsRepo: RequestPermissionsRepo,
     private val logRepo: LogRepo,
     private val playerIdRepo: PlayerIdRepo
@@ -84,7 +84,7 @@ class MainViewInteractor @Inject constructor(
             .ofType(LogRepo.Event.Error::class.java)
             .map { message -> Result.ErrorLogResult(message.error) },
         stateRepo.observe()
-            .map { state -> Result.StateChangedResult(state) },
+            .map { state -> Result.StateChangedResult(state.map()) },
         playerIdRepo.observe()
             .flatMapGhost()
             .map { playerId -> Result.PlayerIdResult(playerId) }

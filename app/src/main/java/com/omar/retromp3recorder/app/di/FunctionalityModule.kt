@@ -1,13 +1,7 @@
 package com.omar.retromp3recorder.app.di
 
-import com.omar.retromp3recorder.app.playback.player.AudioPlayer
-import com.omar.retromp3recorder.app.playback.player.AudioPlayerRx
-import com.omar.retromp3recorder.app.playback.player.LoggingAudioPlayer
-import com.omar.retromp3recorder.app.playback.player.StateLoggingAudioPlayer
-import com.omar.retromp3recorder.app.recording.recorder.LoggingVoiceRecorder
-import com.omar.retromp3recorder.app.recording.recorder.StateLoggingVoiceRecorder
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorderRX
+import com.omar.retromp3recorder.app.playback.player.*
+import com.omar.retromp3recorder.app.recording.recorder.*
 import com.omar.retromp3recorder.app.share.LoggingSharingModule
 import com.omar.retromp3recorder.app.share.SharingModule
 import com.omar.retromp3recorder.app.share.SharingModuleRX
@@ -54,4 +48,10 @@ internal interface FunctionalityModule {
     @Singleton
     @Binds
     fun provideSharingLoggingModule(clazz: LoggingSharingModule): SharingModule
+
+    @Binds
+    fun provideStatefulAudioRecorder(clazz: VoiceRecorderRX): StatefulVoiceRecorder
+
+    @Binds
+    fun provideStatefulAudioPlayer(clazz: AudioPlayerRx): StatefulAudioPlayer
 }

@@ -1,6 +1,7 @@
 package com.omar.retromp3recorder.app.main
 
 import com.github.alkurop.ghostinshell.Shell
+import com.omar.retromp3recorder.app.common.repo.AudioState
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
@@ -52,4 +53,10 @@ object MainViewResultMapper {
         playerId = Shell.empty(),
         requestForPermissions = Shell.empty()
     )
+}
+
+fun AudioState.map(): MainView.State = when (this) {
+    AudioState.Idle -> MainView.State.Idle
+    AudioState.Playing -> MainView.State.Playing
+    AudioState.Recording -> MainView.State.Recording
 }
