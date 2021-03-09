@@ -57,7 +57,6 @@ class AudioPlayerRx @Inject constructor() :
                 e.printStackTrace()
             }
         }
-
     }
 
     private fun stopMedia() {
