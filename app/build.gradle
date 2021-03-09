@@ -26,6 +26,8 @@ android {
         jvmTarget = '1.8'
     }
 
+    ndkVersion '23.0.7123448'
+
     externalNativeBuild {
         ndkBuild {
             path file('src/main/jni/Android.mk')

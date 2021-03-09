@@ -2,6 +2,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
+LOCAL_CFLAGS := -w
 LAME_LIBMP3_DIR := libmp3lame
 
 LOCAL_MODULE    := mp3lame
