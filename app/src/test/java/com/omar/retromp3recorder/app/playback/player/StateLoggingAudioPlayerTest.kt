@@ -43,7 +43,7 @@ class StateLoggingAudioPlayerTest {
         spy = Mockito.spy(baseAudioPlayer)
         stateLoggingAudioPlayer = StateLoggingAudioPlayer(
             stateRepo, spy,
-            playerIdRepo
+            playerIdRepo, scheduler
         )
     }
 
