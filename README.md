@@ -9,6 +9,8 @@ Retro MP3 Recorder:
  - user may then share audio file
 
 
+Develop build ![travis icon](https://travis-ci.com/alkurop/LameMp3Ndk.svg?branch=develop)
+
 
 //todo
 - split main activity into fragments
