@@ -1,7 +1,6 @@
 package com.omar.retromp3recorder.app.common.repo
 
 import com.omar.retromp3recorder.app.playback.player.AudioPlayer
-import com.omar.retromp3recorder.app.recording.recorder.StatefulVoiceRecorder
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -16,7 +15,7 @@ class AudioStateRepo @Inject constructor(
         recorder.observeState(), { playerState, recorderState ->
             when {
                 playerState == AudioPlayer.State.Playing -> AudioState.Playing
-                recorderState == StatefulVoiceRecorder.State.Recording -> AudioState.Recording
+                recorderState == VoiceRecorder.State.Recording -> AudioState.Recording
                 else -> AudioState.Idle
             }
         }

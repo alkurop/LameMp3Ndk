@@ -36,9 +36,9 @@ class VoiceRecorderIO @Inject internal constructor(
     private val elapsed = AtomicLong(0)
     private val compositeDisposable = CompositeDisposable()
 
-    private val state = BehaviorSubject.createDefault(StatefulVoiceRecorder.State.Idle)
+    private val state = BehaviorSubject.createDefault(VoiceRecorder.State.Idle)
 
-    override fun observeState(): Observable<StatefulVoiceRecorder.State> = state
+    override fun observeState(): Observable<VoiceRecorder.State> = state
 
     override fun observeEvents(): Observable<VoiceRecorder.Event> {
         return events
@@ -74,18 +74,18 @@ class VoiceRecorderIO @Inject internal constructor(
                 Completable.complete()
             }
             .subscribeOn(scheduler)
-            .doOnSubscribe { state.onNext(StatefulVoiceRecorder.State.Recording) }
-            .doFinally { state.onNext(StatefulVoiceRecorder.State.Idle) }
+            .doOnSubscribe { state.onNext(VoiceRecorder.State.Recording) }
+            .doFinally { state.onNext(VoiceRecorder.State.Idle) }
             .subscribe()
             .disposedBy(compositeDisposable)
     }
 
     override fun isRecording(): Boolean =
-        state.blockingFirst() == StatefulVoiceRecorder.State.Recording
+        state.blockingFirst() == VoiceRecorder.State.Recording
 
     override fun stopRecord() {
         compositeDisposable.clear()
-        state.onNext(StatefulVoiceRecorder.State.Idle)
+        state.onNext(VoiceRecorder.State.Idle)
     }
 
     private fun createBuffer(sampleRate: Int): ShortArray {

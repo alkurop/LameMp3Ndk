@@ -47,7 +47,7 @@ interface VoiceRecorder {
         )
     }
 
-    fun observeState(): Observable<StatefulVoiceRecorder.State>
+    fun observeState(): Observable<State>
 
     enum class State {
         Idle,

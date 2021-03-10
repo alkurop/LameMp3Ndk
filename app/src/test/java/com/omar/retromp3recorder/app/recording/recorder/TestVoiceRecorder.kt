@@ -12,23 +12,23 @@ open class TestVoiceRecorder @Inject internal constructor(
     @param:Named(MockModule.RECORDER_SUBJECT) private val bus: Subject<VoiceRecorder.Event>
 ) : VoiceRecorder {
 
-    private val state = BehaviorSubject.createDefault(StatefulVoiceRecorder.State.Idle)
+    private val state = BehaviorSubject.createDefault(VoiceRecorder.State.Idle)
 
     override fun observeEvents(): Observable<VoiceRecorder.Event> {
         return bus
     }
 
     override fun record(props: RecorderProps) {
-        state.onNext(StatefulVoiceRecorder.State.Recording)
+        state.onNext(VoiceRecorder.State.Recording)
     }
 
     override fun stopRecord() {
-        state.onNext(StatefulVoiceRecorder.State.Idle)
+        state.onNext(VoiceRecorder.State.Idle)
     }
 
     override fun isRecording(): Boolean {
-        return state.blockingFirst() == StatefulVoiceRecorder.State.Recording
+        return state.blockingFirst() == VoiceRecorder.State.Recording
     }
 
-    override fun observeState(): Observable<StatefulVoiceRecorder.State> = state
+    override fun observeState(): Observable<VoiceRecorder.State> = state
 }
