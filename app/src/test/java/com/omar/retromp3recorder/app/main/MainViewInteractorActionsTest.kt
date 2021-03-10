@@ -58,7 +58,7 @@ class MainViewInteractorActionsTest {
     }
 
     @Test
-    fun test_ChangeBitrate_Action_UC_Executed() {
+    fun `bitrate change action leads to usecase execution`() {
         val bitRate = BitRate._160
 
         //When
@@ -73,7 +73,7 @@ class MainViewInteractorActionsTest {
     }
 
     @Test
-    fun test_ChangeSampleRate_Action_UC_Executed() {
+    fun `sample rate change action leads to usecase execution`() {
         val sampleRate = SampleRate._11025
 
         //When
@@ -88,7 +88,7 @@ class MainViewInteractorActionsTest {
     }
 
     @Test
-    fun test_Share_Action_UC_Executed() {
+    fun `sharing action leads to usecase exection`() {
         //When
         actionSubject.onNext(MainView.Action.Share)
 
@@ -99,7 +99,7 @@ class MainViewInteractorActionsTest {
     }
 
     @Test
-    fun test_StartPlayback_Action_UC_Executed() {
+    fun `play action leads to audioplayer playing`() {
 
         //When
         actionSubject.onNext(MainView.Action.Play)
@@ -109,7 +109,7 @@ class MainViewInteractorActionsTest {
     }
 
     @Test
-    fun test_StopPlaybackAndRecord_Action_UC_Executed() {
+    fun `stop action leads to state stopped`() {
 
         //When
         actionSubject.onNext(MainView.Action.Stop)
@@ -119,7 +119,7 @@ class MainViewInteractorActionsTest {
     }
 
     @Test
-    fun test_StartRecord_Action_UC_Executed() {
+    fun `start record action leads to state recording`() {
 
         //When
         actionSubject.onNext(MainView.Action.Record)

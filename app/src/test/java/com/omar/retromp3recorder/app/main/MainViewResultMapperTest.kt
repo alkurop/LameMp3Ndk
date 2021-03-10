@@ -20,7 +20,7 @@ class MainViewResultMapperTest {
     }
 
     @Test
-    fun test_MapperStartsWithDefaultViewModel() {
+    fun `mapper starts with default view state`() {
         test.assertNoErrors()
             .assertNotComplete()
             .assertNoErrors()
@@ -28,7 +28,7 @@ class MainViewResultMapperTest {
     }
 
     @Test
-    fun test_MessageLogResult_Mapped() {
+    fun `map log repo message event`() {
         val messageLogResult = MainView.Result.MessageLogResult(Stringer.ofString("test"))
 
         //When
@@ -47,7 +47,7 @@ class MainViewResultMapperTest {
     }
 
     @Test
-    fun test_ErrorLogResult_Mapped() {
+    fun `map log repo error event`() {
         val errorLogResult = MainView.Result.ErrorLogResult(Stringer.ofString("test"))
 
         //When
@@ -66,7 +66,7 @@ class MainViewResultMapperTest {
     }
 
     @Test
-    fun test_BitrateChangedResult_Mapped() {
+    fun `map bitrate change result`() {
         val bitrateChangedResult = MainView.Result.BitrateChangedResult(Mp3VoiceRecorder.BitRate._128)
         //When
         resultPublisher.onNext(bitrateChangedResult)
@@ -82,7 +82,7 @@ class MainViewResultMapperTest {
     }
 
     @Test
-    fun test_SampleRateChangeResult_Mapped() {
+    fun `map sample rate change result`() {
         val bitrateChangedResult =
             MainView.Result.SampleRateChangeResult(Mp3VoiceRecorder.SampleRate._22050)
 
@@ -100,7 +100,7 @@ class MainViewResultMapperTest {
     }
 
     @Test
-    fun test_StateChangedResult_Mapped() {
+    fun `map audio state change result`() {
         val stateChangedResult = MainView.Result.StateChangedResult(MainView.State.Playing)
 
         //When
@@ -117,7 +117,7 @@ class MainViewResultMapperTest {
     }
 
     @Test
-    fun test_RequestPermissionsResult_Mapped() {
+    fun `map request permission result`() {
         val permissionsToRequest = setOf("test")
         val requestPermissionsResult =
             MainView.Result.RequestPermissionsResult(permissionsToRequest)
@@ -136,7 +136,7 @@ class MainViewResultMapperTest {
     }
 
     @Test
-    fun test_PlayerIdResult_Mapped() {
+    fun `map player id changed result`() {
         val playerId = 28
         val playerIdResult = MainView.Result.PlayerIdResult(playerId)
 

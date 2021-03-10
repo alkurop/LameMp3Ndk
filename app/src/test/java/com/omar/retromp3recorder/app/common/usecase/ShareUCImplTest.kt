@@ -9,7 +9,7 @@ import org.mockito.Mockito
 
 class ShareUCImplTest {
     @Test
-    fun test_UC_Executed() {
+    fun `assert happy flow`() {
         val sharingModule = Mockito.mock(Sharer::class.java)
         whenever(sharingModule.share()).thenReturn(Completable.complete())
         val shareUC = ShareUC(sharingModule)

@@ -52,12 +52,7 @@ class MainViewInteractorRepoTest {
     }
 
     @Test
-    fun test_Listening_Default_Config_Values() {
-        test.assertValueCount(FIRST_EVENT_INDEX)
-    }
-
-    @Test
-    fun test_Listening_BitRateRepo() {
+    fun `interactor listens to bitrate repo`() {
         //When
         bitRateRepo.newValue(Mp3VoiceRecorder.BitRate._128)
 
@@ -68,7 +63,7 @@ class MainViewInteractorRepoTest {
     }
 
     @Test
-    fun test_Listening_LogRepo() {
+    fun `interactor listens to state repo`() {
         //When
         audioBus.onNext(AudioPlayer.Event.Message(Stringer.ofString("test")))
 
@@ -82,7 +77,7 @@ class MainViewInteractorRepoTest {
     }
 
     @Test
-    fun test_Listening_PlayerIdRepo() {
+    fun `interacto listens to player id repo`() {
         //When
         audioBus.onNext(AudioPlayer.Event.PlayerId(38))
 
@@ -96,7 +91,7 @@ class MainViewInteractorRepoTest {
     }
 
     @Test
-    fun test_Listening_RequestPermissionsRepo() {
+    fun `interactor listens to request permissions repo`() {
         val shouldRequestPermissions: ShouldRequestPermissions =
             ShouldRequestPermissions.Denied(Shell(setOf("test")))
 
@@ -116,24 +111,7 @@ class MainViewInteractorRepoTest {
     }
 
     @Test
-    fun test_Listening_StateRepo() {
-        //When
-        voiceRecorder.record(Mp3VoiceRecorder.RecorderProps("test", Mp3VoiceRecorder.BitRate._128, SampleRate._11025))
-
-        //Then
-        test.assertValueAt(
-            FIRST_EVENT_INDEX
-        ) { result: MainView.Result ->
-            val stateChangedResult: MainView.Result.StateChangedResult =
-                result as MainView.Result.StateChangedResult
-            val state: MainView.State =
-                stateChangedResult.state
-            state === MainView.State.Recording
-        }
-    }
-
-    @Test
-    fun test_Listening_SampleRateRepo() {
+    fun `interactor listens to sample rate repo`() {
         sampleRateRepo.newValue(SampleRate._8000)
 
         //Then

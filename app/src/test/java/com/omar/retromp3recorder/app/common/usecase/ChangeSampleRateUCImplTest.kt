@@ -19,7 +19,7 @@ class ChangeSampleRateUCImplTest {
     }
 
     @Test
-    fun test_UC_Executed() {
+    fun `assert happy flow`() {
         changeSampleRateUC.execute(Mp3VoiceRecorder.SampleRate._8000).subscribe()
 
         //Then

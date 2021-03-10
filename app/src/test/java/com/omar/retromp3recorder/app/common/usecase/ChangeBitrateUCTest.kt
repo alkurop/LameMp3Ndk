@@ -21,7 +21,7 @@ class ChangeBitrateUCTest {
     }
 
     @Test
-    fun test_UC_Executed() {
+    fun `assert happy flow`() {
         changeBitrateUC.execute(Mp3VoiceRecorder.BitRate._160).subscribe()
 
         //Then
