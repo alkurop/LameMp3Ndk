@@ -3,7 +3,7 @@ package com.omar.retromp3recorder.app.main
 import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.main.MainView.MainViewModel
 import com.omar.retromp3recorder.app.main.MainViewResultMapper.map
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -67,7 +67,7 @@ class MainViewResultMapperTest {
 
     @Test
     fun test_BitrateChangedResult_Mapped() {
-        val bitrateChangedResult = MainView.Result.BitrateChangedResult(VoiceRecorder.BitRate._128)
+        val bitrateChangedResult = MainView.Result.BitrateChangedResult(Mp3VoiceRecorder.BitRate._128)
         //When
         resultPublisher.onNext(bitrateChangedResult)
 
@@ -78,13 +78,13 @@ class MainViewResultMapperTest {
             .assertValueCount(2)
             .assertValueAt(
                 1
-            ) { (bitRate) -> bitRate == VoiceRecorder.BitRate._128 }
+            ) { (bitRate) -> bitRate == Mp3VoiceRecorder.BitRate._128 }
     }
 
     @Test
     fun test_SampleRateChangeResult_Mapped() {
         val bitrateChangedResult =
-            MainView.Result.SampleRateChangeResult(VoiceRecorder.SampleRate._22050)
+            MainView.Result.SampleRateChangeResult(Mp3VoiceRecorder.SampleRate._22050)
 
         //When
         resultPublisher.onNext(bitrateChangedResult)
@@ -96,7 +96,7 @@ class MainViewResultMapperTest {
             .assertValueCount(2)
             .assertValueAt(
                 1
-            ) { (_, _, _, _, _, _, sampleRate) -> sampleRate == VoiceRecorder.SampleRate._22050 }
+            ) { (_, _, _, _, _, _, sampleRate) -> sampleRate == Mp3VoiceRecorder.SampleRate._22050 }
     }
 
     @Test

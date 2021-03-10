@@ -6,7 +6,7 @@ import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.ShouldRe
 import com.omar.retromp3recorder.app.common.usecase.StopPlaybackAndRecordUC
 import com.omar.retromp3recorder.app.files.repo.CurrentFileRepo
 import com.omar.retromp3recorder.app.playback.player.AudioPlayer
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.recording.usecase.CheckPermissionsUC
 import io.reactivex.Completable
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class StartPlaybackUC @Inject constructor(
     private val currentFileRepo: CurrentFileRepo,
     private val audioPlayer: AudioPlayer,
-    private val voiceRecorder: VoiceRecorder,
+    private val voiceRecorder: Mp3VoiceRecorder,
     private val stopUC: StopPlaybackAndRecordUC,
     private val checkPermissionsUC: CheckPermissionsUC,
     private val requestPermissionsRepo: RequestPermissionsRepo

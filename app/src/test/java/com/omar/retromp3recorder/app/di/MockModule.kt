@@ -3,7 +3,7 @@ package com.omar.retromp3recorder.app.di
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.app.playback.player.AudioPlayer
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.recording.usecase.CheckPermissionsUC
 import com.omar.retromp3recorder.app.share.Sharer
 import dagger.Module
@@ -21,7 +21,7 @@ class MockModule {
     @Singleton
     @Provides
     @Named(RECORDER_SUBJECT)
-    fun provideRecorderSubject(): Subject<VoiceRecorder.Event> {
+    fun provideRecorderSubject(): Subject<Mp3VoiceRecorder.Event> {
         return PublishSubject.create()
     }
 

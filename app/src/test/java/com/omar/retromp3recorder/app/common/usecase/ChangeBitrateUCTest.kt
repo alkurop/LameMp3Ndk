@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.common.usecase
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.recording.repo.BitRateRepo
 import com.omar.retromp3recorder.app.recording.usecase.ChangeBitrateUC
 import org.junit.Before
@@ -22,10 +22,10 @@ class ChangeBitrateUCTest {
 
     @Test
     fun test_UC_Executed() {
-        changeBitrateUC.execute(VoiceRecorder.BitRate._160).subscribe()
+        changeBitrateUC.execute(Mp3VoiceRecorder.BitRate._160).subscribe()
 
         //Then
         bitRateRepo.observe().test()
-            .assertValue(VoiceRecorder.BitRate._160)
+            .assertValue(Mp3VoiceRecorder.BitRate._160)
     }
 }

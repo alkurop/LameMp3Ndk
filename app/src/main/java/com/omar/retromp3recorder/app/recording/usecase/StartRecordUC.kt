@@ -6,7 +6,7 @@ import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.ShouldRe
 import com.omar.retromp3recorder.app.common.usecase.StopPlaybackAndRecordUC
 import com.omar.retromp3recorder.app.files.repo.CurrentFileRepo
 import com.omar.retromp3recorder.app.files.usecase.GenerateNewFilenameForRecorderUC
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.recording.repo.BitRateRepo
 import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo
 import io.reactivex.Completable
@@ -18,15 +18,15 @@ class StartRecordUC @Inject constructor(
     private val currentFileRepo: CurrentFileRepo,
     private val bitRateRepo: BitRateRepo,
     private val sampleRateRepo: SampleRateRepo,
-    private val voiceRecorder: VoiceRecorder,
+    private val voiceRecorder: Mp3VoiceRecorder,
     private val stopPlaybackAndRecordUC: StopPlaybackAndRecordUC,
     private val checkPermissionsUC: CheckPermissionsUC,
     private val requestPermissionsRepo: RequestPermissionsRepo,
     private val generateNewFilenameForRecorderUC: GenerateNewFilenameForRecorderUC
 ) {
     fun execute(): Completable {
-        val propsZipper = Function3 { filepath: String, bitRate: VoiceRecorder.BitRate, sampleRate: VoiceRecorder.SampleRate ->
-            VoiceRecorder.RecorderProps(filepath, bitRate, sampleRate)
+        val propsZipper = Function3 { filepath: String, bitRate: Mp3VoiceRecorder.BitRate, sampleRate: Mp3VoiceRecorder.SampleRate ->
+            Mp3VoiceRecorder.RecorderProps(filepath, bitRate, sampleRate)
         }
         val abort = Completable.complete()
         val execute = generateNewFilenameForRecorderUC
@@ -39,7 +39,7 @@ class StartRecordUC @Inject constructor(
                     propsZipper
                 )
             )
-            .flatMapCompletable { props: VoiceRecorder.RecorderProps ->
+            .flatMapCompletable { props: Mp3VoiceRecorder.RecorderProps ->
                 Completable
                     .fromAction { voiceRecorder.record(props) }
             }

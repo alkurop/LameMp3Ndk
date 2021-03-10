@@ -7,10 +7,10 @@ import android.os.Process
 import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.recorder.LameModule
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.Companion.AUDIO_FORMAT_PRESETS
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.Companion.CHANNEL_PRESETS
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.Companion.QUALITY_PRESETS
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.RecorderProps
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder.Companion.AUDIO_FORMAT_PRESETS
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder.Companion.CHANNEL_PRESETS
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder.Companion.QUALITY_PRESETS
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder.RecorderProps
 import com.omar.retromp3recorder.app.utils.NotUnitTestable
 import com.omar.retromp3recorder.app.utils.disposedBy
 import io.reactivex.*
@@ -28,19 +28,19 @@ import javax.inject.Singleton
 
 @Singleton
 @NotUnitTestable
-class VoiceRecorderIO @Inject internal constructor(
+class Mp3VoiceRecorderImpl @Inject internal constructor(
     private val scheduler: Scheduler,
     private val context: Context
-) : VoiceRecorder {
-    private val events: Subject<VoiceRecorder.Event> = PublishSubject.create()
+) : Mp3VoiceRecorder {
+    private val events: Subject<Mp3VoiceRecorder.Event> = PublishSubject.create()
     private val elapsed = AtomicLong(0)
     private val compositeDisposable = CompositeDisposable()
 
-    private val state = BehaviorSubject.createDefault(VoiceRecorder.State.Idle)
+    private val state = BehaviorSubject.createDefault(Mp3VoiceRecorder.State.Idle)
 
-    override fun observeState(): Observable<VoiceRecorder.State> = state
+    override fun observeState(): Observable<Mp3VoiceRecorder.State> = state
 
-    override fun observeEvents(): Observable<VoiceRecorder.Event> {
+    override fun observeEvents(): Observable<Mp3VoiceRecorder.Event> {
         return events
     }
 
@@ -64,7 +64,7 @@ class VoiceRecorderIO @Inject internal constructor(
             }
             .onErrorResumeNext { throwable ->
                 events.onNext(
-                    VoiceRecorder.Event.Error(
+                    Mp3VoiceRecorder.Event.Error(
                         Stringer.ofString(
                             throwable.message ?: throwable.toString()
                         )
@@ -74,18 +74,18 @@ class VoiceRecorderIO @Inject internal constructor(
                 Completable.complete()
             }
             .subscribeOn(scheduler)
-            .doOnSubscribe { state.onNext(VoiceRecorder.State.Recording) }
-            .doFinally { state.onNext(VoiceRecorder.State.Idle) }
+            .doOnSubscribe { state.onNext(Mp3VoiceRecorder.State.Recording) }
+            .doFinally { state.onNext(Mp3VoiceRecorder.State.Idle) }
             .subscribe()
             .disposedBy(compositeDisposable)
     }
 
     override fun isRecording(): Boolean =
-        state.blockingFirst() == VoiceRecorder.State.Recording
+        state.blockingFirst() == Mp3VoiceRecorder.State.Recording
 
     override fun stopRecord() {
         compositeDisposable.clear()
-        state.onNext(VoiceRecorder.State.Idle)
+        state.onNext(Mp3VoiceRecorder.State.Idle)
     }
 
     private fun createBuffer(sampleRate: Int): ShortArray {
@@ -186,10 +186,10 @@ class VoiceRecorderIO @Inject internal constructor(
                 Stringer(R.string.compression_rate, outFile.length().toFloat() / counter)
             )
             for (message in messages) {
-                events.onNext(VoiceRecorder.Event.Message(message))
+                events.onNext(Mp3VoiceRecorder.Event.Message(message))
             }
         } else events.onNext(
-            VoiceRecorder.Event.Error(
+            Mp3VoiceRecorder.Event.Error(
                 Stringer(R.string.error_saving_file_to, absolutePath)
             )
         )
@@ -230,7 +230,7 @@ class VoiceRecorderIO @Inject internal constructor(
                     bitRate,
                     sampleRate
                 )
-                events.onNext(VoiceRecorder.Event.Message(logMessage))
+                events.onNext(Mp3VoiceRecorder.Event.Message(logMessage))
                 recorder
             } else {
                 throw Exception(

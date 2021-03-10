@@ -4,7 +4,7 @@ import android.media.AudioFormat
 import com.github.alkurop.stringerbell.Stringer
 import io.reactivex.Observable
 
-interface VoiceRecorder {
+interface Mp3VoiceRecorder {
     fun observeEvents(): Observable<Event>
     fun record(props: RecorderProps)
     fun stopRecord()

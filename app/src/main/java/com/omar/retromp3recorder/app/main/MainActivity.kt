@@ -19,8 +19,8 @@ import com.jakewharton.rxbinding3.view.clicks
 import com.omar.retromp3recorder.app.App
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.customviews.VisualizerView
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.SampleRate
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder.SampleRate
 import com.squareup.picasso.Picasso
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
     private fun createBitRateGroup(): List<RadioButton> =
-        VoiceRecorder.BitRate.values().map { bitRate ->
+        Mp3VoiceRecorder.BitRate.values().map { bitRate ->
             bitRateContainer.addCheckBox(
                 title = getString(
                     R.string.bit_rate_format,
@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
         bitRateGroup.mapIndexed { index, radioButton ->
             radioButton.clicks().subscribe {
-                val bitRate = VoiceRecorder.BitRate.values()[index]
+                val bitRate = Mp3VoiceRecorder.BitRate.values()[index]
                 actionPublishSubject.onNext(MainView.Action.BitRateChange(bitRate))
             }
         }.forEach { compositeDisposable.add(it) }
@@ -289,7 +289,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
     }
 
-    private fun renderBitrate(bitRate: VoiceRecorder.BitRate) {
+    private fun renderBitrate(bitRate: Mp3VoiceRecorder.BitRate) {
         bitRateGroup.forEachIndexed { index, radioButton ->
             radioButton.isChecked = bitRate.ordinal == index
         }

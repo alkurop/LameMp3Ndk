@@ -2,14 +2,14 @@ package com.omar.retromp3recorder.app.common.repo
 
 import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.playback.player.AudioPlayer
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.share.Sharer
 import io.reactivex.Observable
 import javax.inject.Inject
 
 class LogRepo @Inject constructor(
     audioPlayer: AudioPlayer,
-    recorder: VoiceRecorder,
+    recorder: Mp3VoiceRecorder,
     sharingModule: Sharer
 
 ) {
@@ -27,15 +27,15 @@ class LogRepo @Inject constructor(
     }
 }
 
-private fun VoiceRecorder.createLogs(): Observable<LogRepo.Event> {
+private fun Mp3VoiceRecorder.createLogs(): Observable<LogRepo.Event> {
     val message = this
         .observeEvents()
-        .ofType(VoiceRecorder.Event.Message::class.java)
+        .ofType(Mp3VoiceRecorder.Event.Message::class.java)
         .map { answer -> LogRepo.Event.Message(answer.message) }
 
     val error = this
         .observeEvents()
-        .ofType(VoiceRecorder.Event.Error::class.java)
+        .ofType(Mp3VoiceRecorder.Event.Error::class.java)
         .map { answer -> LogRepo.Event.Error(answer.error) }
     return Observable.merge(message, error)
 }

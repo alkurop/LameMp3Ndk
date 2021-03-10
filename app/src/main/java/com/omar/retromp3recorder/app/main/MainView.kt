@@ -2,8 +2,8 @@ package com.omar.retromp3recorder.app.main
 
 import com.github.alkurop.ghostinshell.Shell
 import com.github.alkurop.stringerbell.Stringer
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.BitRate
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.SampleRate
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder.BitRate
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder.SampleRate
 
 object MainView {
     enum class State {

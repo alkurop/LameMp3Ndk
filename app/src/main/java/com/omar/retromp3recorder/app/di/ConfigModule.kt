@@ -1,8 +1,8 @@
 package com.omar.retromp3recorder.app.di
 
 import com.omar.retromp3recorder.app.files.FilePathGenerator
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.recording.recorder.RecorderDefaults
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
 import dagger.Module
 import dagger.Provides
 
@@ -11,8 +11,8 @@ internal class ConfigModule {
     @Provides
     fun provideRecorderDefaults(filePathGenerator: FilePathGenerator): RecorderDefaults {
         return RecorderDefaults(
-            VoiceRecorder.BitRate._320,
-            VoiceRecorder.SampleRate._44100,
+            Mp3VoiceRecorder.BitRate._320,
+            Mp3VoiceRecorder.SampleRate._44100,
             filePathGenerator.generateFilePath()
         )
     }

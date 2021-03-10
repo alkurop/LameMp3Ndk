@@ -7,8 +7,8 @@ import com.omar.retromp3recorder.app.common.repo.AudioState
 import com.omar.retromp3recorder.app.common.repo.AudioStateRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.BitRate
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.SampleRate
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder.BitRate
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder.SampleRate
 import com.omar.retromp3recorder.app.recording.repo.BitRateRepo
 import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo
 import com.omar.retromp3recorder.app.recording.usecase.CheckPermissionsUC

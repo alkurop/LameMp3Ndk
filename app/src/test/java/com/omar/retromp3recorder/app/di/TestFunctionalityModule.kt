@@ -2,8 +2,8 @@ package com.omar.retromp3recorder.app.di
 
 import com.omar.retromp3recorder.app.playback.player.AudioPlayer
 import com.omar.retromp3recorder.app.playback.player.TestAudioPlayer
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.recording.recorder.TestVoiceRecorder
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
 import com.omar.retromp3recorder.app.share.Sharer
 import com.omar.retromp3recorder.app.share.TestSharingModule
 import dagger.Binds
@@ -19,7 +19,7 @@ interface TestFunctionalityModule {
 
     @Singleton
     @Binds
-    fun provideVoiceRecorder (clazz: TestVoiceRecorder): VoiceRecorder
+    fun provideVoiceRecorder (clazz: TestVoiceRecorder): Mp3VoiceRecorder
 
     @Singleton
     @Binds

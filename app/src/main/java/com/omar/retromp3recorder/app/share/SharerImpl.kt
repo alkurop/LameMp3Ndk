@@ -23,7 +23,7 @@ import javax.inject.Singleton
 
 @Singleton
 @NotUnitTestable
-class SharerIO @Inject internal constructor(
+class SharerImpl @Inject internal constructor(
     private val sharableFileUriCreator: SharableFileUriCreator,
     private val context: Context,
     private val currentFileRepo: CurrentFileRepo,

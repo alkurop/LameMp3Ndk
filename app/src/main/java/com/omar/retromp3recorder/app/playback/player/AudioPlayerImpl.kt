@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Singleton
 @NotUnitTestable
-class AudioPlayerIO @Inject constructor() : AudioPlayer {
+class AudioPlayerImpl @Inject constructor() : AudioPlayer {
 
     private val events = PublishSubject.create<AudioPlayer.Event>()
     private val state = BehaviorSubject.createDefault(AudioPlayer.State.Idle)

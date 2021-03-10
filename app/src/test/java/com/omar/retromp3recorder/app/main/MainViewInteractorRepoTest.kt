@@ -8,8 +8,8 @@ import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.ShouldRe
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.di.MockModule
 import com.omar.retromp3recorder.app.playback.player.AudioPlayer
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.SampleRate
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder.SampleRate
 import com.omar.retromp3recorder.app.recording.repo.BitRateRepo
 import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo
 import io.reactivex.observers.TestObserver
@@ -37,7 +37,7 @@ class MainViewInteractorRepoTest {
     lateinit var requestPermissionsRepo: RequestPermissionsRepo
 
     @Inject
-    lateinit var voiceRecorder: VoiceRecorder
+    lateinit var voiceRecorder: Mp3VoiceRecorder
 
     @Inject
     lateinit var sampleRateRepo: SampleRateRepo
@@ -59,11 +59,11 @@ class MainViewInteractorRepoTest {
     @Test
     fun test_Listening_BitRateRepo() {
         //When
-        bitRateRepo.newValue(VoiceRecorder.BitRate._128)
+        bitRateRepo.newValue(Mp3VoiceRecorder.BitRate._128)
 
         //Then
         test.assertValueAt(FIRST_EVENT_INDEX) { result ->
-            (result as MainView.Result.BitrateChangedResult).bitRate === VoiceRecorder.BitRate._128
+            (result as MainView.Result.BitrateChangedResult).bitRate === Mp3VoiceRecorder.BitRate._128
         }
     }
 
@@ -118,7 +118,7 @@ class MainViewInteractorRepoTest {
     @Test
     fun test_Listening_StateRepo() {
         //When
-        voiceRecorder.record(VoiceRecorder.RecorderProps("test", VoiceRecorder.BitRate._128, SampleRate._11025))
+        voiceRecorder.record(Mp3VoiceRecorder.RecorderProps("test", Mp3VoiceRecorder.BitRate._128, SampleRate._11025))
 
         //Then
         test.assertValueAt(

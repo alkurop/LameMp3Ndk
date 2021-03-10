@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.app.main
 
 import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.app.common.repo.AudioState
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.functions.BiFunction
@@ -46,8 +46,8 @@ object MainViewResultMapper {
 
     private fun getDefaultViewModel() = MainView.MainViewModel(
         state = MainView.State.Idle,
-        sampleRate = VoiceRecorder.SampleRate._44100,
-        bitRate = VoiceRecorder.BitRate._320,
+        sampleRate = Mp3VoiceRecorder.SampleRate._44100,
+        bitRate = Mp3VoiceRecorder.BitRate._320,
         error = Shell.empty(),
         message = Shell.empty(),
         playerId = Shell.empty(),

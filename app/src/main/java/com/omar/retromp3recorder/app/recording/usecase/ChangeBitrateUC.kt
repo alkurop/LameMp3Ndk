@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.recording.usecase
 
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.BitRate
+import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder.BitRate
 import com.omar.retromp3recorder.app.recording.repo.BitRateRepo
 import io.reactivex.Completable
 import javax.inject.Inject
