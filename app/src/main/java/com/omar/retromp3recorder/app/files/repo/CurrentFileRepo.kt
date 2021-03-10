@@ -17,10 +17,6 @@ class CurrentFileRepo @Inject constructor(defaults: RecorderDefaults) {
         return stateSubject
     }
 
-    fun hasValue(): Boolean {
-        return stateSubject.hasValue()
-    }
-
     init {
         stateSubject.onNext(defaults.filePath)
     }

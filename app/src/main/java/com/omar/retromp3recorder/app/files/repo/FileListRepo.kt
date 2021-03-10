@@ -9,10 +9,6 @@ import javax.inject.Singleton
 class FileListRepo @Inject constructor() {
     private val stateSubject = BehaviorSubject.create<List<String>>()
 
-    fun hasValue(): Boolean {
-        return stateSubject.hasValue()
-    }
-
     fun newValue(fileNames: List<String>) {
         stateSubject.onNext(fileNames)
     }
