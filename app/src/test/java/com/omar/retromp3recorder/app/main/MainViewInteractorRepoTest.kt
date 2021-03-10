@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.app.main
 
 import com.github.alkurop.ghostinshell.Shell
 import com.github.alkurop.stringerbell.Stringer
+import com.omar.retromp3recorder.app.common.repo.LogRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.ShouldRequestPermissions
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
@@ -63,7 +64,7 @@ class MainViewInteractorRepoTest {
     @Test
     fun test_Listening_LogRepo() {
         //When
-        logRepo.newValue(LogRepo.Event.Message(Stringer.ofString("test")))
+       // logRepo.newValue(LogRepo.Event.Message(Stringer.ofString("test")))
 
         //Then
         test.assertValueAt(
@@ -77,7 +78,7 @@ class MainViewInteractorRepoTest {
     @Test
     fun test_Listening_PlayerIdRepo() {
         //When
-        playerIdRepo.newValue(38)
+        //playerIdRepo.newValue(38)
 
         //Then
         test.assertValueAt(
@@ -110,7 +111,7 @@ class MainViewInteractorRepoTest {
 
     @Test
     fun test_Listening_StateRepo() {
-        stateRepo.newValue(MainView.State.Recording)
+        //stateRepo.newValue(MainView.State.Recording)
 
         //Then
         test.assertValueAt(
