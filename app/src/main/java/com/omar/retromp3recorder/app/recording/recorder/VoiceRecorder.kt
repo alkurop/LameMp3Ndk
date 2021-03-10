@@ -46,4 +46,11 @@ interface VoiceRecorder {
                 .toShort()
         )
     }
+
+    fun observeState(): Observable<StatefulVoiceRecorder.State>
+
+    enum class State {
+        Idle,
+        Recording
+    }
 }

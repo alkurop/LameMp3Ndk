@@ -10,7 +10,7 @@ import javax.inject.Named
 
 open class TestVoiceRecorder @Inject internal constructor(
     @param:Named(MockModule.RECORDER_SUBJECT) private val bus: Subject<VoiceRecorder.Event>
-) : VoiceRecorder, StatefulVoiceRecorder {
+) : VoiceRecorder {
 
     private val state = BehaviorSubject.createDefault(StatefulVoiceRecorder.State.Idle)
 

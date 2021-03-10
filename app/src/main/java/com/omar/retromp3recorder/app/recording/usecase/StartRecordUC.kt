@@ -7,7 +7,6 @@ import com.omar.retromp3recorder.app.common.usecase.StopPlaybackAndRecordUC
 import com.omar.retromp3recorder.app.files.repo.CurrentFileRepo
 import com.omar.retromp3recorder.app.files.usecase.GenerateNewFilenameForRecorderUC
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
-import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.*
 import com.omar.retromp3recorder.app.recording.repo.BitRateRepo
 import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo
 import io.reactivex.Completable
@@ -26,8 +25,8 @@ class StartRecordUC @Inject constructor(
     private val generateNewFilenameForRecorderUC: GenerateNewFilenameForRecorderUC
 ) {
     fun execute(): Completable {
-        val propsZipper = Function3 { filepath: String, bitRate: BitRate, sampleRate: SampleRate ->
-            RecorderProps(filepath, bitRate, sampleRate)
+        val propsZipper = Function3 { filepath: String, bitRate: VoiceRecorder.BitRate, sampleRate: VoiceRecorder.SampleRate ->
+            VoiceRecorder.RecorderProps(filepath, bitRate, sampleRate)
         }
         val abort = Completable.complete()
         val execute = generateNewFilenameForRecorderUC
@@ -40,7 +39,7 @@ class StartRecordUC @Inject constructor(
                     propsZipper
                 )
             )
-            .flatMapCompletable { props: RecorderProps ->
+            .flatMapCompletable { props: VoiceRecorder.RecorderProps ->
                 Completable
                     .fromAction { voiceRecorder.record(props) }
             }

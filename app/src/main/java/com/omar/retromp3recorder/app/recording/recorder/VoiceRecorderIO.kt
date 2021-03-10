@@ -31,7 +31,7 @@ import javax.inject.Singleton
 class VoiceRecorderIO @Inject internal constructor(
     private val scheduler: Scheduler,
     private val context: Context
-) : VoiceRecorder, StatefulVoiceRecorder {
+) : VoiceRecorder {
     private val events: Subject<VoiceRecorder.Event> = PublishSubject.create()
     private val elapsed = AtomicLong(0)
     private val compositeDisposable = CompositeDisposable()
@@ -80,7 +80,8 @@ class VoiceRecorderIO @Inject internal constructor(
             .disposedBy(compositeDisposable)
     }
 
-    override fun isRecording(): Boolean = state.blockingFirst() == StatefulVoiceRecorder.State.Recording
+    override fun isRecording(): Boolean =
+        state.blockingFirst() == StatefulVoiceRecorder.State.Recording
 
     override fun stopRecord() {
         compositeDisposable.clear()

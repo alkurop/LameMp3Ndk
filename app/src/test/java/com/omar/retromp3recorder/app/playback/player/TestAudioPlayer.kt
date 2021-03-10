@@ -9,15 +9,15 @@ import javax.inject.Named
 
 open class TestAudioPlayer @Inject internal constructor(
     @param:Named(MockModule.PLAYER_SUBJECT) private val audioBus: Subject<AudioPlayer.Event>
-) : StatefulAudioPlayer, AudioPlayer {
+) : AudioPlayer {
 
-    private val state = BehaviorSubject.createDefault(StatefulAudioPlayer.State.Idle)
+    private val state = BehaviorSubject.createDefault(AudioPlayer.State.Idle)
 
     override fun playerStop() {
-        state.onNext(StatefulAudioPlayer.State.Idle)
+        state.onNext(AudioPlayer.State.Idle)
     }
     override fun playerStart(voiceURL: String) {
-        state.onNext(StatefulAudioPlayer.State.Playing)
+        state.onNext(AudioPlayer.State.Playing)
     }
     override fun observeEvents(): Observable<AudioPlayer.Event> {
         return audioBus
@@ -26,6 +26,6 @@ open class TestAudioPlayer @Inject internal constructor(
     override val isPlaying: Boolean
         get() = true
 
-    override fun observeState(): Observable<StatefulAudioPlayer.State> = state
+    override fun observeState(): Observable<AudioPlayer.State> = state
 
 }

@@ -15,4 +15,11 @@ interface AudioPlayer {
         data class Error(val error: Stringer) : Event()
         data class PlayerId internal constructor(val playerId: Int) : Event()
     }
+
+    fun observeState(): Observable<State>
+
+    enum class State {
+        Idle,
+        Playing
+    }
 }

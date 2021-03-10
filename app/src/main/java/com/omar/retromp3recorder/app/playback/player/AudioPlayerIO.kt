@@ -15,17 +15,15 @@ import javax.inject.Singleton
 
 @Singleton
 @NotUnitTestable
-class AudioPlayerRx @Inject constructor() :
-    AudioPlayer,
-    StatefulAudioPlayer {
+class AudioPlayerIO @Inject constructor() : AudioPlayer {
 
     private val events = PublishSubject.create<AudioPlayer.Event>()
-    private val state = BehaviorSubject.createDefault(StatefulAudioPlayer.State.Idle)
+    private val state = BehaviorSubject.createDefault(AudioPlayer.State.Idle)
 
     //should be nullable, because after MediaPlayer.release() becomes useless
     private var mediaPlayer: MediaPlayer? = null
 
-    override fun observeState(): Observable<StatefulAudioPlayer.State> = state
+    override fun observeState(): Observable<AudioPlayer.State> = state
 
     override fun playerStop() {
         if (isPlaying)
@@ -64,7 +62,7 @@ class AudioPlayerRx @Inject constructor() :
     private fun stopMedia() {
         mediaPlayer
             ?.let {
-                state.onNext(StatefulAudioPlayer.State.Idle)
+                state.onNext(AudioPlayer.State.Idle)
                 it.stop()
                 it.release()
                 mediaPlayer = null
@@ -76,7 +74,7 @@ class AudioPlayerRx @Inject constructor() :
         val mediaPlayer = mediaPlayer ?: return
         if (!mediaPlayer.isPlaying) {
             mediaPlayer.start()
-            state.onNext(StatefulAudioPlayer.State.Playing)
+            state.onNext(AudioPlayer.State.Playing)
             events.onNext(AudioPlayer.Event.PlayerId(mediaPlayer.audioSessionId))
             events.onNext(AudioPlayer.Event.Message(Stringer(R.string.started_playing)))
         } else {
@@ -87,6 +85,6 @@ class AudioPlayerRx @Inject constructor() :
     //exposing internal state instead of the mediaplayer's state
     //to have single source of truth
     override val isPlaying: Boolean
-        get() = state.blockingFirst() == StatefulAudioPlayer.State.Playing
+        get() = state.blockingFirst() == AudioPlayer.State.Playing
 
 }
