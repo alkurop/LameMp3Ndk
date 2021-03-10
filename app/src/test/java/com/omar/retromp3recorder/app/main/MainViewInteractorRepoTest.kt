@@ -6,16 +6,19 @@ import com.omar.retromp3recorder.app.common.repo.LogRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo.ShouldRequestPermissions
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.app.playback.repo.PlayerIdRepo
+import com.omar.retromp3recorder.app.di.MockModule
+import com.omar.retromp3recorder.app.playback.player.AudioPlayer
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.SampleRate
 import com.omar.retromp3recorder.app.recording.repo.BitRateRepo
 import com.omar.retromp3recorder.app.recording.repo.SampleRateRepo
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
+import javax.inject.Named
 
 class MainViewInteractorRepoTest {
     @Inject
@@ -27,11 +30,14 @@ class MainViewInteractorRepoTest {
     @Inject
     lateinit var logRepo: LogRepo
 
-    @Inject
-    lateinit var playerIdRepo: PlayerIdRepo
+    @Named(MockModule.PLAYER_SUBJECT)
+    @Inject lateinit var audioBus: Subject<AudioPlayer.Event>
 
     @Inject
     lateinit var requestPermissionsRepo: RequestPermissionsRepo
+
+    @Inject
+    lateinit var voiceRecorder: VoiceRecorder
 
     @Inject
     lateinit var sampleRateRepo: SampleRateRepo
@@ -64,7 +70,7 @@ class MainViewInteractorRepoTest {
     @Test
     fun test_Listening_LogRepo() {
         //When
-       // logRepo.newValue(LogRepo.Event.Message(Stringer.ofString("test")))
+        audioBus.onNext(AudioPlayer.Event.Message(Stringer.ofString("test")))
 
         //Then
         test.assertValueAt(
@@ -78,7 +84,7 @@ class MainViewInteractorRepoTest {
     @Test
     fun test_Listening_PlayerIdRepo() {
         //When
-        //playerIdRepo.newValue(38)
+        audioBus.onNext(AudioPlayer.Event.PlayerId(38))
 
         //Then
         test.assertValueAt(
@@ -111,7 +117,8 @@ class MainViewInteractorRepoTest {
 
     @Test
     fun test_Listening_StateRepo() {
-        //stateRepo.newValue(MainView.State.Recording)
+        //When
+        voiceRecorder.record(VoiceRecorder.RecorderProps("test", VoiceRecorder.BitRate._128, SampleRate._11025))
 
         //Then
         test.assertValueAt(
