@@ -3,6 +3,8 @@ package com.omar.retromp3recorder.app.main
 import com.github.alkurop.stringerbell.Stringer
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
+import com.omar.retromp3recorder.app.common.repo.AudioState
+import com.omar.retromp3recorder.app.common.repo.AudioStateRepo
 import com.omar.retromp3recorder.app.common.repo.RequestPermissionsRepo
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.recording.recorder.VoiceRecorder.BitRate
@@ -37,6 +39,9 @@ class MainViewInteractorActionsTest {
 
     @Inject
     lateinit var requestPermissionsRepo: RequestPermissionsRepo
+
+    @Inject
+    lateinit var stateRepo: AudioStateRepo
 
     private val actionSubject: Subject<MainView.Action> = PublishSubject.create()
     private lateinit var test: TestObserver<MainView.Result>
@@ -100,7 +105,7 @@ class MainViewInteractorActionsTest {
         actionSubject.onNext(MainView.Action.Play)
 
         //then
-        stateRepo.observe().test().assertValue(MainView.State.Playing)
+        stateRepo.observe().test().assertValue(AudioState.Playing)
     }
 
     @Test
@@ -110,7 +115,7 @@ class MainViewInteractorActionsTest {
         actionSubject.onNext(MainView.Action.Stop)
 
         //then
-        stateRepo.observe().test().assertValue(MainView.State.Idle)
+        stateRepo.observe().test().assertValue(AudioState.Idle)
     }
 
     @Test
@@ -120,6 +125,6 @@ class MainViewInteractorActionsTest {
         actionSubject.onNext(MainView.Action.Record)
 
         //then
-        stateRepo.observe().test().assertValue(MainView.State.Recording)
+        stateRepo.observe().test().assertValue(AudioState.Recording)
     }
 }

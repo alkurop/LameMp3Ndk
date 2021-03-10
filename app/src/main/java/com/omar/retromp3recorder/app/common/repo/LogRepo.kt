@@ -59,6 +59,7 @@ private fun Sharer.createLogs(): Observable<LogRepo.Event> {
         .observeEvents()
         .ofType(Sharer.Event.SharingOk::class.java)
         .map { answer -> LogRepo.Event.Message(answer.message) }
+
     val error = this
         .observeEvents().ofType(Sharer.Event.SharingError::class.java)
         .map { answer -> LogRepo.Event.Error(answer.error) }

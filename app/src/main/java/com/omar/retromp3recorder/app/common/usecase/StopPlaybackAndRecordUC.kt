@@ -12,7 +12,9 @@ class StopPlaybackAndRecordUC @Inject constructor(
     private val stopPlaybackUC: StopPlaybackUC,
     private val stateRepo: AudioStateRepo
 ) {
-    fun execute(): Completable = stateRepo.observe().take(1)
+    fun execute(): Completable = stateRepo
+        .observe()
+        .take(1)
         .flatMapCompletable { state: AudioState ->
             when (state) {
                 AudioState.Playing -> stopPlaybackUC.execute()
