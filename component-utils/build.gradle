@@ -35,5 +35,4 @@ dependencies {
     api "com.github.alkurop:stringerbell:$versions.stringerbell"
     api "com.jakewharton.timber:timber:$versions.timber"
     api "com.google.dagger:dagger:$versions.dagger"
-
 }

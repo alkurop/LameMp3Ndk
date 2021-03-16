@@ -9,7 +9,6 @@ import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.modules.share.Sharer.Event.SharingError
 import com.omar.retromp3recorder.app.modules.share.Sharer.Event.SharingOk
-import com.omar.retromp3recorder.app.state.CurrentFileRepo
 import com.omar.retromp3recorder.app.utils.NotUnitTestable
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -26,45 +25,42 @@ import javax.inject.Singleton
 class SharerImpl @Inject internal constructor(
     private val sharableFileUriCreator: SharableFileUriCreator,
     private val context: Context,
-    private val currentFileRepo: CurrentFileRepo,
     private val scheduler: Scheduler,
     @param:Named(AppComponent.MAIN_THREAD) private val mainThreadScheduler: Scheduler
 ) : Sharer {
     private val events = PublishSubject.create<Sharer.Event>()
-    override fun share(): Completable {
-        return currentFileRepo.observe().take(1)
-            .flatMapCompletable { fileName ->
-                val file = File(fileName)
-                if (!file.exists()) {
-                    Completable.fromAction {
-                        events.onNext(SharingError(Stringer(R.string.trying_to_share)))
-                    }
-                } else Single
-                    .fromCallable {
-                        val uri = collectForShare(file)
-                        initShareIntent(uri)
-                    }
-                    .subscribeOn(scheduler)
-                    .flatMapCompletable { intent ->
-                        Completable
-                            .fromAction {
-                                context.startActivity(
-                                    Intent.createChooser(
-                                        intent,
-                                        context.getString(R.string.select)
-                                    ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                )
-                            }
-                    }
-                    .subscribeOn(mainThreadScheduler)
-                    .andThen(
-                        Completable.fromAction {
-                            events.onNext(
-                                SharingOk(Stringer(R.string.trying_to_share))
+    override fun share(file: File): Completable {
+        return Completable.fromAction {
+            if (!file.exists()) {
+                Completable.fromAction {
+                    events.onNext(SharingError(Stringer(R.string.trying_to_share)))
+                }
+            } else Single
+                .fromCallable {
+                    val uri = collectForShare(file)
+                    initShareIntent(uri)
+                }
+                .subscribeOn(scheduler)
+                .flatMapCompletable { intent ->
+                    Completable
+                        .fromAction {
+                            context.startActivity(
+                                Intent.createChooser(
+                                    intent,
+                                    context.getString(R.string.select)
+                                ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             )
                         }
-                    )
-            }
+                }
+                .subscribeOn(mainThreadScheduler)
+                .andThen(
+                    Completable.fromAction {
+                        events.onNext(
+                            SharingOk(Stringer(R.string.trying_to_share))
+                        )
+                    }
+                )
+        }
     }
 
     override fun observeEvents(): Observable<Sharer.Event> {
