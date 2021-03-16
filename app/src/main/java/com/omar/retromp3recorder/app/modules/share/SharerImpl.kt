@@ -9,7 +9,8 @@ import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.modules.share.Sharer.Event.SharingError
 import com.omar.retromp3recorder.app.modules.share.Sharer.Event.SharingOk
-import com.omar.retromp3recorder.app.utils.NotUnitTestable
+import com.omar.retromp3recorder.files_manipulation.FileUriCreator
+import com.omar.retromp3recorder.utils.NotUnitTestable
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -23,7 +24,7 @@ import javax.inject.Singleton
 @Singleton
 @NotUnitTestable
 class SharerImpl @Inject internal constructor(
-    private val sharableFileUriCreator: SharableFileUriCreator,
+    private val fileUriCreator: FileUriCreator,
     private val context: Context,
     private val scheduler: Scheduler,
     @param:Named(AppComponent.MAIN_THREAD) private val mainThreadScheduler: Scheduler
@@ -70,7 +71,7 @@ class SharerImpl @Inject internal constructor(
     @SuppressLint("SetWorldReadable")
     private fun collectForShare(file: File): Uri {
         val success = file.setReadable(true, false)
-        return sharableFileUriCreator.createSharableUri(file)
+        return fileUriCreator.createSharableUri(file)
     }
 
     private fun initShareIntent(uri: Uri): Intent {

@@ -4,7 +4,7 @@ import com.omar.retromp3recorder.app.state.*
 import com.omar.retromp3recorder.app.state.RequestPermissionsRepo.ShouldRequestPermissions.Denied
 import com.omar.retromp3recorder.app.ui.main.MainView.Result
 import com.omar.retromp3recorder.app.usecases.*
-import com.omar.retromp3recorder.app.utils.flatMapGhost
+import com.omar.retromp3recorder.utils.flatMapGhost
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer

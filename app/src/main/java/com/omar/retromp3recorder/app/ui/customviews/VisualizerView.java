@@ -8,7 +8,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.omar.retromp3recorder.app.utils.NotUnitTestable;
+import com.omar.retromp3recorder.utils.NotUnitTestable;
 
 @NotUnitTestable
 public class VisualizerView extends View {

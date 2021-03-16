@@ -5,9 +5,9 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.modules.share.Sharer
-import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.state.*
 import com.omar.retromp3recorder.app.usecases.CheckPermissionsUC
+import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import io.reactivex.Completable
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject

@@ -67,8 +67,9 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
     implementation project(':component-utils')
-    implementation project(':component-recorder')
-    implementation project(':component-audioplayer')
+    implementation project(':component-io-recorder')
+    implementation project(':component-io-audioplayer')
+    implementation project(':component-io-files-manipulation')
 
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
     testImplementation "junit:junit:$testVersions.junit"

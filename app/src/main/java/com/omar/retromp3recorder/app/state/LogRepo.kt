@@ -1,9 +1,9 @@
 package com.omar.retromp3recorder.app.state
 
 import com.github.alkurop.stringerbell.Stringer
-import com.omar.retromp3recorder.app.modules.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.app.modules.share.Sharer
-import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.audioplayer.AudioPlayer
+import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import io.reactivex.Observable
 import javax.inject.Inject
 

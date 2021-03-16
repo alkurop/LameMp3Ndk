@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.usecases
 
-import com.omar.retromp3recorder.app.modules.files.FilePathGenerator
 import com.omar.retromp3recorder.app.state.FileListRepo
+import com.omar.retromp3recorder.files_manipulation.FilePathGenerator
 import io.reactivex.Completable
 import java.io.File
 import javax.inject.Inject

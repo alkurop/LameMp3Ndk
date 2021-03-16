@@ -1,4 +1,5 @@
-include ':component-audioplayer'
+include ':component-io-files-manipulation'
+include ':component-io-audioplayer'
 include ':component-utils'
-include ':component-recorder'
+include ':component-io-recorder'
 include ':app'

@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.state
 
-import com.omar.retromp3recorder.app.modules.audioplayer.AudioPlayer
+import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import io.reactivex.Observable
 import javax.inject.Inject
 

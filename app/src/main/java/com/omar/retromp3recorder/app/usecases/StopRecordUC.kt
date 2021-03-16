@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.usecases
 
-import com.omar.retromp3recorder.app.modules.audioplayer.AudioPlayer
-import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.audioplayer.AudioPlayer
+import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import io.reactivex.Completable
 import javax.inject.Inject
 

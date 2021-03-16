@@ -18,8 +18,8 @@ import com.github.alkurop.jpermissionmanager.PermissionsManager
 import com.jakewharton.rxbinding3.view.clicks
 import com.omar.retromp3recorder.app.App
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.ui.customviews.VisualizerView
+import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.squareup.picasso.Picasso
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers

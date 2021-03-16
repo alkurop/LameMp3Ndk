@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.app.state.RequestPermissionsRepo
 import com.omar.retromp3recorder.app.state.RequestPermissionsRepo.ShouldRequestPermissions.Denied
-import com.omar.retromp3recorder.app.utils.NotUnitTestable
+import com.omar.retromp3recorder.utils.NotUnitTestable
 import io.reactivex.Completable
 import io.reactivex.Observable
 import javax.inject.Inject
