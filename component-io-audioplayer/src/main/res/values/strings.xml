@@ -1,0 +1,7 @@
+<resources>
+    <string name="aplr_player_cannot_find_file">Player cannot find file</string>
+    <string name="aplr_not_recorder_yet">Not recorded yet</string>
+    <string name="aplr_stopped_playing">stopped playing</string>
+    <string name="aplr_started_playing">started playing</string>
+    <string name="aplr_player_error_on_stop">player error onPlay</string>
+</resources>

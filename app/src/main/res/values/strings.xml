@@ -1,31 +1,7 @@
 <resources>
     <string name="app_name">MP3 Recorder</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="timer_no_text"><![CDATA[<< : >>]]></string>
-    <string name="retro_mp3_recordnig">Retro mp3 recording</string>
-    <string name="mp3_file_is_included">mp3 file is included</string>
-    <string name="trying_to_share">Trying to share</string>
-    <string name="cannot_share">Cannot share: file not detected</string>
-    <string name="player_cannot_find_file">Player cannot find file</string>
-    <string name="recorder_stopped">recorder stopped</string>
-    <string name="file_saved_to">"file saved to %1$s"</string>
-    <string name="error_saving_file_to">"error saving file to %1$s"</string>
-    <string name="audio_length">audio length = %1$.1f seconds</string>
-    <string name="file_size">file size = %1$.1f kb</string>
-
-    <string name="compression_rate">"%1$.1f kb per second"</string>
-    <string name="error_init_recorder">Error initializing recorder</string>
-    <string name="recording_mp3_at">"recording MP3 at %1$d kbps, %2$d hz"</string>
-    <string name="audioRecord_bad_value">AudioRecord.ERROR_BAD_VALUE</string>
-    <string name="voice_record">voice_record</string>
-    <string name="not_recorder_yet">Not recorded yet</string>
-    <string name="something_went_wrong">Something went wrong</string>
-    <string name="stopped_playing">stopped playing</string>
-    <string name="started_playing">started playing</string>
-    <string name="player_error_on_stop">player error onPlay</string>
-    <string name="select">Share</string>
     <string name="bit_rate">Bit Rate</string>
     <string name="sample_rate">Sample Rate</string>
     <string name="write_permission_title">Write Storage</string>
@@ -34,9 +10,7 @@
     <string name="record_permission_title">Record Audio</string>
     <string name="record_permission_message">This app is going to record audio files using your mic.</string>
     <string name="record_required_message">Recording audio is required. Go to settings let this app use Microphone</string>
-
     <string name="error_string">Error: %1$s</string>
-    <string name="file_was_not_created">File %1$s was not created</string>
     <string name="sample_rate_format">"%1$d kb"</string>
     <string name="bit_rate_format">"%1$d kbps"</string>
 </resources>

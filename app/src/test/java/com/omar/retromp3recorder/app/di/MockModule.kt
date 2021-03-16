@@ -2,10 +2,10 @@ package com.omar.retromp3recorder.app.di
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
-import com.omar.retromp3recorder.app.playback.player.AudioPlayer
-import com.omar.retromp3recorder.app.recording.recorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.app.recording.usecase.CheckPermissionsUC
-import com.omar.retromp3recorder.app.share.Sharer
+import com.omar.retromp3recorder.audioplayer.AudioPlayer
+import com.omar.retromp3recorder.bl.CheckPermissionsUC
+import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.share.Sharer
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Completable

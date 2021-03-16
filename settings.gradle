@@ -1,1 +1,8 @@
+include ':component-business-logic'
+include ':component-state'
+include ':component-io-share'
+include ':component-io-files-manipulation'
+include ':component-io-audioplayer'
+include ':component-utils'
+include ':component-io-recorder'
 include ':app'

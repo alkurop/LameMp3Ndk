@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.omar.retromp3recorder.app"
@@ -24,14 +25,6 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
-    }
-
-    //ndkVersion '23.0.7123448' this makes travis ci fail
-
-    externalNativeBuild {
-        ndkBuild {
-            path file('src/main/jni/Android.mk')
-        }
     }
 
     buildTypes {
@@ -57,26 +50,32 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
     implementation "androidx.appcompat:appcompat:$versions.support"
-    implementation "androidx.recyclerview:recyclerview:1.1.0"
-    implementation "com.github.alkurop:Android-Runtime-Permission-Manager:$versions.permission"
+    implementation "androidx.recyclerview:recyclerview:$versions.recyclerView"
+    implementation "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
     implementation "com.squareup.picasso:picasso:$versions.picasso"
-    implementation "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
-    implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava"
-    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
-    implementation "com.google.dagger:dagger:$versions.dagger"
-    implementation "com.android.support.constraint:constraint-layout:2.0.4"
+
     implementation "com.jakewharton.rxbinding3:rxbinding:$versions.rxView"
-    implementation "com.github.alkurop:ghostinshell:0.1"
-    implementation "com.github.alkurop:stringerbell:0.4"
-    implementation 'com.akaita.java:rxjava2-debug:1.4.0'
-    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation "com.akaita.java:rxjava2-debug:$versions.rxjava2Debug"
+
+    implementation "com.github.alkurop:Android-Runtime-Permission-Manager:$versions.permission"
+
+    implementation "androidx.fragment:fragment-ktx:$versions.ktxFragment"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
 
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
+    implementation project(':component-utils')
+    implementation project(':component-io-recorder')
+    implementation project(':component-io-audioplayer')
+    implementation project(':component-io-files-manipulation')
+    implementation project(':component-io-share')
+    implementation project(':component-state')
+    implementation project(':component-business-logic')
+
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation "org.mockito:mockito-core:3.4.6"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation "junit:junit:$testVersions.junit"
+    testImplementation "org.mockito:mockito-core:$testVersions.mockitoCore"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$testVersions.mockitoKotlin"
 }

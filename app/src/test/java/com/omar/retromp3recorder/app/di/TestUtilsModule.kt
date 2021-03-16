@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.di
 
 import android.content.Context
-import com.omar.retromp3recorder.app.files.FilePathGenerator
+import com.omar.retromp3recorder.files_manipulation.FilePathGenerator
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -27,9 +27,10 @@ internal class TestUtilsModule {
                 return "test"
             }
 
-            override fun getFileDir(): String {
-                return "test"
-            }
+            override val fileDir: String
+                get() = "test"
+
+
         }
     }
 }
