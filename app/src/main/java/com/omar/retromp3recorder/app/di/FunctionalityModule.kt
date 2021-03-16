@@ -1,11 +1,11 @@
 package com.omar.retromp3recorder.app.di
 
-import com.omar.retromp3recorder.app.modules.share.Sharer
-import com.omar.retromp3recorder.app.modules.share.SharerImpl
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.audioplayer.AudioPlayerImpl
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorderImpl
+import com.omar.retromp3recorder.share.Sharer
+import com.omar.retromp3recorder.share.SharerImpl
 import dagger.Binds
 import dagger.Module
 

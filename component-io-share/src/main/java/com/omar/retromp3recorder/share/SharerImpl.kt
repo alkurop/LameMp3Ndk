@@ -1,15 +1,14 @@
-package com.omar.retromp3recorder.app.modules.share
+package com.omar.retromp3recorder.share
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.github.alkurop.stringerbell.Stringer
-import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.di.AppComponent
-import com.omar.retromp3recorder.app.modules.share.Sharer.Event.SharingError
-import com.omar.retromp3recorder.app.modules.share.Sharer.Event.SharingOk
 import com.omar.retromp3recorder.files_manipulation.FileUriCreator
+import com.omar.retromp3recorder.share.Sharer.Event.SharingError
+import com.omar.retromp3recorder.share.Sharer.Event.SharingOk
+import com.omar.retromp3recorder.utils.MAIN_THREAD
 import com.omar.retromp3recorder.utils.NotUnitTestable
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -27,14 +26,14 @@ class SharerImpl @Inject internal constructor(
     private val fileUriCreator: FileUriCreator,
     private val context: Context,
     private val scheduler: Scheduler,
-    @param:Named(AppComponent.MAIN_THREAD) private val mainThreadScheduler: Scheduler
+    @param:Named(MAIN_THREAD) private val mainThreadScheduler: Scheduler
 ) : Sharer {
     private val events = PublishSubject.create<Sharer.Event>()
     override fun share(file: File): Completable {
         return Completable.fromAction {
             if (!file.exists()) {
                 Completable.fromAction {
-                    events.onNext(SharingError(Stringer(R.string.trying_to_share)))
+                    events.onNext(SharingError(Stringer(R.string.sh_trying_to_share)))
                 }
             } else Single
                 .fromCallable {
@@ -48,7 +47,7 @@ class SharerImpl @Inject internal constructor(
                             context.startActivity(
                                 Intent.createChooser(
                                     intent,
-                                    context.getString(R.string.select)
+                                    context.getString(R.string.sh_select)
                                 ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             )
                         }
@@ -57,7 +56,7 @@ class SharerImpl @Inject internal constructor(
                 .andThen(
                     Completable.fromAction {
                         events.onNext(
-                            SharingOk(Stringer(R.string.trying_to_share))
+                            SharingOk(Stringer(R.string.sh_trying_to_share))
                         )
                     }
                 )

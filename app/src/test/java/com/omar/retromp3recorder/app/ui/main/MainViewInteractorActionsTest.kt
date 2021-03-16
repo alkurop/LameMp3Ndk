@@ -4,7 +4,6 @@ import com.github.alkurop.stringerbell.Stringer
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.app.modules.share.Sharer
 import com.omar.retromp3recorder.app.state.*
 import com.omar.retromp3recorder.app.usecases.CheckPermissionsUC
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
@@ -27,7 +26,7 @@ class MainViewInteractorActionsTest {
     lateinit var sampleRateRepo: SampleRateRepo
 
     @Inject
-    lateinit var sharingModule: Sharer
+    lateinit var sharingModule: com.omar.retromp3recorder.share.Sharer
 
     @Inject
     lateinit var permissionsUC: CheckPermissionsUC
@@ -89,7 +88,7 @@ class MainViewInteractorActionsTest {
 
         //Then
        sharingModule.observeEvents().test().assertValue(
-           Sharer.Event.SharingOk(Stringer.ofString("test"))
+           com.omar.retromp3recorder.share.Sharer.Event.SharingOk(Stringer.ofString("test"))
        )
     }
 

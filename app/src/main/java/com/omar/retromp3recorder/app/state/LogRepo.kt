@@ -1,7 +1,6 @@
 package com.omar.retromp3recorder.app.state
 
 import com.github.alkurop.stringerbell.Stringer
-import com.omar.retromp3recorder.app.modules.share.Sharer
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import io.reactivex.Observable
@@ -10,7 +9,7 @@ import javax.inject.Inject
 class LogRepo @Inject constructor(
     audioPlayer: AudioPlayer,
     recorder: Mp3VoiceRecorder,
-    sharingModule: Sharer
+    sharingModule: com.omar.retromp3recorder.share.Sharer
 
 ) {
     private val observable: Observable<Event> = Observable.merge(
@@ -54,14 +53,14 @@ private fun AudioPlayer.createLogs(): Observable<LogRepo.Event> {
     return Observable.merge(message, error)
 }
 
-private fun Sharer.createLogs(): Observable<LogRepo.Event> {
+private fun com.omar.retromp3recorder.share.Sharer.createLogs(): Observable<LogRepo.Event> {
     val message = this
         .observeEvents()
-        .ofType(Sharer.Event.SharingOk::class.java)
+        .ofType(com.omar.retromp3recorder.share.Sharer.Event.SharingOk::class.java)
         .map { answer -> LogRepo.Event.Message(answer.message) }
 
     val error = this
-        .observeEvents().ofType(Sharer.Event.SharingError::class.java)
+        .observeEvents().ofType(com.omar.retromp3recorder.share.Sharer.Event.SharingError::class.java)
         .map { answer -> LogRepo.Event.Error(answer.error) }
     return Observable.merge(message, error)
 }

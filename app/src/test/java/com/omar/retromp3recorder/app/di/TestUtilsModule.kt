@@ -27,9 +27,10 @@ internal class TestUtilsModule {
                 return "test"
             }
 
-            override fun getFileDir(): String {
-                return "test"
-            }
+            override val fileDir: String
+                get() = "test"
+
+
         }
     }
 }

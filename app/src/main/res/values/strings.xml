@@ -2,8 +2,6 @@
     <string name="app_name">MP3 Recorder</string>
 
     <string name="timer_no_text"><![CDATA[<< : >>]]></string>
-    <string name="trying_to_share">Trying to share</string>
-    <string name="select">Share</string>
     <string name="bit_rate">Bit Rate</string>
     <string name="sample_rate">Sample Rate</string>
     <string name="write_permission_title">Write Storage</string>

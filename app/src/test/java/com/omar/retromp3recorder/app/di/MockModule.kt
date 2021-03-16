@@ -2,7 +2,6 @@ package com.omar.retromp3recorder.app.di
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
-import com.omar.retromp3recorder.app.modules.share.Sharer
 import com.omar.retromp3recorder.app.usecases.CheckPermissionsUC
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
@@ -35,7 +34,7 @@ class MockModule {
     @Singleton
     @Provides
     @Named(SHARING_SUBJECT)
-    fun provideSharingSubject(): Subject<Sharer.Event> {
+    fun provideSharingSubject(): Subject<com.omar.retromp3recorder.share.Sharer.Event> {
         return BehaviorSubject.create()
     }
 

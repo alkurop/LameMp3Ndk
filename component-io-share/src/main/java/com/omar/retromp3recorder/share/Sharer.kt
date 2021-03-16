@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.modules.share
+package com.omar.retromp3recorder.share
 
 import com.github.alkurop.stringerbell.Stringer
 import io.reactivex.Completable
@@ -10,7 +10,7 @@ interface Sharer {
     fun observeEvents(): Observable<Event>
 
     sealed class Event {
-        data class SharingOk internal constructor(val message: Stringer) : Event()
-        data class SharingError internal constructor(val error: Stringer) : Event()
+        data class SharingOk constructor(val message: Stringer) : Event()
+        data class SharingError constructor(val error: Stringer) : Event()
     }
 }
