@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.ui.main
 
 import com.github.alkurop.stringerbell.Stringer
-import com.omar.retromp3recorder.app.modules.recording.Mp3VoiceRecorder
+import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.ui.main.MainView.MainViewModel
 import com.omar.retromp3recorder.app.ui.main.MainViewResultMapper.map
 import io.reactivex.observers.TestObserver

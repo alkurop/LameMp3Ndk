@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.state
 
-import com.omar.retromp3recorder.app.modules.recording.RecorderDefaults
+import com.omar.retromp3recorder.app.recorder.RecorderDefaults
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject

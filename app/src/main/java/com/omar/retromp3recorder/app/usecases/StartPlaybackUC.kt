@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.app.usecases
 
 import android.Manifest
 import com.omar.retromp3recorder.app.modules.playback.AudioPlayer
-import com.omar.retromp3recorder.app.modules.recording.Mp3VoiceRecorder
+import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.state.CurrentFileRepo
 import com.omar.retromp3recorder.app.state.RequestPermissionsRepo
 import com.omar.retromp3recorder.app.state.RequestPermissionsRepo.ShouldRequestPermissions

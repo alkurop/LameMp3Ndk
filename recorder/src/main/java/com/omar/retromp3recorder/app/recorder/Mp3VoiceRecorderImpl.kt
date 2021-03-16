@@ -1,16 +1,13 @@
-package com.omar.retromp3recorder.app.modules.recording
+package com.omar.retromp3recorder.app.recorder
 
 import android.content.Context
 import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Process
 import com.github.alkurop.stringerbell.Stringer
-import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.modules.recording.Mp3VoiceRecorder.Companion.AUDIO_FORMAT_PRESETS
-import com.omar.retromp3recorder.app.modules.recording.Mp3VoiceRecorder.Companion.CHANNEL_PRESETS
-import com.omar.retromp3recorder.app.modules.recording.Mp3VoiceRecorder.Companion.QUALITY_PRESETS
-import com.omar.retromp3recorder.app.modules.recording.Mp3VoiceRecorder.RecorderProps
-import com.omar.retromp3recorder.app.recorder.LameModule
+import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder.Companion.AUDIO_FORMAT_PRESETS
+import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder.Companion.CHANNEL_PRESETS
+import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder.Companion.QUALITY_PRESETS
 import com.omar.retromp3recorder.app.utils.NotUnitTestable
 import com.omar.retromp3recorder.app.utils.disposedBy
 import io.reactivex.*
@@ -44,7 +41,7 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
         return events
     }
 
-    override fun record(props: RecorderProps) {
+    override fun record(props: Mp3VoiceRecorder.RecorderProps) {
         val minBufferSize = AudioRecord.getMinBufferSize(
             props.sampleRate.value,
             channelConfig.toInt(),
@@ -119,7 +116,7 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
             if (!fileWasCreated) {
                 throw IOException(
                     context.getString(
-                        R.string.file_was_not_created,
+                        R.string.rcdr_file_was_not_created,
                         filePath
                     )
                 )
@@ -180,17 +177,17 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
         val absolutePath = outFile!!.absolutePath
         if (outFile.exists()) {
             val messages = arrayOf(
-                Stringer(R.string.file_saved_to, absolutePath),
-                Stringer(R.string.audio_length, counter.toFloat() / 1000),
-                Stringer(R.string.file_size, outFile.length().toFloat() / 1000),
-                Stringer(R.string.compression_rate, outFile.length().toFloat() / counter)
+                Stringer(R.string.rcdr_file_saved_to, absolutePath),
+                Stringer(R.string.rcdr_audio_length, counter.toFloat() / 1000),
+                Stringer(R.string.rcdr_file_size, outFile.length().toFloat() / 1000),
+                Stringer(R.string.rcdr_compression_rate, outFile.length().toFloat() / counter)
             )
             for (message in messages) {
                 events.onNext(Mp3VoiceRecorder.Event.Message(message))
             }
         } else events.onNext(
             Mp3VoiceRecorder.Event.Error(
-                Stringer(R.string.error_saving_file_to, absolutePath)
+                Stringer(R.string.rcdr_error_saving_file_to, absolutePath)
             )
         )
     }
@@ -220,13 +217,13 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
             } catch (e: Exception) {
                 throw Exception(
                     context.getString(
-                        R.string.error_init_recorder
+                        R.string.rcdr_error_init_recorder
                     )
                 )
             }
             if (recorder.state == AudioRecord.STATE_INITIALIZED) {
                 val logMessage = Stringer(
-                    R.string.recording_mp3_at,
+                    R.string.rcdr_recording_mp3_at,
                     bitRate,
                     sampleRate
                 )
@@ -235,14 +232,14 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
             } else {
                 throw Exception(
                     context.getString(
-                        R.string.error_init_recorder
+                        R.string.rcdr_error_init_recorder
                     )
                 )
             }
         } else {
             throw Exception(
                 context.getString(
-                    R.string.audioRecord_bad_value
+                    R.string.rcdr_audio_record_bad_value
                 )
             )
         }

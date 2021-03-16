@@ -18,8 +18,7 @@ import com.github.alkurop.jpermissionmanager.PermissionsManager
 import com.jakewharton.rxbinding3.view.clicks
 import com.omar.retromp3recorder.app.App
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.modules.recording.Mp3VoiceRecorder
-import com.omar.retromp3recorder.app.modules.recording.Mp3VoiceRecorder.SampleRate
+import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.ui.customviews.VisualizerView
 import com.squareup.picasso.Picasso
 import io.reactivex.Completable
@@ -99,7 +98,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun createSampleRateGroup(): List<RadioButton> =
-        SampleRate.values().map { sampleRate ->
+        Mp3VoiceRecorder.SampleRate.values().map { sampleRate ->
             sampleRateContainer.addCheckBox(
                 title = getString(
                     R.string.sample_rate_format,
@@ -178,7 +177,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         sampleRateGroup.mapIndexed { index, radioButton ->
             radioButton.clicks()
                 .subscribe {
-                    val sampleRate = SampleRate.values()[index]
+                    val sampleRate = Mp3VoiceRecorder.SampleRate.values()[index]
                     actionPublishSubject.onNext(MainView.Action.SampleRateChange(sampleRate))
                 }
         }.forEach { compositeDisposable.add(it) }
@@ -283,7 +282,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         permissionsManager.makePermissionRequest(true)
     }
 
-    private fun renderSampleRate(sampleRate: SampleRate) {
+    private fun renderSampleRate(sampleRate: Mp3VoiceRecorder.SampleRate) {
         sampleRateGroup.forEachIndexed { index, radioButton ->
             radioButton.isChecked = sampleRate.ordinal == index
         }

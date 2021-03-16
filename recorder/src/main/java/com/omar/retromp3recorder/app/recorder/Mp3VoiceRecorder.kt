@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.modules.recording
+package com.omar.retromp3recorder.app.recorder
 
 import android.media.AudioFormat
 import com.github.alkurop.stringerbell.Stringer

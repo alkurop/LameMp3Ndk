@@ -1,8 +1,7 @@
 package com.omar.retromp3recorder.app.modules.recording
 
 import com.omar.retromp3recorder.app.di.MockModule
-import com.omar.retromp3recorder.app.modules.recording.Mp3VoiceRecorder
-import com.omar.retromp3recorder.app.modules.recording.Mp3VoiceRecorder.RecorderProps
+import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
@@ -19,7 +18,7 @@ open class TestVoiceRecorder @Inject internal constructor(
         return bus
     }
 
-    override fun record(props: RecorderProps) {
+    override fun record(props: Mp3VoiceRecorder.RecorderProps) {
         state.onNext(Mp3VoiceRecorder.State.Recording)
     }
 

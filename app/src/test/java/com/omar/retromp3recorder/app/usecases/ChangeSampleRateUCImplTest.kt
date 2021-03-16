@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.usecases
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.app.modules.recording.Mp3VoiceRecorder
+import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.state.SampleRateRepo
 import org.junit.Before
 import org.junit.Test

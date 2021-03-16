@@ -5,8 +5,7 @@ import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.di.MockModule
 import com.omar.retromp3recorder.app.modules.playback.AudioPlayer
-import com.omar.retromp3recorder.app.modules.recording.Mp3VoiceRecorder
-import com.omar.retromp3recorder.app.modules.recording.Mp3VoiceRecorder.SampleRate
+import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.state.BitRateRepo
 import com.omar.retromp3recorder.app.state.LogRepo
 import com.omar.retromp3recorder.app.state.RequestPermissionsRepo
@@ -112,7 +111,7 @@ class MainViewInteractorRepoTest {
 
     @Test
     fun `interactor listens to sample rate repo`() {
-        sampleRateRepo.newValue(SampleRate._8000)
+        sampleRateRepo.newValue(Mp3VoiceRecorder.SampleRate._8000)
 
         //Then
         test.assertValueAt(
@@ -120,8 +119,8 @@ class MainViewInteractorRepoTest {
         ) { result: MainView.Result ->
             val stateChangedResult: MainView.Result.SampleRateChangeResult =
                 result as MainView.Result.SampleRateChangeResult
-            val sampleRate: SampleRate = stateChangedResult.sampleRate
-            sampleRate == SampleRate._8000
+            val sampleRate: Mp3VoiceRecorder.SampleRate = stateChangedResult.sampleRate
+            sampleRate == Mp3VoiceRecorder.SampleRate._8000
         }
     }
 

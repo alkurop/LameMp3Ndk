@@ -1,11 +1,8 @@
 package com.omar.retromp3recorder.app.recorder;
 
-import com.omar.retromp3recorder.app.utils.NotUnitTestable;
-
 /**
  * Created by omar on 17.08.15.
  */
-@NotUnitTestable
 public class LameModule {
 
     static {

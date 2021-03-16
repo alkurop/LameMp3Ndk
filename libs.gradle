@@ -11,6 +11,7 @@ ext.versions = [
         'rxView'                :'3.0.0-alpha1',
         'rxAndroid'             :'2.1.0',
         'rxJava'                :'2.1.1',
+        'rxKotlin'              :'2.4.0',
         'rxjava2Debug'          :'1.4.0',
         'stringerbell'          :'0.4',
         'support'               :'1.2.0',
