@@ -1,9 +1,8 @@
 package com.omar.retromp3recorder.app.ui.main
 
-import com.omar.retromp3recorder.app.state.*
-import com.omar.retromp3recorder.app.state.RequestPermissionsRepo.ShouldRequestPermissions.Denied
 import com.omar.retromp3recorder.app.ui.main.MainView.Result
 import com.omar.retromp3recorder.app.usecases.*
+import com.omar.retromp3recorder.state.RequestPermissionsRepo.ShouldRequestPermissions.Denied
 import com.omar.retromp3recorder.utils.flatMapGhost
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -19,12 +18,12 @@ class MainViewInteractor @Inject constructor(
     private val shareUC: ShareUC,
     private val startPlaybackUC: StartPlaybackUC,
     private val stopPlaybackAndRecordUC: StopPlaybackAndRecordUC,
-    private val bitRateRepo: BitRateRepo,
-    private val sampleRateRepo: SampleRateRepo,
-    private val stateRepo: AudioStateRepo,
-    private val requestPermissionsRepo: RequestPermissionsRepo,
-    private val logRepo: LogRepo,
-    private val playerIdRepo: PlayerIdRepo
+    private val bitRateRepo: com.omar.retromp3recorder.state.BitRateRepo,
+    private val sampleRateRepo: com.omar.retromp3recorder.state.SampleRateRepo,
+    private val stateRepo: com.omar.retromp3recorder.state.AudioStateRepo,
+    private val requestPermissionsRepo: com.omar.retromp3recorder.state.RequestPermissionsRepo,
+    private val logRepo: com.omar.retromp3recorder.state.LogRepo,
+    private val playerIdRepo: com.omar.retromp3recorder.state.PlayerIdRepo
 ) {
 
     fun process(): ObservableTransformer<MainView.Action, Result> =
@@ -68,10 +67,10 @@ class MainViewInteractor @Inject constructor(
             .flatMapGhost()
             .map { denied -> Result.RequestPermissionsResult(denied) },
         logRepo.observe()
-            .ofType(LogRepo.Event.Message::class.java)
+            .ofType(com.omar.retromp3recorder.state.LogRepo.Event.Message::class.java)
             .map { message -> Result.MessageLogResult(message.message) },
         logRepo.observe()
-            .ofType(LogRepo.Event.Error::class.java)
+            .ofType(com.omar.retromp3recorder.state.LogRepo.Event.Error::class.java)
             .map { message -> Result.ErrorLogResult(message.error) },
         stateRepo.observe()
             .map { state -> Result.StateChangedResult(state.map()) },

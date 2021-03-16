@@ -4,7 +4,6 @@ import com.github.alkurop.stringerbell.Stringer
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.app.state.*
 import com.omar.retromp3recorder.app.usecases.CheckPermissionsUC
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import io.reactivex.Completable
@@ -20,10 +19,10 @@ class MainViewInteractorActionsTest {
     lateinit var interactor: MainViewInteractor
 
     @Inject
-    lateinit var bitRateRepo: BitRateRepo
+    lateinit var bitRateRepo: com.omar.retromp3recorder.state.BitRateRepo
 
     @Inject
-    lateinit var sampleRateRepo: SampleRateRepo
+    lateinit var sampleRateRepo: com.omar.retromp3recorder.state.SampleRateRepo
 
     @Inject
     lateinit var sharingModule: com.omar.retromp3recorder.share.Sharer
@@ -32,10 +31,10 @@ class MainViewInteractorActionsTest {
     lateinit var permissionsUC: CheckPermissionsUC
 
     @Inject
-    lateinit var requestPermissionsRepo: RequestPermissionsRepo
+    lateinit var requestPermissionsRepo: com.omar.retromp3recorder.state.RequestPermissionsRepo
 
     @Inject
-    lateinit var stateRepo: AudioStateRepo
+    lateinit var stateRepo: com.omar.retromp3recorder.state.AudioStateRepo
 
     private val actionSubject: Subject<MainView.Action> = PublishSubject.create()
     private lateinit var test: TestObserver<MainView.Result>
@@ -45,7 +44,7 @@ class MainViewInteractorActionsTest {
         DaggerTestAppComponent.create().inject(this)
         whenever(permissionsUC.execute(any()))
             .thenAnswer {
-                requestPermissionsRepo.newValue(RequestPermissionsRepo.ShouldRequestPermissions.Granted)
+                requestPermissionsRepo.newValue(com.omar.retromp3recorder.state.RequestPermissionsRepo.ShouldRequestPermissions.Granted)
                 Completable.complete()
             }
         test = actionSubject.compose(interactor.process()).test()
@@ -99,7 +98,7 @@ class MainViewInteractorActionsTest {
         actionSubject.onNext(MainView.Action.Play)
 
         //then
-        stateRepo.observe().test().assertValue(AudioState.Playing)
+        stateRepo.observe().test().assertValue(com.omar.retromp3recorder.state.AudioState.Playing)
     }
 
     @Test
@@ -109,7 +108,7 @@ class MainViewInteractorActionsTest {
         actionSubject.onNext(MainView.Action.Stop)
 
         //then
-        stateRepo.observe().test().assertValue(AudioState.Idle)
+        stateRepo.observe().test().assertValue(com.omar.retromp3recorder.state.AudioState.Idle)
     }
 
     @Test
@@ -119,6 +118,6 @@ class MainViewInteractorActionsTest {
         actionSubject.onNext(MainView.Action.Record)
 
         //then
-        stateRepo.observe().test().assertValue(AudioState.Recording)
+        stateRepo.observe().test().assertValue(com.omar.retromp3recorder.state.AudioState.Recording)
     }
 }

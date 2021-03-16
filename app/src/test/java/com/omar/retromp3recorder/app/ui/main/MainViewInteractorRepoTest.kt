@@ -4,13 +4,9 @@ import com.github.alkurop.ghostinshell.Shell
 import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.di.MockModule
-import com.omar.retromp3recorder.app.state.BitRateRepo
-import com.omar.retromp3recorder.app.state.LogRepo
-import com.omar.retromp3recorder.app.state.RequestPermissionsRepo
-import com.omar.retromp3recorder.app.state.RequestPermissionsRepo.ShouldRequestPermissions
-import com.omar.retromp3recorder.app.state.SampleRateRepo
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.state.RequestPermissionsRepo.ShouldRequestPermissions
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -24,22 +20,22 @@ class MainViewInteractorRepoTest {
     lateinit var interactor: MainViewInteractor
 
     @Inject
-    lateinit var bitRateRepo: BitRateRepo
+    lateinit var bitRateRepo: com.omar.retromp3recorder.state.BitRateRepo
 
     @Inject
-    lateinit var logRepo: LogRepo
+    lateinit var logRepo: com.omar.retromp3recorder.state.LogRepo
 
     @Named(MockModule.PLAYER_SUBJECT)
     @Inject lateinit var audioBus: Subject<AudioPlayer.Event>
 
     @Inject
-    lateinit var requestPermissionsRepo: RequestPermissionsRepo
+    lateinit var requestPermissionsRepo: com.omar.retromp3recorder.state.RequestPermissionsRepo
 
     @Inject
     lateinit var voiceRecorder: Mp3VoiceRecorder
 
     @Inject
-    lateinit var sampleRateRepo: SampleRateRepo
+    lateinit var sampleRateRepo: com.omar.retromp3recorder.state.SampleRateRepo
     private lateinit var test: TestObserver<MainView.Result>
 
     @Before

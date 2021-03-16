@@ -1,7 +1,6 @@
 package com.omar.retromp3recorder.app.usecases
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.app.state.SampleRateRepo
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import org.junit.Before
 import org.junit.Test
@@ -9,7 +8,7 @@ import javax.inject.Inject
 
 class ChangeSampleRateUCImplTest {
     @Inject
-    lateinit var sampleRateRepo: SampleRateRepo
+    lateinit var sampleRateRepo: com.omar.retromp3recorder.state.SampleRateRepo
     private lateinit var changeSampleRateUC: ChangeSampleRateUC
     @Before
     fun setUp() {

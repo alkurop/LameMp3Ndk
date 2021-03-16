@@ -1,7 +1,6 @@
 package com.omar.retromp3recorder.app.usecases
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.app.state.BitRateRepo
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import org.junit.Before
 import org.junit.Test
@@ -10,7 +9,7 @@ import javax.inject.Inject
 class ChangeBitrateUCTest {
 
     @Inject
-    lateinit var bitRateRepo: BitRateRepo
+    lateinit var bitRateRepo: com.omar.retromp3recorder.state.BitRateRepo
     private lateinit var changeBitrateUC: ChangeBitrateUC
 
     @Before

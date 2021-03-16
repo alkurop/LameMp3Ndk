@@ -4,8 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import com.github.alkurop.ghostinshell.Shell
-import com.omar.retromp3recorder.app.state.RequestPermissionsRepo
-import com.omar.retromp3recorder.app.state.RequestPermissionsRepo.ShouldRequestPermissions.Denied
+import com.omar.retromp3recorder.state.RequestPermissionsRepo.ShouldRequestPermissions.Denied
 import com.omar.retromp3recorder.utils.NotUnitTestable
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -18,7 +17,7 @@ interface CheckPermissionsUC {
 @NotUnitTestable
 class CheckPermissionsUCImpl @Inject constructor(
     private val context: Context,
-    private val requestPermissionsRepo: RequestPermissionsRepo
+    private val requestPermissionsRepo: com.omar.retromp3recorder.state.RequestPermissionsRepo
 ) : CheckPermissionsUC {
     override fun execute(permissions: Set<String>): Completable {
         return Observable
@@ -31,7 +30,7 @@ class CheckPermissionsUCImpl @Inject constructor(
                         ) == PackageManager.PERMISSION_GRANTED
                         if (hasPermission) null else permission
                     }.toSet()
-                if (requestPermissions.isEmpty()) RequestPermissionsRepo.ShouldRequestPermissions.Granted else Denied(
+                if (requestPermissions.isEmpty()) com.omar.retromp3recorder.state.RequestPermissionsRepo.ShouldRequestPermissions.Granted else Denied(
                     Shell(requestPermissions)
                 )
             }

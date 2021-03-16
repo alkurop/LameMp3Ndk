@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.state
+package com.omar.retromp3recorder.state
 
 import com.github.alkurop.ghostinshell.Shell
 import io.reactivex.Observable

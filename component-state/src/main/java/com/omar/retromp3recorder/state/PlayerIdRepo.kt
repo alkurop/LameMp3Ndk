@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.state
+package com.omar.retromp3recorder.state
 
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import io.reactivex.Observable
