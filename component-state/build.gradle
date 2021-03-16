@@ -28,8 +28,8 @@ android {
 
 dependencies {
     implementation project(':component-utils')
-    implementation project(':component-io-recorder')
-    implementation project(':component-io-audioplayer')
+    implementation project(':component-io-mp3recorder')
+    implementation project(':component-io-mediaplayer')
     implementation project(':component-io-files-manipulation')
     implementation project(':component-io-share')
 }
