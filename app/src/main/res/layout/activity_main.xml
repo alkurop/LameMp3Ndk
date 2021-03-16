@@ -160,7 +160,7 @@
         app:layout_constraintTop_toTopOf="@id/guidelineCentralHor" />
 
 
-    <com.omar.retromp3recorder.app.customviews.VisualizerView
+    <com.omar.retromp3recorder.app.ui.customviews.VisualizerView
         android:id="@+id/visualizer"
         android:layout_width="0dp"
         android:layout_height="0dp"

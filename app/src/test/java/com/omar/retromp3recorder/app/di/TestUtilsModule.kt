@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.di
 
 import android.content.Context
-import com.omar.retromp3recorder.app.files.FilePathGenerator
+import com.omar.retromp3recorder.app.modules.files.FilePathGenerator
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
