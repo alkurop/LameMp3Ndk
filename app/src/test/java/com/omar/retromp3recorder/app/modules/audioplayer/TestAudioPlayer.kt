@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.modules.playback
+package com.omar.retromp3recorder.app.modules.audioplayer
 
 import com.omar.retromp3recorder.app.di.MockModule
 import io.reactivex.Observable

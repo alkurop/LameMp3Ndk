@@ -16,14 +16,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    //ndkVersion '23.0.7123448' this makes travis ci fail
-
-    externalNativeBuild {
-        ndkBuild {
-            path file('src/main/jni/Android.mk')
-        }
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -34,5 +26,5 @@ android {
 }
 
 dependencies {
-    implementation project(":utils")
+    implementation project(':component-utils')
 }

@@ -4,6 +4,8 @@ buildscript {
     apply from: 'libs.gradle'
     ext {
 
+
+        versions.kotlin = '1.4.31'
         versions.kotlin = '1.4.31'
         versions.kotlin = '1.4.31'
     }

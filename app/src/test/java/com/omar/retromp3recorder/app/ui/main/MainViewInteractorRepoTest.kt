@@ -4,7 +4,7 @@ import com.github.alkurop.ghostinshell.Shell
 import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.di.MockModule
-import com.omar.retromp3recorder.app.modules.playback.AudioPlayer
+import com.omar.retromp3recorder.app.modules.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.app.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.app.state.BitRateRepo
 import com.omar.retromp3recorder.app.state.LogRepo

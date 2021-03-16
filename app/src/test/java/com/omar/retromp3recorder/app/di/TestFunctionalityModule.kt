@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.di
 
-import com.omar.retromp3recorder.app.modules.playback.AudioPlayer
-import com.omar.retromp3recorder.app.modules.playback.TestAudioPlayer
+import com.omar.retromp3recorder.app.modules.audioplayer.AudioPlayer
+import com.omar.retromp3recorder.app.modules.audioplayer.TestAudioPlayer
 import com.omar.retromp3recorder.app.modules.recording.TestVoiceRecorder
 import com.omar.retromp3recorder.app.modules.share.Sharer
 import com.omar.retromp3recorder.app.modules.sharing.TestSharingModule

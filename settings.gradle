@@ -1,3 +1,4 @@
-include ':utils'
-include ':recorder'
+include ':component-audioplayer'
+include ':component-utils'
+include ':component-recorder'
 include ':app'

@@ -1,8 +1,7 @@
-package com.omar.retromp3recorder.app.modules.playback
+package com.omar.retromp3recorder.app.modules.audioplayer
 
 import android.media.MediaPlayer
 import com.github.alkurop.stringerbell.Stringer
-import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.utils.NotUnitTestable
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
@@ -41,7 +40,7 @@ class AudioPlayerImpl @Inject constructor() : AudioPlayer {
 
     private fun setupMediaPlayer(voiceURL: String) {
         if (!File(voiceURL).exists()) {
-            events.onNext(AudioPlayer.Event.Error(Stringer(R.string.player_cannot_find_file)))
+            events.onNext(AudioPlayer.Event.Error(Stringer(R.string.aplr_player_cannot_find_file)))
             return
         }
         mediaPlayer = MediaPlayer().apply {
@@ -51,7 +50,7 @@ class AudioPlayerImpl @Inject constructor() : AudioPlayer {
                 setDataSource(voiceURL)
                 prepareAsync()
             } catch (e: IOException) {
-                events.onNext(AudioPlayer.Event.Error(Stringer(R.string.not_recorder_yet)))
+                events.onNext(AudioPlayer.Event.Error(Stringer(R.string.aplr_not_recorder_yet)))
             } catch (e: Exception) {
                 events.onNext(AudioPlayer.Event.Error(Stringer(R.string.something_went_wrong)))
                 Timber.e(e)
@@ -66,7 +65,7 @@ class AudioPlayerImpl @Inject constructor() : AudioPlayer {
                 it.stop()
                 it.release()
                 mediaPlayer = null
-                events.onNext(AudioPlayer.Event.Message(Stringer(R.string.stopped_playing)))
+                events.onNext(AudioPlayer.Event.Message(Stringer(R.string.aplr_stopped_playing)))
             }
     }
 
@@ -76,9 +75,9 @@ class AudioPlayerImpl @Inject constructor() : AudioPlayer {
             mediaPlayer.start()
             state.onNext(AudioPlayer.State.Playing)
             events.onNext(AudioPlayer.Event.PlayerId(mediaPlayer.audioSessionId))
-            events.onNext(AudioPlayer.Event.Message(Stringer(R.string.started_playing)))
+            events.onNext(AudioPlayer.Event.Message(Stringer(R.string.aplr_started_playing)))
         } else {
-            events.onNext(AudioPlayer.Event.Error(Stringer(R.string.player_error_on_stop)))
+            events.onNext(AudioPlayer.Event.Error(Stringer(R.string.aplr_player_error_on_stop)))
         }
     }
 
