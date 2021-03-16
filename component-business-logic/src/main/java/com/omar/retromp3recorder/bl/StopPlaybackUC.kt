@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.usecases
+package com.omar.retromp3recorder.bl
 
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import io.reactivex.Completable

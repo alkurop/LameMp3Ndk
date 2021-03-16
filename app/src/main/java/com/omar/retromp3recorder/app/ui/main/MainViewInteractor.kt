@@ -1,7 +1,6 @@
 package com.omar.retromp3recorder.app.ui.main
 
 import com.omar.retromp3recorder.app.ui.main.MainView.Result
-import com.omar.retromp3recorder.app.usecases.*
 import com.omar.retromp3recorder.state.RequestPermissionsRepo.ShouldRequestPermissions.Denied
 import com.omar.retromp3recorder.utils.flatMapGhost
 import io.reactivex.Completable
@@ -12,12 +11,12 @@ import javax.inject.Inject
 
 class MainViewInteractor @Inject constructor(
     private val scheduler: Scheduler,
-    private val changeBitrateUC: ChangeBitrateUC,
-    private val changeSampleRateUC: ChangeSampleRateUC,
-    private val startRecordUC: StartRecordUC,
-    private val shareUC: ShareUC,
-    private val startPlaybackUC: StartPlaybackUC,
-    private val stopPlaybackAndRecordUC: StopPlaybackAndRecordUC,
+    private val changeBitrateUC: com.omar.retromp3recorder.bl.ChangeBitrateUC,
+    private val changeSampleRateUC: com.omar.retromp3recorder.bl.ChangeSampleRateUC,
+    private val startRecordUC: com.omar.retromp3recorder.bl.StartRecordUC,
+    private val shareUC: com.omar.retromp3recorder.bl.ShareUC,
+    private val startPlaybackUC: com.omar.retromp3recorder.bl.StartPlaybackUC,
+    private val stopPlaybackAndRecordUC: com.omar.retromp3recorder.bl.StopPlaybackAndRecordUC,
     private val bitRateRepo: com.omar.retromp3recorder.state.BitRateRepo,
     private val sampleRateRepo: com.omar.retromp3recorder.state.SampleRateRepo,
     private val stateRepo: com.omar.retromp3recorder.state.AudioStateRepo,

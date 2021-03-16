@@ -4,8 +4,13 @@ import com.github.alkurop.stringerbell.Stringer
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.app.usecases.CheckPermissionsUC
+import com.omar.retromp3recorder.bl.CheckPermissionsUC
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.share.Sharer
+import com.omar.retromp3recorder.state.AudioStateRepo
+import com.omar.retromp3recorder.state.BitRateRepo
+import com.omar.retromp3recorder.state.RequestPermissionsRepo
+import com.omar.retromp3recorder.state.SampleRateRepo
 import io.reactivex.Completable
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
@@ -19,22 +24,22 @@ class MainViewInteractorActionsTest {
     lateinit var interactor: MainViewInteractor
 
     @Inject
-    lateinit var bitRateRepo: com.omar.retromp3recorder.state.BitRateRepo
+    lateinit var bitRateRepo: BitRateRepo
 
     @Inject
-    lateinit var sampleRateRepo: com.omar.retromp3recorder.state.SampleRateRepo
+    lateinit var sampleRateRepo: SampleRateRepo
 
     @Inject
-    lateinit var sharingModule: com.omar.retromp3recorder.share.Sharer
+    lateinit var sharingModule: Sharer
 
     @Inject
     lateinit var permissionsUC: CheckPermissionsUC
 
     @Inject
-    lateinit var requestPermissionsRepo: com.omar.retromp3recorder.state.RequestPermissionsRepo
+    lateinit var requestPermissionsRepo: RequestPermissionsRepo
 
     @Inject
-    lateinit var stateRepo: com.omar.retromp3recorder.state.AudioStateRepo
+    lateinit var stateRepo: AudioStateRepo
 
     private val actionSubject: Subject<MainView.Action> = PublishSubject.create()
     private lateinit var test: TestObserver<MainView.Result>
@@ -44,7 +49,7 @@ class MainViewInteractorActionsTest {
         DaggerTestAppComponent.create().inject(this)
         whenever(permissionsUC.execute(any()))
             .thenAnswer {
-                requestPermissionsRepo.newValue(com.omar.retromp3recorder.state.RequestPermissionsRepo.ShouldRequestPermissions.Granted)
+                requestPermissionsRepo.newValue(RequestPermissionsRepo.ShouldRequestPermissions.Granted)
                 Completable.complete()
             }
         test = actionSubject.compose(interactor.process()).test()

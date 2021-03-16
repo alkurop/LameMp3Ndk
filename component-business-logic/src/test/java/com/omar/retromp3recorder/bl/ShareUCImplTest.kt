@@ -1,8 +1,9 @@
-package com.omar.retromp3recorder.app.usecases
+package com.omar.retromp3recorder.bl
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
-import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
+import com.omar.retromp3recorder.di.DaggerUseCaseComponent
+import com.omar.retromp3recorder.state.CurrentFileRepo
 import io.reactivex.Completable
 import org.junit.Before
 import org.junit.Test
@@ -12,11 +13,11 @@ import javax.inject.Inject
 
 class ShareUCImplTest {
     @Inject
-    lateinit var currentFileRepo: com.omar.retromp3recorder.state.CurrentFileRepo
+    lateinit var currentFileRepo: CurrentFileRepo
 
     @Before
-    fun setUp(){
-        DaggerTestAppComponent.create().inject(this)
+    fun setUp() {
+        DaggerUseCaseComponent.create().inject(this)
     }
 
     @Test

@@ -6,7 +6,11 @@ import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.di.MockModule
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.state.BitRateRepo
+import com.omar.retromp3recorder.state.LogRepo
+import com.omar.retromp3recorder.state.RequestPermissionsRepo
 import com.omar.retromp3recorder.state.RequestPermissionsRepo.ShouldRequestPermissions
+import com.omar.retromp3recorder.state.SampleRateRepo
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -20,22 +24,23 @@ class MainViewInteractorRepoTest {
     lateinit var interactor: MainViewInteractor
 
     @Inject
-    lateinit var bitRateRepo: com.omar.retromp3recorder.state.BitRateRepo
+    lateinit var bitRateRepo: BitRateRepo
 
     @Inject
-    lateinit var logRepo: com.omar.retromp3recorder.state.LogRepo
+    lateinit var logRepo: LogRepo
 
     @Named(MockModule.PLAYER_SUBJECT)
-    @Inject lateinit var audioBus: Subject<AudioPlayer.Event>
+    @Inject
+    lateinit var audioBus: Subject<AudioPlayer.Event>
 
     @Inject
-    lateinit var requestPermissionsRepo: com.omar.retromp3recorder.state.RequestPermissionsRepo
+    lateinit var requestPermissionsRepo: RequestPermissionsRepo
 
     @Inject
     lateinit var voiceRecorder: Mp3VoiceRecorder
 
     @Inject
-    lateinit var sampleRateRepo: com.omar.retromp3recorder.state.SampleRateRepo
+    lateinit var sampleRateRepo: SampleRateRepo
     private lateinit var test: TestObserver<MainView.Result>
 
     @Before
@@ -66,7 +71,7 @@ class MainViewInteractorRepoTest {
         test.assertValueAt(
             FIRST_EVENT_INDEX
         ) { result: MainView.Result ->
-            val message  = (result as MainView.Result.MessageLogResult).message
+            val message = (result as MainView.Result.MessageLogResult).message
             Stringer.ofString("test") == message
         }
     }

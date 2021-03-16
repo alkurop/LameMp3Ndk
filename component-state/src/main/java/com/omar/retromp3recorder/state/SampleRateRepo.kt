@@ -8,7 +8,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SampleRateRepo @Inject constructor(defaults: RecorderDefaults) {
+class SampleRateRepo @Inject constructor(
+    defaults: RecorderDefaults
+) {
     private val stateSubject = BehaviorSubject.create<Mp3VoiceRecorder.SampleRate>()
 
     init {

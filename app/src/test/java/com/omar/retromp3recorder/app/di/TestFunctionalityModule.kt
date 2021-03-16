@@ -5,6 +5,7 @@ import com.omar.retromp3recorder.app.modules.TestSharingModule
 import com.omar.retromp3recorder.app.modules.TestVoiceRecorder
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.share.Sharer
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -22,6 +23,6 @@ interface TestFunctionalityModule {
 
     @Singleton
     @Binds
-    fun provideSharingModuleInternal(clazz: TestSharingModule): com.omar.retromp3recorder.share.Sharer
+    fun provideSharingModuleInternal(clazz: TestSharingModule): Sharer
 
 }
