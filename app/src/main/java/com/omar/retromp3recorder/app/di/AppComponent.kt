@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.di
 
+import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsViewModel
 import com.omar.retromp3recorder.app.ui.main.MainActivity
 import dagger.Component
 import javax.inject.Singleton
@@ -15,8 +16,5 @@ import javax.inject.Singleton
 )
 interface AppComponent {
     fun inject(mainActivity: MainActivity)
-
-    companion object {
-        const val MAIN_THREAD = "MAIN_THREAD"
-    }
+    fun inject(viewModel: AudioControlsViewModel)
 }

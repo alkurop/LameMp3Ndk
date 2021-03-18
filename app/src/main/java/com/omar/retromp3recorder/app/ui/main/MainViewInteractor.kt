@@ -1,7 +1,8 @@
 package com.omar.retromp3recorder.app.ui.main
 
 import com.omar.retromp3recorder.app.ui.main.MainView.Result
-import com.omar.retromp3recorder.state.RequestPermissionsRepo.ShouldRequestPermissions.Denied
+import com.omar.retromp3recorder.bl.*
+import com.omar.retromp3recorder.state.*
 import com.omar.retromp3recorder.utils.flatMapGhost
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -11,18 +12,18 @@ import javax.inject.Inject
 
 class MainViewInteractor @Inject constructor(
     private val scheduler: Scheduler,
-    private val changeBitrateUC: com.omar.retromp3recorder.bl.ChangeBitrateUC,
-    private val changeSampleRateUC: com.omar.retromp3recorder.bl.ChangeSampleRateUC,
-    private val startRecordUC: com.omar.retromp3recorder.bl.StartRecordUC,
-    private val shareUC: com.omar.retromp3recorder.bl.ShareUC,
-    private val startPlaybackUC: com.omar.retromp3recorder.bl.StartPlaybackUC,
-    private val stopPlaybackAndRecordUC: com.omar.retromp3recorder.bl.StopPlaybackAndRecordUC,
-    private val bitRateRepo: com.omar.retromp3recorder.state.BitRateRepo,
-    private val sampleRateRepo: com.omar.retromp3recorder.state.SampleRateRepo,
-    private val stateRepo: com.omar.retromp3recorder.state.AudioStateRepo,
-    private val requestPermissionsRepo: com.omar.retromp3recorder.state.RequestPermissionsRepo,
-    private val logRepo: com.omar.retromp3recorder.state.LogRepo,
-    private val playerIdRepo: com.omar.retromp3recorder.state.PlayerIdRepo
+    private val changeBitrateUC: ChangeBitrateUC,
+    private val changeSampleRateUC: ChangeSampleRateUC,
+    private val startRecordUC: StartRecordUC,
+    private val shareUC: ShareUC,
+    private val startPlaybackUC: StartPlaybackUC,
+    private val stopPlaybackAndRecordUC: StopPlaybackAndRecordUC,
+    private val bitRateRepo: BitRateRepo,
+    private val sampleRateRepo: SampleRateRepo,
+    private val stateRepo: AudioStateRepo,
+    private val requestPermissionsRepo: RequestPermissionsRepo,
+    private val logRepo: LogRepo,
+    private val playerIdRepo: PlayerIdRepo
 ) {
 
     fun process(): ObservableTransformer<MainView.Action, Result> =
@@ -61,15 +62,15 @@ class MainViewInteractor @Inject constructor(
         sampleRateRepo.observe()
             .map { sampleRate -> Result.SampleRateChangeResult(sampleRate) },
         requestPermissionsRepo.observe()
-            .ofType(Denied::class.java)
+            .ofType(RequestPermissionsRepo.ShouldRequestPermissions.Denied::class.java)
             .map { it.permissions }
             .flatMapGhost()
             .map { denied -> Result.RequestPermissionsResult(denied) },
         logRepo.observe()
-            .ofType(com.omar.retromp3recorder.state.LogRepo.Event.Message::class.java)
+            .ofType(LogRepo.Event.Message::class.java)
             .map { message -> Result.MessageLogResult(message.message) },
         logRepo.observe()
-            .ofType(com.omar.retromp3recorder.state.LogRepo.Event.Error::class.java)
+            .ofType(LogRepo.Event.Error::class.java)
             .map { message -> Result.ErrorLogResult(message.error) },
         stateRepo.observe()
             .map { state -> Result.StateChangedResult(state.map()) },

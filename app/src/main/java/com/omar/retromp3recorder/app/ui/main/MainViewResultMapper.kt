@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.app.ui.main
 
 import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.state.AudioState
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.functions.BiFunction
@@ -54,8 +55,8 @@ object MainViewResultMapper {
     )
 }
 
-fun com.omar.retromp3recorder.state.AudioState.map(): MainView.State = when (this) {
-    com.omar.retromp3recorder.state.AudioState.Idle -> MainView.State.Idle
-    com.omar.retromp3recorder.state.AudioState.Playing -> MainView.State.Playing
-    com.omar.retromp3recorder.state.AudioState.Recording -> MainView.State.Recording
+fun AudioState.map(): MainView.State = when (this) {
+     AudioState.Idle -> MainView.State.Idle
+    AudioState.Playing -> MainView.State.Playing
+    AudioState.Recording -> MainView.State.Recording
 }

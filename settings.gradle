@@ -1,3 +1,4 @@
+include ':component-ui-utils'
 include ':component-business-logic'
 include ':component-state'
 include ':component-io-share'

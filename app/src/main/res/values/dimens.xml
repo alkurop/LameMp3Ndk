@@ -4,4 +4,5 @@
     <dimen name="log_padding_top">2dp</dimen>
     <dimen name="cb_height">24dp</dimen>
     <dimen name="controller_margin">8dp</dimen>
+    <dimen name="control_buttons_dimen">50dp</dimen>
 </resources>
