@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <provider
-            android:name="com.omar.retromp3recorder.files_manipulation.GenericFileProvider"
+            android:name="com.omar.retromp3recorder.files.GenericFileProvider"
             android:authorities="${applicationId}.com.omar.retromp3recorder.app.provider"
             android:exported="false"
             android:grantUriPermissions="true">

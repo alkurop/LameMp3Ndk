@@ -15,21 +15,20 @@ class AudioControlsViewModel : ViewModel() {
     @Inject
     lateinit var interactor: AudioControlsInteractor
 
-    private val actionPublishSubject = PublishSubject.create<AudioControlsView.Action>()
+    private val inputSubject = PublishSubject.create<AudioControlsView.Input>()
     private val compositeDisposable = CompositeDisposable()
 
     init {
         App.appComponent.inject(this)
-
-        actionPublishSubject
-            .compose(interactor.processActions())
-            .compose(AudioControlsResultMapper.mapResultToState())
-            .subscribe { state.postValue(it) }
+        inputSubject
+            .compose(interactor.processIO())
+            .compose(mapOutputToState())
+            .subscribe(state::postValue)
             .disposedBy(compositeDisposable)
     }
 
-    fun onAction(action: AudioControlsView.Action) {
-        actionPublishSubject.onNext(action)
+    fun onInput(action: AudioControlsView.Input) {
+        inputSubject.onNext(action)
     }
 
     override fun onCleared() {

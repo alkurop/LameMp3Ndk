@@ -6,7 +6,7 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.ui_utils.findViewById
+import com.omar.retromp3recorder.app.ui.utils.findViewById
 
 class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
     private val playButton: ImageView

@@ -2,8 +2,8 @@ package com.omar.retromp3recorder.app.di
 
 import android.app.Application
 import android.content.Context
-import com.omar.retromp3recorder.files_manipulation.FilePathGenerator
-import com.omar.retromp3recorder.files_manipulation.FilePathGeneratorImpl
+import com.omar.retromp3recorder.files.FilePathGenerator
+import com.omar.retromp3recorder.files.FilePathGeneratorImpl
 import com.omar.retromp3recorder.utils.MAIN_THREAD
 import dagger.Module
 import dagger.Provides

@@ -4,15 +4,15 @@ import com.omar.retromp3recorder.state.AudioState
 
 object AudioControlsView {
 
-    sealed class Action {
-        object Play : Action()
-        object Record : Action()
-        object Share : Action()
-        object Stop : Action()
+    sealed class Input {
+        object Play : Input()
+        object Record : Input()
+        object Share : Input()
+        object Stop : Input()
     }
 
-    sealed class Result {
-        data class StateChanged(val state:  AudioState) : Result()
+    sealed class Output {
+        data class StateChanged(val state:  AudioState) : Output()
     }
 
     data class State(
