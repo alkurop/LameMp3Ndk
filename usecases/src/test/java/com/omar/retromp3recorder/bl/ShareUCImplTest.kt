@@ -3,7 +3,7 @@ package com.omar.retromp3recorder.bl
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
-import com.omar.retromp3recorder.state.CurrentFileRepo
+import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import io.reactivex.Completable
 import org.junit.Before
 import org.junit.Test

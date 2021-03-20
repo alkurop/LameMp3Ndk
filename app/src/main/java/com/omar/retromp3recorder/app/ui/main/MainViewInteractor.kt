@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.app.ui.main
 
 import com.omar.retromp3recorder.app.ui.main.MainView.Result
 import com.omar.retromp3recorder.bl.*
-import com.omar.retromp3recorder.state.*
+import com.omar.retromp3recorder.state.repos.*
 import com.omar.retromp3recorder.utils.flatMapGhost
 import io.reactivex.Completable
 import io.reactivex.Observable

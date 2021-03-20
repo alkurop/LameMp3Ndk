@@ -1,12 +1,13 @@
 package com.omar.retromp3recorder.bl
 
 import com.omar.retromp3recorder.files.FilePathGenerator
+import com.omar.retromp3recorder.state.repos.FileListRepo
 import io.reactivex.Completable
 import java.io.File
 import javax.inject.Inject
 
 class LookForFilesUC @Inject constructor(
-    private val fileListRepo: com.omar.retromp3recorder.state.FileListRepo,
+    private val fileListRepo: FileListRepo,
     private val filePathGenerator: FilePathGenerator
 ) {
     fun execute(): Completable {

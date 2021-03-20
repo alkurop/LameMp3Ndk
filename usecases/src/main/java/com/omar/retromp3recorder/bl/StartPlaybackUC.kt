@@ -3,17 +3,19 @@ package com.omar.retromp3recorder.bl
 import android.Manifest
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.state.RequestPermissionsRepo.ShouldRequestPermissions
+import com.omar.retromp3recorder.state.repos.CurrentFileRepo
+import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
+import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo.ShouldRequestPermissions
 import io.reactivex.Completable
 import javax.inject.Inject
 
 class StartPlaybackUC @Inject constructor(
-    private val currentFileRepo: com.omar.retromp3recorder.state.CurrentFileRepo,
+    private val currentFileRepo: CurrentFileRepo,
     private val audioPlayer: AudioPlayer,
     private val voiceRecorder: Mp3VoiceRecorder,
     private val stopUC: StopPlaybackAndRecordUC,
     private val checkPermissionsUC: CheckPermissionsUC,
-    private val requestPermissionsRepo: com.omar.retromp3recorder.state.RequestPermissionsRepo
+    private val requestPermissionsRepo: RequestPermissionsRepo
 ) {
     fun execute(): Completable {
         val abort = Completable.complete()

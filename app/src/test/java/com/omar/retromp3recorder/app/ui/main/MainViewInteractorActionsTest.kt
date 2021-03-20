@@ -7,10 +7,7 @@ import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.bl.CheckPermissionsUC
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.share.Sharer
-import com.omar.retromp3recorder.state.AudioStateRepo
-import com.omar.retromp3recorder.state.BitRateRepo
-import com.omar.retromp3recorder.state.RequestPermissionsRepo
-import com.omar.retromp3recorder.state.SampleRateRepo
+import com.omar.retromp3recorder.state.repos.*
 import io.reactivex.Completable
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
@@ -103,7 +100,7 @@ class MainViewInteractorActionsTest {
         actionSubject.onNext(MainView.Action.Play)
 
         //then
-        stateRepo.observe().test().assertValue(com.omar.retromp3recorder.state.AudioState.Playing)
+        stateRepo.observe().test().assertValue(AudioState.Playing)
     }
 
     @Test
@@ -113,7 +110,7 @@ class MainViewInteractorActionsTest {
         actionSubject.onNext(MainView.Action.Stop)
 
         //then
-        stateRepo.observe().test().assertValue(com.omar.retromp3recorder.state.AudioState.Idle)
+        stateRepo.observe().test().assertValue(AudioState.Idle)
     }
 
     @Test
@@ -123,6 +120,6 @@ class MainViewInteractorActionsTest {
         actionSubject.onNext(MainView.Action.Record)
 
         //then
-        stateRepo.observe().test().assertValue(com.omar.retromp3recorder.state.AudioState.Recording)
+        stateRepo.observe().test().assertValue(AudioState.Recording)
     }
 }

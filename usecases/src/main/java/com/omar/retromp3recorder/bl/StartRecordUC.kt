@@ -2,20 +2,24 @@ package com.omar.retromp3recorder.bl
 
 import android.Manifest
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.state.RequestPermissionsRepo.ShouldRequestPermissions
+import com.omar.retromp3recorder.state.repos.BitRateRepo
+import com.omar.retromp3recorder.state.repos.CurrentFileRepo
+import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
+import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo.ShouldRequestPermissions
+import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.functions.Function3
 import javax.inject.Inject
 
 class StartRecordUC @Inject constructor(
-    private val currentFileRepo: com.omar.retromp3recorder.state.CurrentFileRepo,
-    private val bitRateRepo: com.omar.retromp3recorder.state.BitRateRepo,
-    private val sampleRateRepo: com.omar.retromp3recorder.state.SampleRateRepo,
+    private val currentFileRepo: CurrentFileRepo,
+    private val bitRateRepo: BitRateRepo,
+    private val sampleRateRepo: SampleRateRepo,
     private val voiceRecorder: Mp3VoiceRecorder,
     private val stopPlaybackAndRecordUC: StopPlaybackAndRecordUC,
     private val checkPermissionsUC: CheckPermissionsUC,
-    private val requestPermissionsRepo: com.omar.retromp3recorder.state.RequestPermissionsRepo,
+    private val requestPermissionsRepo: RequestPermissionsRepo,
     private val generateNewFilenameForRecorderUC: GenerateNewFilenameForRecorderUC
 ) {
     fun execute(): Completable {

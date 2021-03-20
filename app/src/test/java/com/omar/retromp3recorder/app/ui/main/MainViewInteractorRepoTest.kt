@@ -6,11 +6,11 @@ import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.di.MockModule
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.state.BitRateRepo
-import com.omar.retromp3recorder.state.LogRepo
-import com.omar.retromp3recorder.state.RequestPermissionsRepo
-import com.omar.retromp3recorder.state.RequestPermissionsRepo.ShouldRequestPermissions
-import com.omar.retromp3recorder.state.SampleRateRepo
+import com.omar.retromp3recorder.state.repos.BitRateRepo
+import com.omar.retromp3recorder.state.repos.LogRepo
+import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
+import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo.ShouldRequestPermissions
+import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject

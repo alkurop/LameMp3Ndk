@@ -3,11 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_visualizer_bg"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="@id/guidelineBottomRight"
-    app:layout_constraintTop_toTopOf="@id/guidelineCentralHor">
+    android:background="@color/color_visualizer_bg">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centralVert"
@@ -23,46 +19,52 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
-    <ImageView
+    <com.omar.retromp3recorder.ui.state_button.InteractiveButton
         android:id="@+id/acf_play"
         android:layout_width="@dimen/control_buttons_dimen"
         android:layout_height="@dimen/control_buttons_dimen"
         android:background="?selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
         android:padding="8dp"
-        android:src="@drawable/ic_action_play"
+        app:image="@drawable/ic_action_play"
         app:layout_constraintBottom_toBottomOf="@id/centralHor"
         app:layout_constraintEnd_toEndOf="@id/centralVert"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <com.omar.retromp3recorder.ui.state_button.InteractiveButton
         android:id="@+id/acf_record"
         android:layout_width="@dimen/control_buttons_dimen"
         android:layout_height="@dimen/control_buttons_dimen"
         android:background="?selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
         android:padding="8dp"
-        android:src="@drawable/ic_action_rec"
+        app:image="@drawable/ic_action_rec"
         app:layout_constraintBottom_toBottomOf="@id/centralHor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/centralVert"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <com.omar.retromp3recorder.ui.state_button.InteractiveButton
+        android:id="@+id/acf_stop"
+        android:layout_width="@dimen/control_buttons_dimen"
+        android:layout_height="@dimen/control_buttons_dimen"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="8dp"
+        app:image="@drawable/ic_stop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/centralVert"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/centralHor" />
+
+    <com.omar.retromp3recorder.ui.state_button.InteractiveButton
         android:id="@+id/acf_share"
         android:layout_width="@dimen/control_buttons_dimen"
         android:layout_height="@dimen/control_buttons_dimen"
         android:layout_weight="4"
         android:background="?selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="8dp"
-        android:src="@drawable/abc_ic_menu_share_mtrl_alpha"
+        android:padding="12dp"
+        app:image="@drawable/abc_ic_menu_share_mtrl_alpha"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/centralVert"
         app:layout_constraintTop_toTopOf="@id/centralHor" />
 </androidx.constraintlayout.widget.ConstraintLayout>

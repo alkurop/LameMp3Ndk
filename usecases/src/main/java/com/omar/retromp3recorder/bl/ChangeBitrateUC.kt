@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.bl
 
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.state.BitRateRepo
+import com.omar.retromp3recorder.state.repos.BitRateRepo
 import io.reactivex.Completable
 import javax.inject.Inject
 

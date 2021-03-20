@@ -197,76 +197,19 @@
             android:padding="8dp" />
     </ScrollView>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <fragment
+        android:id="@+id/audio_controls"
+        android:name="com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/controller_margin"
         android:layout_marginTop="@dimen/controller_margin"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@color/color_visualizer_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guidelineBottomRight"
-        app:layout_constraintTop_toTopOf="@id/guidelineCentralHor">
+        app:layout_constraintTop_toTopOf="@id/guidelineCentralHor"/>
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/centralVert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/centralHor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
-
-        <ImageView
-            android:id="@+id/iv_play"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="8dp"
-            android:src="@drawable/ic_action_play"
-            app:layout_constraintBottom_toBottomOf="@id/centralHor"
-            app:layout_constraintEnd_toEndOf="@id/centralVert"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/iv_record"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="8dp"
-            android:clickable="true"
-
-            android:focusable="true"
-            android:padding="8dp"
-            android:src="@drawable/ic_action_rec"
-            app:layout_constraintBottom_toBottomOf="@id/centralHor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/centralVert"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/iv_share"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="8dp"
-            android:layout_weight="4"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="8dp"
-            android:src="@drawable/abc_ic_menu_share_mtrl_alpha"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/centralHor" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

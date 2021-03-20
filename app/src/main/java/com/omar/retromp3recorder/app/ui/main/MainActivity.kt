@@ -37,9 +37,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val scrollDownHandler = Handler(Looper.getMainLooper())
     private val stateSubject: Subject<MainView.State> = BehaviorSubject.create()
 
-    private val playButton: ImageView by lazy { findViewById(R.id.iv_play) }
-    private val recordButton: ImageView by lazy { findViewById(R.id.iv_record) }
-    private val shareButton: ImageView by lazy { findViewById(R.id.iv_share) }
+//    private val playButton: ImageView by lazy { findViewById(R.id.iv_play) }
+//    private val recordButton: ImageView by lazy { findViewById(R.id.iv_record) }
+//    private val shareButton: ImageView by lazy { findViewById(R.id.iv_share) }
 
     private val logContainerView: LinearLayout by lazy { findViewById(R.id.ll_logHolder) }
     private val sampleRateContainer: LinearLayout by lazy { findViewById(R.id.left_radio_container) }
@@ -149,23 +149,23 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun setUpButtonListeners() {
         compositeDisposable.addAll(
-            playButton.clicks().map { stateSubject.blockingFirst() }
-                .subscribe { state ->
-                    when (state) {
-                        MainView.State.Idle,
-                        MainView.State.Recording -> actionPublishSubject.onNext(MainView.Action.Play)
-                        MainView.State.Playing -> actionPublishSubject.onNext(MainView.Action.Stop)
-                    }
-                },
-            recordButton.clicks().map { stateSubject.blockingFirst() }
-                .subscribe { state ->
-                    when (state) {
-                        MainView.State.Idle,
-                        MainView.State.Playing -> actionPublishSubject.onNext(MainView.Action.Record)
-                        MainView.State.Recording -> actionPublishSubject.onNext(MainView.Action.Stop)
-                    }
-                },
-            shareButton.clicks().subscribe { actionPublishSubject.onNext(MainView.Action.Share) }
+//            playButton.clicks().map { stateSubject.blockingFirst() }
+//                .subscribe { state ->
+//                    when (state) {
+//                        MainView.State.Idle,
+//                        MainView.State.Recording -> actionPublishSubject.onNext(MainView.Action.Play)
+//                        MainView.State.Playing -> actionPublishSubject.onNext(MainView.Action.Stop)
+//                    }
+//                },
+//            recordButton.clicks().map { stateSubject.blockingFirst() }
+//                .subscribe { state ->
+//                    when (state) {
+//                        MainView.State.Idle,
+//                        MainView.State.Playing -> actionPublishSubject.onNext(MainView.Action.Record)
+//                        MainView.State.Recording -> actionPublishSubject.onNext(MainView.Action.Stop)
+//                    }
+//                },
+//            shareButton.clicks().subscribe { actionPublishSubject.onNext(MainView.Action.Share) }
         )
         bitRateGroup.mapIndexed { index, radioButton ->
             radioButton.clicks().subscribe {
@@ -220,14 +220,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun renderState(state: MainView.State) {
         stateSubject.onNext(state)
-        playButton.setImageResource(
-            if (state == MainView.State.Playing) R.drawable.ic_action_stop
-            else R.drawable.ic_action_play
-        )
-        recordButton.setImageResource(
-            if (state == MainView.State.Recording) R.drawable.ic_action_stop
-            else R.drawable.ic_action_rec
-        )
+//        playButton.setImageResource(
+//            if (state == MainView.State.Playing) R.drawable.ic_action_stop
+//            else R.drawable.ic_action_play
+//        )
+//        recordButton.setImageResource(
+//            if (state == MainView.State.Recording) R.drawable.ic_action_stop
+//            else R.drawable.ic_action_rec
+//        )
         if (state == MainView.State.Idle) stopVisualizer()
     }
 

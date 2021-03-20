@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.app.ui.main
 
 import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.state.AudioState
+import com.omar.retromp3recorder.state.repos.AudioState
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.functions.BiFunction

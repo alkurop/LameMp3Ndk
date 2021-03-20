@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.ui.audio_controls
 
-import com.omar.retromp3recorder.state.AudioState
+import com.omar.retromp3recorder.state.repos.AudioState
 
 object AudioControlsView {
 
@@ -12,10 +12,12 @@ object AudioControlsView {
     }
 
     sealed class Output {
-        data class StateChanged(val state:  AudioState) : Output()
+        data class AudioStateChanged(val state: AudioState) : Output()
+        object AudioFileFound : Output()
     }
 
     data class State(
-        val audioState: AudioState
+        val audioState: AudioState,
+        val hasAudioFile:Boolean
     )
 }

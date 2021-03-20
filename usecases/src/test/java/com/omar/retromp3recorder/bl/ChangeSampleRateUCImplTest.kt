@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.bl
 
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.state.SampleRateRepo
+import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
