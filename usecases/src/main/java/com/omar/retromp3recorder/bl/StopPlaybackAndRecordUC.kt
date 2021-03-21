@@ -17,7 +17,7 @@ class StopPlaybackAndRecordUC @Inject constructor(
             when (state) {
                 AudioState.Playing -> stopPlaybackUC.execute()
                 AudioState.Recording -> stopRecordUC.execute()
-                AudioState.Idle -> Completable.complete()
+                is AudioState.Idle -> Completable.complete()
             }
         }
 }

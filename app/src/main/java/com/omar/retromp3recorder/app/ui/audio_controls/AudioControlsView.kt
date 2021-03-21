@@ -13,11 +13,9 @@ object AudioControlsView {
 
     sealed class Output {
         data class AudioStateChanged(val state: AudioState) : Output()
-        object AudioFileFound : Output()
     }
 
     data class State(
-        val audioState: AudioState,
-        val hasAudioFile:Boolean
+        val audioState: AudioState
     )
 }

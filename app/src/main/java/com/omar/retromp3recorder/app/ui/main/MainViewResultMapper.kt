@@ -8,8 +8,8 @@ import io.reactivex.ObservableTransformer
 import io.reactivex.functions.BiFunction
 
 object MainViewResultMapper {
-    fun map(): ObservableTransformer<MainView.Result, MainView.MainViewModel> =
-        ObservableTransformer { upstream: Observable<MainView.Result> ->
+    fun map(): ObservableTransformer<MainView.Output, MainView.State> =
+        ObservableTransformer { upstream: Observable<MainView.Output> ->
             upstream
                 .scan(
                     getDefaultViewModel(),
@@ -17,35 +17,35 @@ object MainViewResultMapper {
                 )
         }
 
-    private fun getMapper(): BiFunction<MainView.MainViewModel, MainView.Result, MainView.MainViewModel> =
-        BiFunction { oldState: MainView.MainViewModel, result: MainView.Result ->
-            when (result) {
-                is MainView.Result.MessageLogResult -> oldState.copy(
-                    message = Shell(result.message),
+    private fun getMapper(): BiFunction<MainView.State, MainView.Output, MainView.State> =
+        BiFunction { oldState: MainView.State, output: MainView.Output ->
+            when (output) {
+                is MainView.Output.MessageLogOutput -> oldState.copy(
+                    message = Shell(output.message),
                 )
-                is MainView.Result.ErrorLogResult -> oldState.copy(
-                    error = Shell(result.error),
+                is MainView.Output.ErrorLogOutput -> oldState.copy(
+                    error = Shell(output.error),
                 )
-                is MainView.Result.BitrateChangedResult -> oldState.copy(
-                    bitRate = result.bitRate,
+                is MainView.Output.BitrateChangedOutput -> oldState.copy(
+                    bitRate = output.bitRate,
                 )
-                is MainView.Result.SampleRateChangeResult -> oldState.copy(
-                    sampleRate = result.sampleRate,
+                is MainView.Output.SampleRateChangeOutput -> oldState.copy(
+                    sampleRate = output.sampleRate,
                 )
-                is MainView.Result.StateChangedResult -> oldState.copy(
-                    state = result.state,
+                is MainView.Output.StateChangedOutput -> oldState.copy(
+                    audioState = output.state,
                 )
-                is MainView.Result.RequestPermissionsResult -> oldState.copy(
-                    requestForPermissions = Shell(result.permissionsToRequest)
+                is MainView.Output.RequestPermissionsOutput -> oldState.copy(
+                    requestForPermissions = Shell(output.permissionsToRequest)
                 )
-                is MainView.Result.PlayerIdResult -> oldState.copy(
-                    playerId = Shell(result.playerId),
+                is MainView.Output.PlayerIdOutput -> oldState.copy(
+                    playerId = Shell(output.playerId),
                 )
             }
         }
 
-    private fun getDefaultViewModel() = MainView.MainViewModel(
-        state = MainView.State.Idle,
+    private fun getDefaultViewModel() = MainView.State(
+        audioState = AudioState.Idle(false),
         sampleRate = Mp3VoiceRecorder.SampleRate._44100,
         bitRate = Mp3VoiceRecorder.BitRate._320,
         error = Shell.empty(),
@@ -53,10 +53,4 @@ object MainViewResultMapper {
         playerId = Shell.empty(),
         requestForPermissions = Shell.empty()
     )
-}
-
-fun AudioState.map(): MainView.State = when (this) {
-     AudioState.Idle -> MainView.State.Idle
-    AudioState.Playing -> MainView.State.Playing
-    AudioState.Recording -> MainView.State.Recording
 }

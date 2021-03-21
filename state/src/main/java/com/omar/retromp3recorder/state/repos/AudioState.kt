@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.state.repos
 
-enum class AudioState {
-    Idle,
-    Playing,
-    Recording
+sealed class AudioState {
+    data class Idle(val hasFile: Boolean) : AudioState()
+    object Playing : AudioState()
+    object Recording : AudioState()
 }

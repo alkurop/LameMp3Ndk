@@ -7,7 +7,6 @@ import com.omar.retromp3recorder.app.di.MockModule
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.BitRateRepo
-import com.omar.retromp3recorder.state.repos.LogRepo
 import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
 import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo.ShouldRequestPermissions
 import com.omar.retromp3recorder.state.repos.SampleRateRepo
@@ -26,9 +25,6 @@ class MainViewInteractorRepoTest {
     @Inject
     lateinit var bitRateRepo: BitRateRepo
 
-    @Inject
-    lateinit var logRepo: LogRepo
-
     @Named(MockModule.PLAYER_SUBJECT)
     @Inject
     lateinit var audioBus: Subject<AudioPlayer.Event>
@@ -37,16 +33,13 @@ class MainViewInteractorRepoTest {
     lateinit var requestPermissionsRepo: RequestPermissionsRepo
 
     @Inject
-    lateinit var voiceRecorder: Mp3VoiceRecorder
-
-    @Inject
     lateinit var sampleRateRepo: SampleRateRepo
-    private lateinit var test: TestObserver<MainView.Result>
+    private lateinit var test: TestObserver<MainView.Output>
 
     @Before
     fun setUp() {
         DaggerTestAppComponent.create().inject(this)
-        test = PublishSubject.create<MainView.Action>()
+        test = PublishSubject.create<MainView.Input>()
             .compose(interactor.process())
             .test()
     }
@@ -58,7 +51,7 @@ class MainViewInteractorRepoTest {
 
         //Then
         test.assertValueAt(FIRST_EVENT_INDEX) { result ->
-            (result as MainView.Result.BitrateChangedResult).bitRate === Mp3VoiceRecorder.BitRate._128
+            (result as MainView.Output.BitrateChangedOutput).bitRate === Mp3VoiceRecorder.BitRate._128
         }
     }
 
@@ -70,8 +63,8 @@ class MainViewInteractorRepoTest {
         //Then
         test.assertValueAt(
             FIRST_EVENT_INDEX
-        ) { result: MainView.Result ->
-            val message = (result as MainView.Result.MessageLogResult).message
+        ) { output: MainView.Output ->
+            val message = (output as MainView.Output.MessageLogOutput).message
             Stringer.ofString("test") == message
         }
     }
@@ -84,8 +77,8 @@ class MainViewInteractorRepoTest {
         //Then
         test.assertValueAt(
             FIRST_EVENT_INDEX
-        ) { result: MainView.Result ->
-            val playerId: Int = (result as MainView.Result.PlayerIdResult).playerId
+        ) { output: MainView.Output ->
+            val playerId: Int = (output as MainView.Output.PlayerIdOutput).playerId
             playerId == 38
         }
     }
@@ -101,11 +94,11 @@ class MainViewInteractorRepoTest {
         //Then
         test.assertValueAt(
             FIRST_EVENT_INDEX
-        ) { result: MainView.Result ->
-            val requestPermissionsResult: MainView.Result.RequestPermissionsResult =
-                result as MainView.Result.RequestPermissionsResult
+        ) { output: MainView.Output ->
+            val requestPermissionsOutput: MainView.Output.RequestPermissionsOutput =
+                output as MainView.Output.RequestPermissionsOutput
             val permissions: Set<String> =
-                requestPermissionsResult.permissionsToRequest
+                requestPermissionsOutput.permissionsToRequest
             permissions.size == 1 && permissions.contains("test")
         }
     }
@@ -117,10 +110,10 @@ class MainViewInteractorRepoTest {
         //Then
         test.assertValueAt(
             FIRST_EVENT_INDEX
-        ) { result: MainView.Result ->
-            val stateChangedResult: MainView.Result.SampleRateChangeResult =
-                result as MainView.Result.SampleRateChangeResult
-            val sampleRate: Mp3VoiceRecorder.SampleRate = stateChangedResult.sampleRate
+        ) { output: MainView.Output ->
+            val stateChangedOutput: MainView.Output.SampleRateChangeOutput =
+                output as MainView.Output.SampleRateChangeOutput
+            val sampleRate: Mp3VoiceRecorder.SampleRate = stateChangedOutput.sampleRate
             sampleRate == Mp3VoiceRecorder.SampleRate._8000
         }
     }

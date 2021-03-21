@@ -1,7 +1,8 @@
 package com.omar.retromp3recorder.app.ui.main
 
-import com.omar.retromp3recorder.app.ui.main.MainView.Result
-import com.omar.retromp3recorder.bl.*
+import com.omar.retromp3recorder.app.ui.main.MainView.Output
+import com.omar.retromp3recorder.bl.ChangeBitrateUC
+import com.omar.retromp3recorder.bl.ChangeSampleRateUC
 import com.omar.retromp3recorder.state.repos.*
 import com.omar.retromp3recorder.utils.flatMapGhost
 import io.reactivex.Completable
@@ -14,10 +15,6 @@ class MainViewInteractor @Inject constructor(
     private val scheduler: Scheduler,
     private val changeBitrateUC: ChangeBitrateUC,
     private val changeSampleRateUC: ChangeSampleRateUC,
-    private val startRecordUC: StartRecordUC,
-    private val shareUC: ShareUC,
-    private val startPlaybackUC: StartPlaybackUC,
-    private val stopPlaybackAndRecordUC: StopPlaybackAndRecordUC,
     private val bitRateRepo: BitRateRepo,
     private val sampleRateRepo: SampleRateRepo,
     private val stateRepo: AudioStateRepo,
@@ -26,7 +23,7 @@ class MainViewInteractor @Inject constructor(
     private val playerIdRepo: PlayerIdRepo
 ) {
 
-    fun process(): ObservableTransformer<MainView.Action, Result> =
+    fun process(): ObservableTransformer<MainView.Input, Output> =
         ObservableTransformer { upstream ->
             upstream.observeOn(scheduler)
                 .compose { actions ->
@@ -37,44 +34,36 @@ class MainViewInteractor @Inject constructor(
                 }
         }
 
-    private fun actionsMapper(actions: Observable<MainView.Action>) = Completable.merge(listOf(
-        actions.ofType(MainView.Action.Play::class.java)
-            .flatMapCompletable { startPlaybackUC.execute() },
-        actions.ofType(MainView.Action.Record::class.java)
-            .flatMapCompletable { startRecordUC.execute() },
-        actions.ofType(MainView.Action.Share::class.java)
-            .flatMapCompletable { shareUC.execute() },
-        actions.ofType(MainView.Action.Stop::class.java)
-            .flatMapCompletable { stopPlaybackAndRecordUC.execute() },
-        actions.ofType(MainView.Action.SampleRateChange::class.java)
+    private fun actionsMapper(actions: Observable<MainView.Input>) = Completable.merge(listOf(
+        actions.ofType(MainView.Input.SampleRateChange::class.java)
             .flatMapCompletable { sampleRateChangeAction ->
                 changeSampleRateUC.execute(sampleRateChangeAction.sampleRate)
             },
-        actions.ofType(MainView.Action.BitRateChange::class.java)
+        actions.ofType(MainView.Input.BitRateChange::class.java)
             .flatMapCompletable { bitRateChangeAction ->
                 changeBitrateUC.execute(bitRateChangeAction.bitRate)
             }
     ))
 
-    private fun repoMapper(): Observable<Result> = Observable.merge(listOf(
+    private fun repoMapper(): Observable<Output> = Observable.merge(listOf(
         bitRateRepo.observe()
-            .map { bitRate -> Result.BitrateChangedResult(bitRate) },
+            .map { bitRate -> Output.BitrateChangedOutput(bitRate) },
         sampleRateRepo.observe()
-            .map { sampleRate -> Result.SampleRateChangeResult(sampleRate) },
+            .map { sampleRate -> Output.SampleRateChangeOutput(sampleRate) },
         requestPermissionsRepo.observe()
             .ofType(RequestPermissionsRepo.ShouldRequestPermissions.Denied::class.java)
             .map { it.permissions }
             .flatMapGhost()
-            .map { denied -> Result.RequestPermissionsResult(denied) },
+            .map { denied -> Output.RequestPermissionsOutput(denied) },
         logRepo.observe()
             .ofType(LogRepo.Event.Message::class.java)
-            .map { message -> Result.MessageLogResult(message.message) },
+            .map { message -> Output.MessageLogOutput(message.message) },
         logRepo.observe()
             .ofType(LogRepo.Event.Error::class.java)
-            .map { message -> Result.ErrorLogResult(message.error) },
+            .map { message -> Output.ErrorLogOutput(message.error) },
         stateRepo.observe()
-            .map { state -> Result.StateChangedResult(state.map()) },
+            .map { state -> Output.StateChangedOutput(state) },
         playerIdRepo.observe()
-            .map { playerId -> Result.PlayerIdResult(playerId) }
+            .map { playerId -> Output.PlayerIdOutput(playerId) }
     ))
 }
