@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.di
 
-import com.omar.retromp3recorder.files_manipulation.FilePathGenerator
+import com.omar.retromp3recorder.files.FilePathGenerator
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.recorder.RecorderDefaults
 import dagger.Module

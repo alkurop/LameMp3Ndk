@@ -20,26 +20,20 @@ import com.omar.retromp3recorder.app.App
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.customviews.VisualizerView
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.state.repos.AudioState
 import com.squareup.picasso.Picasso
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
 import java.util.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
-    private val actionPublishSubject = PublishSubject.create<MainView.Action>()
+    private val actionPublishSubject = PublishSubject.create<MainView.Input>()
     private val compositeDisposable = CompositeDisposable()
     private val scrollDownHandler = Handler(Looper.getMainLooper())
-    private val stateSubject: Subject<MainView.State> = BehaviorSubject.create()
-
-    private val playButton: ImageView by lazy { findViewById(R.id.iv_play) }
-    private val recordButton: ImageView by lazy { findViewById(R.id.iv_record) }
-    private val shareButton: ImageView by lazy { findViewById(R.id.iv_share) }
 
     private val logContainerView: LinearLayout by lazy { findViewById(R.id.ll_logHolder) }
     private val sampleRateContainer: LinearLayout by lazy { findViewById(R.id.left_radio_container) }
@@ -73,22 +67,22 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             .compose(interactor.process())
             .compose(MainViewResultMapper.map())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { mainViewModel: MainView.MainViewModel ->
+            .subscribe { state: MainView.State ->
                 renderView(
-                    mainViewModel
+                    state
                 )
             }
         compositeDisposable.add(disposable)
     }
 
-    private fun renderView(mainViewModel: MainView.MainViewModel) {
-        renderPermissions(mainViewModel.requestForPermissions.ghost)
-        renderBitrate(mainViewModel.bitRate)
-        renderSampleRate(mainViewModel.sampleRate)
-        renderError(mainViewModel.error.ghost?.bell(this))
-        renderMessage(mainViewModel.message.ghost?.bell(this))
-        renderState(mainViewModel.state)
-        renderPlayerId(mainViewModel.playerId.ghost)
+    private fun renderView(state: MainView.State) {
+        renderState(state.audioState)
+        renderPermissions(state.requestForPermissions.ghost)
+        renderBitrate(state.bitRate)
+        renderSampleRate(state.sampleRate)
+        renderError(state.error.ghost?.bell(this))
+        renderMessage(state.message.ghost?.bell(this))
+        renderPlayerId(state.playerId.ghost)
     }
 
     private fun addTitleView(container: ViewGroup, title: String) {
@@ -148,29 +142,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         ).toMap()
 
     private fun setUpButtonListeners() {
-        compositeDisposable.addAll(
-            playButton.clicks().map { stateSubject.blockingFirst() }
-                .subscribe { state ->
-                    when (state) {
-                        MainView.State.Idle,
-                        MainView.State.Recording -> actionPublishSubject.onNext(MainView.Action.Play)
-                        MainView.State.Playing -> actionPublishSubject.onNext(MainView.Action.Stop)
-                    }
-                },
-            recordButton.clicks().map { stateSubject.blockingFirst() }
-                .subscribe { state ->
-                    when (state) {
-                        MainView.State.Idle,
-                        MainView.State.Playing -> actionPublishSubject.onNext(MainView.Action.Record)
-                        MainView.State.Recording -> actionPublishSubject.onNext(MainView.Action.Stop)
-                    }
-                },
-            shareButton.clicks().subscribe { actionPublishSubject.onNext(MainView.Action.Share) }
-        )
         bitRateGroup.mapIndexed { index, radioButton ->
             radioButton.clicks().subscribe {
                 val bitRate = Mp3VoiceRecorder.BitRate.values()[index]
-                actionPublishSubject.onNext(MainView.Action.BitRateChange(bitRate))
+                actionPublishSubject.onNext(MainView.Input.BitRateChange(bitRate))
             }
         }.forEach { compositeDisposable.add(it) }
 
@@ -178,7 +153,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             radioButton.clicks()
                 .subscribe {
                     val sampleRate = Mp3VoiceRecorder.SampleRate.values()[index]
-                    actionPublishSubject.onNext(MainView.Action.SampleRateChange(sampleRate))
+                    actionPublishSubject.onNext(MainView.Input.SampleRateChange(sampleRate))
                 }
         }.forEach { compositeDisposable.add(it) }
     }
@@ -218,17 +193,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             .subscribe())
     }
 
-    private fun renderState(state: MainView.State) {
-        stateSubject.onNext(state)
-        playButton.setImageResource(
-            if (state == MainView.State.Playing) R.drawable.ic_action_stop
-            else R.drawable.ic_action_play
-        )
-        recordButton.setImageResource(
-            if (state == MainView.State.Recording) R.drawable.ic_action_stop
-            else R.drawable.ic_action_rec
-        )
-        if (state == MainView.State.Idle) stopVisualizer()
+    private fun renderState(state: AudioState) {
+        if (state !is AudioState.Playing) stopVisualizer()
     }
 
     private fun renderMessage(message: String?) {

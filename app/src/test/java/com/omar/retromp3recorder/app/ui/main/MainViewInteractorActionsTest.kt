@@ -1,17 +1,9 @@
 package com.omar.retromp3recorder.app.ui.main
 
-import com.github.alkurop.stringerbell.Stringer
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.bl.CheckPermissionsUC
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.share.Sharer
-import com.omar.retromp3recorder.state.AudioStateRepo
-import com.omar.retromp3recorder.state.BitRateRepo
-import com.omar.retromp3recorder.state.RequestPermissionsRepo
-import com.omar.retromp3recorder.state.SampleRateRepo
-import io.reactivex.Completable
+import com.omar.retromp3recorder.state.repos.BitRateRepo
+import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -29,30 +21,13 @@ class MainViewInteractorActionsTest {
     @Inject
     lateinit var sampleRateRepo: SampleRateRepo
 
-    @Inject
-    lateinit var sharingModule: Sharer
-
-    @Inject
-    lateinit var permissionsUC: CheckPermissionsUC
-
-    @Inject
-    lateinit var requestPermissionsRepo: RequestPermissionsRepo
-
-    @Inject
-    lateinit var stateRepo: AudioStateRepo
-
-    private val actionSubject: Subject<MainView.Action> = PublishSubject.create()
-    private lateinit var test: TestObserver<MainView.Result>
+    private val inputSubject: Subject<MainView.Input> = PublishSubject.create()
+    private lateinit var test: TestObserver<MainView.Output>
 
     @Before
     fun setUp() {
         DaggerTestAppComponent.create().inject(this)
-        whenever(permissionsUC.execute(any()))
-            .thenAnswer {
-                requestPermissionsRepo.newValue(RequestPermissionsRepo.ShouldRequestPermissions.Granted)
-                Completable.complete()
-            }
-        test = actionSubject.compose(interactor.process()).test()
+        test = inputSubject.compose(interactor.process()).test()
     }
 
     @Test
@@ -60,8 +35,8 @@ class MainViewInteractorActionsTest {
         val bitRate = Mp3VoiceRecorder.BitRate._160
 
         //When
-        actionSubject.onNext(
-            MainView.Action.BitRateChange(
+        inputSubject.onNext(
+            MainView.Input.BitRateChange(
                 bitRate
             )
         )
@@ -75,8 +50,8 @@ class MainViewInteractorActionsTest {
         val sampleRate = Mp3VoiceRecorder.SampleRate._11025
 
         //When
-        actionSubject.onNext(
-            MainView.Action.SampleRateChange(
+        inputSubject.onNext(
+            MainView.Input.SampleRateChange(
                 sampleRate
             )
         )
@@ -85,44 +60,5 @@ class MainViewInteractorActionsTest {
         sampleRateRepo.observe().test().assertValue(sampleRate)
     }
 
-    @Test
-    fun `sharing action leads to usecase exection`() {
-        //When
-        actionSubject.onNext(MainView.Action.Share)
 
-        //Then
-       sharingModule.observeEvents().test().assertValue(
-           com.omar.retromp3recorder.share.Sharer.Event.SharingOk(Stringer.ofString("test"))
-       )
-    }
-
-    @Test
-    fun `play action leads to audioplayer playing`() {
-
-        //When
-        actionSubject.onNext(MainView.Action.Play)
-
-        //then
-        stateRepo.observe().test().assertValue(com.omar.retromp3recorder.state.AudioState.Playing)
-    }
-
-    @Test
-    fun `stop action leads to state stopped`() {
-
-        //When
-        actionSubject.onNext(MainView.Action.Stop)
-
-        //then
-        stateRepo.observe().test().assertValue(com.omar.retromp3recorder.state.AudioState.Idle)
-    }
-
-    @Test
-    fun `start record action leads to state recording`() {
-
-        //When
-        actionSubject.onNext(MainView.Action.Record)
-
-        //then
-        stateRepo.observe().test().assertValue(com.omar.retromp3recorder.state.AudioState.Recording)
-    }
 }
