@@ -3,7 +3,10 @@ package com.omar.retromp3recorder.app.ui.main
 import com.omar.retromp3recorder.app.ui.main.MainView.Output
 import com.omar.retromp3recorder.bl.ChangeBitrateUC
 import com.omar.retromp3recorder.bl.ChangeSampleRateUC
-import com.omar.retromp3recorder.state.repos.*
+import com.omar.retromp3recorder.state.repos.BitRateRepo
+import com.omar.retromp3recorder.state.repos.LogRepo
+import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
+import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import com.omar.retromp3recorder.utils.flatMapGhost
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -17,10 +20,8 @@ class MainViewInteractor @Inject constructor(
     private val changeSampleRateUC: ChangeSampleRateUC,
     private val bitRateRepo: BitRateRepo,
     private val sampleRateRepo: SampleRateRepo,
-    private val stateRepo: AudioStateRepo,
     private val requestPermissionsRepo: RequestPermissionsRepo,
     private val logRepo: LogRepo,
-    private val playerIdRepo: PlayerIdRepo
 ) {
 
     fun processIO(): ObservableTransformer<MainView.Input, Output> =
@@ -61,9 +62,6 @@ class MainViewInteractor @Inject constructor(
         logRepo.observe()
             .ofType(LogRepo.Event.Error::class.java)
             .map { message -> Output.ErrorLogOutput(message.error) },
-        stateRepo.observe()
-            .map { state -> Output.StateChangedOutput(state) },
-        playerIdRepo.observe()
-            .map { playerId -> Output.PlayerIdOutput(playerId) }
-    ))
+    )
+    )
 }

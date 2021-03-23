@@ -13,6 +13,6 @@ object VisualizerView {
 
     sealed class Output {
         data class PlayerIdOutput(val playerId: Int) : VisualizerView.Output()
-        data class StateChangedOutput(val state: AudioState) : VisualizerView.Output()
+        data class AudioStateChanged(val state: AudioState) : VisualizerView.Output()
     }
 }

@@ -4,7 +4,6 @@ import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.ui.main.MainView.State
 import com.omar.retromp3recorder.app.ui.main.MainViewOutputMapper.mapOutputToState
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.state.repos.AudioState
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -42,7 +41,7 @@ class MainViewOutputMapperTest {
             .assertValueCount(2)
             .assertValueAt(
                 1
-            ) { (_, _, _, message) ->
+            ) { (_, _, message) ->
                 Stringer.ofString("test") == message.ghost
             }
     }
@@ -54,6 +53,7 @@ class MainViewOutputMapperTest {
         //When
         outputPublisher.onNext(errorLogResult)
 
+        test.values().forEach { println(it) }
         //Then
         test.assertNoErrors()
             .assertNotComplete()
@@ -61,7 +61,7 @@ class MainViewOutputMapperTest {
             .assertValueCount(2)
             .assertValueAt(
                 1
-            ) { (_, _, error) ->
+            ) { (_, error) ->
                 Stringer.ofString("test") == error.ghost
             }
     }
@@ -80,7 +80,7 @@ class MainViewOutputMapperTest {
             .assertValueCount(2)
             .assertValueAt(
                 1
-            ) { (_, bitRate) -> bitRate == Mp3VoiceRecorder.BitRate._128 }
+            ) { (bitRate) -> bitRate == Mp3VoiceRecorder.BitRate._128 }
     }
 
     @Test
@@ -98,25 +98,10 @@ class MainViewOutputMapperTest {
             .assertValueCount(2)
             .assertValueAt(
                 1
-            ) { (_, _, _, _, _, _, sampleRate) -> sampleRate == Mp3VoiceRecorder.SampleRate._22050 }
+            ) { (_, _, _, _, sampleRate) -> sampleRate == Mp3VoiceRecorder.SampleRate._22050 }
     }
 
-    @Test
-    fun `map audio state change result`() {
-        val stateChangedResult = MainView.Output.StateChangedOutput(AudioState.Playing)
 
-        //When
-        outputPublisher.onNext(stateChangedResult)
-
-        //Then
-        test.assertNoErrors()
-            .assertNotComplete()
-            .assertNoErrors()
-            .assertValueCount(2)
-            .assertValueAt(
-                1
-            ) { (state) -> state === AudioState.Playing }
-    }
 
     @Test
     fun `map request permission result`() {
@@ -134,24 +119,8 @@ class MainViewOutputMapperTest {
             .assertValueCount(2)
             .assertValueAt(
                 1
-            ) { (_, _, _, _, _, requestForPermissions) -> requestForPermissions.ghost === permissionsToRequest }
+            ) { (_, _, _, requestForPermissions) -> requestForPermissions.ghost === permissionsToRequest }
     }
 
-    @Test
-    fun `map player id changed result`() {
-        val playerId = 28
-        val playerIdResult = MainView.Output.PlayerIdOutput(playerId)
 
-        //When
-        outputPublisher.onNext(playerIdResult)
-
-        //Then
-        test.assertNoErrors()
-            .assertNotComplete()
-            .assertNoErrors()
-            .assertValueCount(2)
-            .assertValueAt(
-                1
-            ) { (_, _, _, _, playerId1) -> playerId1.ghost == playerId }
-    }
 }

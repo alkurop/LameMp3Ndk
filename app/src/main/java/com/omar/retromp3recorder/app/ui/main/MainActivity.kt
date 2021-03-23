@@ -2,8 +2,6 @@ package com.omar.retromp3recorder.app.ui.main
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.media.audiofx.Visualizer
-import android.media.audiofx.Visualizer.OnDataCaptureListener
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,13 +16,9 @@ import com.github.alkurop.jpermissionmanager.PermissionRequiredDetails
 import com.github.alkurop.jpermissionmanager.PermissionsManager
 import com.jakewharton.rxbinding3.view.clicks
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.ui.visualizer.VisualizerDisplayView
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.state.repos.AudioState
 import com.squareup.picasso.Picasso
-import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -36,7 +30,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val bitRateContainer: LinearLayout by lazy { findViewById(R.id.right_radio_container) }
 
     private val scrollView: ScrollView by lazy { findViewById(R.id.scrollView) }
-    private val visualizerDisplayView: VisualizerDisplayView by lazy { findViewById(R.id.visualizer) }
     private val background: ImageView by lazy { findViewById(R.id.background) }
 
     private val sampleRateGroup: List<RadioButton> by lazy { createSampleRateGroup() }
@@ -46,8 +39,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val permissionsManager: PermissionsManager by lazy { PermissionsManager(this) }
     private val permissionsMap: Map<String, PermissionOptionalDetails> by lazy { createPermissionsMap() }
-
-    private var visualizer: Visualizer? = null
 
     private val viewModel by viewModels<MainViewModel>()
 
@@ -62,13 +53,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun renderView(state: MainView.State) {
-        renderState(state.audioState)
         renderPermissions(state.requestForPermissions.ghost)
         renderBitrate(state.bitRate)
         renderSampleRate(state.sampleRate)
         renderError(state.error.ghost?.bell(this))
         renderMessage(state.message.ghost?.bell(this))
-        renderPlayerId(state.playerId.ghost)
     }
 
     private fun addTitleView(container: ViewGroup, title: String) {
@@ -144,45 +133,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }.forEach { compositeDisposable.add(it) }
     }
 
-    private fun renderPlayerId(playerId: Int?) {
-        if (playerId == null) {
-            return
-        }
-        visualizer = Visualizer(playerId).apply {
-            captureSize = Visualizer.getCaptureSizeRange()[1]
-            setDataCaptureListener(object : OnDataCaptureListener {
-                override fun onWaveFormDataCapture(
-                    visualizer: Visualizer,
-                    bytes: ByteArray,
-                    samplingRate: Int
-                ) = visualizerDisplayView.updateVisualizer(bytes)
-
-                override fun onFftDataCapture(
-                    visualizer: Visualizer,
-                    bytes: ByteArray,
-                    samplingRate: Int
-                ) = Unit
-            }, Visualizer.getMaxCaptureRate() / 2, true, false)
-            enabled = true
-        }
-    }
-
-    private fun stopVisualizer() {
-        compositeDisposable.add(Completable
-            .fromAction {
-                if (visualizer != null) {
-                    visualizer?.release()
-                    visualizer = null
-                }
-            }
-            .subscribeOn(Schedulers.computation())
-            .subscribe())
-    }
-
-    private fun renderState(state: AudioState) {
-        if (state !is AudioState.Playing) stopVisualizer()
-    }
-
     private fun renderMessage(message: String?) {
         if (message == null) {
             return
@@ -250,7 +200,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         super.onDestroy()
         compositeDisposable.clear()
         scrollDownHandler.removeCallbacksAndMessages(null)
-        stopVisualizer()
     }
 }
 

@@ -17,9 +17,12 @@ open class TestAudioPlayer @Inject internal constructor(
     override fun playerStop() {
         state.onNext(AudioPlayer.State.Idle)
     }
+
     override fun playerStart(voiceURL: String) {
         state.onNext(AudioPlayer.State.Playing)
+        audioBus.onNext(AudioPlayer.Event.PlayerId(PLAYER_ID))
     }
+
     override fun observeEvents(): Observable<AudioPlayer.Event> {
         return audioBus
     }
@@ -29,4 +32,7 @@ open class TestAudioPlayer @Inject internal constructor(
 
     override fun observeState(): Observable<AudioPlayer.State> = state
 
+    companion object {
+        const val PLAYER_ID = 11
+    }
 }
