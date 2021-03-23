@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.ui.customviews;
+package com.omar.retromp3recorder.app.ui.visualizer;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,24 +11,24 @@ import android.view.View;
 import com.omar.retromp3recorder.utils.NotUnitTestable;
 
 @NotUnitTestable
-public class VisualizerView extends View {
+public class VisualizerDisplayView extends View {
 
     private byte[] mBytes;
     private float[] mPoints;
     final private Rect mRect = new Rect();
     private final Paint mForePaint = new Paint();
 
-    public VisualizerView(Context context) {
+    public VisualizerDisplayView(Context context) {
         super(context);
         init();
     }
 
-    public VisualizerView(Context context, AttributeSet attrs) {
+    public VisualizerDisplayView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public VisualizerView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public VisualizerDisplayView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

@@ -18,7 +18,7 @@ import com.github.alkurop.jpermissionmanager.PermissionRequiredDetails
 import com.github.alkurop.jpermissionmanager.PermissionsManager
 import com.jakewharton.rxbinding3.view.clicks
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.ui.customviews.VisualizerView
+import com.omar.retromp3recorder.app.ui.visualizer.VisualizerDisplayView
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.AudioState
 import com.squareup.picasso.Picasso
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val bitRateContainer: LinearLayout by lazy { findViewById(R.id.right_radio_container) }
 
     private val scrollView: ScrollView by lazy { findViewById(R.id.scrollView) }
-    private val visualizerView: VisualizerView by lazy { findViewById(R.id.visualizer) }
+    private val visualizerDisplayView: VisualizerDisplayView by lazy { findViewById(R.id.visualizer) }
     private val background: ImageView by lazy { findViewById(R.id.background) }
 
     private val sampleRateGroup: List<RadioButton> by lazy { createSampleRateGroup() }
@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     visualizer: Visualizer,
                     bytes: ByteArray,
                     samplingRate: Int
-                ) = visualizerView.updateVisualizer(bytes)
+                ) = visualizerDisplayView.updateVisualizer(bytes)
 
                 override fun onFftDataCapture(
                     visualizer: Visualizer,
