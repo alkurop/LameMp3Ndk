@@ -23,7 +23,7 @@ class MainViewInteractor @Inject constructor(
     private val playerIdRepo: PlayerIdRepo
 ) {
 
-    fun process(): ObservableTransformer<MainView.Input, Output> =
+    fun processIO(): ObservableTransformer<MainView.Input, Output> =
         ObservableTransformer { upstream ->
             upstream.observeOn(scheduler)
                 .compose { actions ->

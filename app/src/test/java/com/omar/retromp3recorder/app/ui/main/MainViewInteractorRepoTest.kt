@@ -40,7 +40,7 @@ class MainViewInteractorRepoTest {
     fun setUp() {
         DaggerTestAppComponent.create().inject(this)
         test = PublishSubject.create<MainView.Input>()
-            .compose(interactor.process())
+            .compose(interactor.processIO())
             .test()
     }
 

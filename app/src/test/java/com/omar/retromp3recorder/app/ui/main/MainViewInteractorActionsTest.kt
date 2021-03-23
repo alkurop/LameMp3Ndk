@@ -27,7 +27,7 @@ class MainViewInteractorActionsTest {
     @Before
     fun setUp() {
         DaggerTestAppComponent.create().inject(this)
-        test = inputSubject.compose(interactor.process()).test()
+        test = inputSubject.compose(interactor.processIO()).test()
     }
 
     @Test

@@ -1,22 +1,22 @@
-package com.omar.retromp3recorder.app.ui.audio_controls
+package com.omar.retromp3recorder.app.ui.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.omar.retromp3recorder.app.App
-import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsOutputMapper.mapOutputToState
+import com.omar.retromp3recorder.app.ui.main.MainViewOutputMapper.mapOutputToState
 import com.omar.retromp3recorder.utils.disposedBy
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
-class AudioControlsViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
 
-    val state = MutableLiveData<AudioControlsView.State>()
+    val state = MutableLiveData<MainView.State>()
 
     @Inject
-    lateinit var interactor: AudioControlsInteractor
+    lateinit var interactor: MainViewInteractor
 
-    private val inputSubject = PublishSubject.create<AudioControlsView.Input>()
+    private val inputSubject = PublishSubject.create<MainView.Input>()
     private val compositeDisposable = CompositeDisposable()
 
     init {
@@ -28,7 +28,7 @@ class AudioControlsViewModel : ViewModel() {
             .disposedBy(compositeDisposable)
     }
 
-    fun onInput(action: AudioControlsView.Input) {
+    fun onInput(action: MainView.Input) {
         inputSubject.onNext(action)
     }
 

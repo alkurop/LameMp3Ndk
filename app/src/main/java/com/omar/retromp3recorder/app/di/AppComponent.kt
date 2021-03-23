@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.app.di
 
 import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsViewModel
 import com.omar.retromp3recorder.app.ui.main.MainActivity
+import com.omar.retromp3recorder.app.ui.main.MainViewModel
 import dagger.Component
 import javax.inject.Singleton
 
@@ -17,4 +18,5 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(mainActivity: MainActivity)
     fun inject(viewModel: AudioControlsViewModel)
+    fun inject(mainViewModel: MainViewModel)
 }

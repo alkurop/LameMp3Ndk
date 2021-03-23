@@ -10,6 +10,7 @@ import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.github.alkurop.jpermissionmanager.PermissionOptionalDetails
@@ -23,15 +24,11 @@ import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.AudioState
 import com.squareup.picasso.Picasso
 import io.reactivex.Completable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
 import java.util.*
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
-    private val actionPublishSubject = PublishSubject.create<MainView.Input>()
     private val compositeDisposable = CompositeDisposable()
     private val scrollDownHandler = Handler(Looper.getMainLooper())
 
@@ -53,8 +50,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private var visualizer: Visualizer? = null
 
-    @Inject
-    lateinit var interactor: MainViewInteractor
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,16 +59,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         addTitleView(sampleRateContainer, getString(R.string.sample_rate))
         setUpButtonListeners()
         Picasso.with(this).load(R.drawable.bg).fit().into(background)
-        val disposable = actionPublishSubject
-            .compose(interactor.process())
-            .compose(MainViewResultMapper.map())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { state: MainView.State ->
-                renderView(
-                    state
-                )
-            }
-        compositeDisposable.add(disposable)
+
+        viewModel.state.observe(this, ::renderView)
     }
 
     private fun renderView(state: MainView.State) {
@@ -145,7 +133,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         bitRateGroup.mapIndexed { index, radioButton ->
             radioButton.clicks().subscribe {
                 val bitRate = Mp3VoiceRecorder.BitRate.values()[index]
-                actionPublishSubject.onNext(MainView.Input.BitRateChange(bitRate))
+                viewModel.onInput(MainView.Input.BitRateChange(bitRate))
             }
         }.forEach { compositeDisposable.add(it) }
 
@@ -153,7 +141,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             radioButton.clicks()
                 .subscribe {
                     val sampleRate = Mp3VoiceRecorder.SampleRate.values()[index]
-                    actionPublishSubject.onNext(MainView.Input.SampleRateChange(sampleRate))
+                    viewModel.onInput(MainView.Input.SampleRateChange(sampleRate))
                 }
         }.forEach { compositeDisposable.add(it) }
     }
@@ -231,8 +219,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             )
         )
         scrollDownHandler.postDelayed(
-            { scrollView.fullScroll(View.FOCUS_DOWN) }, DELAY_MILLIS
-                .toLong()
+            { scrollView.fullScroll(View.FOCUS_DOWN) },
+            DELAY_MILLIS.toLong()
         )
     }
 

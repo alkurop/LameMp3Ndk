@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.app.ui.main
 
 import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.ui.main.MainView.State
-import com.omar.retromp3recorder.app.ui.main.MainViewResultMapper.map
+import com.omar.retromp3recorder.app.ui.main.MainViewOutputMapper.mapOutputToState
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.AudioState
 import io.reactivex.observers.TestObserver
@@ -17,7 +17,7 @@ class MainViewOutputMapperTest {
 
     @Before
     fun setUp() {
-        test = outputPublisher.compose(map()).test()
+        test = outputPublisher.compose(mapOutputToState()).test()
     }
 
     @Test
