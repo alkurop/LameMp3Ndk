@@ -7,8 +7,8 @@ import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.functions.BiFunction
 
-object MainViewResultMapper {
-    fun map(): ObservableTransformer<MainView.Output, MainView.State> =
+object MainViewOutputMapper {
+    fun mapOutputToState(): ObservableTransformer<MainView.Output, MainView.State> =
         ObservableTransformer { upstream: Observable<MainView.Output> ->
             upstream
                 .scan(
