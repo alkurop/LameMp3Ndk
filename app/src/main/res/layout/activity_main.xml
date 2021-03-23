@@ -160,15 +160,15 @@
         app:layout_constraintTop_toTopOf="@id/guidelineCentralHor" />
 
 
-    <com.omar.retromp3recorder.app.ui.customviews.VisualizerView
-        android:id="@+id/visualizer"
+    <fragment
+        android:name="com.omar.retromp3recorder.app.ui.visualizer.VisualizerFragment"
+        android:id="@+id/fragment_visualizer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="@dimen/controller_margin"
         android:layout_marginEnd="@dimen/controller_margin"
         android:layout_marginBottom="16dp"
-        android:background="@color/color_visualizer_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guidelineBottomLeft"
         app:layout_constraintStart_toStartOf="parent"

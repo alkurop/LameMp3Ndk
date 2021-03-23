@@ -1,10 +1,7 @@
 package com.omar.retromp3recorder.app.ui.main
 
 import com.github.alkurop.ghostinshell.Shell
-import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.app.di.MockModule
-import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.BitRateRepo
 import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
@@ -12,11 +9,9 @@ import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo.ShouldReques
 import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
-import javax.inject.Named
 
 class MainViewInteractorRepoTest {
     @Inject
@@ -25,15 +20,12 @@ class MainViewInteractorRepoTest {
     @Inject
     lateinit var bitRateRepo: BitRateRepo
 
-    @Named(MockModule.PLAYER_SUBJECT)
-    @Inject
-    lateinit var audioBus: Subject<AudioPlayer.Event>
-
     @Inject
     lateinit var requestPermissionsRepo: RequestPermissionsRepo
 
     @Inject
     lateinit var sampleRateRepo: SampleRateRepo
+
     private lateinit var test: TestObserver<MainView.Output>
 
     @Before
@@ -52,34 +44,6 @@ class MainViewInteractorRepoTest {
         //Then
         test.assertValueAt(FIRST_EVENT_INDEX) { result ->
             (result as MainView.Output.BitrateChangedOutput).bitRate === Mp3VoiceRecorder.BitRate._128
-        }
-    }
-
-    @Test
-    fun `interactor listens to state repo`() {
-        //When
-        audioBus.onNext(AudioPlayer.Event.Message(Stringer.ofString("test")))
-
-        //Then
-        test.assertValueAt(
-            FIRST_EVENT_INDEX
-        ) { output: MainView.Output ->
-            val message = (output as MainView.Output.MessageLogOutput).message
-            Stringer.ofString("test") == message
-        }
-    }
-
-    @Test
-    fun `interacto listens to player id repo`() {
-        //When
-        audioBus.onNext(AudioPlayer.Event.PlayerId(38))
-
-        //Then
-        test.assertValueAt(
-            FIRST_EVENT_INDEX
-        ) { output: MainView.Output ->
-            val playerId: Int = (output as MainView.Output.PlayerIdOutput).playerId
-            playerId == 38
         }
     }
 
@@ -119,6 +83,6 @@ class MainViewInteractorRepoTest {
     }
 
     companion object {
-        private const val FIRST_EVENT_INDEX = 3
+        private const val FIRST_EVENT_INDEX = 2
     }
 }
