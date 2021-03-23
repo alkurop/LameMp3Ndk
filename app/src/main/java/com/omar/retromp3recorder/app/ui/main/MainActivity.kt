@@ -17,7 +17,6 @@ import com.github.alkurop.jpermissionmanager.PermissionOptionalDetails
 import com.github.alkurop.jpermissionmanager.PermissionRequiredDetails
 import com.github.alkurop.jpermissionmanager.PermissionsManager
 import com.jakewharton.rxbinding3.view.clicks
-import com.omar.retromp3recorder.app.App
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.customviews.VisualizerView
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
@@ -54,7 +53,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        App.appComponent.inject(this)
         addTitleView(bitRateContainer, getString(R.string.bit_rate))
         addTitleView(sampleRateContainer, getString(R.string.sample_rate))
         setUpButtonListeners()
