@@ -3,14 +3,13 @@ package com.omar.retromp3recorder.app.ui.main
 import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.github.alkurop.jpermissionmanager.PermissionOptionalDetails
 import com.github.alkurop.jpermissionmanager.PermissionRequiredDetails
 import com.github.alkurop.jpermissionmanager.PermissionsManager
@@ -23,20 +22,15 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val compositeDisposable = CompositeDisposable()
-    private val scrollDownHandler = Handler(Looper.getMainLooper())
 
-    private val logContainerView: LinearLayout by lazy { findViewById(R.id.ll_logHolder) }
     private val sampleRateContainer: LinearLayout by lazy { findViewById(R.id.left_radio_container) }
     private val bitRateContainer: LinearLayout by lazy { findViewById(R.id.right_radio_container) }
-
-    private val scrollView: ScrollView by lazy { findViewById(R.id.scrollView) }
     private val background: ImageView by lazy { findViewById(R.id.background) }
 
     private val sampleRateGroup: List<RadioButton> by lazy { createSampleRateGroup() }
     private val bitRateGroup: List<RadioButton> by lazy { createBitRateGroup() }
 
     private val checkboxHeight by lazy { resources.getDimensionPixelSize(R.dimen.cb_height) }
-
     private val permissionsManager: PermissionsManager by lazy { PermissionsManager(this) }
     private val permissionsMap: Map<String, PermissionOptionalDetails> by lazy { createPermissionsMap() }
 
@@ -56,8 +50,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         renderPermissions(state.requestForPermissions.ghost)
         renderBitrate(state.bitRate)
         renderSampleRate(state.sampleRate)
-        renderError(state.error.ghost?.bell(this))
-        renderMessage(state.message.ghost?.bell(this))
     }
 
     private fun addTitleView(container: ViewGroup, title: String) {
@@ -133,45 +125,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }.forEach { compositeDisposable.add(it) }
     }
 
-    private fun renderMessage(message: String?) {
-        if (message == null) {
-            return
-        }
-        @SuppressLint("InflateParams") val inflate = layoutInflater.inflate(
-            R.layout.log_view,
-            null
-        ) as TextView
-        logContainerView.addView(inflate)
-        inflate.text = message
-        scrollDownHandler.postDelayed(
-            { scrollView.fullScroll(View.FOCUS_DOWN) },
-            DELAY_MILLIS.toLong()
-        )
-    }
-
-    private fun renderError(error: String?) {
-        if (error == null) {
-            return
-        }
-        @SuppressLint("InflateParams") val inflate =
-            layoutInflater.inflate(R.layout.log_view, null) as TextView
-        logContainerView.addView(inflate)
-        inflate.text = getString(
-            R.string.error_string,
-            error
-        )
-        inflate.setTextColor(
-            ContextCompat.getColor(
-                this,
-                android.R.color.holo_orange_light
-            )
-        )
-        scrollDownHandler.postDelayed(
-            { scrollView.fullScroll(View.FOCUS_DOWN) },
-            DELAY_MILLIS.toLong()
-        )
-    }
-
     private fun renderPermissions(requestForPermissions: Set<String>?) {
         if (requestForPermissions == null) {
             return
@@ -199,8 +152,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.clear()
-        scrollDownHandler.removeCallbacksAndMessages(null)
     }
 }
 
-private const val DELAY_MILLIS = 150

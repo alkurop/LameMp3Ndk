@@ -1,6 +1,5 @@
 package com.omar.retromp3recorder.app.ui.main
 
-import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.ui.main.MainView.State
 import com.omar.retromp3recorder.app.ui.main.MainViewOutputMapper.mapOutputToState
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
@@ -25,45 +24,6 @@ class MainViewOutputMapperTest {
             .assertNotComplete()
             .assertNoErrors()
             .assertValueCount(1)
-    }
-
-    @Test
-    fun `map log repo message event`() {
-        val messageLogResult = MainView.Output.MessageLogOutput(Stringer.ofString("test"))
-
-        //When
-        outputPublisher.onNext(messageLogResult)
-
-        //Then
-        test.assertNoErrors()
-            .assertNotComplete()
-            .assertNoErrors()
-            .assertValueCount(2)
-            .assertValueAt(
-                1
-            ) { (_, _, message) ->
-                Stringer.ofString("test") == message.ghost
-            }
-    }
-
-    @Test
-    fun `map log repo error event`() {
-        val errorLogResult = MainView.Output.ErrorLogOutput(Stringer.ofString("test"))
-
-        //When
-        outputPublisher.onNext(errorLogResult)
-
-        test.values().forEach { println(it) }
-        //Then
-        test.assertNoErrors()
-            .assertNotComplete()
-            .assertNoErrors()
-            .assertValueCount(2)
-            .assertValueAt(
-                1
-            ) { (_, error) ->
-                Stringer.ofString("test") == error.ghost
-            }
     }
 
     @Test
@@ -96,11 +56,9 @@ class MainViewOutputMapperTest {
             .assertNotComplete()
             .assertNoErrors()
             .assertValueCount(2)
-            .assertValueAt(
-                1
-            ) { (_, _, _, _, sampleRate) -> sampleRate == Mp3VoiceRecorder.SampleRate._22050 }
+            .assertValueAt(1)
+            { (_, _, sampleRate) -> sampleRate == Mp3VoiceRecorder.SampleRate._22050 }
     }
-
 
 
     @Test
@@ -117,9 +75,8 @@ class MainViewOutputMapperTest {
             .assertNotComplete()
             .assertNoErrors()
             .assertValueCount(2)
-            .assertValueAt(
-                1
-            ) { (_, _, _, requestForPermissions) -> requestForPermissions.ghost === permissionsToRequest }
+            .assertValueAt(1)
+            { (_, requestForPermissions) -> requestForPermissions.ghost === permissionsToRequest }
     }
 
 

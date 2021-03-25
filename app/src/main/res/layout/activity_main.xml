@@ -161,8 +161,8 @@
 
 
     <fragment
-        android:name="com.omar.retromp3recorder.app.ui.visualizer.VisualizerFragment"
         android:id="@+id/fragment_visualizer"
+        android:name="com.omar.retromp3recorder.app.ui.visualizer.VisualizerFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -174,8 +174,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guidelineCentralHor" />
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <fragment
+        android:id="@+id/log_fragment"
+        android:name="com.omar.retromp3recorder.app.ui.log.LogFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/controller_margin"
@@ -187,15 +188,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guidelineBottomRight"
         app:layout_constraintStart_toStartOf="@id/guidelineBottomLeft"
-        app:layout_constraintTop_toTopOf="@id/guidelineCentralHor">
-
-        <LinearLayout
-            android:id="@+id/ll_logHolder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp" />
-    </ScrollView>
+        app:layout_constraintTop_toTopOf="@id/guidelineCentralHor" />
 
     <fragment
         android:id="@+id/audio_controls"
@@ -209,7 +202,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guidelineBottomRight"
-        app:layout_constraintTop_toTopOf="@id/guidelineCentralHor"/>
-
+        app:layout_constraintTop_toTopOf="@id/guidelineCentralHor" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

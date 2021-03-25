@@ -4,7 +4,6 @@ import com.omar.retromp3recorder.app.ui.main.MainView.Output
 import com.omar.retromp3recorder.bl.ChangeBitrateUC
 import com.omar.retromp3recorder.bl.ChangeSampleRateUC
 import com.omar.retromp3recorder.state.repos.BitRateRepo
-import com.omar.retromp3recorder.state.repos.LogRepo
 import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
 import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import com.omar.retromp3recorder.utils.flatMapGhost
@@ -21,7 +20,6 @@ class MainViewInteractor @Inject constructor(
     private val bitRateRepo: BitRateRepo,
     private val sampleRateRepo: SampleRateRepo,
     private val requestPermissionsRepo: RequestPermissionsRepo,
-    private val logRepo: LogRepo,
 ) {
 
     fun processIO(): ObservableTransformer<MainView.Input, Output> =
@@ -56,12 +54,5 @@ class MainViewInteractor @Inject constructor(
             .map { it.permissions }
             .flatMapGhost()
             .map { denied -> Output.RequestPermissionsOutput(denied) },
-        logRepo.observe()
-            .ofType(LogRepo.Event.Message::class.java)
-            .map { message -> Output.MessageLogOutput(message.message) },
-        logRepo.observe()
-            .ofType(LogRepo.Event.Error::class.java)
-            .map { message -> Output.ErrorLogOutput(message.error) },
-    )
-    )
+    ))
 }

@@ -18,12 +18,6 @@ object MainViewOutputMapper {
     private fun getMapper(): BiFunction<MainView.State, MainView.Output, MainView.State> =
         BiFunction { oldState: MainView.State, output: MainView.Output ->
             when (output) {
-                is MainView.Output.MessageLogOutput -> oldState.copy(
-                    message = Shell(output.message),
-                )
-                is MainView.Output.ErrorLogOutput -> oldState.copy(
-                    error = Shell(output.error),
-                )
                 is MainView.Output.BitrateChangedOutput -> oldState.copy(
                     bitRate = output.bitRate,
                 )
@@ -39,8 +33,6 @@ object MainViewOutputMapper {
     private fun getDefaultViewModel() = MainView.State(
         sampleRate = Mp3VoiceRecorder.SampleRate._44100,
         bitRate = Mp3VoiceRecorder.BitRate._320,
-        error = Shell.empty(),
-        message = Shell.empty(),
         requestForPermissions = Shell.empty()
     )
 }

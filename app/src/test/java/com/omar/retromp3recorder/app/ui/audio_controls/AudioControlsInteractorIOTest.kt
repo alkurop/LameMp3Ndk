@@ -17,7 +17,7 @@ import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
-class AudioControlsInteractorTest {
+class AudioControlsInteractorIOTest {
     @Inject
     lateinit var interactor: AudioControlsInteractor
 
