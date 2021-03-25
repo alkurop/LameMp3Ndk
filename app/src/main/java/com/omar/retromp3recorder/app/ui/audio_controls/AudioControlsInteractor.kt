@@ -22,26 +22,26 @@ class AudioControlsInteractor @Inject constructor(
 ) {
     fun processIO(): ObservableTransformer<AudioControlsView.Input, AudioControlsView.Output> =
         workScheduler.processIO(
-            outMapper = usecaseMapper,
-            inMappper = mapStateToResult
+            inputMapper = mapInputToUsecase,
+            outputMapper = mapRepoToOutput
         )
 
-    private val mapStateToResult: () -> Observable<AudioControlsView.Output> = {
+    private val mapRepoToOutput: () -> Observable<AudioControlsView.Output> = {
         Observable.merge(listOf(
             audioStateRepo.observe()
                 .map { AudioControlsView.Output.AudioStateChanged(it) },
         ))
     }
 
-    private val usecaseMapper: (Observable<AudioControlsView.Input>) -> Completable = { actions ->
+    private val mapInputToUsecase: (Observable<AudioControlsView.Input>) -> Completable = { input ->
         Completable.merge(listOf(
-            actions.ofType(AudioControlsView.Input.Play::class.java)
+            input.ofType(AudioControlsView.Input.Play::class.java)
                 .flatMapCompletable { startPlaybackUC.execute() },
-            actions.ofType(AudioControlsView.Input.Stop::class.java)
+            input.ofType(AudioControlsView.Input.Stop::class.java)
                 .flatMapCompletable { stopPlaybackAndRecordUC.execute() },
-            actions.ofType(AudioControlsView.Input.Record::class.java)
+            input.ofType(AudioControlsView.Input.Record::class.java)
                 .flatMapCompletable { startRecordUC.execute() },
-            actions.ofType(AudioControlsView.Input.Share::class.java)
+            input.ofType(AudioControlsView.Input.Share::class.java)
                 .flatMapCompletable { shareUC.execute() }
         ))
     }

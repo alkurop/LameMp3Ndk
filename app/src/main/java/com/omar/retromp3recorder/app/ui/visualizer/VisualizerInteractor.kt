@@ -2,6 +2,8 @@ package com.omar.retromp3recorder.app.ui.visualizer
 
 import com.omar.retromp3recorder.state.repos.AudioStateRepo
 import com.omar.retromp3recorder.state.repos.PlayerIdRepo
+import com.omar.retromp3recorder.utils.processIO
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.Scheduler
@@ -13,15 +15,17 @@ class VisualizerInteractor @Inject constructor(
     private val audioStateRepo: AudioStateRepo
 ) {
     fun processIO(): ObservableTransformer<VisualizerView.Input, VisualizerView.Output> =
-        ObservableTransformer { upstream ->
-            upstream.observeOn(scheduler)
-                .compose { repoMapper() }
-        }
+        scheduler.processIO(
+            inputMapper = { Completable.never() },
+            outputMapper = mapRepoToOutput
+        )
 
-    private fun repoMapper(): Observable<VisualizerView.Output> = Observable.merge(listOf(
-        audioStateRepo.observe()
-            .map { state -> VisualizerView.Output.AudioStateChanged(state) },
-        playerIdRepo.observe()
-            .map { playerId -> VisualizerView.Output.PlayerIdOutput(playerId) }
-    ))
+    private val mapRepoToOutput: () -> Observable<VisualizerView.Output> = {
+        Observable.merge(listOf(
+            audioStateRepo.observe()
+                .map { state -> VisualizerView.Output.AudioStateChanged(state) },
+            playerIdRepo.observe()
+                .map { playerId -> VisualizerView.Output.PlayerIdOutput(playerId) }
+        ))
+    }
 }

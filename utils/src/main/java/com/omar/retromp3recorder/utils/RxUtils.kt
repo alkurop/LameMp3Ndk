@@ -19,10 +19,10 @@ fun <T> Observable<Shell<T>>.flatMapGhost(): Observable<T> = this.flatMap {
 }
 
 fun <In, Out> Scheduler.processIO(
-    outMapper: (Observable<In>) -> Completable,
-    inMappper: () -> Observable<Out>
+    inputMapper: (Observable<In>) -> Completable,
+    outputMapper: () -> Observable<Out>
 ): ObservableTransformer<In, Out> = ObservableTransformer { actions ->
-    inMappper().mergeWith(
-        outMapper(actions.observeOn(this))
+    outputMapper().mergeWith(
+        inputMapper(actions.observeOn(this))
     )
 }
