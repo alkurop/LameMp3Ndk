@@ -2,7 +2,6 @@ package com.omar.retromp3recorder.app.ui.main
 
 import com.omar.retromp3recorder.app.ui.main.MainView.State
 import com.omar.retromp3recorder.app.ui.main.MainViewOutputMapper.mapOutputToState
-import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -27,41 +26,6 @@ class MainViewOutputMapperTest {
     }
 
     @Test
-    fun `map bitrate change result`() {
-        val bitrateChangedResult =
-            MainView.Output.BitrateChangedOutput(Mp3VoiceRecorder.BitRate._128)
-        //When
-        outputPublisher.onNext(bitrateChangedResult)
-
-        //Then
-        test.assertNoErrors()
-            .assertNotComplete()
-            .assertNoErrors()
-            .assertValueCount(2)
-            .assertValueAt(
-                1
-            ) { (bitRate) -> bitRate == Mp3VoiceRecorder.BitRate._128 }
-    }
-
-    @Test
-    fun `map sample rate change result`() {
-        val bitrateChangedResult =
-            MainView.Output.SampleRateChangeOutput(Mp3VoiceRecorder.SampleRate._22050)
-
-        //When
-        outputPublisher.onNext(bitrateChangedResult)
-
-        //Then
-        test.assertNoErrors()
-            .assertNotComplete()
-            .assertNoErrors()
-            .assertValueCount(2)
-            .assertValueAt(1)
-            { (_, _, sampleRate) -> sampleRate == Mp3VoiceRecorder.SampleRate._22050 }
-    }
-
-
-    @Test
     fun `map request permission result`() {
         val permissionsToRequest = setOf("test")
         val requestPermissionsResult =
@@ -76,8 +40,7 @@ class MainViewOutputMapperTest {
             .assertNoErrors()
             .assertValueCount(2)
             .assertValueAt(1)
-            { (_, requestForPermissions) -> requestForPermissions.ghost === permissionsToRequest }
+            { (requestForPermissions) -> requestForPermissions.ghost === permissionsToRequest }
     }
-
 
 }
