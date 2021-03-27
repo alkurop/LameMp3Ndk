@@ -6,7 +6,8 @@
     <ImageView
         android:id="@+id/background"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@drawable/bg" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineTopHor"
@@ -122,25 +123,23 @@
         app:layout_constraintStart_toStartOf="@id/guidelineTopLeft"
         app:layout_constraintTop_toTopOf="@id/guidelineTopHor" />
 
-    <LinearLayout
+    <fragment
         android:id="@+id/left_radio_container"
+        android:name="com.omar.retromp3recorder.app.ui.recorder_settings.beat_rate.BitRateSettingsFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"
-        android:background="@drawable/holder_l"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@id/guidelineCentralHor"
         app:layout_constraintEnd_toEndOf="@id/guidelineTopLeft"
         app:layout_constraintStart_toStartOf="@id/guidelineFarLeft"
         app:layout_constraintTop_toTopOf="@id/guidelineTopHor" />
 
-    <LinearLayout
+    <fragment
         android:id="@+id/right_radio_container"
+        android:name="com.omar.retromp3recorder.app.ui.recorder_settings.sample_rate.SampleRateSettingsFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"
-        android:background="@drawable/holder_r"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@id/guidelineCentralHor"
         app:layout_constraintEnd_toEndOf="@id/guidelineFarRight"
         app:layout_constraintStart_toStartOf="@id/guidelineTopRight"

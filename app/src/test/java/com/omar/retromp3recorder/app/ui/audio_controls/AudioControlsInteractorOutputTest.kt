@@ -9,7 +9,7 @@ import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
-class AudioControlsInteractorRepoTest {
+class AudioControlsInteractorOutputTest {
 
     @Inject
     lateinit var interactor: AudioControlsInteractor
