@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "699638817113",
+    "project_id": "retro-recorder",
+    "storage_bucket": "retro-recorder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699638817113:android:7d09c2a41c7c17e066ec48",
+        "android_client_info": {
+          "package_name": "com.omar.retromp3recorder.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699638817113-gh2lffu5lcbvjvlsomu5pvp53js5aolr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsa06LT6luYAKWF1S2aFBxdi-NeyiSzek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699638817113-gh2lffu5lcbvjvlsomu5pvp53js5aolr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
