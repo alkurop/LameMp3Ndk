@@ -52,14 +52,14 @@ class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
             }
             AudioState.Playing -> {
                 shareButton.onState(InteractiveButton.State.ENABLED)
-                playButton.onState(InteractiveButton.State.RUNNING)
+                playButton.onState(InteractiveButton.State.DISABLED)
                 recordButton.onState(InteractiveButton.State.DISABLED)
                 stopButton.onState(InteractiveButton.State.ENABLED)
             }
             AudioState.Recording -> {
                 shareButton.onState(InteractiveButton.State.DISABLED)
                 playButton.onState(InteractiveButton.State.DISABLED)
-                recordButton.onState(InteractiveButton.State.RUNNING)
+                recordButton.onState(InteractiveButton.State.DISABLED)
                 stopButton.onState(InteractiveButton.State.ENABLED)
             }
         }

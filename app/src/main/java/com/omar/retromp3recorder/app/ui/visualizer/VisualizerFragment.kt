@@ -7,16 +7,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.state.repos.AudioState
-import com.omar.retromp3recorder.utils.disposedBy
-import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
 class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
 
     private val viewModel by viewModels<VisualizerViewModel>()
-    private val visualizerDisplayView: VisualizerDisplayView
-        get() = requireView() as VisualizerDisplayView
+    private val visualizerDisplayView: VisualizerDisplayView?
+        get() = view as? VisualizerDisplayView
 
     private var visualizer: Visualizer? = null
     private val compositeDisposable = CompositeDisposable()
@@ -28,21 +25,14 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
             if (state.audioState != AudioState.Playing) {
                 stopVisualizer()
             }
-            renderPlayerId(state.playerId.ghost)
+            renderPlayerId(state.playerId)
         }
     }
 
     private fun stopVisualizer() {
-        Completable
-            .fromAction {
-                if (visualizer != null) {
-                    visualizer?.release()
-                    visualizer = null
-                }
-            }
-            .subscribeOn(Schedulers.computation())
-            .subscribe()
-            .disposedBy(compositeDisposable)
+        visualizer?.enabled = false
+        visualizer?.release()
+        visualizer = null
     }
 
     private fun renderPlayerId(playerId: Int?) {
@@ -56,7 +46,7 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
                     visualizer: Visualizer,
                     bytes: ByteArray,
                     samplingRate: Int
-                ) = visualizerDisplayView.updateVisualizer(bytes)
+                ) = visualizerDisplayView?.updateVisualizer(bytes)?: Unit
 
                 override fun onFftDataCapture(
                     visualizer: Visualizer,
@@ -69,8 +59,8 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         stopVisualizer()
+        super.onDestroyView()
     }
 
     override fun onDestroy() {

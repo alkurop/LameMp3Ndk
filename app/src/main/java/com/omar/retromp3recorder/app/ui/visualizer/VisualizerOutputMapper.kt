@@ -1,6 +1,5 @@
 package com.omar.retromp3recorder.app.ui.visualizer
 
-import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.state.repos.AudioState
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
@@ -19,13 +18,13 @@ object VisualizerOutputMapper {
                     audioState = result.state
                 )
                 is VisualizerView.Output.PlayerIdOutput -> oldState.copy(
-                    playerId = Shell(result.playerId)
+                    playerId = result.playerId
                 )
             }
         }
 
     private val defaultViewModel = VisualizerView.State(
         audioState = AudioState.Idle(false),
-        playerId = Shell.empty()
+        playerId = null
     )
 }
