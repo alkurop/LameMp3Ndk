@@ -12,9 +12,8 @@ Develop ...  ![travis icon](https://travis-ci.com/alkurop/LameMp3Ndk.svg?branch=
 
 
 //todo
-- split main activity into fragments
-- refactor activity component into non-static
-- add viewModel
-- add liveData
+- file list
+- backgrounds 9 pack
 - use exo player
+- recycler view in log, save state for log
 - scrubbing

@@ -1,12 +1,11 @@
 package com.omar.retromp3recorder.app.ui.visualizer
 
-import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.state.repos.AudioState
 
 object VisualizerView {
     data class State(
         val audioState: AudioState,
-        val playerId: Shell<Int>
+        val playerId: Int?
     )
 
     sealed class Input

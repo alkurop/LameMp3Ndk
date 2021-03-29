@@ -11,7 +11,7 @@ abstract class RecorderSettingsBaseFragment : Fragment(R.layout.fragment_recorde
 
     private val checkboxHeight by lazy { resources.getDimensionPixelSize(R.dimen.cb_height) }
     private val container: ViewGroup
-        get() = requireView() as ViewGroup
+        get() = requireView().findViewById(R.id.container) as ViewGroup
 
     protected fun addTitleView(title: String) {
         layoutInflater.inflate(R.layout.container_title, container)

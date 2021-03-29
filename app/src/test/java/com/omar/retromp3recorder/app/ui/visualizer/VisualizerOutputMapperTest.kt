@@ -49,6 +49,6 @@ class VisualizerOutputMapperTest {
             .assertValueCount(2)
             .assertValueAt(
                 1
-            ) { (_, playerId1) -> playerId1.ghost == playerId }
+            ) { (_, playerId1) -> playerId1 == playerId }
     }
 }
