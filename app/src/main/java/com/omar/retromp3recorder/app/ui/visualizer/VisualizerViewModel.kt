@@ -22,6 +22,7 @@ class VisualizerViewModel : ViewModel() {
         inputSubject
             .compose(interactor.processIO())
             .compose(VisualizerOutputMapper.mapOutputToState())
+            .distinctUntilChanged()
             .subscribe(state::postValue)
             .disposedBy(compositeDisposable)
     }
