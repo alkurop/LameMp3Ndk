@@ -17,20 +17,36 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
 
     private var visualizer: Visualizer? = null
     private val compositeDisposable = CompositeDisposable()
+    private val visualizerListener = object : Visualizer.OnDataCaptureListener {
+        override fun onWaveFormDataCapture(
+            visualizer: Visualizer,
+            bytes: ByteArray,
+            samplingRate: Int
+        ) {
+            visualizerDisplayView?.updateVisualizer(bytes)
+        }
 
+        override fun onFftDataCapture(
+            visualizer: Visualizer,
+            bytes: ByteArray,
+            samplingRate: Int
+        ) = Unit
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.state.observe(viewLifecycleOwner) { state ->
             if (state.audioState != AudioState.Playing) {
                 stopVisualizer()
+            } else {
+                renderPlayerId(state.playerId)
             }
-            renderPlayerId(state.playerId)
         }
     }
 
     private fun stopVisualizer() {
         visualizer?.enabled = false
+        visualizer?.setDataCaptureListener(null, Visualizer.getMaxCaptureRate() / 2, true, false)
         visualizer?.release()
         visualizer = null
     }
@@ -41,19 +57,13 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
         }
         visualizer = Visualizer(playerId).apply {
             captureSize = Visualizer.getCaptureSizeRange()[1]
-            setDataCaptureListener(object : Visualizer.OnDataCaptureListener {
-                override fun onWaveFormDataCapture(
-                    visualizer: Visualizer,
-                    bytes: ByteArray,
-                    samplingRate: Int
-                ) = visualizerDisplayView?.updateVisualizer(bytes)?: Unit
 
-                override fun onFftDataCapture(
-                    visualizer: Visualizer,
-                    bytes: ByteArray,
-                    samplingRate: Int
-                ) = Unit
-            }, Visualizer.getMaxCaptureRate() / 2, true, false)
+            setDataCaptureListener(
+                visualizerListener,
+                Visualizer.getMaxCaptureRate() / 2,
+                true,
+                false
+            )
             enabled = true
         }
     }
