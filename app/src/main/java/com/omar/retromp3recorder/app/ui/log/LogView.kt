@@ -1,12 +1,10 @@
 package com.omar.retromp3recorder.app.ui.log
 
-import com.github.alkurop.ghostinshell.Shell
 import com.github.alkurop.stringerbell.Stringer
 
 object LogView {
     data class State(
-        val error: Shell<Stringer>,
-        val message: Shell<Stringer>,
+        val messages: List<Output>
     )
 
     sealed class Input
