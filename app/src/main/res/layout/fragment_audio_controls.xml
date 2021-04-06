@@ -17,23 +17,23 @@
         android:background="@color/color_visualizer_bg"
         android:orientation="horizontal">
 
-        <com.omar.retromp3recorder.ui.state_button.InteractiveButton
+        <com.omar.retromp3recorder.ui.state_button.InteractiveButtonBlinking
             android:id="@+id/acf_play"
             android:layout_width="@dimen/control_buttons_dimen"
             android:layout_height="@dimen/control_buttons_dimen"
             android:layout_marginEnd="8dp"
             android:background="?selectableItemBackgroundBorderless"
             android:padding="8dp"
-            app:image="@drawable/ic_action_play" />
+            app:image="@drawable/ic_play_composite" />
 
-        <com.omar.retromp3recorder.ui.state_button.InteractiveButton
+        <com.omar.retromp3recorder.ui.state_button.InteractiveButtonBlinking
             android:id="@+id/acf_record"
             android:layout_width="@dimen/control_buttons_dimen"
             android:layout_height="@dimen/control_buttons_dimen"
             android:layout_marginEnd="8dp"
             android:background="?selectableItemBackgroundBorderless"
             android:padding="8dp"
-            app:image="@drawable/ic_action_rec" />
+            app:image="@drawable/ic_record_composite" />
 
         <com.omar.retromp3recorder.ui.state_button.InteractiveButton
             android:id="@+id/acf_stop"

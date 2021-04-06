@@ -10,10 +10,11 @@ import com.omar.retromp3recorder.app.ui.utils.findViewById
 import com.omar.retromp3recorder.app.uiutils.observe
 import com.omar.retromp3recorder.state.repos.AudioState
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
+import com.omar.retromp3recorder.ui.state_button.InteractiveButtonBlinking
 import io.reactivex.Observable.merge
 
 class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
-    private val playButton: InteractiveButton
+    private val playButton: InteractiveButtonBlinking
         get() = findViewById(R.id.acf_play)
 
     private val recordButton: InteractiveButton
@@ -48,14 +49,14 @@ class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
             }
             AudioState.Playing -> {
                 shareButton.onState(InteractiveButton.State.ENABLED)
-                playButton.onState(InteractiveButton.State.DISABLED)
+                playButton.onState(InteractiveButton.State.RUNNING)
                 recordButton.onState(InteractiveButton.State.DISABLED)
                 stopButton.onState(InteractiveButton.State.ENABLED)
             }
             AudioState.Recording -> {
                 shareButton.onState(InteractiveButton.State.DISABLED)
                 playButton.onState(InteractiveButton.State.DISABLED)
-                recordButton.onState(InteractiveButton.State.DISABLED)
+                recordButton.onState(InteractiveButton.State.RUNNING)
                 stopButton.onState(InteractiveButton.State.ENABLED)
             }
         }
