@@ -34,7 +34,6 @@ class LogInteractorRepoTest {
             .test()
     }
 
-
     @Test
     fun `interactor listens to log repo messages`() {
         val message = Stringer.ofString("hello")

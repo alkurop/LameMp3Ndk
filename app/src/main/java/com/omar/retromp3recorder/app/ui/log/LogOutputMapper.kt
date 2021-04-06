@@ -1,6 +1,5 @@
 package com.omar.retromp3recorder.app.ui.log
 
-import com.github.alkurop.ghostinshell.Shell
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.functions.BiFunction
@@ -16,18 +15,14 @@ object LogOutputMapper {
 
     private fun getMapper(): BiFunction<LogView.State, LogView.Output, LogView.State> =
         BiFunction { oldState: LogView.State, output: LogView.Output ->
-            when (output) {
-                is LogView.Output.MessageLogOutput -> oldState.copy(
-                    message = Shell(output.message),
+                oldState.copy(
+                    messages = oldState.messages.takeLast(LOG_MEMORY_SIZE) + output,
                 )
-                is LogView.Output.ErrorLogOutput -> oldState.copy(
-                    error = Shell(output.error),
-                )
-            }
         }
 
     private fun getDefaultViewModel() = LogView.State(
-        error = Shell.empty(),
-        message = Shell.empty(),
+        messages = emptyList()
     )
 }
+
+private const val LOG_MEMORY_SIZE = 30

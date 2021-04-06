@@ -30,8 +30,9 @@ class LogOutputMapperTest {
             .assertValueCount(2)
             .assertValueAt(
                 1
-            ) { (_, message) ->
-                Stringer.ofString("test") == message.ghost
+            ) { (messages) ->
+                val lastOrNull = messages.lastOrNull()!! as LogView.Output.MessageLogOutput
+                Stringer.ofString("test") == lastOrNull.message
             }
     }
 
@@ -50,8 +51,9 @@ class LogOutputMapperTest {
             .assertValueCount(2)
             .assertValueAt(
                 1
-            ) { (error) ->
-                Stringer.ofString("test") == error.ghost
+            ) { (messages) ->
+                val lastOrNull = messages.lastOrNull()!! as LogView.Output.ErrorLogOutput
+                Stringer.ofString("test") == lastOrNull.error
             }
     }
 }

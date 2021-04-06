@@ -1,17 +1,17 @@
 package com.omar.retromp3recorder.app.ui.main
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.omar.retromp3recorder.app.App
 import com.omar.retromp3recorder.app.ui.main.MainViewOutputMapper.mapOutputToState
 import com.omar.retromp3recorder.utils.disposedBy
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 class MainViewModel : ViewModel() {
 
-    val state = MutableLiveData<MainView.State>()
+    val state = BehaviorSubject.create<MainView.State>()
 
     @Inject
     lateinit var interactor: MainViewInteractor
@@ -24,7 +24,7 @@ class MainViewModel : ViewModel() {
         inputSubject
             .compose(interactor.processIO())
             .compose(mapOutputToState())
-            .subscribe(state::postValue)
+            .subscribe(state::onNext)
             .disposedBy(compositeDisposable)
     }
 

@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.state.repos.AudioState
-import io.reactivex.disposables.CompositeDisposable
 
 class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
 
@@ -16,7 +15,6 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
         get() = view as? VisualizerDisplayView
 
     private var visualizer: Visualizer? = null
-    private val compositeDisposable = CompositeDisposable()
     private val visualizerListener = object : Visualizer.OnDataCaptureListener {
         override fun onWaveFormDataCapture(
             visualizer: Visualizer,
@@ -71,10 +69,5 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
     override fun onDestroyView() {
         stopVisualizer()
         super.onDestroyView()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.clear()
     }
 }
