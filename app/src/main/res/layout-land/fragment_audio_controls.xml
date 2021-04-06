@@ -19,25 +19,25 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
-    <com.omar.retromp3recorder.ui.state_button.InteractiveButton
+    <com.omar.retromp3recorder.ui.state_button.InteractiveButtonBlinking
         android:id="@+id/acf_play"
         android:layout_width="@dimen/control_buttons_dimen"
         android:layout_height="@dimen/control_buttons_dimen"
         android:background="?selectableItemBackgroundBorderless"
         android:padding="8dp"
-        app:image="@drawable/ic_action_play"
+        app:image="@drawable/ic_play_composite"
         app:layout_constraintBottom_toBottomOf="@id/centralHor"
         app:layout_constraintEnd_toEndOf="@id/centralVert"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.omar.retromp3recorder.ui.state_button.InteractiveButton
+    <com.omar.retromp3recorder.ui.state_button.InteractiveButtonBlinking
         android:id="@+id/acf_record"
         android:layout_width="@dimen/control_buttons_dimen"
         android:layout_height="@dimen/control_buttons_dimen"
         android:background="?selectableItemBackgroundBorderless"
         android:padding="8dp"
-        app:image="@drawable/ic_action_rec"
+        app:image="@drawable/ic_record_composite"
         app:layout_constraintBottom_toBottomOf="@id/centralHor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/centralVert"

@@ -15,10 +15,8 @@ class LogAdapter : RecyclerView.Adapter<LogAdapter.LogViewHolder>() {
 
     var items: List<LogView.Output> = emptyList()
         set(newValue) {
-            val oldValue = field
-            field = newValue;
-            val diffResult = DiffUtil.calculateDiff(MyDiffCallback(oldValue, newValue))
-            diffResult.dispatchUpdatesTo(this)
+            field = newValue
+            notifyDataSetChanged()
         }
 
     private lateinit var layoutInflater: LayoutInflater

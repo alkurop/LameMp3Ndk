@@ -5,14 +5,17 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import io.reactivex.disposables.CompositeDisposable
 
 
-class InteractiveButton @JvmOverloads constructor(
+open class InteractiveButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val imageView: ImageView
         get() = findViewById(R.id.vsb_image_view)
+
+    protected val compositeDisposable = CompositeDisposable()
 
     init {
         View.inflate(context, R.layout.view_state_button, this)
@@ -40,21 +43,29 @@ class InteractiveButton @JvmOverloads constructor(
         }
 
     private fun onEnabled() {
+        compositeDisposable.clear()
         alpha = 1.0f
-        this.isEnabled = true
-        this.isActivated = false
+        isEnabled = true
+        isActivated = false
     }
 
     private fun onDisabled() {
+        compositeDisposable.clear()
         alpha = 0.30f
-        this.isEnabled = false
-        this.isActivated = false
+        isEnabled = false
+        isActivated = false
     }
 
-    private fun onRunning() {
+    open fun onRunning() {
+        compositeDisposable.clear()
         alpha = 1.0f
         isActivated = true
-        isActivated = true
+        isEnabled = false
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        compositeDisposable.clear()
     }
 
     enum class State {
