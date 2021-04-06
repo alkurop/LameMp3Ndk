@@ -63,7 +63,6 @@ dependencies {
 
     implementation "androidx.fragment:fragment-ktx:$versions.ktxFragment"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
 
     implementation platform("com.google.firebase:firebase-bom:$versions.firebase")
     implementation 'com.google.firebase:firebase-analytics-ktx'
