@@ -9,6 +9,6 @@ class ChangeSampleRateUC @Inject constructor(
     private val repo: SampleRateRepo
 ) {
     fun execute(sampleRate: Mp3VoiceRecorder.SampleRate): Completable {
-        return Completable.fromAction { repo.newValue(sampleRate) }
+        return Completable.fromAction { repo.onNext(sampleRate) }
     }
 }

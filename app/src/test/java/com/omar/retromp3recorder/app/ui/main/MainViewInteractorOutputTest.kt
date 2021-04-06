@@ -41,7 +41,7 @@ class MainViewInteractorRepoTest {
             ShouldRequestPermissions.Denied(Shell(setOf("test")))
 
         //When
-        requestPermissionsRepo.newValue(shouldRequestPermissions)
+        requestPermissionsRepo.onNext(shouldRequestPermissions)
 
         //Then
         test.assertValueAt(

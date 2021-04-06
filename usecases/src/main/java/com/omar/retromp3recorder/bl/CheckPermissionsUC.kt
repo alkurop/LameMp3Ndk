@@ -36,7 +36,7 @@ class CheckPermissionsUCImpl @Inject constructor(
                 )
             }
             .flatMapCompletable { shouldRequestPermissions ->
-                Completable.fromAction { requestPermissionsRepo.newValue(shouldRequestPermissions) }
+                Completable.fromAction { requestPermissionsRepo.onNext(shouldRequestPermissions) }
             }
     }
 

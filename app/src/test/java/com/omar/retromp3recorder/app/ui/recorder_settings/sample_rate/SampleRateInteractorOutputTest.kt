@@ -27,7 +27,7 @@ class SampleRateInteractorOutputTest {
     }
     @Test
     fun `interactor listens to sample rate repo`() {
-        sampleRateRepo.newValue(Mp3VoiceRecorder.SampleRate._8000)
+        sampleRateRepo.onNext(Mp3VoiceRecorder.SampleRate._8000)
 
         //Then
         test.assertValueAt(

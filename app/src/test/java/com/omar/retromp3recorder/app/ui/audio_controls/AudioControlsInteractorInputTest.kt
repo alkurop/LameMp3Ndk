@@ -42,7 +42,7 @@ class AudioControlsInteractorInputTest {
         test = actionSubject.compose(interactor.processIO()).test()
         whenever(permissionsUC.execute(any()))
             .thenAnswer {
-                requestPermissionsRepo.newValue(RequestPermissionsRepo.ShouldRequestPermissions.Granted)
+                requestPermissionsRepo.onNext(RequestPermissionsRepo.ShouldRequestPermissions.Granted)
                 Completable.complete()
             }
     }

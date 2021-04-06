@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class ChangeBitrateUC @Inject constructor(private val repo: BitRateRepo) {
     fun execute(bitRate: Mp3VoiceRecorder.BitRate): Completable {
-        return Completable.fromAction { repo.newValue(bitRate) }
+        return Completable.fromAction { repo.onNext(bitRate) }
     }
 }

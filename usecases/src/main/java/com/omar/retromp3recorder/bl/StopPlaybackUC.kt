@@ -5,12 +5,10 @@ import io.reactivex.Completable
 import javax.inject.Inject
 
 class StopPlaybackUC @Inject constructor(
-    private val audioPlayer: AudioPlayer,
-    private val lookForFilesUC: LookForFilesUC
+    private val audioPlayer: AudioPlayer
 ) {
     fun execute(): Completable {
         return Completable
             .fromAction { audioPlayer.playerStop() }
-            .andThen(lookForFilesUC.execute())
     }
 }
