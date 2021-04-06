@@ -7,7 +7,7 @@ import javax.inject.Singleton
 
 @Singleton
 class BitRateRepo @Inject constructor(defaults: RecorderDefaults) :
-    BehaviorSubjectRepo<RecorderDefaults>(defaults)
+    BehaviorSubjectRepo<Mp3VoiceRecorder.BitRate>(defaults.bitRate)
 
 @Singleton
 class CurrentFileRepo @Inject constructor(defaults: RecorderDefaults) :
