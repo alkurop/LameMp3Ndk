@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.utils.findViewById
+import com.omar.retromp3recorder.app.uiutils.observe
 
 class LogFragment : Fragment(R.layout.fragment_log) {
 
@@ -25,14 +26,12 @@ class LogFragment : Fragment(R.layout.fragment_log) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
-        viewModel.state.observe(viewLifecycleOwner) { state ->
-            renderMessages(state.messages)
-        }
+        viewModel.state.observe(viewLifecycleOwner) { state -> renderMessages(state.messages) }
     }
 
     private fun renderMessages(messages: List<LogView.Output>) {
         adapter.items = messages
-        recyclerView.smoothScrollToPosition(messages.size - 1)
+        recyclerView.smoothScrollToPosition(messages.size)
     }
 
     override fun onDestroyView() {

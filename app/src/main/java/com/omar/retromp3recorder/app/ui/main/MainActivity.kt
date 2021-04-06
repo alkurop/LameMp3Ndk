@@ -8,12 +8,11 @@ import com.github.alkurop.jpermissionmanager.PermissionOptionalDetails
 import com.github.alkurop.jpermissionmanager.PermissionRequiredDetails
 import com.github.alkurop.jpermissionmanager.PermissionsManager
 import com.omar.retromp3recorder.app.R
-import io.reactivex.disposables.CompositeDisposable
+import com.omar.retromp3recorder.app.uiutils.observe
 import java.util.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private val compositeDisposable = CompositeDisposable()
     private val permissionsManager: PermissionsManager by lazy { PermissionsManager(this) }
     private val permissionsMap: Map<String, PermissionOptionalDetails> by lazy { createPermissionsMap() }
 
@@ -59,10 +58,4 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         permissionsManager.addPermissions(permissionRequests)
         permissionsManager.makePermissionRequest(true)
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.clear()
-    }
 }
-

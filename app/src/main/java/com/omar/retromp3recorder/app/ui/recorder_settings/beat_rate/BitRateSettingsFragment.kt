@@ -6,11 +6,10 @@ import androidx.fragment.app.viewModels
 import com.jakewharton.rxbinding3.view.clicks
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.recorder_settings.RecorderSettingsBaseFragment
+import com.omar.retromp3recorder.app.uiutils.observe
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
-import io.reactivex.disposables.CompositeDisposable
 
 class BitRateSettingsFragment : RecorderSettingsBaseFragment() {
-    private val compositeDisposable = CompositeDisposable()
     private val viewModel by viewModels<BitRateSettingsViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,21 +25,17 @@ class BitRateSettingsFragment : RecorderSettingsBaseFragment() {
         }
         group.mapIndexed { index, radioButton ->
             radioButton.clicks()
-                .subscribe {
+                .observe(viewLifecycleOwner) {
                     val bitRate = Mp3VoiceRecorder.BitRate.values()[index]
                     viewModel.inputSubject.onNext(bitRate)
                 }
-        }.forEach { compositeDisposable.add(it) }
+        }
 
-        viewModel.state.observe(viewLifecycleOwner, { state ->
-            group.forEachIndexed { index, radioButton ->
-                radioButton.isChecked = state.ordinal == index
+        viewModel.state
+            .observe(viewLifecycleOwner) { state ->
+                group.forEachIndexed { index, radioButton ->
+                    radioButton.isChecked = state.ordinal == index
+                }
             }
-        })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        compositeDisposable.clear()
     }
 }

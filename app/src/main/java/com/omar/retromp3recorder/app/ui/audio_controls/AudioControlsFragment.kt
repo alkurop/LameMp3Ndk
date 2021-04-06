@@ -7,11 +7,10 @@ import androidx.fragment.app.viewModels
 import com.jakewharton.rxbinding3.view.clicks
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.utils.findViewById
+import com.omar.retromp3recorder.app.uiutils.observe
 import com.omar.retromp3recorder.state.repos.AudioState
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
-import com.omar.retromp3recorder.utils.disposedBy
 import io.reactivex.Observable.merge
-import io.reactivex.disposables.CompositeDisposable
 
 class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
     private val playButton: InteractiveButton
@@ -27,7 +26,6 @@ class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
         get() = findViewById(R.id.acf_stop)
 
     private val viewModel: AudioControlsViewModel by viewModels()
-    private val compositeDisposable = CompositeDisposable()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,9 +34,7 @@ class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
             playButton.clicks().map { AudioControlsView.Input.Play },
             stopButton.clicks().map { AudioControlsView.Input.Stop },
             shareButton.clicks().map { AudioControlsView.Input.Share }
-        ))
-            .subscribe { viewModel.onInput(it) }
-            .disposedBy(compositeDisposable)
+        )).observe(viewLifecycleOwner) { viewModel.onInput(it) }
         viewModel.state.observe(viewLifecycleOwner, ::renderState)
     }
 
@@ -63,10 +59,5 @@ class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
                 stopButton.onState(InteractiveButton.State.ENABLED)
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        compositeDisposable.clear()
     }
 }

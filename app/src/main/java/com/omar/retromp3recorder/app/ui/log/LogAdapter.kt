@@ -6,14 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.omar.retromp3recorder.app.R
+
 
 class LogAdapter : RecyclerView.Adapter<LogAdapter.LogViewHolder>() {
 
     var items: List<LogView.Output> = emptyList()
-        set(value) {
-            field = value; notifyDataSetChanged()
+        set(newValue) {
+            val oldValue = field
+            field = newValue;
+            val diffResult = DiffUtil.calculateDiff(MyDiffCallback(oldValue, newValue))
+            diffResult.dispatchUpdatesTo(this)
         }
 
     private lateinit var layoutInflater: LayoutInflater
@@ -80,6 +85,28 @@ class LogAdapter : RecyclerView.Adapter<LogAdapter.LogViewHolder>() {
                     )
                 )
             }
+        }
+    }
+
+    class MyDiffCallback(
+        private val newList: List<LogView.Output>,
+        private val oldList: List<LogView.Output>
+    ) :
+        DiffUtil.Callback() {
+        override fun getOldListSize(): Int {
+            return oldList.size
+        }
+
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] === newList[newItemPosition]
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
         }
     }
 }
