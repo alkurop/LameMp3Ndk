@@ -15,7 +15,7 @@ class LookForFilesUC @Inject constructor(
             val fileDir = filePathGenerator.fileDir
             val file = File(fileDir)
             val list = file.listFiles()?.map { it.absolutePath }?.sorted()?: emptyList()
-            fileListRepo.newValue(list)
+            fileListRepo.onNext(list)
         }
     }
 }

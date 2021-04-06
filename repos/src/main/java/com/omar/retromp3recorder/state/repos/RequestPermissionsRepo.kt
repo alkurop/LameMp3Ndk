@@ -13,7 +13,7 @@ class RequestPermissionsRepo @Inject constructor() {
         return state
     }
 
-    fun newValue(newValue: ShouldRequestPermissions) {
+    fun onNext(newValue: ShouldRequestPermissions) {
         state.onNext(newValue)
     }
 

@@ -28,7 +28,7 @@ class BitRateSettingsInteractorOutputTest {
     @Test
     fun `interactor listens to bitrate repo`() {
         //When
-        bitrateRepo.newValue(Mp3VoiceRecorder.BitRate._128)
+        bitrateRepo.onNext(Mp3VoiceRecorder.BitRate._128)
 
         //Then
         test.assertValueAt(FIRST_EVENT_INDEX) { bitrate ->

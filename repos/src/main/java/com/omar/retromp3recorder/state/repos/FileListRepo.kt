@@ -9,7 +9,7 @@ import javax.inject.Singleton
 class FileListRepo @Inject constructor() {
     private val stateSubject = BehaviorSubject.create<List<String>>()
 
-    fun newValue(fileNames: List<String>) {
+    fun onNext(fileNames: List<String>) {
         stateSubject.onNext(fileNames)
     }
 

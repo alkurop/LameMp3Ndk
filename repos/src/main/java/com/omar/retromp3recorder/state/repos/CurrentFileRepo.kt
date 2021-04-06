@@ -9,7 +9,8 @@ import javax.inject.Singleton
 @Singleton
 class CurrentFileRepo @Inject constructor(defaults: RecorderDefaults) {
     private val stateSubject = BehaviorSubject.create<String>()
-    fun newValue(bitRate: String) {
+
+    fun onNext(bitRate: String) {
         stateSubject.onNext(bitRate)
     }
 

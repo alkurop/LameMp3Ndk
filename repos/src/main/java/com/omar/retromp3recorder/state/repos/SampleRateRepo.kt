@@ -17,7 +17,7 @@ class SampleRateRepo @Inject constructor(
         stateSubject.onNext(defaults.sampleRate)
     }
 
-    fun newValue(bitRate: Mp3VoiceRecorder.SampleRate) {
+    fun onNext(bitRate: Mp3VoiceRecorder.SampleRate) {
         stateSubject.onNext(bitRate)
     }
 

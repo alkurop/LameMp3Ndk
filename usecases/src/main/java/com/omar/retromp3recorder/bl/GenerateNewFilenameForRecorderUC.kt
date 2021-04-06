@@ -12,7 +12,7 @@ class GenerateNewFilenameForRecorderUC @Inject constructor(
     fun execute(): Completable {
         return Completable.fromAction {
             val filePath = filePathGenerator.generateFilePath()
-            currentFileRepo.newValue(filePath)
+            currentFileRepo.onNext(filePath)
         }
     }
 }

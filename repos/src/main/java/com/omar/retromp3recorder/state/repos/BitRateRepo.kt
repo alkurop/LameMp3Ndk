@@ -15,7 +15,7 @@ class BitRateRepo @Inject constructor(defaults: RecorderDefaults) {
         stateSubject.onNext(defaults.bitRate)
     }
 
-    fun newValue(bitRate: Mp3VoiceRecorder.BitRate) {
+    fun onNext(bitRate: Mp3VoiceRecorder.BitRate) {
         stateSubject.onNext(bitRate)
     }
 
