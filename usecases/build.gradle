@@ -35,7 +35,7 @@ dependencies {
     implementation project(':io-audioplayer')
     implementation project(':io-files')
     implementation project(':io-share')
-    implementation project(':state')
+    implementation project(':repos')
 
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
     testImplementation "junit:junit:$testVersions.junit"

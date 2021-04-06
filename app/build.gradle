@@ -76,7 +76,7 @@ dependencies {
     implementation project(':io-files')
     implementation project(':io-share')
     implementation project(':ui-state-button')
-    implementation project(':state')
+    implementation project(':repos')
     implementation project(':usecases')
 
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
