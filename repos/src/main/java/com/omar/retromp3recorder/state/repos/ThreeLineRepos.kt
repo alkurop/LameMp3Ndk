@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.state.repos
 
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.recorder.RecorderDefaults
+import com.omar.retromp3recorder.state.repos.common.BehaviorSubjectRepo
 import javax.inject.Inject
 import javax.inject.Singleton
 

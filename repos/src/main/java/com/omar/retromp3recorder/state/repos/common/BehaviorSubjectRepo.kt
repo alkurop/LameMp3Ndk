@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.state.repos
+package com.omar.retromp3recorder.state.repos.common
 
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
