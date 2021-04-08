@@ -5,6 +5,4 @@
     <dimen name="cb_height">24dp</dimen>
     <dimen name="controller_margin">8dp</dimen>
     <dimen name="control_buttons_dimen">50dp</dimen>
-    <dimen name="audio_controls_width">240dp</dimen>
-    <dimen name="audio_controls_height">66dp</dimen>
 </resources>
