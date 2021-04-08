@@ -11,8 +11,8 @@ class BitRateRepo @Inject constructor(defaults: RecorderDefaults) :
     BehaviorSubjectRepo<Mp3VoiceRecorder.BitRate>(defaults.bitRate)
 
 @Singleton
-class CurrentFileRepo @Inject constructor(defaults: RecorderDefaults) :
-    BehaviorSubjectRepo<String>(defaults.filePath)
+class CurrentFileRepo @Inject constructor() :
+    BehaviorSubjectRepo<String>("")
 
 @Singleton
 class FileListRepo @Inject constructor() : BehaviorSubjectRepo<List<String>>()

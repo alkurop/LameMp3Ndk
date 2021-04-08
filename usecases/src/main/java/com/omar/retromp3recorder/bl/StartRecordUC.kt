@@ -1,6 +1,7 @@
 package com.omar.retromp3recorder.bl
 
 import android.Manifest
+import com.omar.retromp3recorder.files.FilePathGenerator
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.BitRateRepo
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
@@ -13,33 +14,33 @@ import io.reactivex.functions.Function3
 import javax.inject.Inject
 
 class StartRecordUC @Inject constructor(
-    private val currentFileRepo: CurrentFileRepo,
     private val bitRateRepo: BitRateRepo,
-    private val sampleRateRepo: SampleRateRepo,
-    private val voiceRecorder: Mp3VoiceRecorder,
-    private val stopPlaybackAndRecordUC: StopPlaybackAndRecordUC,
     private val checkPermissionsUC: CheckPermissionsUC,
+    private val currentFileRepo: CurrentFileRepo,
+    private val filePathGenerator: FilePathGenerator,
     private val requestPermissionsRepo: RequestPermissionsRepo,
-    private val generateNewFilenameForRecorderUC: GenerateNewFilenameForRecorderUC
+    private val sampleRateRepo: SampleRateRepo,
+    private val stopPlaybackAndRecordUC: StopPlaybackAndRecordUC,
+    private val voiceRecorder: Mp3VoiceRecorder,
 ) {
     fun execute(): Completable {
-        val propsZipper = Function3 { filepath: String, bitRate: Mp3VoiceRecorder.BitRate, sampleRate: Mp3VoiceRecorder.SampleRate ->
-            Mp3VoiceRecorder.RecorderProps(filepath, bitRate, sampleRate)
-        }
+        val propsZipper =
+            Function3 { filepath: String, bitRate: Mp3VoiceRecorder.BitRate, sampleRate: Mp3VoiceRecorder.SampleRate ->
+                Mp3VoiceRecorder.RecorderProps(filepath, bitRate, sampleRate)
+            }
         val abort = Completable.complete()
-        val execute = generateNewFilenameForRecorderUC
-            .execute()
-            .andThen(
-                Observable.zip(
-                    currentFileRepo.observe().take(1),
-                    bitRateRepo.observe().take(1),
-                    sampleRateRepo.observe().take(1),
-                    propsZipper
-                )
+        val execute = Observable
+            .zip(
+                Observable.fromCallable { filePathGenerator.generateFilePath() },
+                bitRateRepo.observe().take(1),
+                sampleRateRepo.observe().take(1),
+                propsZipper
             )
             .flatMapCompletable { props: Mp3VoiceRecorder.RecorderProps ->
-                Completable
-                    .fromAction { voiceRecorder.record(props) }
+                Completable.fromAction {
+                    currentFileRepo.onNext(props.filepath)
+                    voiceRecorder.record(props)
+                }
             }
         val merge = checkPermissionsUC.execute(voiceRecordPermissions)
             .andThen(
