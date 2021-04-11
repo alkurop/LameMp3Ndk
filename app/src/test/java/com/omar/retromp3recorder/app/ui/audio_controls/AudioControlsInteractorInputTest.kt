@@ -8,7 +8,9 @@ import com.omar.retromp3recorder.bl.CheckPermissionsUC
 import com.omar.retromp3recorder.share.Sharer
 import com.omar.retromp3recorder.state.repos.AudioState
 import com.omar.retromp3recorder.state.repos.AudioStateRepo
+import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
+import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.Completable
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
@@ -33,6 +35,9 @@ class AudioControlsInteractorInputTest {
     @Inject
     lateinit var sharingModule: Sharer
 
+    @Inject
+    lateinit var currentFileRepo: CurrentFileRepo
+
     private val actionSubject: Subject<AudioControlsView.Input> = PublishSubject.create()
     private lateinit var test: TestObserver<AudioControlsView.Output>
 
@@ -45,10 +50,11 @@ class AudioControlsInteractorInputTest {
                 requestPermissionsRepo.onNext(RequestPermissionsRepo.ShouldRequestPermissions.Granted)
                 Completable.complete()
             }
+        currentFileRepo.onNext(Optional("test"))
     }
 
     @Test
-    fun `sharing action leads to usecase exection`() {
+    fun `sharing action leads to usecase execution`() {
         //When
         actionSubject.onNext(AudioControlsView.Input.Share)
 
