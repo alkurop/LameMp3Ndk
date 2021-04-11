@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.app.di
 
 import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsViewModel
 import com.omar.retromp3recorder.app.ui.files.preview.CurrentFileViewModel
+import com.omar.retromp3recorder.app.ui.files.selector.FileSelectorViewModel
 import com.omar.retromp3recorder.app.ui.log.LogViewModel
 import com.omar.retromp3recorder.app.ui.main.MainViewModel
 import com.omar.retromp3recorder.app.ui.recorder_settings.beat_rate.BitRateSettingsViewModel
@@ -27,4 +28,5 @@ interface AppComponent {
     fun inject(bitRateSettingsViewModel: BitRateSettingsViewModel)
     fun inject(sampleRateViewModel: SampleRateViewModel)
     fun inject(currentFileViewModel: CurrentFileViewModel)
+    fun inject(fileSelectorViewModel: FileSelectorViewModel)
 }
