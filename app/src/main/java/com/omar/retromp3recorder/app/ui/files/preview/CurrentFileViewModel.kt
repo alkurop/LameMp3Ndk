@@ -9,17 +9,17 @@ import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 class CurrentFileViewModel : ViewModel() {
+
     val state = BehaviorSubject.create<CurrentFileView.State>()
+    val input = PublishSubject.create<CurrentFileView.Input>()
 
     @Inject
     lateinit var interactor: CurrentFileInteractor
-
-    private val inputSubject = PublishSubject.create<CurrentFileView.Input>()
     private val compositeDisposable = CompositeDisposable()
 
     init {
         App.appComponent.inject(this)
-        inputSubject
+        input
             .compose(interactor.processIO())
             .compose(CurrentFileOutputMapper.mapOutputToState())
             .subscribe(state::onNext)

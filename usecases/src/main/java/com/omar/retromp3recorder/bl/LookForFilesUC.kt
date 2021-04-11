@@ -12,9 +12,10 @@ class LookForFilesUC @Inject constructor(
 ) {
     fun execute(): Completable {
         return Completable.fromAction {
+            println("privet2")
             val fileDir = filePathGenerator.fileDir
             val file = File(fileDir)
-            val list = file.listFiles()?.map { it.absolutePath }?.sorted()?: emptyList()
+            val list = file.listFiles()?.map { it.absolutePath }?.sorted() ?: emptyList()
             fileListRepo.onNext(list)
         }
     }

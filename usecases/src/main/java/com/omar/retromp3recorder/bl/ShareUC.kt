@@ -14,6 +14,9 @@ class ShareUC @Inject constructor(
         return currentFileRepo
             .observe()
             .take(1)
-            .flatMapCompletable { fileName -> sharingModule.share(File(fileName)) }
+            .flatMapCompletable { fileName ->
+                @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+                sharingModule.share(File(fileName.value))
+            }
     }
 }

@@ -8,6 +8,7 @@ import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
 import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo.ShouldRequestPermissions
 import com.omar.retromp3recorder.state.repos.SampleRateRepo
+import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.functions.Function3
@@ -38,7 +39,7 @@ class StartRecordUC @Inject constructor(
             )
             .flatMapCompletable { props: Mp3VoiceRecorder.RecorderProps ->
                 Completable.fromAction {
-                    currentFileRepo.onNext(props.filepath)
+                    currentFileRepo.onNext(Optional(props.filepath))
                     voiceRecorder.record(props)
                 }
             }

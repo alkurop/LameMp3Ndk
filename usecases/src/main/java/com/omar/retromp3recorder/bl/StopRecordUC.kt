@@ -7,13 +7,11 @@ import javax.inject.Inject
 
 class StopRecordUC @Inject constructor(
     private val audioPlayer: AudioPlayer,
-    private val voiceRecorder: Mp3VoiceRecorder,
-    private val lookForFilesUC: LookForFilesUC
+    private val voiceRecorder: Mp3VoiceRecorder
 ) {
     fun execute(): Completable = Completable
         .fromAction {
             voiceRecorder.stopRecord()
             audioPlayer.playerStop()
         }
-        .andThen(lookForFilesUC.execute())
 }

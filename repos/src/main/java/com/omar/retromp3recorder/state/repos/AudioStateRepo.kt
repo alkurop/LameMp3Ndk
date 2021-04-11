@@ -2,8 +2,8 @@ package com.omar.retromp3recorder.state.repos
 
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.utils.fileIfExistsAndNotEmpty
 import io.reactivex.Observable
-import java.io.File
 import javax.inject.Inject
 
 class AudioStateRepo @Inject constructor(
@@ -17,8 +17,9 @@ class AudioStateRepo @Inject constructor(
         recorder.observeState(),
         currentFileRepo.observe(),
         { playerState, recorderState, currentFilePath ->
-            val file = File(currentFilePath)
-            val hasSomethingToPlay = file.exists() && file.length() > 0
+            @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+            val file = currentFilePath.value.fileIfExistsAndNotEmpty()
+            val hasSomethingToPlay = file != null
             when {
                 playerState == AudioPlayer.State.Playing -> AudioState.Playing
                 recorderState == Mp3VoiceRecorder.State.Recording -> AudioState.Recording

@@ -8,7 +8,10 @@ object CurrentFileView {
         val currentFileName: Stringer
     )
 
-    sealed class Input
+    sealed class Input {
+        object LookForPlayableFile : Input()
+    }
+
     sealed class Output {
         data class CurrentFileOutput(val currentFile: File?) : CurrentFileView.Output()
     }

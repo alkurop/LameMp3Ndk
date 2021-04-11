@@ -26,7 +26,7 @@ class FileSelectorInteractor @Inject constructor(
     }
 
     private val mapInputToUsecase: (Observable<FileSelectorView.Input>) -> Completable =
-        { input ->
+        { _ ->
             Completable.merge(
                 listOf(
 

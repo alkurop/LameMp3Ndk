@@ -25,7 +25,7 @@ class StartPlaybackUC @Inject constructor(
                 Completable
                     .fromAction {
                         voiceRecorder.stopRecord()
-                        audioPlayer.playerStart(fileName)
+                        audioPlayer.playerStart(fileName.value!!)
                     }
             }
         val merge = checkPermissionsUC.execute(playbackPermissions)
