@@ -19,7 +19,7 @@ object CurrentFileOutputMapper {
         BiFunction { oldState: CurrentFileView.State, output: CurrentFileView.Output ->
             when (output) {
                 is CurrentFileView.Output.CurrentFileOutput -> {
-                    val fileName = output.currentFile?.name
+                    val fileName = output.currentFileName
                     oldState.copy(
                         currentFileName =
                         if (fileName != null) Stringer.ofString(fileName)

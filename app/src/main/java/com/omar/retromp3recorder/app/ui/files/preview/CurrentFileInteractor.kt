@@ -2,12 +2,12 @@ package com.omar.retromp3recorder.app.ui.files.preview
 
 import com.omar.retromp3recorder.bl.TakeLastFileUC
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
+import com.omar.retromp3recorder.utils.filepathToFileName
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.Scheduler
-import java.io.File
 import javax.inject.Inject
 
 class CurrentFileInteractor @Inject constructor(
@@ -36,11 +36,7 @@ class CurrentFileInteractor @Inject constructor(
             listOf(
                 currentFileRepo.observe()
                     .map { filePath ->
-                        @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-                        val file = if (filePath.value != null) {
-                            File(filePath.value)
-                        } else null
-                        CurrentFileView.Output.CurrentFileOutput(file)
+                        CurrentFileView.Output.CurrentFileOutput(filePath.value?.filepathToFileName())
                     },
             )
         )

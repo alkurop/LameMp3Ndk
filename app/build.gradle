@@ -83,6 +83,7 @@ dependencies {
 
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
     testImplementation "junit:junit:$testVersions.junit"
+    testImplementation "com.google.truth:truth:$testVersions.truth"
     testImplementation "org.mockito:mockito-core:$testVersions.mockitoCore"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$testVersions.mockitoKotlin"
 }

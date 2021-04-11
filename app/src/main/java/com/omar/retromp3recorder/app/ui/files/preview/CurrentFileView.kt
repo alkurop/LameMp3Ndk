@@ -1,7 +1,6 @@
 package com.omar.retromp3recorder.app.ui.files.preview
 
 import com.github.alkurop.stringerbell.Stringer
-import java.io.File
 
 object CurrentFileView {
     data class State(
@@ -13,6 +12,6 @@ object CurrentFileView {
     }
 
     sealed class Output {
-        data class CurrentFileOutput(val currentFile: File?) : CurrentFileView.Output()
+        data class CurrentFileOutput(val currentFileName: String?) : CurrentFileView.Output()
     }
 }
