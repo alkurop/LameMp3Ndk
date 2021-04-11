@@ -1,10 +1,11 @@
 package com.omar.retromp3recorder.app.ui.files.preview
 
+import com.github.alkurop.stringerbell.Stringer
 import java.io.File
 
 object CurrentFileView {
     data class State(
-        val currentName: String?
+        val currentFileName: Stringer
     )
 
     sealed class Input

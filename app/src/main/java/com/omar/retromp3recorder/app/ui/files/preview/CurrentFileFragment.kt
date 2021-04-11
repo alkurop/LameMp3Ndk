@@ -21,7 +21,6 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
     }
 
     private fun renderState(state: CurrentFileView.State) {
-
+        textView.text = state.currentFileName.bell(requireContext())
     }
-
 }
