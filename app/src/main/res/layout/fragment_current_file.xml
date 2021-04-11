@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/current_file_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
