@@ -1,9 +1,7 @@
 package com.omar.retromp3recorder.files
 
 import android.content.Context
-import com.omar.retromp3recorder.utils.NotUnitTestable
 
-@NotUnitTestable
 class FilePathGeneratorImpl(
     private val context: Context
 ) : FilePathGenerator {

@@ -81,7 +81,7 @@ class AudioControlsInteractorInputTest {
         actionSubject.onNext(AudioControlsView.Input.Stop)
 
         //then
-        stateRepo.observe().test().assertValue(AudioState.Idle(false))
+        stateRepo.observe().test().assertValue(AudioState.Idle(true))
     }
 
     @Test
