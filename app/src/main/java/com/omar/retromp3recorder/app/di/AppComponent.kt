@@ -17,7 +17,6 @@ import javax.inject.Singleton
         ConfigModule::class,
         FunctionalityModule::class,
         UtilsModule::class,
-        UseCaseModule::class
     ]
 )
 interface AppComponent {

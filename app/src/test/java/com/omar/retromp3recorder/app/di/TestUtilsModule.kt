@@ -1,14 +1,18 @@
 package com.omar.retromp3recorder.app.di
 
 import android.content.Context
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.files.FileEmptyChecker
 import com.omar.retromp3recorder.files.FileLister
 import com.omar.retromp3recorder.files.FilePathGenerator
+import com.omar.retromp3recorder.utils.PermissionChecker
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
-import org.mockito.Mockito
 
 @Module
 internal class TestUtilsModule {
@@ -19,36 +23,35 @@ internal class TestUtilsModule {
 
     @Provides
     fun context(): Context {
-        return Mockito.mock(Context::class.java)
+        return mock()
     }
 
     @Provides
     fun filePathGenerator(): FilePathGenerator {
-        return object : FilePathGenerator {
-            override fun generateFilePath(): String {
-                return "test"
-            }
-
-            override val fileDir: String
-                get() = "test"
+        return mock<FilePathGenerator>().apply {
+            whenever(this.generateFilePath()) doReturn "test"
+            whenever(this.fileDir) doReturn "test"
         }
     }
 
     @Provides
     fun provideFileLister(): FileLister {
-        return object : FileLister {
-            override fun listFiles(dirPath: String): List<String> {
-                return listOf("test")
-            }
+        return mock<FileLister>().apply {
+            whenever(this.listFiles(any())) doReturn listOf("test")
         }
     }
 
     @Provides
     fun provideFileNonEmptyChecker(): FileEmptyChecker {
-        return object : FileEmptyChecker {
-            override fun isFileEmpty(path: String?): Boolean {
-                return path != "test"
-            }
+        return mock<FileEmptyChecker>().apply {
+            whenever(this.isFileEmpty(any())) doReturn false
+        }
+    }
+
+    @Provides
+    fun providePermissionChecker(): PermissionChecker {
+        return mock<PermissionChecker>().apply {
+            whenever(this.showUnchecked(any())) doReturn emptySet()
         }
     }
 }
