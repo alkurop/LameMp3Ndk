@@ -13,19 +13,23 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Singleton
 
 @Module
 open class TestUtilsModuleUsecase {
+    @Singleton
     @Provides
     fun provideScheduler(): Scheduler {
         return Schedulers.trampoline()
     }
 
+    @Singleton
     @Provides
     fun context(): Context {
         return mock()
     }
 
+    @Singleton
     @Provides
     fun filePathGenerator(): FilePathGenerator {
         return mock<FilePathGenerator>().apply {
@@ -34,6 +38,7 @@ open class TestUtilsModuleUsecase {
         }
     }
 
+    @Singleton
     @Provides
     fun provideFileLister(): FileLister {
         return mock<FileLister>().apply {
@@ -41,6 +46,7 @@ open class TestUtilsModuleUsecase {
         }
     }
 
+    @Singleton
     @Provides
     fun provideFileNonEmptyChecker(): FileEmptyChecker {
         return mock<FileEmptyChecker>().apply {
@@ -48,6 +54,7 @@ open class TestUtilsModuleUsecase {
         }
     }
 
+    @Singleton
     @Provides
     fun providePermissionChecker(): PermissionChecker {
         return mock<PermissionChecker>().apply {
