@@ -1,13 +1,13 @@
 package com.omar.retromp3recorder.bl
 
 import android.Manifest
-import com.omar.retromp3recorder.files.FilePathGenerator
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.BitRateRepo
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
 import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo.ShouldRequestPermissions
 import com.omar.retromp3recorder.state.repos.SampleRateRepo
+import com.omar.retromp3recorder.utils.FilePathGenerator
 import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.Completable
 import io.reactivex.Observable

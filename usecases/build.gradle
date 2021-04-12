@@ -33,12 +33,10 @@ dependencies {
     implementation project(':utils')
     implementation project(':io-mp3recorder')
     implementation project(':io-audioplayer')
-    implementation project(':io-files')
     implementation project(':io-share')
     implementation project(':repos')
 
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
     testImplementation "junit:junit:$testVersions.junit"
-    testImplementation "org.mockito:mockito-core:$testVersions.mockitoCore"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$testVersions.mockitoKotlin"
 }

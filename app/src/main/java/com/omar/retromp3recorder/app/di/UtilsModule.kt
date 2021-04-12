@@ -2,10 +2,7 @@ package com.omar.retromp3recorder.app.di
 
 import android.app.Application
 import android.content.Context
-import com.omar.retromp3recorder.files.*
-import com.omar.retromp3recorder.utils.MAIN_THREAD
-import com.omar.retromp3recorder.utils.PermissionChecker
-import com.omar.retromp3recorder.utils.PermissionCheckerImpl
+import com.omar.retromp3recorder.utils.*
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler

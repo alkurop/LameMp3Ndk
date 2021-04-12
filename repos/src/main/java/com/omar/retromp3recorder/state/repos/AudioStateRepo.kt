@@ -1,8 +1,8 @@
 package com.omar.retromp3recorder.state.repos
 
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
-import com.omar.retromp3recorder.files.FileEmptyChecker
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.utils.FileEmptyChecker
 import io.reactivex.Observable
 import javax.inject.Inject
 

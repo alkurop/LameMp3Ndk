@@ -1,8 +1,8 @@
 package com.omar.retromp3recorder.bl
 
-import com.omar.retromp3recorder.files.FileEmptyChecker
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.state.repos.FileListRepo
+import com.omar.retromp3recorder.utils.FileEmptyChecker
 import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.Completable
 import javax.inject.Inject

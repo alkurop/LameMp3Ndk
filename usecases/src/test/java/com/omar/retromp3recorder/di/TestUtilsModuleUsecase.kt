@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.di
+package com.omar.retromp3recorder.di
 
 import android.content.Context
 import com.nhaarman.mockitokotlin2.any
@@ -15,7 +15,7 @@ import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 
 @Module
-class TestUtilsModule {
+open class TestUtilsModuleUsecase {
     @Provides
     fun provideScheduler(): Scheduler {
         return Schedulers.trampoline()

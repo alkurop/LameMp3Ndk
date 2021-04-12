@@ -1,8 +1,8 @@
 package com.omar.retromp3recorder.bl
 
-import com.omar.retromp3recorder.files.FileLister
-import com.omar.retromp3recorder.files.FilePathGenerator
 import com.omar.retromp3recorder.state.repos.FileListRepo
+import com.omar.retromp3recorder.utils.FileLister
+import com.omar.retromp3recorder.utils.FilePathGenerator
 import io.reactivex.Completable
 import javax.inject.Inject
 

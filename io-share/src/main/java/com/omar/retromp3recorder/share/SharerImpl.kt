@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.github.alkurop.stringerbell.Stringer
-import com.omar.retromp3recorder.files.FileUriCreator
 import com.omar.retromp3recorder.share.Sharer.Event.SharingError
 import com.omar.retromp3recorder.share.Sharer.Event.SharingOk
+import com.omar.retromp3recorder.utils.FileUriCreator
 import com.omar.retromp3recorder.utils.MAIN_THREAD
 import com.omar.retromp3recorder.utils.NotUnitTestable
 import io.reactivex.Completable
@@ -52,7 +52,7 @@ class SharerImpl @Inject internal constructor(
 
     @SuppressLint("SetWorldReadable")
     private fun collectForShare(file: File): Uri {
-        val success = file.setReadable(true, false)
+        file.setReadable(true, false)
         return fileUriCreator.createSharableUri(file)
     }
 
