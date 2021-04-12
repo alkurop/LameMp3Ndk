@@ -26,3 +26,5 @@ fun <In, Out> Scheduler.processIO(
         inputMapper(actions.observeOn(this))
     )
 }
+
+fun <T> Observable<T>.takeOne() = this.take(1)

@@ -2,8 +2,7 @@ package com.omar.retromp3recorder.app.di
 
 import android.app.Application
 import android.content.Context
-import com.omar.retromp3recorder.files.FilePathGenerator
-import com.omar.retromp3recorder.files.FilePathGeneratorImpl
+import com.omar.retromp3recorder.files.*
 import com.omar.retromp3recorder.utils.MAIN_THREAD
 import dagger.Module
 import dagger.Provides
@@ -31,7 +30,13 @@ class UtilsModule(private val app: Application) {
     }
 
     @Provides
-    fun filePathGenerator(context: Context): FilePathGenerator {
+    fun provideFilePathGenerator(context: Context): FilePathGenerator {
         return FilePathGeneratorImpl(context)
     }
+
+    @Provides
+    fun provideFileLister(): FileLister = FileListerImpl()
+
+    @Provides
+    fun provideFileNonEmptyChecker(): FileEmptyChecker = FileEmptyCheckerImpl()
 }

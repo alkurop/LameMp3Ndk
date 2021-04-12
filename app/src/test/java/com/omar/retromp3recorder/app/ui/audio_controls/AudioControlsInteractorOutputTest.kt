@@ -19,7 +19,6 @@ class AudioControlsInteractorOutputTest {
 
     private lateinit var test: TestObserver<AudioControlsView.Output>
 
-
     @Before
     fun setUp() {
         DaggerTestAppComponent.create().inject(this)
@@ -28,7 +27,6 @@ class AudioControlsInteractorOutputTest {
             .test()
     }
 
-    @Inject
     @Test
     fun `interactor listens to audio state repo`() {
         audioPlayer.playerStart("test")

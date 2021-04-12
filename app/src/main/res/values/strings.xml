@@ -13,4 +13,5 @@
     <string name="error_string">Error: %1$s</string>
     <string name="sample_rate_format">"%1$d kb"</string>
     <string name="bit_rate_format">"%1$d kbps"</string>
+    <string name="no_file">*** NO FILE ***</string>
 </resources>

@@ -11,8 +11,7 @@ class TestConfigModule {
     fun provideRecorderDefaults(): RecorderDefaults {
         return RecorderDefaults(
             Mp3VoiceRecorder.BitRate._320,
-            Mp3VoiceRecorder.SampleRate._44100,
-            "test"
+            Mp3VoiceRecorder.SampleRate._44100
         )
     }
 }

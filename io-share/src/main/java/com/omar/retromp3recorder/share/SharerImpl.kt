@@ -17,9 +17,7 @@ import io.reactivex.subjects.PublishSubject
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Named
-import javax.inject.Singleton
 
-@Singleton
 @NotUnitTestable
 class SharerImpl @Inject internal constructor(
     private val fileUriCreator: FileUriCreator,

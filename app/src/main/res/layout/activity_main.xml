@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="67dp" />
+        app:layout_constraintGuide_begin="70dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineTopLeft"
@@ -82,34 +82,33 @@
 
     <ImageView
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="4dp"
         android:scaleType="fitStart"
         android:src="@drawable/speaker_r"
-        app:layout_constraintBottom_toBottomOf="@id/guidelineCentralHor"
         app:layout_constraintEnd_toEndOf="@id/guidelineFarLeft"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="12dp"
         android:scaleType="fitStart"
         android:src="@drawable/speaker_r"
-        app:layout_constraintBottom_toBottomOf="@id/guidelineCentralHor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guidelineFarRight"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:src="@drawable/title"
-        app:layout_constraintBottom_toBottomOf="@id/guidelineTopHor"
         app:layout_constraintEnd_toEndOf="@id/guidelineFarRight"
         app:layout_constraintStart_toStartOf="@id/guidelineFarLeft"
         app:layout_constraintTop_toTopOf="parent" />
@@ -118,7 +117,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:src="@drawable/holder_mic"
-        app:layout_constraintBottom_toTopOf="@id/audio_controls"
+        app:layout_constraintBottom_toTopOf="@id/current_file"
         app:layout_constraintEnd_toEndOf="@id/guidelineTopRight"
         app:layout_constraintStart_toStartOf="@id/guidelineTopLeft"
         app:layout_constraintTop_toTopOf="@id/guidelineTopHor" />
@@ -128,8 +127,9 @@
         android:name="com.omar.retromp3recorder.app.ui.recorder_settings.beat_rate.BitRateSettingsFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
-        app:layout_constraintBottom_toTopOf="@id/audio_controls"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@id/current_file"
         app:layout_constraintEnd_toEndOf="@id/guidelineTopLeft"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guidelineTopHor" />
@@ -139,11 +139,24 @@
         android:name="com.omar.retromp3recorder.app.ui.recorder_settings.sample_rate.SampleRateSettingsFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
-        app:layout_constraintBottom_toTopOf="@id/audio_controls"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@id/current_file"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guidelineTopRight"
         app:layout_constraintTop_toTopOf="@id/guidelineTopHor" />
+
+    <fragment
+        android:id="@+id/current_file"
+        android:name="com.omar.retromp3recorder.app.ui.files.preview.CurrentFileFragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/audio_controls"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <fragment
         android:id="@+id/audio_controls"
@@ -152,7 +165,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/guidelineCentralHor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -160,9 +173,9 @@
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
         android:scaleType="fitXY"
         android:src="@drawable/holder_bt"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -176,10 +189,10 @@
         android:name="com.omar.retromp3recorder.app.ui.visualizer.VisualizerFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="@dimen/controller_margin"
         android:layout_marginEnd="@dimen/controller_margin"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="38dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guidelineBottomLeft"
         app:layout_constraintStart_toStartOf="parent"
@@ -192,8 +205,8 @@
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/controller_margin"
         android:layout_marginTop="@dimen/controller_margin"
-        android:layout_marginEnd="@dimen/controller_margin"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="38dp"
         android:background="@color/color_visualizer_bg"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"

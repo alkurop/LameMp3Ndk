@@ -1,6 +1,8 @@
 package com.omar.retromp3recorder.app.di
 
 import android.content.Context
+import com.omar.retromp3recorder.files.FileEmptyChecker
+import com.omar.retromp3recorder.files.FileLister
 import com.omar.retromp3recorder.files.FilePathGenerator
 import dagger.Module
 import dagger.Provides
@@ -29,8 +31,24 @@ internal class TestUtilsModule {
 
             override val fileDir: String
                 get() = "test"
+        }
+    }
 
+    @Provides
+    fun provideFileLister(): FileLister {
+        return object : FileLister {
+            override fun listFiles(dirPath: String): List<String> {
+                return listOf("test")
+            }
+        }
+    }
 
+    @Provides
+    fun provideFileNonEmptyChecker(): FileEmptyChecker {
+        return object : FileEmptyChecker {
+            override fun isFileEmpty(path: String?): Boolean {
+                return path != "test"
+            }
         }
     }
 }
