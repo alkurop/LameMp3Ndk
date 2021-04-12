@@ -16,6 +16,7 @@ import javax.inject.Singleton
     modules = [
         ConfigModule::class,
         FunctionalityModule::class,
+        RepoModule::class,
         UtilsModule::class,
     ]
 )

@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 
 @Module
-open class TestUtilsModuleUsecase {
+internal class TestUtilsModuleUsecase {
     @Singleton
     @Provides
     fun provideScheduler(): Scheduler {
