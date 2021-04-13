@@ -20,4 +20,5 @@ interface UseCaseComponent {
     fun inject(takeLastFileUCTest: TakeLastFileUCTest)
     fun inject(stopPlaybackAndRecordUCTest: StopPlaybackAndRecordUCTest)
     fun inject(startRecordUCTest: StartRecordUCTest)
+    fun inject(startPlaybackUCTest: StartPlaybackUCTest)
 }
