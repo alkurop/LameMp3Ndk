@@ -35,9 +35,11 @@ dependencies {
     implementation project(':io-audioplayer')
     implementation project(':io-share')
     implementation project(':repos')
+    implementation "com.google.dagger:dagger:$versions.dagger"
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
     testImplementation "junit:junit:$testVersions.junit"
+    testImplementation "com.google.truth:truth:$testVersions.truth"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$testVersions.mockitoKotlin"
 }

@@ -69,7 +69,7 @@ dependencies {
     implementation platform("com.google.firebase:firebase-bom:$versions.firebase")
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
-
+    implementation "com.google.dagger:dagger:$versions.dagger"
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
     implementation project(':utils')
