@@ -1,9 +1,8 @@
-package com.omar.retromp3recorder.files
+package com.omar.retromp3recorder.utils
 
 import android.content.Context
 import android.net.Uri
 import androidx.core.content.FileProvider
-import com.omar.retromp3recorder.utils.NotUnitTestable
 import java.io.File
 import javax.inject.Inject
 

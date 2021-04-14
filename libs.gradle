@@ -1,6 +1,6 @@
 ext.versions = [
         'constraintLayout'      :'2.0.4',
-        'dagger'                :'2.31.2',
+        'dagger'                :'2.33',
         'firebase'              :'26.8.0',
         'ghostinshell'          :'0.1',
         'kotlin'                :'1.4.30',

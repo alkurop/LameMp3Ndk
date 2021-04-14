@@ -2,8 +2,7 @@ package com.omar.retromp3recorder.app.di
 
 import android.app.Application
 import android.content.Context
-import com.omar.retromp3recorder.files.*
-import com.omar.retromp3recorder.utils.MAIN_THREAD
+import com.omar.retromp3recorder.utils.*
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -39,4 +38,8 @@ class UtilsModule(private val app: Application) {
 
     @Provides
     fun provideFileNonEmptyChecker(): FileEmptyChecker = FileEmptyCheckerImpl()
+
+    @Provides
+    fun providePermissionChecker(context: Context): PermissionChecker =
+        PermissionCheckerImpl(context)
 }

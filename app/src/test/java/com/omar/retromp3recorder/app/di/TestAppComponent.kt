@@ -15,7 +15,15 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ConfigModule::class, TestFunctionalityModule::class, TestUtilsModule::class, MockModule::class])
+@Component(
+    modules = [
+        ConfigModule::class,
+        MockModule::class,
+        RepoModule::class,
+        TestFunctionalityModule::class,
+        TestUtilsModule::class
+    ]
+)
 interface TestAppComponent {
     fun inject(mainViewInteractorRepoTest: MainViewInteractorRepoTest)
     fun inject(audioControlsInteractorInputTest: AudioControlsInteractorInputTest)

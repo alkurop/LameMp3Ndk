@@ -14,4 +14,5 @@ class ConfigModule {
             Mp3VoiceRecorder.SampleRate._44100
         )
     }
+
 }

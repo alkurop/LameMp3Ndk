@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class TestConfigModule {
+internal class TestConfigModule {
     @Provides
     fun provideRecorderDefaults(): RecorderDefaults {
         return RecorderDefaults(

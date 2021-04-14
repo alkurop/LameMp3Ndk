@@ -30,8 +30,9 @@ class AudioControlsInteractorOutputTest {
     @Test
     fun `interactor listens to audio state repo`() {
         audioPlayer.playerStart("test")
+        println(test.values())
         test.assertValueAt(0) { value ->
-            value == AudioControlsView.Output.AudioStateChanged(AudioState.Idle(false))
+            value == AudioControlsView.Output.AudioStateChanged(AudioState.Idle(true))
         }
         test.assertValueAt(1) { value ->
             value == AudioControlsView.Output.AudioStateChanged(AudioState.Playing)

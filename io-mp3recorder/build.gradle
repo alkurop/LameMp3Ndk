@@ -35,4 +35,5 @@ android {
 
 dependencies {
     implementation project(':utils')
+    implementation "com.google.dagger:dagger:$versions.dagger"
 }

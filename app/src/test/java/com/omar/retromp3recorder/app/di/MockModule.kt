@@ -1,18 +1,13 @@
 package com.omar.retromp3recorder.app.di
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
-import com.omar.retromp3recorder.bl.CheckPermissionsUC
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.share.Sharer
 import dagger.Module
 import dagger.Provides
-import io.reactivex.Completable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import org.mockito.Mockito
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -37,14 +32,6 @@ class MockModule {
     @Named(SHARING_SUBJECT)
     fun provideSharingSubject(): Subject<Sharer.Event> {
         return BehaviorSubject.create()
-    }
-
-    @Singleton
-    @Provides
-    fun provideCheckPermissionsUC(): CheckPermissionsUC {
-        val mock = Mockito.mock(CheckPermissionsUC::class.java)
-        whenever(mock.execute(any())).thenReturn(Completable.complete())
-        return mock
     }
 
     companion object {

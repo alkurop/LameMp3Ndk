@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.di
+package com.omar.retromp3recorder.di
 
 import android.content.Context
 import com.nhaarman.mockitokotlin2.any
@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 
 @Module
-class TestUtilsModule {
+internal class TestUtilsModuleUsecase {
     @Singleton
     @Provides
     fun provideScheduler(): Scheduler {
