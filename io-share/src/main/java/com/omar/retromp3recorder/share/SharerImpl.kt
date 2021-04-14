@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.github.alkurop.stringerbell.Stringer
-import com.omar.retromp3recorder.share.Sharer.Event.SharingError
+import com.omar.retromp3recorder.share.Sharer.Event.Error
 import com.omar.retromp3recorder.share.Sharer.Event.SharingOk
 import com.omar.retromp3recorder.utils.FileUriCreator
 import com.omar.retromp3recorder.utils.MAIN_THREAD
@@ -28,7 +28,7 @@ class SharerImpl @Inject internal constructor(
     override fun share(file: File): Completable {
         return if (!file.exists()) {
             Completable.fromAction {
-                events.onNext(SharingError(Stringer(R.string.sh_trying_to_share)))
+                events.onNext(Error(Stringer(R.string.sh_trying_to_share)))
             }
         } else Completable
             .fromAction {

@@ -15,7 +15,7 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import javax.inject.Inject
 
-class AudioStateRepoImplTest {
+internal class AudioStateRepoImplTest {
     @Inject
     lateinit var currentFileRepo: CurrentFileRepo
 

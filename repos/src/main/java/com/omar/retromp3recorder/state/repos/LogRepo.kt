@@ -10,12 +10,12 @@ import javax.inject.Inject
 class LogRepo @Inject constructor(
     audioPlayer: AudioPlayer,
     recorder: Mp3VoiceRecorder,
-    sharingModule: Sharer
+    sharer: Sharer
 ) {
     private val observable: Observable<Event> = Observable.merge(
         audioPlayer.createLogs(),
         recorder.createLogs(),
-        sharingModule.createLogs()
+        sharer.createLogs()
     ).share()
 
     fun observe(): Observable<Event> = observable
@@ -31,7 +31,6 @@ private fun Mp3VoiceRecorder.createLogs(): Observable<LogRepo.Event> {
         .observeEvents()
         .ofType(Mp3VoiceRecorder.Event.Message::class.java)
         .map { answer -> LogRepo.Event.Message(answer.message) }
-
     val error = this
         .observeEvents()
         .ofType(Mp3VoiceRecorder.Event.Error::class.java)
@@ -44,7 +43,6 @@ private fun AudioPlayer.createLogs(): Observable<LogRepo.Event> {
         .observeEvents()
         .ofType(AudioPlayer.Event.Message::class.java)
         .map { answer -> LogRepo.Event.Message(answer.message) }
-
     val error: Observable<LogRepo.Event> = this
         .observeEvents()
         .ofType(AudioPlayer.Event.Error::class.java)
@@ -58,10 +56,9 @@ private fun Sharer.createLogs(): Observable<LogRepo.Event> {
         .observeEvents()
         .ofType(Sharer.Event.SharingOk::class.java)
         .map { answer -> LogRepo.Event.Message(answer.message) }
-
     val error = this
         .observeEvents()
-        .ofType(Sharer.Event.SharingError::class.java)
+        .ofType(Sharer.Event.Error::class.java)
         .map { answer -> LogRepo.Event.Error(answer.error) }
     return Observable.merge(message, error)
 }
