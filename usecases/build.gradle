@@ -36,7 +36,6 @@ dependencies {
     implementation project(':io-share')
     implementation project(':repos')
     implementation "com.google.dagger:dagger:$versions.dagger"
-    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
     testImplementation "junit:junit:$testVersions.junit"
