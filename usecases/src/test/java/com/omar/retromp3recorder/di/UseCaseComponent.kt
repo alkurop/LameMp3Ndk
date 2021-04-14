@@ -22,4 +22,5 @@ interface UseCaseComponent {
     fun inject(startRecordUCTest: StartRecordUCTest)
     fun inject(startPlaybackUCTest: StartPlaybackUCTest)
     fun inject(lookForFilesUCTest: LookForFilesUCTest)
+    fun inject(checkPermissionsUCTest: CheckPermissionsUCTest)
 }

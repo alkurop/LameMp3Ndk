@@ -24,5 +24,4 @@ class CheckPermissionsUC @Inject constructor(
                 Completable.fromAction { requestPermissionsRepo.onNext(shouldRequestPermissions) }
             }
     }
-
 }
