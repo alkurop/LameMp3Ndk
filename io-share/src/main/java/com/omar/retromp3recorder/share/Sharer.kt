@@ -11,6 +11,6 @@ interface Sharer {
 
     sealed class Event {
         data class SharingOk constructor(val message: Stringer) : Event()
-        data class SharingError constructor(val error: Stringer) : Event()
+        data class Error constructor(val error: Stringer) : Event()
     }
 }
