@@ -3,12 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineTopHor"
         android:layout_width="wrap_content"
@@ -79,31 +73,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.7" />
 
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="4dp"
-        android:scaleType="fitStart"
-        android:src="@drawable/speaker_r"
-        app:layout_constraintEnd_toEndOf="@id/guidelineFarLeft"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="12dp"
-        android:scaleType="fitStart"
-        android:src="@drawable/speaker_r"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guidelineFarRight"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -112,15 +81,6 @@
         app:layout_constraintEnd_toEndOf="@id/guidelineFarRight"
         app:layout_constraintStart_toStartOf="@id/guidelineFarLeft"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/holder_mic"
-        app:layout_constraintBottom_toTopOf="@id/current_file"
-        app:layout_constraintEnd_toEndOf="@id/guidelineTopRight"
-        app:layout_constraintStart_toStartOf="@id/guidelineTopLeft"
-        app:layout_constraintTop_toTopOf="@id/guidelineTopHor" />
 
     <fragment
         android:id="@+id/left_radio_container"
@@ -170,19 +130,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/holder_bt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guidelineCentralHor" />
-
 
     <fragment
         android:id="@+id/fragment_visualizer"
@@ -213,6 +160,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guidelineBottomLeft"
         app:layout_constraintTop_toTopOf="@id/guidelineCentralHor" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
