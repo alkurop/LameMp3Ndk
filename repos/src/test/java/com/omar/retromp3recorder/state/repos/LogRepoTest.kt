@@ -81,6 +81,16 @@ internal class LogRepoTest {
     }
 
     @Test
+    fun `AudioPlayer id see no evil`() {
+        val test = logRepo.observe().test()
+
+        audioPlayerSubject.onNext(AudioPlayer.Event.PlayerId(17))
+
+        test.assertNoErrors().assertNotComplete()
+            .assertNoValues()
+    }
+
+    @Test
     fun `Sharer Event SharingOk logs Message`() {
         val test = logRepo.observe().test()
 
