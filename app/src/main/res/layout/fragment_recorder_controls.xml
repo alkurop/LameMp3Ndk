@@ -8,7 +8,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/container"
-        android:background="@drawable/holder_r"
         android:orientation="vertical"
         android:padding="8dp" />
 
