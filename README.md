@@ -18,7 +18,6 @@ Develop ...  ![travis icon](https://travis-ci.com/alkurop/LameMp3Ndk.svg?branch=
 - mp3 file properties
 - record from line
 - multitrack
-- update icon with black
 - file list
 - use exo player
 - scrubbing
