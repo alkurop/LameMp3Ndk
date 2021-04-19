@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.ui.files.selector
+package com.omar.retromp3recorder.app.ui.files.edit.selector
 
 
 import com.omar.retromp3recorder.utils.processIO
@@ -8,28 +8,25 @@ import io.reactivex.ObservableTransformer
 import io.reactivex.Scheduler
 import javax.inject.Inject
 
-class FileSelectorInteractor @Inject constructor(
+class SelectorInteractor @Inject constructor(
     private val scheduler: Scheduler
 ) {
-    fun processIO(): ObservableTransformer<FileSelectorView.Input, FileSelectorView.Output> =
+    fun processIO(): ObservableTransformer<SelectorView.Input, SelectorView.Output> =
         scheduler.processIO(
             inputMapper = mapInputToUsecase,
             outputMapper = mapRepoToOutput
         )
 
-    private val mapRepoToOutput: () -> Observable<FileSelectorView.Output> = {
+    private val mapRepoToOutput: () -> Observable<SelectorView.Output> = {
         Observable.merge(
             listOf(
-
             )
         )
     }
-
-    private val mapInputToUsecase: (Observable<FileSelectorView.Input>) -> Completable =
+    private val mapInputToUsecase: (Observable<SelectorView.Input>) -> Completable =
         { _ ->
             Completable.merge(
                 listOf(
-
                 )
             )
         }
