@@ -10,7 +10,8 @@ object SelectorView {
     }
 
     sealed class Output {
-        data class FileList(val items: List<String>)
+        data class FileList(val items: List<String>) : Output()
+        data class CurrentFile(val filePath: String) : Output()
     }
 
     data class Item(
