@@ -10,4 +10,11 @@
         android:layout_height="?actionBarSize"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <fragment
+        android:id="@+id/selector_fragment"
+        android:name="com.omar.retromp3recorder.app.ui.files.edit.selector.SelectorFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
