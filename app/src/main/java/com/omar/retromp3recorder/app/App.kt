@@ -19,8 +19,8 @@ class App : Application() {
         )
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
-            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
         } else {
+            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
             Timber.plant(object : Timber.Tree() {
                 override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
                     t?.let {
