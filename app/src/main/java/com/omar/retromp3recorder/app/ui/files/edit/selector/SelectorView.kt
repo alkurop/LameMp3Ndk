@@ -5,8 +5,13 @@ object SelectorView {
         val items: List<Item>
     )
 
-    sealed class Input
-    sealed class Output
+    sealed class Input {
+        data class ItemSelected(val item: Item) : Input()
+    }
+
+    sealed class Output {
+        data class FileList(val items: List<String>)
+    }
 
     data class Item(
         val fileName: String,

@@ -1,6 +1,5 @@
 package com.omar.retromp3recorder.app.ui.files.edit.selector
 
-
 import androidx.lifecycle.ViewModel
 import com.omar.retromp3recorder.app.App
 import com.omar.retromp3recorder.utils.disposedBy
@@ -11,10 +10,10 @@ import javax.inject.Inject
 
 class SelectorViewModel : ViewModel() {
     val state = BehaviorSubject.create<SelectorView.State>()
+    val inputSubject = PublishSubject.create<SelectorView.Input>()
 
     @Inject
     lateinit var interactor: SelectorInteractor
-    private val inputSubject = PublishSubject.create<SelectorView.Input>()
     private val compositeDisposable = CompositeDisposable()
 
     init {
