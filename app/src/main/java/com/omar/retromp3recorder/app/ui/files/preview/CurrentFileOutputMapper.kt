@@ -26,10 +26,17 @@ object CurrentFileOutputMapper {
                         else Stringer(R.string.no_file)
                     )
                 }
+                is CurrentFileView.Output.AudioInactive -> {
+                    oldState.copy(isShowingFileButtons = true)
+                }
+                is CurrentFileView.Output.AudioActive -> {
+                    oldState.copy(isShowingFileButtons = false)
+                }
             }
         }
 
     private fun getDefaultViewModel() = CurrentFileView.State(
-        currentFileName = Stringer(R.string.no_file)
+        currentFileName = Stringer(R.string.no_file),
+        isShowingFileButtons = false
     )
 }

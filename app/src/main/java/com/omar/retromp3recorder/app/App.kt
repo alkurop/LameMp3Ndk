@@ -15,7 +15,7 @@ class App : Application() {
         super.onCreate()
         appComponent = DaggerAppComponent.builder().utilsModule(UtilsModule(this)).build()
         RxJava2Debug.enableRxJava2AssemblyTracking(
-            arrayOf("com.omar.retromp3recorder.app")
+            arrayOf(BuildConfig.APPLICATION_ID)
         )
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

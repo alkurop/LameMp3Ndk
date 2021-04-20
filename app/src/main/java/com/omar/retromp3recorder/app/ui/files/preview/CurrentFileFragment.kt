@@ -12,7 +12,10 @@ import com.omar.retromp3recorder.app.uiutils.observe
 class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
     private val textView: TextView
         get() = findViewById(R.id.current_file_text)
-
+    private val buttonOpen: View
+        get() = findViewById(R.id.button_open)
+    private val buttonDelete: View
+        get() = findViewById(R.id.button_delete)
     private val viewModel: CurrentFileViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
