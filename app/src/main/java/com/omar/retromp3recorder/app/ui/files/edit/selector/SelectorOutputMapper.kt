@@ -20,5 +20,6 @@ object SelectorOutputMapper {
         }
 
     private fun getDefaultViewModel() = SelectorView.State(
+        items = emptyList()
     )
 }
