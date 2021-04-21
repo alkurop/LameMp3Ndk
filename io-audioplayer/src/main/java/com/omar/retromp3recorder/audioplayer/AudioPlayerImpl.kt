@@ -2,7 +2,6 @@ package com.omar.retromp3recorder.audioplayer
 
 import android.media.MediaPlayer
 import com.github.alkurop.stringerbell.Stringer
-import com.omar.retromp3recorder.utils.NotUnitTestable
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
@@ -13,7 +12,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-@NotUnitTestable
 class AudioPlayerImpl @Inject constructor() : AudioPlayer {
 
     private val events = PublishSubject.create<AudioPlayer.Event>()

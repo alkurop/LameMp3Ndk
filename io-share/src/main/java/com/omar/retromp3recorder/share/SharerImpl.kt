@@ -9,7 +9,6 @@ import com.omar.retromp3recorder.share.Sharer.Event.Error
 import com.omar.retromp3recorder.share.Sharer.Event.SharingOk
 import com.omar.retromp3recorder.utils.FileUriCreator
 import com.omar.retromp3recorder.utils.MAIN_THREAD
-import com.omar.retromp3recorder.utils.NotUnitTestable
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -18,7 +17,6 @@ import java.io.File
 import javax.inject.Inject
 import javax.inject.Named
 
-@NotUnitTestable
 class SharerImpl @Inject internal constructor(
     private val fileUriCreator: FileUriCreator,
     private val context: Context,

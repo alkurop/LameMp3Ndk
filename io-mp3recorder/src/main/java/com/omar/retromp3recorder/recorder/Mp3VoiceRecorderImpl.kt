@@ -10,7 +10,6 @@ import com.omar.retromp3recorder.app.recorder.R
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder.Companion.AUDIO_FORMAT_PRESETS
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder.Companion.CHANNEL_PRESETS
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder.Companion.QUALITY_PRESETS
-import com.omar.retromp3recorder.utils.NotUnitTestable
 import com.omar.retromp3recorder.utils.disposedBy
 import io.reactivex.*
 import io.reactivex.disposables.CompositeDisposable
@@ -26,7 +25,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-@NotUnitTestable
 class Mp3VoiceRecorderImpl @Inject internal constructor(
     private val scheduler: Scheduler,
     private val context: Context

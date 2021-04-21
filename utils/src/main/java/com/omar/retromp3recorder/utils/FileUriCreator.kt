@@ -6,7 +6,6 @@ import androidx.core.content.FileProvider
 import java.io.File
 import javax.inject.Inject
 
-@NotUnitTestable
 class FileUriCreator @Inject constructor(private val context: Context) {
     fun createSharableUri(file: File): Uri {
         return FileProvider.getUriForFile(
