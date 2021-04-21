@@ -2,8 +2,10 @@ package com.omar.retromp3recorder.app.di
 
 import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsInteractorInputTest
 import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsInteractorOutputTest
+import com.omar.retromp3recorder.app.ui.files.edit.selector.SelectorInteractorInputTest
+import com.omar.retromp3recorder.app.ui.files.edit.selector.SelectorInteractorOutputTest
 import com.omar.retromp3recorder.app.ui.files.preview.CurrentFileInteractorInputTest
-import com.omar.retromp3recorder.app.ui.files.preview.CurrentFileOutputMapperTest
+import com.omar.retromp3recorder.app.ui.files.preview.CurrentFileInteractorOutputTest
 import com.omar.retromp3recorder.app.ui.log.LogInteractorRepoTest
 import com.omar.retromp3recorder.app.ui.main.MainViewInteractorRepoTest
 import com.omar.retromp3recorder.app.ui.recorder_settings.beat_rate.BitRateSettingsInteractorInputTest
@@ -35,5 +37,7 @@ interface TestAppComponent {
     fun inject(sampleRateInteractorOutputTest: SampleRateInteractorOutputTest)
     fun inject(bitRateSettingsInteractorOutputTest: BitRateSettingsInteractorOutputTest)
     fun inject(currentFileInteractorInputTest: CurrentFileInteractorInputTest)
-    fun inject(currentFileOutputMapperTest: CurrentFileOutputMapperTest)
+    fun inject(currentFileOutputMapperTest: CurrentFileInteractorOutputTest)
+    fun inject(selectorInteractorInputTest: SelectorInteractorInputTest)
+    fun inject(selectorInteractorOutputTest: SelectorInteractorOutputTest)
 }

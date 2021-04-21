@@ -5,4 +5,5 @@
     <dimen name="cb_height">24dp</dimen>
     <dimen name="controller_margin">8dp</dimen>
     <dimen name="control_buttons_dimen">50dp</dimen>
+    <dimen name="file_controls_button_size">48dp</dimen>
 </resources>

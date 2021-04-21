@@ -14,4 +14,5 @@
     <string name="sample_rate_format">"%1$d kb"</string>
     <string name="bit_rate_format">"%1$d kbps"</string>
     <string name="no_file">*** NO FILE ***</string>
+    <string name="current_file">Current file</string>
 </resources>

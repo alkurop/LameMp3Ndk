@@ -15,12 +15,12 @@ class App : Application() {
         super.onCreate()
         appComponent = DaggerAppComponent.builder().utilsModule(UtilsModule(this)).build()
         RxJava2Debug.enableRxJava2AssemblyTracking(
-            arrayOf("com.omar.retromp3recorder.app")
+            arrayOf(BuildConfig.APPLICATION_ID)
         )
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
-            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
         } else {
+            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
             Timber.plant(object : Timber.Tree() {
                 override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
                     t?.let {

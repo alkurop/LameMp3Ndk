@@ -1,40 +1,73 @@
 package com.omar.retromp3recorder.app.ui.files.preview
 
-import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.state.repos.CurrentFileRepo
-import com.omar.retromp3recorder.utils.Optional
+import com.github.alkurop.stringerbell.Stringer
+import com.omar.retromp3recorder.app.R
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
 
 class CurrentFileOutputMapperTest {
-    @Inject
-    lateinit var interactor: CurrentFileInteractor
-
-    @Inject
-    lateinit var currentFileRepo: CurrentFileRepo
-
-    private lateinit var test: TestObserver<CurrentFileView.Output>
+    private val outputPublisher: Subject<CurrentFileView.Output> = PublishSubject.create()
+    private lateinit var test: TestObserver<CurrentFileView.State>
+    private val default = CurrentFileView.State(Stringer(R.string.no_file), false)
 
     @Before
     fun setUp() {
-        DaggerTestAppComponent.create().inject(this)
-        test = PublishSubject.create<CurrentFileView.Input>()
-            .compose(interactor.processIO())
-            .test()
+        test = outputPublisher.compose(CurrentFileOutputMapper.mapOutputToState()).test()
     }
 
     @Test
-    fun `interactor listens to current file repo`() {
-        currentFileRepo.onNext(Optional("test1"))
+    fun `mapper starts with default view state`() {
+        test.assertNoErrors()
+            .assertNotComplete()
+            .assertNoErrors()
+            .assertValueCount(1)
+            .assertValueAt(0) { value ->
+                value == default
+            }
+    }
 
-        test.assertValueAt(0) { value ->
-            value == CurrentFileView.Output.CurrentFileOutput(null)
-        }
-        test.assertValueAt(1) { value ->
-            value == CurrentFileView.Output.CurrentFileOutput("test1")
-        }
+    @Test
+    fun `map file output change result`() {
+        val stateChangedResult = CurrentFileView.Output.CurrentFileOutput("la")
+        //When
+        outputPublisher.onNext(stateChangedResult)
+        //Then
+        test.assertNoErrors()
+            .assertNotComplete()
+            .assertNoErrors()
+            .assertValueCount(2)
+            .assertValueAt(1) { value ->
+                value == default.copy(currentFileName = Stringer.ofString("la"))
+            }
+    }
+
+    @Test
+    fun `map audio state inactive`() {
+        outputPublisher.onNext(CurrentFileView.Output.AudioInactive)
+        //Then
+        test.assertNoErrors()
+            .assertNotComplete()
+            .assertNoErrors()
+            .assertValueCount(2)
+            .assertValueAt(1) { value ->
+                value == default.copy(isShowingFileButtons = true)
+            }
+    }
+
+    @Test
+    fun `map audio state playing`() {
+        outputPublisher.onNext(CurrentFileView.Output.AudioActive)
+        //Then
+        test.assertNoErrors()
+            .assertNotComplete()
+            .assertNoErrors()
+            .assertValueCount(2)
+            .assertValueAt(1) { value ->
+                value == default.copy(isShowingFileButtons = false)
+            }
     }
 }
+

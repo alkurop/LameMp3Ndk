@@ -3,6 +3,7 @@ package com.omar.retromp3recorder.app.ui.audio_controls
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.state.repos.AudioState
+import com.omar.retromp3recorder.state.repos.AudioStateRepo
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import org.junit.Before
@@ -10,13 +11,14 @@ import org.junit.Test
 import javax.inject.Inject
 
 class AudioControlsInteractorOutputTest {
+    @Inject
+    lateinit var audioStateRepo: AudioStateRepo
 
     @Inject
     lateinit var interactor: AudioControlsInteractor
 
     @Inject
     lateinit var audioPlayer: AudioPlayer
-
     private lateinit var test: TestObserver<AudioControlsView.Output>
 
     @Before
