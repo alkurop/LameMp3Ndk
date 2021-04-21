@@ -4,7 +4,6 @@ import com.omar.retromp3recorder.bl.TakeLastFileUC
 import com.omar.retromp3recorder.state.repos.AudioState
 import com.omar.retromp3recorder.state.repos.AudioStateRepo
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
-import com.omar.retromp3recorder.utils.filepathToFileName
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -38,7 +37,7 @@ class CurrentFileInteractor @Inject constructor(
                 currentFileRepo.observe()
                     .map { filePath ->
                         CurrentFileView.Output.CurrentFileOutput(
-                            filePath.value?.filepathToFileName()
+                            filePath.value
                         )
                     },
                 audioStateRepo.observe().ofType(AudioState.Idle::class.java)

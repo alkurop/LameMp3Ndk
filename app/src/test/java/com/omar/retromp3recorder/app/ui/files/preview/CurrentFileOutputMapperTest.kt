@@ -1,7 +1,5 @@
 package com.omar.retromp3recorder.app.ui.files.preview
 
-import com.github.alkurop.stringerbell.Stringer
-import com.omar.retromp3recorder.app.R
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -11,7 +9,7 @@ import org.junit.Test
 class CurrentFileOutputMapperTest {
     private val outputPublisher: Subject<CurrentFileView.Output> = PublishSubject.create()
     private lateinit var test: TestObserver<CurrentFileView.State>
-    private val default = CurrentFileView.State(Stringer(R.string.no_file), false)
+    private val default = CurrentFileView.State(null, false)
 
     @Before
     fun setUp() {
@@ -40,7 +38,7 @@ class CurrentFileOutputMapperTest {
             .assertNoErrors()
             .assertValueCount(2)
             .assertValueAt(1) { value ->
-                value == default.copy(currentFileName = Stringer.ofString("la"))
+                value == default.copy(currentFilePath = "la")
             }
     }
 

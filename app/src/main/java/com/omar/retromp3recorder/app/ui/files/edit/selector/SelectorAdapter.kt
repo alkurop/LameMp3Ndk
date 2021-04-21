@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.omar.retromp3recorder.app.R
+import com.omar.retromp3recorder.app.ui.utils.fileName
 import com.omar.retromp3recorder.app.ui.utils.findViewById
 
 class SelectorAdapter(
@@ -43,7 +44,7 @@ class SelectorAdapter(
 
         fun bind(item: SelectorView.Item) {
             itemView.setOnClickListener { onItemSelectedListener(item) }
-            textView.text = item.filePath.split("/").lastOrNull()
+            textView.text = item.filePath.fileName()
             currentFileSign.isVisible = item.isCurrentItem
         }
     }

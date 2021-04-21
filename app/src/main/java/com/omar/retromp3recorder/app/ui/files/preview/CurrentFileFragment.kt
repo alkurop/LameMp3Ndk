@@ -4,11 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.files.edit.CurrentFileActivity
+import com.omar.retromp3recorder.app.ui.files.edit.delete.DeleteFileDialogFragment
+import com.omar.retromp3recorder.app.ui.utils.fileName
 import com.omar.retromp3recorder.app.ui.utils.findViewById
 import com.omar.retromp3recorder.app.uiutils.observe
 
@@ -30,12 +31,25 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
     }
 
     private fun renderState(state: CurrentFileView.State) {
-        textView.text = state.currentFileName.bell(requireContext())
-        buttonOpen.isVisible = state.isShowingFileButtons
+        textView.text = state.currentFilePath?.fileName() ?: getString(R.string.no_file)
+        buttonOpen.setIsButtonActive(state.isShowingFileButtons)
+        buttonDelete.setIsButtonActive(state.isShowingFileButtons && state.currentFilePath != null)
+        if (state.currentFilePath != null)
+            buttonDelete.setOnClickListener {
+                DeleteFileDialogFragment.newInstance(state.currentFilePath).show(
+                    childFragmentManager,
+                    DeleteFileDialogFragment::class.java.canonicalName
+                )
+            }
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.input.onNext(CurrentFileView.Input.LookForPlayableFile)
     }
+}
+
+private fun View.setIsButtonActive(isVisible: Boolean) {
+    this.isClickable = isVisible
+    this.alpha = if (isVisible) 1.0f else 0.4f
 }

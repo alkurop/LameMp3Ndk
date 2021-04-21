@@ -1,6 +1,7 @@
 package com.omar.retromp3recorder.app.di
 
 import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsViewModel
+import com.omar.retromp3recorder.app.ui.files.edit.delete.DeleteFileViewModel
 import com.omar.retromp3recorder.app.ui.files.edit.selector.SelectorViewModel
 import com.omar.retromp3recorder.app.ui.files.preview.CurrentFileViewModel
 import com.omar.retromp3recorder.app.ui.log.LogViewModel
@@ -29,4 +30,5 @@ interface AppComponent {
     fun inject(sampleRateViewModel: SampleRateViewModel)
     fun inject(currentFileViewModel: CurrentFileViewModel)
     fun inject(fileSelectorViewModel: SelectorViewModel)
+    fun inject(deleteFileViewModel: DeleteFileViewModel)
 }
