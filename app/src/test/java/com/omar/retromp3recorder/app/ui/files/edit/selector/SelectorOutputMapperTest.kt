@@ -31,7 +31,10 @@ class SelectorOutputMapperTest {
     fun `on selected file changed, items in list were updated`() {
         outputPublisher.onNext(SelectorView.Output.FileList(files + anOtherOne))
         outputPublisher.onNext(SelectorView.Output.CurrentFile(anOtherOne))
+        val lastState = test.values().last()!!
+        val selectedItem = lastState.items.find { it.isCurrentItem }!!
 
-        assert(test.values().last()!!.items.find { it.isCurrentItem }!!.filePath == anOtherOne)
+        assert(selectedItem.filePath == anOtherOne)
+        assert(lastState.selectedFile == anOtherOne)
     }
 }

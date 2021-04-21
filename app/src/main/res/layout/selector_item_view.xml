@@ -16,14 +16,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/current_file_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="16dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:textColor="@color/log_text_color"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"

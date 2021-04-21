@@ -26,7 +26,7 @@ class SelectorFragment : Fragment(R.layout.fragment_selector) {
         recyclerView.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
-                LinearLayoutManager.HORIZONTAL
+                LinearLayoutManager.VERTICAL
             )
         )
         viewModel.state.observe(viewLifecycleOwner, ::renderState)

@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.app.ui.files.edit.selector
 
 object SelectorView {
     data class State(
+        val selectedFile: String?,
         val items: List<Item>
     )
 

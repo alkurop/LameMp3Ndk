@@ -17,23 +17,28 @@ object SelectorOutputMapper {
         BiFunction { oldState: SelectorView.State, output: SelectorView.Output ->
             when (output) {
                 is SelectorView.Output.FileList -> {
-                    val selectedFile = oldState.items.firstOrNull { it.isCurrentItem }?.filePath
-                    val items = output.items.map { SelectorView.Item(it, it == selectedFile) }
+                    val selectedFile = oldState.selectedFile
+                    val items =
+                        output.items.map { SelectorView.Item(it, it == selectedFile) }.reversed()
                     oldState.copy(items = items)
                 }
                 is SelectorView.Output.CurrentFile -> {
                     val selectedFile = output.filePath
+
                     oldState.copy(
                         items = oldState.items.map { item ->
                             val isSelected = item.filePath == selectedFile
                             SelectorView.Item(item.filePath, isSelected)
-                        }
+                        },
+                        selectedFile = selectedFile
                     )
                 }
             }
         }
 
     private fun getDefaultViewModel() = SelectorView.State(
-        items = emptyList()
+        items = emptyList(),
+        // selected file has to be here,   in case selection comes before list
+        selectedFile = null
     )
 }
