@@ -6,12 +6,12 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [
-        TestConfigModule::class,
-        TestUtilsModuleUsecase::class,
-        TestFunctionalityModule::class,
-        TestRepoModule::class
-    ]
+        modules = [
+            TestConfigModule::class,
+            TestUtilsModuleUsecase::class,
+            TestFunctionalityModule::class,
+            TestRepoModule::class
+        ]
 )
 interface UseCaseComponent {
     fun inject(changeBitrateUCImplTest: ChangeBitrateUCTest)
@@ -24,4 +24,5 @@ interface UseCaseComponent {
     fun inject(lookForFilesUCTest: LookForFilesUCTest)
     fun inject(checkPermissionsUCTest: CheckPermissionsUCTest)
     fun inject(setCurrentFileUCTest: SetCurrentFileUCTest)
+    fun inject(deleteFileUCTest: DeleteFileUCTest)
 }

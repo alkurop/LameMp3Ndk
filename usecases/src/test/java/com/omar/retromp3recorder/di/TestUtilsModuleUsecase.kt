@@ -5,6 +5,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
+import com.omar.retromp3recorder.utils.FileDeleter
 import com.omar.retromp3recorder.utils.FileEmptyChecker
 import com.omar.retromp3recorder.utils.FileLister
 import com.omar.retromp3recorder.utils.FilePathGenerator
@@ -60,5 +61,11 @@ internal class TestUtilsModuleUsecase {
         return mock<PermissionChecker>().apply {
             whenever(this.showUnchecked(any())) doReturn emptySet()
         }
+    }
+
+    @Singleton
+    @Provides
+    fun provideFileDeleter(): FileDeleter {
+        return mock<FileDeleter>()
     }
 }
