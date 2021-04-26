@@ -15,4 +15,7 @@
     <string name="bit_rate_format">"%1$d kbps"</string>
     <string name="no_file">*** NO FILE ***</string>
     <string name="current_file">Current file</string>
+    <string name="delete_file">Delete file</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
