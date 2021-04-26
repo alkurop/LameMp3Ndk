@@ -1,11 +1,10 @@
 package com.omar.retromp3recorder.app.ui.files.preview
 
-import com.github.alkurop.stringerbell.Stringer
-
 object CurrentFileView {
     data class State(
-        val currentFileName: Stringer,
-        val isShowingFileButtons: Boolean
+        val currentFilePath: String? = null,
+        val isOpenFileActive: Boolean = false,
+        val isDeleteFileActive: Boolean = false
     )
 
     sealed class Input {
@@ -13,8 +12,8 @@ object CurrentFileView {
     }
 
     sealed class Output {
-        data class CurrentFileOutput(val currentFileName: String?) : CurrentFileView.Output()
-        object AudioActive : Output()
-        object AudioInactive : Output()
+        data class CurrentFileOutput(val currentFilePath: String?) : CurrentFileView.Output()
+        data class DeleteButtonState(val isActive: Boolean) : Output()
+        data class OpenButtonState(val isActive: Boolean) : Output()
     }
 }

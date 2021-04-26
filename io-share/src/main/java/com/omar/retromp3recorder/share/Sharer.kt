@@ -14,3 +14,4 @@ interface Sharer {
         data class Error constructor(val error: Stringer) : Event()
     }
 }
+

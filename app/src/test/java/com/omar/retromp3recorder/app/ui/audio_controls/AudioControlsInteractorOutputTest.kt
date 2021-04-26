@@ -1,9 +1,10 @@
 package com.omar.retromp3recorder.app.ui.audio_controls
 
+import com.google.common.truth.Truth.assertThat
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
-import com.omar.retromp3recorder.state.repos.AudioState
-import com.omar.retromp3recorder.state.repos.AudioStateRepo
+import com.omar.retromp3recorder.state.repos.AudioStateMapper
+import com.omar.retromp3recorder.ui.state_button.InteractiveButton
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import org.junit.Before
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 class AudioControlsInteractorOutputTest {
     @Inject
-    lateinit var audioStateRepo: AudioStateRepo
+    lateinit var audioStateMapper: AudioStateMapper
 
     @Inject
     lateinit var interactor: AudioControlsInteractor
@@ -30,15 +31,44 @@ class AudioControlsInteractorOutputTest {
     }
 
     @Test
-    fun `interactor listens to audio state repo`() {
+    fun `interactor listens to play button state mapper`() {
         audioPlayer.playerStart("test")
-        println(test.values())
-        test.assertValueAt(0) { value ->
-            value == AudioControlsView.Output.AudioStateChanged(AudioState.Idle(true))
-        }
-        test.assertValueAt(1) { value ->
-            value == AudioControlsView.Output.AudioStateChanged(AudioState.Playing)
-        }
+
+        assertThat(test.values()).contains(
+            AudioControlsView.Output.PlayButtonState(
+                InteractiveButton.State.RUNNING
+            )
+        )
     }
 
+    @Test
+    fun `interactor listens to stop button state mapper`() {
+        audioPlayer.playerStart("test")
+
+        assertThat(test.values()).contains(
+            AudioControlsView.Output.StopButtonState(
+                InteractiveButton.State.ENABLED
+            )
+        )
+    }
+
+    @Test
+    fun `interactor listens to record button state mapper`() {
+        audioPlayer.playerStart("test")
+
+        assertThat(test.values()).contains(
+            AudioControlsView.Output.RecordButtonState(
+                InteractiveButton.State.DISABLED
+            )
+        )
+    }
+
+    @Test
+    fun `interactor listens to share button state mapper`() {
+        assertThat(test.values()).contains(
+            AudioControlsView.Output.ShareButtonState(
+                InteractiveButton.State.ENABLED
+            )
+        )
+    }
 }

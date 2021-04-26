@@ -47,17 +47,8 @@ class CurrentFileInteractorOutputTest {
         test.assertValueAt(0) { value ->
             value == CurrentFileView.Output.CurrentFileOutput(null)
         }
-        test.assertValueAt(2) { value ->
+        test.assertValueAt(3) { value ->
             value == CurrentFileView.Output.CurrentFileOutput("test1")
-        }
-    }
-
-    @Test
-    fun `listens to audio state`() {
-        audioPlayer.playerStart("test")
-
-        test.assertValueAt(2) { value ->
-            value == CurrentFileView.Output.AudioActive
         }
     }
 }

@@ -18,6 +18,7 @@ Develop ...  ![travis icon](https://travis-ci.com/alkurop/LameMp3Ndk.svg?branch=
 - mp3 file properties
 - record from line
 - multitrack
-- file list
 - use exo player
 - scrubbing
+- save recorder prefs
+- add ui smoke tests

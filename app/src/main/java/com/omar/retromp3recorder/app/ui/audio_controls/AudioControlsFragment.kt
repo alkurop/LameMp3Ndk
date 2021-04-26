@@ -8,7 +8,6 @@ import com.jakewharton.rxbinding3.view.clicks
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.utils.findViewById
 import com.omar.retromp3recorder.app.uiutils.observe
-import com.omar.retromp3recorder.state.repos.AudioState
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
 import com.omar.retromp3recorder.ui.state_button.InteractiveButtonBlinking
 import io.reactivex.Observable.merge
@@ -16,16 +15,12 @@ import io.reactivex.Observable.merge
 class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
     private val playButton: InteractiveButtonBlinking
         get() = findViewById(R.id.acf_play)
-
     private val recordButton: InteractiveButton
         get() = findViewById(R.id.acf_record)
-
     private val shareButton: InteractiveButton
         get() = findViewById(R.id.acf_share)
-
     private val stopButton: InteractiveButton
         get() = findViewById(R.id.acf_stop)
-
     private val viewModel: AudioControlsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,25 +35,9 @@ class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
     }
 
     private fun renderState(state: AudioControlsView.State) {
-        when (val audioState = state.audioState) {
-            is AudioState.Idle -> {
-                playButton.onState(if (audioState.hasFile) InteractiveButton.State.ENABLED else InteractiveButton.State.DISABLED)
-                shareButton.onState(if (audioState.hasFile) InteractiveButton.State.ENABLED else InteractiveButton.State.DISABLED)
-                recordButton.onState(InteractiveButton.State.ENABLED)
-                stopButton.onState(InteractiveButton.State.DISABLED)
-            }
-            AudioState.Playing -> {
-                shareButton.onState(InteractiveButton.State.ENABLED)
-                playButton.onState(InteractiveButton.State.RUNNING)
-                recordButton.onState(InteractiveButton.State.DISABLED)
-                stopButton.onState(InteractiveButton.State.ENABLED)
-            }
-            AudioState.Recording -> {
-                shareButton.onState(InteractiveButton.State.DISABLED)
-                playButton.onState(InteractiveButton.State.DISABLED)
-                recordButton.onState(InteractiveButton.State.RUNNING)
-                stopButton.onState(InteractiveButton.State.ENABLED)
-            }
-        }
+        playButton.onState(state.playButtonState)
+        shareButton.onState(state.shareButtonState)
+        recordButton.onState(state.recordButtonState)
+        stopButton.onState(state.stopButtonState)
     }
 }

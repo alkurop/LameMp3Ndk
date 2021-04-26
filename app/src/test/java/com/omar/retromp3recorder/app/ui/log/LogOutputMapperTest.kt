@@ -43,7 +43,6 @@ class LogOutputMapperTest {
         //When
         outputPublisher.onNext(errorLogResult)
 
-        test.values().forEach { println(it) }
         //Then
         test.assertNoErrors()
             .assertNotComplete()
