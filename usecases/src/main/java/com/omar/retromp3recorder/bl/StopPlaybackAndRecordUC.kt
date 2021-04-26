@@ -10,7 +10,8 @@ import javax.inject.Inject
 class StopPlaybackAndRecordUC @Inject constructor(
     private val voiceRecorder: Mp3VoiceRecorder,
     private val audioPlayer: AudioPlayer,
-    private val stateMapper: AudioStateMapper
+    private val stateMapper: AudioStateMapper,
+    private val lookForFilesUC: LookForFilesUC
 ) {
     fun execute(): Completable = stateMapper
         .observe()
@@ -24,4 +25,5 @@ class StopPlaybackAndRecordUC @Inject constructor(
                 }
             }
         }
+        .andThen(lookForFilesUC.execute())
 }

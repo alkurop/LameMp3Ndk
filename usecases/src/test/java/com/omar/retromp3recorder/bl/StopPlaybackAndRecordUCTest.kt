@@ -1,14 +1,12 @@
 package com.omar.retromp3recorder.bl
 
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyZeroInteractions
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.AudioState
 import com.omar.retromp3recorder.state.repos.AudioStateMapper
+import com.omar.retromp3recorder.utils.FileLister
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
@@ -26,6 +24,9 @@ class StopPlaybackAndRecordUCTest {
 
     @Inject
     lateinit var useCase: StopPlaybackAndRecordUC
+
+    @Inject
+    lateinit var fileLister: FileLister
 
     @Before
     fun setUp() {
@@ -59,5 +60,14 @@ class StopPlaybackAndRecordUCTest {
         useCase.execute().test().assertNoErrors().assertComplete()
         verifyZeroInteractions(player)
         verifyZeroInteractions(recorder)
+    }
+
+    @Test
+    fun `look for files after stop`() {
+        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Recording)
+
+        useCase.execute().test()
+
+        verify(fileLister).listFiles(any())
     }
 }
