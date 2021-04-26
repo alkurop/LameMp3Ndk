@@ -15,9 +15,13 @@ object DeleteFileOutputMapper {
 
     private fun getMapper(): BiFunction<DeleteFileView.State, DeleteFileView.Output, DeleteFileView.State> =
         BiFunction { oldState: DeleteFileView.State, output: DeleteFileView.Output ->
-            oldState.copy()
+            when (output) {
+                is DeleteFileView.Output.Finished ->
+                    oldState.copy(shouldDismiss = true)
+            }
         }
 
     private fun getDefaultViewModel() = DeleteFileView.State(
+        shouldDismiss = false
     )
 }
