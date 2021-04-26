@@ -69,7 +69,7 @@ class AudioControlsInteractorInputTest {
         actionSubject.onNext(AudioControlsView.Input.Stop)
 
         //then
-        stateMapper.observe().test().assertValue(AudioState.Idle(true))
+        stateMapper.observe().test().assertValue(AudioState.Idle)
     }
 
     @Test

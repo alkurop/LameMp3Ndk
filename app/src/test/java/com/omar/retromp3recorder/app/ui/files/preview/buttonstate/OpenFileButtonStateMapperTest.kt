@@ -44,7 +44,7 @@ class OpenFileButtonStateMapperTest {
 
     @Test
     fun `when audio idle and no files state false`() {
-        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Idle(false))
+        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Idle)
 
         mapper.observe().test().assertValue(false)
     }
@@ -52,7 +52,7 @@ class OpenFileButtonStateMapperTest {
     @Test
     fun `when audio idle and has files state true`() {
         fileListRepo.onNext(listOf("something"))
-        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Idle(false))
+        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Idle)
 
         mapper.observe().test().assertValue(true)
     }

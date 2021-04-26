@@ -7,18 +7,13 @@ import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.di.DaggerRepoTestComponent
 import com.omar.retromp3recorder.utils.FileEmptyChecker
-import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import javax.inject.Inject
 
 internal class AudioStateMapperImplTest {
-    @Inject
-    lateinit var currentFileRepo: CurrentFileRepo
-
     @Mock
     lateinit var player: AudioPlayer
 
@@ -34,8 +29,6 @@ internal class AudioStateMapperImplTest {
         MockitoAnnotations.initMocks(this)
         DaggerRepoTestComponent.create().inject(this)
         audioStateMapper = AudioStateMapperImpl(
-            currentFileRepo = currentFileRepo,
-            fileEmptyChecker = fileEmptyChecker,
             recorder = recorder,
             player = player
         )
@@ -62,21 +55,12 @@ internal class AudioStateMapperImplTest {
     }
 
     @Test
-    fun `when both idle and has file state Idle with file`() {
-        whenever(player.observeState()) doReturn Observable.just(AudioPlayer.State.Idle)
-        whenever(recorder.observeState()) doReturn Observable.just(Mp3VoiceRecorder.State.Idle)
-        currentFileRepo.onNext(Optional("test"))
-
-        audioStateMapper.observe().test().assertNotComplete().assertNoErrors()
-            .assertValue(AudioState.Idle(hasCurrentFile = true))
-    }
-
-    @Test
-    fun `when both idle and no file state Idloe no file`() {
+    fun `when both idle  state Idle`() {
         whenever(player.observeState()) doReturn Observable.just(AudioPlayer.State.Idle)
         whenever(recorder.observeState()) doReturn Observable.just(Mp3VoiceRecorder.State.Idle)
 
         audioStateMapper.observe().test().assertNotComplete().assertNoErrors()
-            .assertValue(AudioState.Idle(hasCurrentFile = false))
+            .assertValue(AudioState.Idle)
     }
+
 }

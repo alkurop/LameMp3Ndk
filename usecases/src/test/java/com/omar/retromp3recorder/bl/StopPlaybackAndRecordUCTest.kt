@@ -54,7 +54,7 @@ class StopPlaybackAndRecordUCTest {
 
     @Test
     fun `do nothing when idle`() {
-        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Idle(false))
+        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Idle)
 
         useCase.execute().test().assertNoErrors().assertComplete()
         verifyZeroInteractions(player)

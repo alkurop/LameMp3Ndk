@@ -45,7 +45,7 @@ class DeleteFileButtonStateMapperTest {
 
     @Test
     fun `when audio idle and no current file state false`() {
-        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Idle(false))
+        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Idle)
 
         mapper.observe().test().assertValue(false)
     }
@@ -53,7 +53,7 @@ class DeleteFileButtonStateMapperTest {
     @Test
     fun `when audio idle and has current file state true`() {
         currentFileRepo.onNext(Optional("something"))
-        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Idle(false))
+        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Idle)
 
         mapper.observe().test().assertValue(true)
     }

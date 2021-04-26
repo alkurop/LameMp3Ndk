@@ -2,7 +2,6 @@ package com.omar.retromp3recorder.state.repos
 
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.utils.FileEmptyChecker
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -11,28 +10,24 @@ interface AudioStateMapper {
 }
 
 class AudioStateMapperImpl @Inject constructor(
-    private val currentFileRepo: CurrentFileRepo,
-    private val fileEmptyChecker: FileEmptyChecker,
     private val player: AudioPlayer,
     private val recorder: Mp3VoiceRecorder
 ) : AudioStateMapper {
     override fun observe(): Observable<AudioState> = Observable.combineLatest(
         player.observeState(),
         recorder.observeState(),
-        currentFileRepo.observe(),
-        { playerState, recorderState, currentFilePath ->
-            val hasSomethingToPlay = fileEmptyChecker.isFileEmpty(currentFilePath.value).not()
+        { playerState, recorderState ->
             when {
                 playerState == AudioPlayer.State.Playing -> AudioState.Playing
                 recorderState == Mp3VoiceRecorder.State.Recording -> AudioState.Recording
-                else -> AudioState.Idle(hasSomethingToPlay)
+                else -> AudioState.Idle
             }
         }
     ).distinctUntilChanged()
 }
 
 sealed class AudioState {
-    data class Idle(val hasCurrentFile: Boolean) : AudioState()
+    object Idle : AudioState()
     object Playing : AudioState()
     object Recording : AudioState()
 }

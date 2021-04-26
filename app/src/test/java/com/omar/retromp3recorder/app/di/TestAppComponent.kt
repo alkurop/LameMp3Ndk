@@ -2,6 +2,8 @@ package com.omar.retromp3recorder.app.di
 
 import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsInteractorInputTest
 import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsInteractorOutputTest
+import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.PlayButtonStateMapperTest
+import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.ShareButtonStateMapperTest
 import com.omar.retromp3recorder.app.ui.files.edit.delete.DeleteFileInteractorTest
 import com.omar.retromp3recorder.app.ui.files.edit.selector.SelectorInteractorInputTest
 import com.omar.retromp3recorder.app.ui.files.edit.selector.SelectorInteractorOutputTest
@@ -46,4 +48,6 @@ interface TestAppComponent {
     fun inject(deleteFileInteractorTest: DeleteFileInteractorTest)
     fun inject(openFileButtonStateMapperTest: OpenFileButtonStateMapperTest)
     fun inject(deleteFileButtonStateMapperTest: DeleteFileButtonStateMapperTest)
+    fun inject(playButtonStateMapperTest: PlayButtonStateMapperTest)
+    fun inject(shareButtonStateMapperTest: ShareButtonStateMapperTest)
 }

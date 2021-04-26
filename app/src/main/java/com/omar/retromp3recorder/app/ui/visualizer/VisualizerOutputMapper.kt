@@ -24,7 +24,7 @@ object VisualizerOutputMapper {
         }
 
     private val defaultViewModel = VisualizerView.State(
-        audioState = AudioState.Idle(false),
+        audioState = AudioState.Idle,
         playerId = null
     )
 }

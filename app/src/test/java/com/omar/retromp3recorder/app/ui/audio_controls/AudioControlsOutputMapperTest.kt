@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.ui.audio_controls
 
 import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsOutputMapper.mapOutputToState
-import com.omar.retromp3recorder.state.repos.AudioState
+import com.omar.retromp3recorder.ui.state_button.InteractiveButton
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -26,19 +26,42 @@ class AudioControlsOutputMapperTest {
     }
 
     @Test
-    fun `map audio state change result`() {
-        val stateChangedResult = AudioControlsView.Output.AudioStateChanged(AudioState.Playing)
+    fun `map play button state to play change`() {
+        outputPublisher.onNext(AudioControlsView.Output.PlayButtonState(InteractiveButton.State.RUNNING))
 
-        //When
-        outputPublisher.onNext(stateChangedResult)
+        test.assertValueAt(
+            1,
+            AudioControlsView.State(playButtonState = InteractiveButton.State.RUNNING)
+        )
+    }
 
-        //Then
-        test.assertNoErrors()
-            .assertNotComplete()
-            .assertNoErrors()
-            .assertValueCount(2)
-            .assertValueAt(
-                1
-            ) { (state) -> state === AudioState.Playing }
+    @Test
+    fun `map record button state to record change`() {
+        outputPublisher.onNext(AudioControlsView.Output.RecordButtonState(InteractiveButton.State.RUNNING))
+
+        test.assertValueAt(
+            1,
+            AudioControlsView.State(recordButtonState = InteractiveButton.State.RUNNING)
+        )
+    }
+
+    @Test
+    fun `map share button state to share change`() {
+        outputPublisher.onNext(AudioControlsView.Output.ShareButtonState(InteractiveButton.State.RUNNING))
+
+        test.assertValueAt(
+            1,
+            AudioControlsView.State(shareButtonState = InteractiveButton.State.RUNNING)
+        )
+    }
+
+    @Test
+    fun `map stop button state to stop change`() {
+        outputPublisher.onNext(AudioControlsView.Output.StopButtonState(InteractiveButton.State.RUNNING))
+
+        test.assertValueAt(
+            1,
+            AudioControlsView.State(stopButtonState = InteractiveButton.State.RUNNING)
+        )
     }
 }
