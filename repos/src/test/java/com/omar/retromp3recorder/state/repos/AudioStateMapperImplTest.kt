@@ -41,7 +41,7 @@ internal class AudioStateMapperImplTest {
         whenever(player.observeState()) doReturn Observable.just(AudioPlayer.State.Playing)
         whenever(recorder.observeState()) doReturn Observable.just(Mp3VoiceRecorder.State.Idle)
 
-        audioStateMapper.observe().test().assertNotComplete().assertNoErrors()
+        audioStateMapper.observe().test()
             .assertValue(AudioState.Playing)
     }
 
@@ -50,17 +50,16 @@ internal class AudioStateMapperImplTest {
         whenever(player.observeState()) doReturn Observable.just(AudioPlayer.State.Idle)
         whenever(recorder.observeState()) doReturn Observable.just(Mp3VoiceRecorder.State.Recording)
 
-        audioStateMapper.observe().test().assertNotComplete().assertNoErrors()
+        audioStateMapper.observe().test()
             .assertValue(AudioState.Recording)
     }
 
     @Test
-    fun `when both idle  state Idle`() {
+    fun `when both idle state Idle`() {
         whenever(player.observeState()) doReturn Observable.just(AudioPlayer.State.Idle)
         whenever(recorder.observeState()) doReturn Observable.just(Mp3VoiceRecorder.State.Idle)
 
-        audioStateMapper.observe().test().assertNotComplete().assertNoErrors()
+        audioStateMapper.observe().test()
             .assertValue(AudioState.Idle)
     }
-
 }
