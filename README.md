@@ -20,4 +20,5 @@ Develop ...  ![travis icon](https://travis-ci.com/alkurop/LameMp3Ndk.svg?branch=
 - multitrack
 - use exo player
 - scrubbing
-- save recorder preffs
+- save recorder prefs
+- add ui smoke tests
