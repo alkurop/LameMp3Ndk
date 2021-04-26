@@ -42,8 +42,8 @@ class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
     private fun renderState(state: AudioControlsView.State) {
         when (val audioState = state.audioState) {
             is AudioState.Idle -> {
-                playButton.onState(if (audioState.hasFile) InteractiveButton.State.ENABLED else InteractiveButton.State.DISABLED)
-                shareButton.onState(if (audioState.hasFile) InteractiveButton.State.ENABLED else InteractiveButton.State.DISABLED)
+                playButton.onState(if (audioState.hasCurrentFile) InteractiveButton.State.ENABLED else InteractiveButton.State.DISABLED)
+                shareButton.onState(if (audioState.hasCurrentFile) InteractiveButton.State.ENABLED else InteractiveButton.State.DISABLED)
                 recordButton.onState(InteractiveButton.State.ENABLED)
                 stopButton.onState(InteractiveButton.State.DISABLED)
             }

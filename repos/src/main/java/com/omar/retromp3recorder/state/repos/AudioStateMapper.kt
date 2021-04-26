@@ -6,17 +6,16 @@ import com.omar.retromp3recorder.utils.FileEmptyChecker
 import io.reactivex.Observable
 import javax.inject.Inject
 
-interface AudioStateRepo {
+interface AudioStateMapper {
     fun observe(): Observable<AudioState>
 }
 
-class AudioStateRepoImpl @Inject constructor(
+class AudioStateMapperImpl @Inject constructor(
     private val currentFileRepo: CurrentFileRepo,
     private val fileEmptyChecker: FileEmptyChecker,
     private val player: AudioPlayer,
     private val recorder: Mp3VoiceRecorder
-) : AudioStateRepo {
-
+) : AudioStateMapper {
     override fun observe(): Observable<AudioState> = Observable.combineLatest(
         player.observeState(),
         recorder.observeState(),
@@ -33,7 +32,7 @@ class AudioStateRepoImpl @Inject constructor(
 }
 
 sealed class AudioState {
-    data class Idle(val hasFile: Boolean) : AudioState()
+    data class Idle(val hasCurrentFile: Boolean) : AudioState()
     object Playing : AudioState()
     object Recording : AudioState()
 }

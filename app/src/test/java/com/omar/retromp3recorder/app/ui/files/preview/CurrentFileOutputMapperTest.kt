@@ -43,28 +43,28 @@ class CurrentFileOutputMapperTest {
     }
 
     @Test
-    fun `map audio state inactive`() {
-        outputPublisher.onNext(CurrentFileView.Output.AudioInactive)
+    fun `map delete button state`() {
+        outputPublisher.onNext(CurrentFileView.Output.DeleteButtonState(true))
         //Then
         test.assertNoErrors()
             .assertNotComplete()
             .assertNoErrors()
             .assertValueCount(2)
             .assertValueAt(1) { value ->
-                value == default.copy(isShowingFileButtons = true)
+                value == default.copy(isDeleteFileActive = true)
             }
     }
 
     @Test
-    fun `map audio state playing`() {
-        outputPublisher.onNext(CurrentFileView.Output.AudioActive)
+    fun `map open button state`() {
+        outputPublisher.onNext(CurrentFileView.Output.OpenButtonState(true))
         //Then
         test.assertNoErrors()
             .assertNotComplete()
             .assertNoErrors()
             .assertValueCount(2)
             .assertValueAt(1) { value ->
-                value == default.copy(isShowingFileButtons = false)
+                value == default.copy(isOpenFileActive = true)
             }
     }
 }

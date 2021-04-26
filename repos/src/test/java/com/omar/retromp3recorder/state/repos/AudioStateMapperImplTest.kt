@@ -15,7 +15,7 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import javax.inject.Inject
 
-internal class AudioStateRepoImplTest {
+internal class AudioStateMapperImplTest {
     @Inject
     lateinit var currentFileRepo: CurrentFileRepo
 
@@ -27,14 +27,13 @@ internal class AudioStateRepoImplTest {
 
     @Mock
     lateinit var fileEmptyChecker: FileEmptyChecker
-
-    lateinit var audioStateRepo: AudioStateRepo
+    lateinit var audioStateMapper: AudioStateMapper
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         DaggerRepoTestComponent.create().inject(this)
-        audioStateRepo = AudioStateRepoImpl(
+        audioStateMapper = AudioStateMapperImpl(
             currentFileRepo = currentFileRepo,
             fileEmptyChecker = fileEmptyChecker,
             recorder = recorder,
@@ -49,7 +48,7 @@ internal class AudioStateRepoImplTest {
         whenever(player.observeState()) doReturn Observable.just(AudioPlayer.State.Playing)
         whenever(recorder.observeState()) doReturn Observable.just(Mp3VoiceRecorder.State.Idle)
 
-        audioStateRepo.observe().test().assertNotComplete().assertNoErrors()
+        audioStateMapper.observe().test().assertNotComplete().assertNoErrors()
             .assertValue(AudioState.Playing)
     }
 
@@ -58,7 +57,7 @@ internal class AudioStateRepoImplTest {
         whenever(player.observeState()) doReturn Observable.just(AudioPlayer.State.Idle)
         whenever(recorder.observeState()) doReturn Observable.just(Mp3VoiceRecorder.State.Recording)
 
-        audioStateRepo.observe().test().assertNotComplete().assertNoErrors()
+        audioStateMapper.observe().test().assertNotComplete().assertNoErrors()
             .assertValue(AudioState.Recording)
     }
 
@@ -68,8 +67,8 @@ internal class AudioStateRepoImplTest {
         whenever(recorder.observeState()) doReturn Observable.just(Mp3VoiceRecorder.State.Idle)
         currentFileRepo.onNext(Optional("test"))
 
-        audioStateRepo.observe().test().assertNotComplete().assertNoErrors()
-            .assertValue(AudioState.Idle(hasFile = true))
+        audioStateMapper.observe().test().assertNotComplete().assertNoErrors()
+            .assertValue(AudioState.Idle(hasCurrentFile = true))
     }
 
     @Test
@@ -77,7 +76,7 @@ internal class AudioStateRepoImplTest {
         whenever(player.observeState()) doReturn Observable.just(AudioPlayer.State.Idle)
         whenever(recorder.observeState()) doReturn Observable.just(Mp3VoiceRecorder.State.Idle)
 
-        audioStateRepo.observe().test().assertNotComplete().assertNoErrors()
-            .assertValue(AudioState.Idle(hasFile = false))
+        audioStateMapper.observe().test().assertNotComplete().assertNoErrors()
+            .assertValue(AudioState.Idle(hasCurrentFile = false))
     }
 }

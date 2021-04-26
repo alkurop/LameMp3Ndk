@@ -8,7 +8,7 @@ object CurrentFileOutputMapper {
     fun mapOutputToState(): ObservableTransformer<CurrentFileView.Output, CurrentFileView.State> =
         ObservableTransformer { upstream: Observable<CurrentFileView.Output> ->
             upstream.scan(
-                getDefaultViewModel(),
+                CurrentFileView.State(),
                 getMapper()
             )
         }
@@ -16,22 +16,15 @@ object CurrentFileOutputMapper {
     private fun getMapper(): BiFunction<CurrentFileView.State, CurrentFileView.Output, CurrentFileView.State> =
         BiFunction { oldState: CurrentFileView.State, output: CurrentFileView.Output ->
             when (output) {
-                is CurrentFileView.Output.CurrentFileOutput -> {
-                    oldState.copy(
-                        currentFilePath = output.currentFilePath
-                    )
-                }
-                is CurrentFileView.Output.AudioInactive -> {
-                    oldState.copy(isShowingFileButtons = true)
-                }
-                is CurrentFileView.Output.AudioActive -> {
-                    oldState.copy(isShowingFileButtons = false)
-                }
+                is CurrentFileView.Output.CurrentFileOutput -> oldState.copy(
+                    currentFilePath = output.currentFilePath
+                )
+                is CurrentFileView.Output.DeleteButtonState -> oldState.copy(
+                    isDeleteFileActive = output.isActive,
+                )
+                is CurrentFileView.Output.OpenButtonState -> oldState.copy(
+                    isOpenFileActive = output.isActive,
+                )
             }
         }
-
-    private fun getDefaultViewModel() = CurrentFileView.State(
-        currentFilePath = null,
-        isShowingFileButtons = false
-    )
 }

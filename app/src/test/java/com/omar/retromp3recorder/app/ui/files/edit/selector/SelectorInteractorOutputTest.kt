@@ -34,7 +34,7 @@ class SelectorInteractorOutputTest {
         val fileName = "otlichno"
         currentFileRepo.onNext(Optional(fileName))
 
-        test.assertValueAt(1, SelectorView.Output.CurrentFile(fileName))
+        test.assertValueAt(2, SelectorView.Output.CurrentFile(fileName))
     }
 
     @Test
@@ -42,6 +42,6 @@ class SelectorInteractorOutputTest {
         val files = listOf("zdraste")
         fileListRepo.onNext(files)
 
-        test.assertValueAt(1, SelectorView.Output.FileList(files))
+        test.assertValueAt(2, SelectorView.Output.FileList(files))
     }
 }

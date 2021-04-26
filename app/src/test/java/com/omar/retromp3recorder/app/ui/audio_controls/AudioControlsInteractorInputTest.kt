@@ -4,7 +4,7 @@ import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.share.Sharer
 import com.omar.retromp3recorder.state.repos.AudioState
-import com.omar.retromp3recorder.state.repos.AudioStateRepo
+import com.omar.retromp3recorder.state.repos.AudioStateMapper
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
 import com.omar.retromp3recorder.utils.Optional
@@ -20,7 +20,7 @@ class AudioControlsInteractorInputTest {
     lateinit var interactor: AudioControlsInteractor
 
     @Inject
-    lateinit var stateRepo: AudioStateRepo
+    lateinit var stateMapper: AudioStateMapper
 
     @Inject
     lateinit var requestPermissionsRepo: RequestPermissionsRepo
@@ -59,7 +59,7 @@ class AudioControlsInteractorInputTest {
         actionSubject.onNext(AudioControlsView.Input.Play)
 
         //then
-        stateRepo.observe().test().assertValue(AudioState.Playing)
+        stateMapper.observe().test().assertValue(AudioState.Playing)
     }
 
     @Test
@@ -69,7 +69,7 @@ class AudioControlsInteractorInputTest {
         actionSubject.onNext(AudioControlsView.Input.Stop)
 
         //then
-        stateRepo.observe().test().assertValue(AudioState.Idle(true))
+        stateMapper.observe().test().assertValue(AudioState.Idle(true))
     }
 
     @Test
@@ -79,6 +79,6 @@ class AudioControlsInteractorInputTest {
         actionSubject.onNext(AudioControlsView.Input.Record)
 
         //then
-        stateRepo.observe().test().assertValue(AudioState.Recording)
+        stateMapper.observe().test().assertValue(AudioState.Recording)
     }
 }

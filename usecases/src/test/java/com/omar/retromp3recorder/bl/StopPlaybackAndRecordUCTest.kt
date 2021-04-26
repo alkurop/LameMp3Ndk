@@ -8,16 +8,15 @@ import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.AudioState
-import com.omar.retromp3recorder.state.repos.AudioStateRepo
+import com.omar.retromp3recorder.state.repos.AudioStateMapper
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
 class StopPlaybackAndRecordUCTest {
-
     @Inject
-    lateinit var audioStateRepo: AudioStateRepo
+    lateinit var audioStateMapper: AudioStateMapper
 
     @Inject
     lateinit var player: AudioPlayer
@@ -35,7 +34,7 @@ class StopPlaybackAndRecordUCTest {
 
     @Test
     fun `stop play when playing`() {
-        whenever(audioStateRepo.observe()) doReturn Observable.just(AudioState.Playing)
+        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Playing)
 
         useCase.execute().test().assertNoErrors().assertComplete()
 
@@ -45,7 +44,7 @@ class StopPlaybackAndRecordUCTest {
 
     @Test
     fun `stop record when recording`() {
-        whenever(audioStateRepo.observe()) doReturn Observable.just(AudioState.Recording)
+        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Recording)
 
         useCase.execute().test().assertNoErrors().assertComplete()
 
@@ -55,7 +54,7 @@ class StopPlaybackAndRecordUCTest {
 
     @Test
     fun `do nothing when idle`() {
-        whenever(audioStateRepo.observe()) doReturn Observable.just(AudioState.Idle(false))
+        whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Idle(false))
 
         useCase.execute().test().assertNoErrors().assertComplete()
         verifyZeroInteractions(player)

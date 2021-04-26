@@ -16,7 +16,7 @@ class CurrentFileRepo @Inject constructor() :
     BehaviorSubjectRepo<Optional<String>>(Optional.empty())
 
 @Singleton
-class FileListRepo @Inject constructor() : BehaviorSubjectRepo<List<String>>()
+class FileListRepo @Inject constructor() : BehaviorSubjectRepo<List<String>>(emptyList())
 
 @Singleton
 class SampleRateRepo @Inject constructor(defaults: RecorderDefaults) :

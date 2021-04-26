@@ -32,8 +32,8 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
 
     private fun renderState(state: CurrentFileView.State) {
         textView.text = state.currentFilePath?.fileName() ?: getString(R.string.no_file)
-        buttonOpen.setIsButtonActive(state.isShowingFileButtons)
-        buttonDelete.setIsButtonActive(state.isShowingFileButtons && state.currentFilePath != null)
+        buttonOpen.setIsButtonActive(state.isOpenFileActive)
+        buttonDelete.setIsButtonActive(state.isDeleteFileActive)
         if (state.currentFilePath != null)
             buttonDelete.setOnClickListener {
                 DeleteFileDialogFragment.newInstance(state.currentFilePath).show(

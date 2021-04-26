@@ -2,8 +2,9 @@ package com.omar.retromp3recorder.app.ui.files.preview
 
 object CurrentFileView {
     data class State(
-        val currentFilePath: String?,
-        val isShowingFileButtons: Boolean
+        val currentFilePath: String? = null,
+        val isOpenFileActive: Boolean = false,
+        val isDeleteFileActive: Boolean = false
     )
 
     sealed class Input {
@@ -12,7 +13,7 @@ object CurrentFileView {
 
     sealed class Output {
         data class CurrentFileOutput(val currentFilePath: String?) : CurrentFileView.Output()
-        object AudioActive : Output()
-        object AudioInactive : Output()
+        data class DeleteButtonState(val isActive: Boolean) : Output()
+        data class OpenButtonState(val isActive: Boolean) : Output()
     }
 }
