@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate
 
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.anyOrNull
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
@@ -9,6 +10,7 @@ import com.omar.retromp3recorder.state.repos.AudioStateMapper
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
 import com.omar.retromp3recorder.utils.FileEmptyChecker
+import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
@@ -32,6 +34,7 @@ class ShareButtonStateMapperTest {
         MockitoAnnotations.initMocks(this)
         DaggerTestAppComponent.create().inject(this)
         mapper = ShareButtonStateMapper(currentFileRepo, audioStateMapper, fileEmptyChecker)
+        currentFileRepo.onNext(Optional("test"))
     }
 
     @Test
@@ -51,7 +54,7 @@ class ShareButtonStateMapperTest {
     @Test
     fun `when audio idle and has file state enabled`() {
         whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Idle)
-        whenever(fileEmptyChecker.isFileEmpty(anyOrNull())) doReturn false
+        whenever(fileEmptyChecker.isFileEmpty(any())) doReturn false
 
         mapper.observe().test().assertValue(InteractiveButton.State.ENABLED)
     }

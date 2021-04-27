@@ -39,7 +39,7 @@ class SelectorInteractor @Inject constructor(
             Completable.merge(listOf(
                 input.ofType(SelectorView.Input.ItemSelected::class.java)
                     .flatMapCompletable {
-                        setCurrentFileUC.execute(it.item.filePath)
+                        setCurrentFileUC.execute(it.item.fileWrapper.path)
                     }
             ))
         }

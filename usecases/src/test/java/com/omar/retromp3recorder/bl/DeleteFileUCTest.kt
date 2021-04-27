@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.bl
 
 import com.nhaarman.mockitokotlin2.verify
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
+import com.omar.retromp3recorder.dto.toTestFileWrapper
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.state.repos.FileListRepo
 import com.omar.retromp3recorder.utils.FileDeleter
@@ -29,7 +30,7 @@ class DeleteFileUCTest {
     fun setUp() {
         DaggerUseCaseComponent.create().inject(this)
         currentFileRepo.onNext(Optional.empty())
-        fileListRepo.onNext(listOf(testPath))
+        fileListRepo.onNext(listOf(testPath.toTestFileWrapper()))
     }
 
     @Test
@@ -58,7 +59,7 @@ class DeleteFileUCTest {
 
     @Test
     fun `file list repo was updated`() {
-        fileListRepo.onNext(listOf(testPath))
+        fileListRepo.onNext(listOf(testPath.toTestFileWrapper()))
         useCase.execute(testPath).test().assertNoErrors().assertComplete()
 
         fileListRepo.observe().test().assertValue(emptyList())

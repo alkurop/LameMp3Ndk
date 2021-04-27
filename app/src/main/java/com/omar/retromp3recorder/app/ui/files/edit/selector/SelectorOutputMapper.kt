@@ -19,7 +19,8 @@ object SelectorOutputMapper {
                 is SelectorView.Output.FileList -> {
                     val selectedFile = oldState.selectedFile
                     val items =
-                        output.items.map { SelectorView.Item(it, it == selectedFile) }.reversed()
+                        output.items.map { SelectorView.Item(it, it.path == selectedFile) }
+                            .reversed()
                     oldState.copy(items = items)
                 }
                 is SelectorView.Output.CurrentFile -> {
@@ -27,8 +28,8 @@ object SelectorOutputMapper {
 
                     oldState.copy(
                         items = oldState.items.map { item ->
-                            val isSelected = item.filePath == selectedFile
-                            SelectorView.Item(item.filePath, isSelected)
+                            val isSelected = item.fileWrapper.path == selectedFile
+                            SelectorView.Item(item.fileWrapper, isSelected)
                         },
                         selectedFile = selectedFile
                     )

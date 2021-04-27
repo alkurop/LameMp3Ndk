@@ -21,7 +21,11 @@ class PlayButtonStateMapper @Inject constructor(
                     is AudioState.Recording -> InteractiveButton.State.DISABLED
                     is AudioState.Playing -> InteractiveButton.State.RUNNING
                     is AudioState.Idle -> {
-                        val hasPlayableFile = fileEmptyChecker.isFileEmpty(currentFile.value).not()
+                        val path = currentFile.value
+                        val hasPlayableFile =
+                            path != null && fileEmptyChecker.isFileEmpty(
+                                path,
+                            ).not()
                         if (hasPlayableFile) InteractiveButton.State.ENABLED else InteractiveButton.State.DISABLED
                     }
                 }

@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.bl
 
+import com.omar.retromp3recorder.dto.FileWrapper
 import com.omar.retromp3recorder.state.repos.FileListRepo
 import com.omar.retromp3recorder.utils.FileLister
 import com.omar.retromp3recorder.utils.FilePathGenerator
@@ -14,7 +15,8 @@ class LookForFilesUC @Inject constructor(
     fun execute(): Completable {
         return Completable.fromAction {
             val fileDir = filePathGenerator.fileDir
-            fileListRepo.onNext(fileLister.listFiles(fileDir))
+            fileListRepo.onNext(
+                fileLister.listFiles(fileDir).map { FileWrapper(it.path, it.lastModified()) })
         }
     }
 }

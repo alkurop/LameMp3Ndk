@@ -44,7 +44,7 @@ class SelectorAdapter(
 
         fun bind(item: SelectorView.Item) {
             itemView.setOnClickListener { onItemSelectedListener(item) }
-            textView.text = item.filePath.fileName()
+            textView.text = item.fileWrapper.path.fileName()
             currentFileSign.isVisible = item.isCurrentItem
         }
     }

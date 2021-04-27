@@ -1,6 +1,7 @@
 package com.omar.retromp3recorder.app.ui.files.edit.selector
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
+import com.omar.retromp3recorder.dto.toTestFileWrapper
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.state.repos.FileListRepo
 import com.omar.retromp3recorder.utils.Optional
@@ -39,7 +40,9 @@ class SelectorInteractorOutputTest {
 
     @Test
     fun `interactor listens to FileListRepo`() {
-        val files = listOf("zdraste")
+        val files = listOf(
+            "zdraste".toTestFileWrapper()
+        )
         fileListRepo.onNext(files)
 
         test.assertValueAt(2, SelectorView.Output.FileList(files))

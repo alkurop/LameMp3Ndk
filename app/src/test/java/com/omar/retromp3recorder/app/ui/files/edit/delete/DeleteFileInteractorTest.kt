@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.app.ui.files.edit.delete
 
 import com.nhaarman.mockitokotlin2.verify
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
+import com.omar.retromp3recorder.dto.toTestFileWrapper
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.state.repos.FileListRepo
 import com.omar.retromp3recorder.utils.FileDeleter
@@ -35,7 +36,7 @@ class DeleteFileInteractorTest {
         test = actionSubject.compose(interactor.processIO()).test()
 
         currentFileRepo.onNext(Optional(filePath))
-        fileListRepo.onNext(listOf(filePath))
+        fileListRepo.onNext(listOf(filePath.toTestFileWrapper()))
     }
 
     @Test

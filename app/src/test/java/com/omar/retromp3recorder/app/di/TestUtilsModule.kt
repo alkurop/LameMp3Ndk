@@ -5,15 +5,12 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.omar.retromp3recorder.utils.FileDeleter
-import com.omar.retromp3recorder.utils.FileEmptyChecker
-import com.omar.retromp3recorder.utils.FileLister
-import com.omar.retromp3recorder.utils.FilePathGenerator
-import com.omar.retromp3recorder.utils.PermissionChecker
+import com.omar.retromp3recorder.utils.*
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
+import java.io.File
 import javax.inject.Singleton
 
 @Module
@@ -43,7 +40,7 @@ class TestUtilsModule {
     @Provides
     fun provideFileLister(): FileLister {
         return mock<FileLister>().apply {
-            whenever(this.listFiles(any())) doReturn listOf("test")
+            whenever(this.listFiles(any())) doReturn listOf(File("test"))
         }
     }
 

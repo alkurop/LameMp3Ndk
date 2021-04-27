@@ -1,5 +1,7 @@
 package com.omar.retromp3recorder.app.ui.files.edit.selector
 
+import com.omar.retromp3recorder.dto.FileWrapper
+
 object SelectorView {
     data class State(
         val selectedFile: String?,
@@ -11,12 +13,12 @@ object SelectorView {
     }
 
     sealed class Output {
-        data class FileList(val items: List<String>) : Output()
+        data class FileList(val items: List<FileWrapper>) : Output()
         data class CurrentFile(val filePath: String?) : Output()
     }
 
     data class Item(
-        val filePath: String,
+        val fileWrapper: FileWrapper,
         val isCurrentItem: Boolean
     )
 }

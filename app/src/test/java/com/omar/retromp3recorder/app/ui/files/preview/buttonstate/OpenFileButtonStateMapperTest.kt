@@ -3,6 +3,7 @@ package com.omar.retromp3recorder.app.ui.files.preview.buttonstate
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
+import com.omar.retromp3recorder.dto.toTestFileWrapper
 import com.omar.retromp3recorder.state.repos.AudioState
 import com.omar.retromp3recorder.state.repos.AudioStateMapper
 import com.omar.retromp3recorder.state.repos.FileListRepo
@@ -51,7 +52,7 @@ class OpenFileButtonStateMapperTest {
 
     @Test
     fun `when audio idle and has files state true`() {
-        fileListRepo.onNext(listOf("something"))
+        fileListRepo.onNext(listOf("something".toTestFileWrapper()))
         whenever(audioStateMapper.observe()) doReturn Observable.just(AudioState.Idle)
 
         mapper.observe().test().assertValue(true)
