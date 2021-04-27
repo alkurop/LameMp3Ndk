@@ -50,7 +50,7 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
     }
 
     private fun renderPlayerId(playerId: Int?) {
-        if (playerId == null) {
+        if (playerId == null || visualizer?.enabled == true) {
             return
         }
         visualizer = Visualizer(playerId).apply {
