@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.di
 
+import com.omar.retromp3recorder.app.App
 import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsViewModel
 import com.omar.retromp3recorder.app.ui.files.edit.delete.DeleteFileViewModel
 import com.omar.retromp3recorder.app.ui.files.edit.selector.SelectorViewModel
@@ -9,6 +10,7 @@ import com.omar.retromp3recorder.app.ui.main.MainViewModel
 import com.omar.retromp3recorder.app.ui.recorder_settings.beat_rate.BitRateSettingsViewModel
 import com.omar.retromp3recorder.app.ui.recorder_settings.sample_rate.SampleRateViewModel
 import com.omar.retromp3recorder.app.ui.visualizer.VisualizerViewModel
+import com.omar.retromp3recorder.bl.di.UsecaseModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -19,6 +21,7 @@ import javax.inject.Singleton
         FunctionalityModule::class,
         RepoModule::class,
         UtilsModule::class,
+        UsecaseModule::class
     ]
 )
 interface AppComponent {
@@ -31,4 +34,5 @@ interface AppComponent {
     fun inject(currentFileViewModel: CurrentFileViewModel)
     fun inject(fileSelectorViewModel: SelectorViewModel)
     fun inject(deleteFileViewModel: DeleteFileViewModel)
+    fun inject(app: App)
 }

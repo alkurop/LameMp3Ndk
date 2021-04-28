@@ -28,7 +28,8 @@ import javax.inject.Singleton
         MockModule::class,
         RepoModule::class,
         TestFunctionalityModule::class,
-        TestUtilsModule::class
+        TestUtilsModule::class,
+        TestUsecaseModule::class
     ]
 )
 interface TestAppComponent {

@@ -1,13 +1,19 @@
 package com.omar.retromp3recorder.bl
 
+import android.content.SharedPreferences
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.BitRateRepo
+import com.omar.retromp3recorder.storage.SharedPrefsRecorderKeys
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
 class ChangeBitrateUCTest {
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     @Inject
     lateinit var bitRateRepo: BitRateRepo
@@ -16,15 +22,19 @@ class ChangeBitrateUCTest {
     @Before
     fun setUp() {
         DaggerUseCaseComponent.create().inject(this)
-        changeBitrateUC = ChangeBitrateUC(bitRateRepo)
+        changeBitrateUC = ChangeBitrateUC(bitRateRepo, sharedPreferences)
     }
 
     @Test
     fun `assert happy flow`() {
-        changeBitrateUC.execute(Mp3VoiceRecorder.BitRate._160).subscribe()
-
+        val bitRate = Mp3VoiceRecorder.BitRate._160
+        changeBitrateUC.execute(bitRate).subscribe()
         //Then
         bitRateRepo.observe().test()
-            .assertValue(Mp3VoiceRecorder.BitRate._160)
+            .assertValue(bitRate)
+
+        verify(sharedPreferences.edit()).putInt(SharedPrefsRecorderKeys.BIT_RATE, bitRate.ordinal)
+        verify(sharedPreferences.edit()).apply()
+        verifyNoMoreInteractions(sharedPreferences.edit())
     }
 }
