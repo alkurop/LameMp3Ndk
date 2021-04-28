@@ -33,7 +33,6 @@ dependencies {
     api "io.reactivex.rxjava2:rxkotlin:$versions.rxKotlin"
     api "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
     api "com.jakewharton.timber:timber:$versions.timber"
-    api "com.github.alkurop:stringerbell:$versions.stringerbell"
     api project(":dto")
 
     implementation "com.github.alkurop:ghostinshell:$versions.ghostinshell"
