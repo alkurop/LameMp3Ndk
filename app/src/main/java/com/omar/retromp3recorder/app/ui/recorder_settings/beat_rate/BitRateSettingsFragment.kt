@@ -7,7 +7,7 @@ import com.jakewharton.rxbinding3.view.clicks
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.recorder_settings.RecorderSettingsBaseFragment
 import com.omar.retromp3recorder.app.uiutils.observe
-import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 
 class BitRateSettingsFragment : RecorderSettingsBaseFragment() {
     private val viewModel by viewModels<BitRateSettingsViewModel>()

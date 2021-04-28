@@ -56,19 +56,18 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$versions.recyclerView"
     implementation "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
     implementation "com.squareup.picasso:picasso:$versions.picasso"
-
+    implementation "com.github.alkurop:stringerbell:$versions.stringerbell"
     implementation "com.jakewharton.rxbinding3:rxbinding:$versions.rxView"
     implementation "com.akaita.java:rxjava2-debug:$versions.rxjava2Debug"
-
     implementation "com.github.alkurop:Android-Runtime-Permission-Manager:$versions.permission"
-
     implementation "androidx.fragment:fragment-ktx:$versions.ktxFragment"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
-
     implementation platform("com.google.firebase:firebase-bom:$versions.firebase")
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation "com.google.dagger:dagger:$versions.dagger"
+    implementation "com.github.alkurop:ghostinshell:$versions.ghostinshell"
+
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
     implementation project(':utils')
@@ -80,5 +79,7 @@ dependencies {
     implementation project(':usecases')
 
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
-    testImplementation project(':test-dep')
+    testImplementation "junit:junit:$testVersions.junit"
+    testImplementation "com.google.truth:truth:$testVersions.truth"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$testVersions.mockitoKotlin"
 }

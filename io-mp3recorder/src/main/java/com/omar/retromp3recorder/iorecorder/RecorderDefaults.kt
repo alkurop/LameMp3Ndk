@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.recorder
+package com.omar.retromp3recorder.iorecorder
 
 data class RecorderDefaults(
     val bitRate: Mp3VoiceRecorder.BitRate,

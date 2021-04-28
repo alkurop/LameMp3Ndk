@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.modules
 
 import com.omar.retromp3recorder.app.di.MockModule
-import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
