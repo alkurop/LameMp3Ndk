@@ -40,5 +40,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
-    testImplementation project(':test-dep')
+    testImplementation "junit:junit:$testVersions.junit"
+    testImplementation "com.google.truth:truth:$testVersions.truth"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$testVersions.mockitoKotlin"
 }
