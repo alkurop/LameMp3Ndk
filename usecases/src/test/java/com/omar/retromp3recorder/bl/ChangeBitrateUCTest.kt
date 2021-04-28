@@ -6,7 +6,7 @@ import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.BitRateRepo
-import com.omar.retromp3recorder.storage.SharedPrefsRecorderKeys
+import com.omar.retromp3recorder.storage.RecorderPrefsKeys
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
@@ -33,7 +33,7 @@ class ChangeBitrateUCTest {
         bitRateRepo.observe().test()
             .assertValue(bitRate)
 
-        verify(sharedPreferences.edit()).putInt(SharedPrefsRecorderKeys.BIT_RATE, bitRate.ordinal)
+        verify(sharedPreferences.edit()).putInt(RecorderPrefsKeys.BIT_RATE, bitRate.ordinal)
         verify(sharedPreferences.edit()).apply()
         verifyNoMoreInteractions(sharedPreferences.edit())
     }

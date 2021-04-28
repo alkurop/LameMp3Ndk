@@ -3,7 +3,7 @@ package com.omar.retromp3recorder.bl
 import android.content.SharedPreferences
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.BitRateRepo
-import com.omar.retromp3recorder.storage.SharedPrefsRecorderKeys
+import com.omar.retromp3recorder.storage.RecorderPrefsKeys
 import io.reactivex.Completable
 import javax.inject.Inject
 
@@ -16,7 +16,7 @@ class ChangeBitrateUC @Inject constructor(
             .andThen(Completable
                 .fromAction {
                     sharedPreferences.edit()
-                        .putInt(SharedPrefsRecorderKeys.BIT_RATE, bitRate.ordinal)
+                        .putInt(RecorderPrefsKeys.BIT_RATE, bitRate.ordinal)
                         .apply()
                 }
             )

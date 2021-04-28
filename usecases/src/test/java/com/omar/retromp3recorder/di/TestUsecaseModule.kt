@@ -7,9 +7,11 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
 internal class TestUsecaseModule {
+    @Singleton
     @Provides
     fun provideSharedPrefs(editor: SharedPreferences.Editor): SharedPreferences {
         return mock<SharedPreferences>().apply {

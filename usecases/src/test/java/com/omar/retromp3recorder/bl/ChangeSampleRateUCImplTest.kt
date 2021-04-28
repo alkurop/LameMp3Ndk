@@ -6,7 +6,7 @@ import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.SampleRateRepo
-import com.omar.retromp3recorder.storage.SharedPrefsRecorderKeys
+import com.omar.retromp3recorder.storage.RecorderPrefsKeys
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
@@ -35,7 +35,7 @@ class ChangeSampleRateUCImplTest {
         )
 
         verify(sharedPreferences.edit()).putInt(
-            SharedPrefsRecorderKeys.SAMPLE_RATE,
+            RecorderPrefsKeys.SAMPLE_RATE,
             sampleRate.ordinal
         )
         verify(sharedPreferences.edit()).apply()
