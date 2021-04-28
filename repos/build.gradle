@@ -33,6 +33,7 @@ dependencies {
     implementation project(':io-mp3recorder')
     implementation project(':io-audioplayer')
     implementation project(':io-share')
+    implementation "com.github.alkurop:ghostinshell:$versions.ghostinshell"
 
     kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
     testImplementation "junit:junit:$testVersions.junit"
