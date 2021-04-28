@@ -1,6 +1,7 @@
 package com.omar.retromp3recorder.app.ui.files.edit.selector
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
+import com.omar.retromp3recorder.dto.toTestFileWrapper
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.observers.TestObserver
@@ -28,7 +29,7 @@ class SelectorInteractorInputTest {
     @Test
     fun `current file input sets current file`() {
         val fileName = "horosho"
-        val item = SelectorView.Item(fileName, false)
+        val item = SelectorView.Item(fileName.toTestFileWrapper(), false)
         actionSubject.onNext(SelectorView.Input.ItemSelected(item))
 
         currentFileRepo.observe().test().assertValue(Optional(fileName))

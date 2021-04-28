@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.state.repos
 
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.notNull
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
@@ -32,8 +32,7 @@ internal class AudioStateMapperImplTest {
             recorder = recorder,
             player = player
         )
-        whenever(fileEmptyChecker.isFileEmpty(null)) doReturn true
-        whenever(fileEmptyChecker.isFileEmpty(notNull())) doReturn false
+        whenever(fileEmptyChecker.isFileEmpty(any())) doReturn false
     }
 
     @Test

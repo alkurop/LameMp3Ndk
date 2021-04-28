@@ -4,6 +4,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
+import com.omar.retromp3recorder.dto.toTestFileWrapper
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.state.repos.FileListRepo
 import com.omar.retromp3recorder.utils.FileEmptyChecker
@@ -13,7 +14,6 @@ import org.junit.Test
 import javax.inject.Inject
 
 class TakeLastFileUCTest {
-
     @Inject
     lateinit var fileListRepo: FileListRepo
 
@@ -29,25 +29,23 @@ class TakeLastFileUCTest {
     @Before
     fun setUp() {
         DaggerUseCaseComponent.create().inject(this)
-        fileListRepo.onNext(listOf("test1"))
-
+        fileListRepo.onNext(listOf("test1".toTestFileWrapper()))
     }
 
     @Test
     fun `dont update if current file not empty`() {
-        fileListRepo.onNext(listOf("no good"))
+        fileListRepo.onNext(listOf("no good".toTestFileWrapper()))
         currentFileRepo.onNext(Optional("test"))
 
         useCase.execute().test().assertComplete()
 
         currentFileRepo.observe().test().assertValue(Optional("test"))
-
     }
 
     @Test
     fun `update with null if last file empty`() {
         whenever(fileEmptyChecker.isFileEmpty(any())) doReturn true
-        fileListRepo.onNext(listOf("test"))
+        fileListRepo.onNext(listOf("test".toTestFileWrapper()))
         currentFileRepo.onNext(Optional(null))
 
         useCase.execute().test().assertComplete()
@@ -57,7 +55,7 @@ class TakeLastFileUCTest {
 
     @Test
     fun `update with last file `() {
-        fileListRepo.onNext(listOf("test"))
+        fileListRepo.onNext(listOf("test".toTestFileWrapper()))
         currentFileRepo.onNext(Optional(null))
 
         useCase.execute().test().assertComplete()

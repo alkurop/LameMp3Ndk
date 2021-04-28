@@ -7,7 +7,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class TestRepoModule {
+internal class TestRepoModule {
     @Singleton
     @Provides
     fun provideAudioStateRepo(): AudioStateMapper {

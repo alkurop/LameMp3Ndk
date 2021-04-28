@@ -35,6 +35,7 @@ dependencies {
     api "com.github.alkurop:ghostinshell:$versions.ghostinshell"
     api "com.github.alkurop:stringerbell:$versions.stringerbell"
     api "com.jakewharton.timber:timber:$versions.timber"
+    api project(":dto")
     implementation "com.google.dagger:dagger:$versions.dagger"
     implementation "androidx.appcompat:appcompat:$versions.support"
 }

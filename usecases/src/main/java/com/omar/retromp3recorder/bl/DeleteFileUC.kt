@@ -8,16 +8,16 @@ import io.reactivex.Completable
 import javax.inject.Inject
 
 class DeleteFileUC @Inject constructor(
-        private val fileDeleter: FileDeleter,
-        private val currentFileRepo: CurrentFileRepo,
-        private val fileListRepo: FileListRepo
+    private val fileDeleter: FileDeleter,
+    private val currentFileRepo: CurrentFileRepo,
+    private val fileListRepo: FileListRepo
 ) {
     fun execute(filePath: String): Completable {
         return Completable.fromAction {
             fileDeleter.deleteFile(filePath)
             val newFileList = fileListRepo
-                    .observe()
-                    .blockingFirst().filter { it != filePath }
+                .observe()
+                .blockingFirst().filter { it.path != filePath }
             fileListRepo.onNext(newFileList)
             val currentFile = currentFileRepo.observe().blockingFirst().value
             if (currentFile == filePath)

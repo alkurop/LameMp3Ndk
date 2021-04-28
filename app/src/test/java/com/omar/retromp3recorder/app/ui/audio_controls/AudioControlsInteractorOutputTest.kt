@@ -4,7 +4,9 @@ import com.google.common.truth.Truth.assertThat
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.state.repos.AudioStateMapper
+import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
+import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import org.junit.Before
@@ -22,12 +24,16 @@ class AudioControlsInteractorOutputTest {
     lateinit var audioPlayer: AudioPlayer
     private lateinit var test: TestObserver<AudioControlsView.Output>
 
+    @Inject
+    lateinit var currentFileRepo: CurrentFileRepo
+
     @Before
     fun setUp() {
         DaggerTestAppComponent.create().inject(this)
         test = PublishSubject.create<AudioControlsView.Input>()
             .compose(interactor.processIO())
             .test()
+        currentFileRepo.onNext(Optional("test"))
     }
 
     @Test

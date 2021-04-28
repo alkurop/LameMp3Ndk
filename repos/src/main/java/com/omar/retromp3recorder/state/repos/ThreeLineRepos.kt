@@ -16,7 +16,8 @@ class CurrentFileRepo @Inject constructor() :
     BehaviorSubjectRepo<Optional<String>>(Optional.empty())
 
 @Singleton
-class FileListRepo @Inject constructor() : BehaviorSubjectRepo<List<String>>(emptyList())
+class FileListRepo @Inject constructor() :
+    BehaviorSubjectRepo<List<com.omar.retromp3recorder.dto.FileWrapper>>(emptyList())
 
 @Singleton
 class SampleRateRepo @Inject constructor(defaults: RecorderDefaults) :

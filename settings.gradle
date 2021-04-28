@@ -1,3 +1,5 @@
+include ':storage'
+include ':dto'
 include ':ui-state-button'
 include ':usecases'
 include ':repos'

@@ -18,11 +18,11 @@ class TakeLastFileUC @Inject constructor(
             .andThen(Completable.fromAction {
                 val currentFilePath = currentFileRepo.observe().blockingFirst().value
                 if (currentFilePath != null) return@fromAction
-                val lastFilePath = fileListRepo.observe().blockingFirst().lastOrNull()
-                if (fileEmptyChecker.isFileEmpty(lastFilePath)) {
+                val lastFile = fileListRepo.observe().blockingFirst().lastOrNull()
+                if (lastFile == null || fileEmptyChecker.isFileEmpty(lastFile.path)) {
                     currentFileRepo.onNext(Optional.empty())
                 } else {
-                    currentFileRepo.onNext(Optional(lastFilePath))
+                    currentFileRepo.onNext(Optional(lastFile.path))
                 }
             })
     }
