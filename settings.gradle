@@ -1,3 +1,4 @@
+include ':test-dep'
 include ':storage'
 include ':dto'
 include ':ui-state-button'
