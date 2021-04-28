@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.ui.recorder_settings.beat_rate
 
 import com.omar.retromp3recorder.bl.ChangeBitrateUC
-import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.BitRateRepo
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.Completable

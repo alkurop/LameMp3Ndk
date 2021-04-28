@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.ui.recorder_settings.sample_rate
 
 import com.omar.retromp3recorder.bl.ChangeSampleRateUC
-import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.Completable

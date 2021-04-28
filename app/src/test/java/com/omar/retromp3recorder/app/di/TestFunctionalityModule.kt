@@ -4,7 +4,7 @@ import com.omar.retromp3recorder.app.modules.TestAudioPlayer
 import com.omar.retromp3recorder.app.modules.TestSharingModule
 import com.omar.retromp3recorder.app.modules.TestVoiceRecorder
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
-import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.share.Sharer
 import dagger.Binds
 import dagger.Module

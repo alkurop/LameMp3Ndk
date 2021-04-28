@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.di
 
 import com.nhaarman.mockitokotlin2.mock
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
-import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.share.Sharer
 import dagger.Module
 import dagger.Provides

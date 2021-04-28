@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.app.ui.recorder_settings.sample_rate
 
 import androidx.lifecycle.ViewModel
 import com.omar.retromp3recorder.app.App
-import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.utils.disposedBy
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject

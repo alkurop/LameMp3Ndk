@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.di
 
-import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.recorder.RecorderDefaults
+import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.iorecorder.RecorderDefaults
 import dagger.Module
 import dagger.Provides
 

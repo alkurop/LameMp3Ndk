@@ -5,7 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
-import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.BitRateRepo
 import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import com.omar.retromp3recorder.storage.RecorderPrefsKeys

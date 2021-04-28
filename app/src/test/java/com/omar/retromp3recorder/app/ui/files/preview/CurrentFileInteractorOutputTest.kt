@@ -3,7 +3,7 @@ package com.omar.retromp3recorder.app.ui.files.preview
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.di.MockModule
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
-import com.omar.retromp3recorder.recorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.observers.TestObserver
