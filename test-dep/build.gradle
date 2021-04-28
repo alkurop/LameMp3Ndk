@@ -28,6 +28,7 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+    implementation project(":dto")
     api "junit:junit:$testVersions.junit"
     api "com.google.truth:truth:$testVersions.truth"
     api "com.nhaarman.mockitokotlin2:mockito-kotlin:$testVersions.mockitoKotlin"
