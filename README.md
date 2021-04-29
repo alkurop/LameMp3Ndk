@@ -8,9 +8,6 @@ Retro MP3 Recorder:
  - user may then share audio file
 
 
-Develop ...  ![travis icon](https://travis-ci.com/alkurop/LameMp3Ndk.svg?branch=develop)
-
-
 //todo
 - file properties
 - file properties db
