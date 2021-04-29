@@ -30,7 +30,7 @@ class VisualizerOutputMapperTest {
             .assertNoErrors()
             .assertValueCount(2)
             .assertValueAt(
-                0
+                1
             ) { (state) -> state === AudioState.Playing }
     }
 
