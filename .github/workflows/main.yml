@@ -28,3 +28,8 @@ jobs:
       # Runs Unit test
       - name: Unit Test
         run: ./gradlew testDebugUnitTest
+
+      # Print reports
+      - name: Android Test Report
+          uses: asadmansr/android-test-report-action@v1.2.0
+          if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
