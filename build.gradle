@@ -2,9 +2,6 @@
 
 buildscript {
     apply from: 'libs.gradle'
-    ext {
-        versions.kotlin = '1.4.32'
-    }
     ext.compileSdkVersion = 30
     ext.buildToolsVersion = "30.0.3"
     ext.minSdkVersion = 19

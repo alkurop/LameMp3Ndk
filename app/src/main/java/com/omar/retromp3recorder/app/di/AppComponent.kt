@@ -10,7 +10,7 @@ import com.omar.retromp3recorder.app.ui.main.MainViewModel
 import com.omar.retromp3recorder.app.ui.recorder_settings.beat_rate.BitRateSettingsViewModel
 import com.omar.retromp3recorder.app.ui.recorder_settings.sample_rate.SampleRateViewModel
 import com.omar.retromp3recorder.app.ui.visualizer.VisualizerViewModel
-import com.omar.retromp3recorder.bl.di.UsecaseModule
+import com.omar.retromp3recorder.storage.StorageModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -21,7 +21,7 @@ import javax.inject.Singleton
         FunctionalityModule::class,
         RepoModule::class,
         UtilsModule::class,
-        UsecaseModule::class
+        StorageModule::class
     ]
 )
 interface AppComponent {

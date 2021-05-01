@@ -11,7 +11,7 @@ import javax.inject.Singleton
         TestUtilsModuleUsecase::class,
         TestFunctionalityModule::class,
         TestRepoModule::class,
-        TestUsecaseModule::class
+        TestStorageModule::class
     ]
 )
 interface UseCaseComponent {

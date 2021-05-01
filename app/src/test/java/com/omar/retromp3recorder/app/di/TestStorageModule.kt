@@ -1,16 +1,17 @@
-package com.omar.retromp3recorder.di
+package com.omar.retromp3recorder.app.di
 
 import android.content.SharedPreferences
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
+import com.omar.retromp3recorder.storage.db.Database
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-internal class TestUsecaseModule {
+internal class TestStorageModule {
     @Singleton
     @Provides
     fun provideSharedPrefs(editor: SharedPreferences.Editor): SharedPreferences {
@@ -26,5 +27,10 @@ internal class TestUsecaseModule {
             whenever(putInt(any(), any())) doReturn this
             whenever(putString(any(), any())) doReturn this
         }
+    }
+
+    @Provides
+    fun provideDatabase(): Database {
+        return mock()
     }
 }
