@@ -3,8 +3,8 @@ package com.omar.retromp3recorder.ui.state_button
 import android.content.Context
 import android.util.AttributeSet
 import com.omar.retromp3recorder.utils.disposedBy
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.TimeUnit
 
 

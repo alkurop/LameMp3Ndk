@@ -1,8 +1,8 @@
 package com.omar.retromp3recorder.app.ui.files.preview
 
-import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
-import io.reactivex.functions.BiFunction
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
+import io.reactivex.rxjava3.functions.BiFunction
 
 object CurrentFileOutputMapper {
     fun mapOutputToState(): ObservableTransformer<CurrentFileView.Output, CurrentFileView.State> =

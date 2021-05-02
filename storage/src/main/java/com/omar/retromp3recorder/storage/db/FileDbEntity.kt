@@ -1,8 +1,8 @@
 package com.omar.retromp3recorder.storage.db
 
 import androidx.room.*
-import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 
 @Entity
 data class FileDbEntity(

@@ -7,7 +7,7 @@ import com.omar.retromp3recorder.state.repos.AudioState
 import com.omar.retromp3recorder.state.repos.AudioStateMapper
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.utils.Optional
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

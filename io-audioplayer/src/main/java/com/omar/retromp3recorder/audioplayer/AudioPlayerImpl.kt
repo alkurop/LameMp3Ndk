@@ -2,9 +2,9 @@ package com.omar.retromp3recorder.audioplayer
 
 import android.media.MediaPlayer
 import com.github.alkurop.stringerbell.Stringer
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import timber.log.Timber
 import java.io.File
 import java.io.IOException

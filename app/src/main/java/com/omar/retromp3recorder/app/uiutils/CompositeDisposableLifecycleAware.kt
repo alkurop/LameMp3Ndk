@@ -4,12 +4,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
-
 
 fun compositeDisposableLifecycleAware(initialise: () -> LifecycleOwner): ReadOnlyProperty<Any, CompositeDisposable> =
     object : ReadOnlyProperty<Any, CompositeDisposable>, LifecycleObserver {

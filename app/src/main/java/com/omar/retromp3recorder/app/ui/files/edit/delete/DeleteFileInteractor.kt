@@ -1,9 +1,9 @@
 package com.omar.retromp3recorder.app.ui.files.edit.delete
 
 import com.omar.retromp3recorder.bl.DeleteFileUC
-import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
-import io.reactivex.Scheduler
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
+import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Inject
 
 class DeleteFileInteractor @Inject constructor(

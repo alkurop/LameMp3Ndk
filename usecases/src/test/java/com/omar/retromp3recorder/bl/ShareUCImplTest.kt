@@ -6,7 +6,7 @@ import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.share.Sharer
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.utils.Optional
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito

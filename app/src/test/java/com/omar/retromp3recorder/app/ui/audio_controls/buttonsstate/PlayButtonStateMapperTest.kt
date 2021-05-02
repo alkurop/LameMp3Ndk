@@ -11,7 +11,7 @@ import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
 import com.omar.retromp3recorder.utils.FileEmptyChecker
 import com.omar.retromp3recorder.utils.Optional
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

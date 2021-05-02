@@ -6,7 +6,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.share.Sharer
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

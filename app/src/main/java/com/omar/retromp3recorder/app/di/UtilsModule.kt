@@ -5,9 +5,9 @@ import android.content.Context
 import com.omar.retromp3recorder.utils.*
 import dagger.Module
 import dagger.Provides
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Named
 
 @Module

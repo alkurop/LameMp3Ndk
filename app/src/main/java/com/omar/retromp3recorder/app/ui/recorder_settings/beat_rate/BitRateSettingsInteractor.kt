@@ -4,10 +4,10 @@ import com.omar.retromp3recorder.bl.ChangeBitrateUC
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.BitRateRepo
 import com.omar.retromp3recorder.utils.processIO
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
-import io.reactivex.Scheduler
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
+import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Inject
 
 class BitRateSettingsInteractor @Inject constructor(

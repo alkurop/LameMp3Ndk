@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.jakewharton.rxbinding3.view.clicks
+import com.jakewharton.rxbinding4.view.clicks
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.utils.findViewById
 import com.omar.retromp3recorder.app.uiutils.observe
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
 import com.omar.retromp3recorder.ui.state_button.InteractiveButtonBlinking
-import io.reactivex.Observable.merge
+import io.reactivex.rxjava3.core.Observable.merge
 
 class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
     private val playButton: InteractiveButtonBlinking

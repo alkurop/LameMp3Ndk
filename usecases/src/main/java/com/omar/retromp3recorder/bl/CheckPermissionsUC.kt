@@ -4,8 +4,8 @@ import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
 import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo.ShouldRequestPermissions.Denied
 import com.omar.retromp3recorder.utils.PermissionChecker
-import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 class CheckPermissionsUC @Inject constructor(

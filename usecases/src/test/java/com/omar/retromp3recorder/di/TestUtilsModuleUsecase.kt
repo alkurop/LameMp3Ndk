@@ -8,8 +8,8 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.utils.*
 import dagger.Module
 import dagger.Provides
-import io.reactivex.Scheduler
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.io.File
 import javax.inject.Singleton
 

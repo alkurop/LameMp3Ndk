@@ -5,7 +5,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.omar.retromp3recorder.storage.db.Database
+import com.omar.retromp3recorder.storage.db.DatabaseI
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -30,7 +30,7 @@ internal class TestStorageModule {
     }
 
     @Provides
-    fun provideDatabase(): Database {
+    fun provideDatabase(): DatabaseI {
         return mock()
     }
 }

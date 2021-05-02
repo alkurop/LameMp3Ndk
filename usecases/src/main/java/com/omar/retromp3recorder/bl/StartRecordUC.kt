@@ -10,9 +10,9 @@ import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import com.omar.retromp3recorder.utils.FilePathGenerator
 import com.omar.retromp3recorder.utils.Optional
 import com.omar.retromp3recorder.utils.takeOne
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.functions.Function3
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.functions.Function3
 import javax.inject.Inject
 
 class StartRecordUC @Inject constructor(

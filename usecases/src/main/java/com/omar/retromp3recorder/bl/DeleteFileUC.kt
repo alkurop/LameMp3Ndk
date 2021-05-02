@@ -4,7 +4,7 @@ import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.state.repos.FileListRepo
 import com.omar.retromp3recorder.utils.FileDeleter
 import com.omar.retromp3recorder.utils.Optional
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 
 class DeleteFileUC @Inject constructor(

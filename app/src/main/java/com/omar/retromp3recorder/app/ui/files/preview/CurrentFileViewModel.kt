@@ -3,9 +3,9 @@ package com.omar.retromp3recorder.app.ui.files.preview
 import androidx.lifecycle.ViewModel
 import com.omar.retromp3recorder.app.App
 import com.omar.retromp3recorder.utils.disposedBy
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
 class CurrentFileViewModel : ViewModel() {

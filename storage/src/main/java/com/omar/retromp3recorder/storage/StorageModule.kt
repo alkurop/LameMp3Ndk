@@ -3,7 +3,8 @@ package com.omar.retromp3recorder.storage
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
-import com.omar.retromp3recorder.storage.db.Database
+import com.omar.retromp3recorder.storage.db.AppDatabase
+import com.omar.retromp3recorder.storage.db.DatabaseI
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -17,10 +18,10 @@ class StorageModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(context: Context): Database {
+    fun provideDatabase(context: Context): DatabaseI {
         return Room.databaseBuilder(
             context,
-            Database::class.java, "database-name"
+            AppDatabase::class.java, "database-name"
         ).build()
     }
 }

@@ -9,10 +9,10 @@ import com.omar.retromp3recorder.share.Sharer.Event.Error
 import com.omar.retromp3recorder.share.Sharer.Event.SharingOk
 import com.omar.retromp3recorder.utils.FileUriCreator
 import com.omar.retromp3recorder.utils.MAIN_THREAD
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.subjects.PublishSubject
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Named

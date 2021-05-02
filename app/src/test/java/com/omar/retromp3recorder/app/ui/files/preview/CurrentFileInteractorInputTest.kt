@@ -3,9 +3,9 @@ package com.omar.retromp3recorder.app.ui.files.preview
 import com.google.common.truth.Truth.assertThat
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
-import io.reactivex.observers.TestObserver
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.observers.TestObserver
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
