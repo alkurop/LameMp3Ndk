@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import com.omar.retromp3recorder.storage.RecorderPrefsKeys
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 
 class ChangeSampleRateUC @Inject constructor(

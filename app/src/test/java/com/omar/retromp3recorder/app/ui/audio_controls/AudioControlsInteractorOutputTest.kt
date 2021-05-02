@@ -7,8 +7,8 @@ import com.omar.retromp3recorder.state.repos.AudioStateMapper
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
 import com.omar.retromp3recorder.utils.Optional
-import io.reactivex.observers.TestObserver
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.observers.TestObserver
+import io.reactivex.rxjava3.subjects.PublishSubject
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject

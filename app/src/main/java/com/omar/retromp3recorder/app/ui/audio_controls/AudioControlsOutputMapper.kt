@@ -1,8 +1,8 @@
 package com.omar.retromp3recorder.app.ui.audio_controls
 
-import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
-import io.reactivex.functions.BiFunction
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
+import io.reactivex.rxjava3.functions.BiFunction
 
 object AudioControlsOutputMapper {
     internal fun mapOutputToState(): ObservableTransformer<AudioControlsView.Output, AudioControlsView.State> =

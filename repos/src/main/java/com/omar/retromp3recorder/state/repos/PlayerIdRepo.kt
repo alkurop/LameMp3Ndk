@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.state.repos
 
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 class PlayerIdRepo @Inject internal constructor(

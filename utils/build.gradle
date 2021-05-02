@@ -29,9 +29,9 @@ android {
 dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
-    api "io.reactivex.rxjava2:rxjava:$versions.rxJava"
-    api "io.reactivex.rxjava2:rxkotlin:$versions.rxKotlin"
-    api "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
+    api "io.reactivex.rxjava3:rxjava:$versions.rxJava"
+    api "io.reactivex.rxjava3:rxkotlin:$versions.rxKotlin"
+    api "io.reactivex.rxjava3:rxandroid:$versions.rxAndroid"
     api "com.jakewharton.timber:timber:$versions.timber"
     api project(":dto")
 

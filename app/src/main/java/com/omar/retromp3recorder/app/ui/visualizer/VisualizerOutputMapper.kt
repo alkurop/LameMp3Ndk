@@ -1,9 +1,9 @@
 package com.omar.retromp3recorder.app.ui.visualizer
 
 import com.omar.retromp3recorder.state.repos.AudioState
-import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
-import io.reactivex.functions.BiFunction
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
+import io.reactivex.rxjava3.functions.BiFunction
 
 object VisualizerOutputMapper {
     internal fun mapOutputToState(): ObservableTransformer<VisualizerView.Output, VisualizerView.State> =

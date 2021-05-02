@@ -4,7 +4,7 @@ import com.github.alkurop.stringerbell.Stringer
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import org.junit.Before
 import org.junit.Test
 import org.mockito.InjectMocks

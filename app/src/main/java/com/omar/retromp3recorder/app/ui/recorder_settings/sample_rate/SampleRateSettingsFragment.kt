@@ -3,7 +3,7 @@ package com.omar.retromp3recorder.app.ui.recorder_settings.sample_rate
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.jakewharton.rxbinding3.view.clicks
+import com.jakewharton.rxbinding4.view.clicks
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.recorder_settings.RecorderSettingsBaseFragment
 import com.omar.retromp3recorder.app.uiutils.observe
@@ -29,7 +29,7 @@ class SampleRateSettingsFragment : RecorderSettingsBaseFragment() {
             radioButton.clicks()
                 .observe(viewLifecycleOwner) {
                     val sampleRate = Mp3VoiceRecorder.SampleRate.values()[index]
-                    viewModel.inputSubject.onNext(sampleRate)
+                    viewModel.input.onNext(sampleRate)
                 }
         }
 

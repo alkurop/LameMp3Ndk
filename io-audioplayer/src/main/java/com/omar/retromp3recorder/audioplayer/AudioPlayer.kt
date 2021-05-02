@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.audioplayer
 
 import com.github.alkurop.stringerbell.Stringer
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface AudioPlayer {
     fun playerStop()

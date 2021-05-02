@@ -7,7 +7,7 @@ import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.di.DaggerRepoTestComponent
 import com.omar.retromp3recorder.utils.FileEmptyChecker
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

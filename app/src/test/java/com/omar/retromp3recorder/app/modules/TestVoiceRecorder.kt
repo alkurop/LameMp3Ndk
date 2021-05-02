@@ -2,9 +2,9 @@ package com.omar.retromp3recorder.app.modules
 
 import com.omar.retromp3recorder.app.di.MockModule
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 import javax.inject.Named
 

@@ -5,8 +5,8 @@ import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.BitRateRepo
 import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import com.omar.retromp3recorder.storage.RecorderPrefsKeys
-import io.reactivex.Completable
-import io.reactivex.Scheduler
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Inject
 
 class LoadRecorderSettingsUC @Inject constructor(

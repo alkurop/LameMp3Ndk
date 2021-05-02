@@ -16,7 +16,7 @@ class SelectorFragment : Fragment(R.layout.fragment_selector) {
     private val recyclerView: RecyclerView
         get() = findViewById(R.id.recycler_view)
     private val adapter = SelectorAdapter {
-        viewModel.inputSubject.onNext(SelectorView.Input.ItemSelected(it))
+        viewModel.input.onNext(SelectorView.Input.ItemSelected(it))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

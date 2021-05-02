@@ -2,9 +2,9 @@ package com.omar.retromp3recorder.app.ui.main
 
 import com.omar.retromp3recorder.app.ui.main.MainView.State
 import com.omar.retromp3recorder.app.ui.main.MainViewOutputMapper.mapOutputToState
-import io.reactivex.observers.TestObserver
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.observers.TestObserver
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Before
 import org.junit.Test
 

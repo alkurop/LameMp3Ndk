@@ -4,7 +4,7 @@ import com.omar.retromp3recorder.dto.FileWrapper
 import com.omar.retromp3recorder.state.repos.FileListRepo
 import com.omar.retromp3recorder.utils.FileLister
 import com.omar.retromp3recorder.utils.FilePathGenerator
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 
 class LookForFilesUC @Inject constructor(

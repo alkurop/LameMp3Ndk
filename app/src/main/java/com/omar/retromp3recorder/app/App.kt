@@ -1,7 +1,6 @@
 package com.omar.retromp3recorder.app
 
 import android.app.Application
-import com.akaita.java.rxjava2debug.RxJava2Debug
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.di.DaggerAppComponent
@@ -17,9 +16,9 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         appComponent = DaggerAppComponent.builder().utilsModule(UtilsModule(this)).build()
-        RxJava2Debug.enableRxJava2AssemblyTracking(
-            arrayOf(BuildConfig.APPLICATION_ID)
-        )
+//        RxJava2Debug.enableRxJava2AssemblyTracking(
+//            arrayOf(BuildConfig.APPLICATION_ID)
+//        )
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {

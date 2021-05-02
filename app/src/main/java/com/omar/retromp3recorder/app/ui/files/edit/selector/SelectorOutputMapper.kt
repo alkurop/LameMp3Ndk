@@ -1,8 +1,8 @@
 package com.omar.retromp3recorder.app.ui.files.edit.selector
 
-import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
-import io.reactivex.functions.BiFunction
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
+import io.reactivex.rxjava3.functions.BiFunction
 
 object SelectorOutputMapper {
     fun mapOutputToState(): ObservableTransformer<SelectorView.Output, SelectorView.State> =

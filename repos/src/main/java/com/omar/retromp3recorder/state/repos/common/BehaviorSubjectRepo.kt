@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.state.repos.common
 
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 open class BehaviorSubjectRepo<T : Any>(default: T? = null) {
     private val behaviorSubject: BehaviorSubject<T> =

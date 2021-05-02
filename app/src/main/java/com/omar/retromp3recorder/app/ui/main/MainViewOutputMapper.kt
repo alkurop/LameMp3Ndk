@@ -1,9 +1,9 @@
 package com.omar.retromp3recorder.app.ui.main
 
 import com.github.alkurop.ghostinshell.Shell
-import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
-import io.reactivex.functions.BiFunction
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
+import io.reactivex.rxjava3.functions.BiFunction
 
 object MainViewOutputMapper {
     fun mapOutputToState(): ObservableTransformer<MainView.Output, MainView.State> =

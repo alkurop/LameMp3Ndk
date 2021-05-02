@@ -4,10 +4,10 @@ import com.omar.retromp3recorder.bl.ChangeSampleRateUC
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import com.omar.retromp3recorder.utils.processIO
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
-import io.reactivex.Scheduler
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
+import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Inject
 
 class SampleRateInteractor @Inject constructor(

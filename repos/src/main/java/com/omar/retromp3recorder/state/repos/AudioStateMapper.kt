@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.state.repos
 
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 interface AudioStateMapper {

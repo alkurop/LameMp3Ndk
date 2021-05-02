@@ -5,10 +5,10 @@ import com.omar.retromp3recorder.app.ui.files.preview.buttonstate.OpenFileButton
 import com.omar.retromp3recorder.bl.TakeLastFileUC
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.utils.processIO
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
-import io.reactivex.Scheduler
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
+import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Inject
 
 class CurrentFileInteractor @Inject constructor(

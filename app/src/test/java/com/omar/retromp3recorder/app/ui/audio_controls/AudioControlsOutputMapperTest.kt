@@ -2,9 +2,9 @@ package com.omar.retromp3recorder.app.ui.audio_controls
 
 import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsOutputMapper.mapOutputToState
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
-import io.reactivex.observers.TestObserver
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.observers.TestObserver
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Before
 import org.junit.Test
 

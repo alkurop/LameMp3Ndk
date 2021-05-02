@@ -4,10 +4,10 @@ import com.omar.retromp3recorder.bl.SetCurrentFileUC
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.state.repos.FileListRepo
 import com.omar.retromp3recorder.utils.processIO
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
-import io.reactivex.Scheduler
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
+import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Inject
 
 class SelectorInteractor @Inject constructor(

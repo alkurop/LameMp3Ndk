@@ -4,9 +4,9 @@ import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.di.MockModule
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
-import io.reactivex.observers.TestObserver
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.observers.TestObserver
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject

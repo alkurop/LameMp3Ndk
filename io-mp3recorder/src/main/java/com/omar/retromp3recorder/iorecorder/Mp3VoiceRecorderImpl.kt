@@ -11,11 +11,11 @@ import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder.Companion.AUDIO_FOR
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder.Companion.CHANNEL_PRESETS
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder.Companion.QUALITY_PRESETS
 import com.omar.retromp3recorder.utils.disposedBy
-import io.reactivex.*
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.*
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
