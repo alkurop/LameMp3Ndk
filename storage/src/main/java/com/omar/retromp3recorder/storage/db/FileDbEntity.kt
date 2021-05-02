@@ -1,8 +1,7 @@
 package com.omar.retromp3recorder.storage.db
 
 import androidx.room.*
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
+import com.omar.retromp3recorder.dto.FileWrapper
 
 @Entity
 data class FileDbEntity(
@@ -14,17 +13,28 @@ data class FileDbEntity(
 @Dao
 interface FileDbEntityDao {
     @Query("SELECT * FROM FileDbEntity")
-    fun getAll(): Single<List<FileDbEntity>>
+    fun getAll(): List<FileDbEntity>
 
     @Query("SELECT * from FileDbEntity WHERE filepath = :filepath")
-    fun getByFilepath(filepath: String): Single<FileDbEntity>
+    fun getByFilepath(filepath: String): List<FileDbEntity>
 
     @Insert
-    fun insert(items: List<FileDbEntity>): Completable
+    fun insert(items: List<FileDbEntity>)
 
     @Update
-    fun updateItem(item: FileDbEntity): Completable
+    fun updateItem(item: FileDbEntity)
 
     @Delete
-    fun delete(items: List<FileDbEntity>): Completable
+    fun delete(items: List<FileDbEntity>)
+
+    @Query("DELETE from FileDbEntity where filepath=:filePath")
+    fun deleteByFilepath(filePath: String)
 }
+
+fun FileDbEntity.toFileWrapper(): FileWrapper =
+    FileWrapper(this.filepath, this.created, this.lastModified)
+
+fun FileWrapper.toDatabaseEntity(): FileDbEntity = FileDbEntity(
+    this.createTimedStamp, this.modifiedTimestamp, this.path
+)
+

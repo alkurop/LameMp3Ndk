@@ -22,7 +22,7 @@ class DeleteFileDialogFragment : DialogFragment() {
             .setPositiveButton(getString(R.string.yes)) { _, _ ->
                 viewModel.input.onNext(
                     DeleteFileView.Input.DeleteFile(
-                        filePath
+                        filePath = filePath
                     )
                 )
             }

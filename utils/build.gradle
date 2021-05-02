@@ -32,6 +32,7 @@ dependencies {
     api "io.reactivex.rxjava3:rxjava:$versions.rxJava"
     api "io.reactivex.rxjava3:rxkotlin:$versions.rxKotlin"
     api "io.reactivex.rxjava3:rxandroid:$versions.rxAndroid"
+
     api "com.jakewharton.timber:timber:$versions.timber"
     api project(":dto")
 

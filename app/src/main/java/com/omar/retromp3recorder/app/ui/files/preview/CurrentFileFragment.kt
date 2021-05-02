@@ -43,8 +43,8 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
             }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         viewModel.input.onNext(CurrentFileView.Input.LookForPlayableFile)
     }
 }

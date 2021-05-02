@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.state.repos
 
+import com.omar.retromp3recorder.dto.FileWrapper
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.iorecorder.RecorderDefaults
 import com.omar.retromp3recorder.state.repos.common.BehaviorSubjectRepo
@@ -17,7 +18,7 @@ class CurrentFileRepo @Inject constructor() :
 
 @Singleton
 class FileListRepo @Inject constructor() :
-    BehaviorSubjectRepo<List<com.omar.retromp3recorder.dto.FileWrapper>>(emptyList())
+    BehaviorSubjectRepo<List<FileWrapper>>(emptyList())
 
 @Singleton
 class SampleRateRepo @Inject constructor(defaults: RecorderDefaults) :
