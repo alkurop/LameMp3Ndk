@@ -26,12 +26,15 @@ interface FileDbEntityDao {
 
     @Delete
     fun delete(items: List<FileDbEntity>)
+
+    @Query("DELETE from FileDbEntity where filepath=:filePath")
+    fun deleteByFilepath(filePath: String)
 }
 
 fun FileDbEntity.toFileWrapper(): FileWrapper =
     FileWrapper(this.filepath, this.created, this.lastModified)
 
 fun FileWrapper.toDatabaseEntity(): FileDbEntity = FileDbEntity(
-    this.createTimeStamp, this.editTimestamp, this.path
+    this.createTimedStamp, this.modifiedTimestamp, this.path
 )
 

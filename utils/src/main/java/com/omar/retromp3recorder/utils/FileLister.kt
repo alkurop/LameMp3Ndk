@@ -12,7 +12,7 @@ class FileListerImpl : FileLister {
     override fun listFiles(dirPath: String): List<FileWrapper> {
         val file = File(dirPath)
         return file.listFiles()?.map { it.toFileWrapper() }
-            ?.sortedBy { it.editTimestamp }
+            ?.sortedBy { it.modifiedTimestamp }
             ?: emptyList()
     }
 }

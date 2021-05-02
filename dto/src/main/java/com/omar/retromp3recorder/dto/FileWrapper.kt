@@ -4,8 +4,8 @@ import java.io.File
 
 data class FileWrapper(
     val path: String,
-    val createTimeStamp: Long,
-    val editTimestamp: Long
+    val createTimedStamp: Long,
+    val modifiedTimestamp: Long = 0L
 )
 
 fun String.toTestFileWrapper(): FileWrapper =

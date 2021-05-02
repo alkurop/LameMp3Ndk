@@ -5,6 +5,7 @@ import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.dto.toTestFileWrapper
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.state.repos.FileListRepo
+import com.omar.retromp3recorder.storage.db.FileDbEntityDao
 import com.omar.retromp3recorder.utils.FileDeleter
 import com.omar.retromp3recorder.utils.Optional
 import org.junit.Before
@@ -22,8 +23,10 @@ class DeleteFileUCTest {
     lateinit var fileListRepo: FileListRepo
 
     @Inject
-    lateinit var useCase: DeleteFileUC
+    lateinit var fileDbEntityDao: FileDbEntityDao
 
+    @Inject
+    lateinit var useCase: DeleteFileUC
     private val testPath: String = "delete_file_test"
 
     @Before
@@ -63,5 +66,12 @@ class DeleteFileUCTest {
         useCase.execute(testPath).test().assertNoErrors().assertComplete()
 
         fileListRepo.observe().test().assertValue(emptyList())
+    }
+
+    @Test
+    fun `on delete file record removed from db`() {
+        useCase.execute(testPath).test().assertNoErrors().assertComplete()
+
+        verify(fileDbEntityDao).deleteByFilepath(testPath)
     }
 }
