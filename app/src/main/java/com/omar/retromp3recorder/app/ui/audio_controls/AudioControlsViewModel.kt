@@ -12,16 +12,16 @@ import javax.inject.Inject
 class AudioControlsViewModel : ViewModel() {
 
     val state = BehaviorSubject.create<AudioControlsView.State>()
+    val input = PublishSubject.create<AudioControlsView.Input>()
 
     @Inject
     lateinit var interactor: AudioControlsInteractor
 
-    private val inputSubject = PublishSubject.create<AudioControlsView.Input>()
     private val compositeDisposable = CompositeDisposable()
 
     init {
         App.appComponent.inject(this)
-        inputSubject
+        input
             .compose(interactor.processIO())
             .compose(mapOutputToState())
             .subscribe(state::onNext)
@@ -29,7 +29,7 @@ class AudioControlsViewModel : ViewModel() {
     }
 
     fun onInput(action: AudioControlsView.Input) {
-        inputSubject.onNext(action)
+        input.onNext(action)
     }
 
     override fun onCleared() {

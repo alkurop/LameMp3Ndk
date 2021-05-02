@@ -30,7 +30,7 @@ class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
             playButton.clicks().map { AudioControlsView.Input.Play },
             stopButton.clicks().map { AudioControlsView.Input.Stop },
             shareButton.clicks().map { AudioControlsView.Input.Share }
-        )).observe(viewLifecycleOwner) { viewModel.onInput(it) }
+        )).observe(viewLifecycleOwner) { viewModel.input.onNext(it) }
         viewModel.state.observe(viewLifecycleOwner, ::renderState)
     }
 

@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class BitRateSettingsViewModel : ViewModel() {
     val state = BehaviorSubject.create<Mp3VoiceRecorder.BitRate>()
-    val inputSubject = PublishSubject.create<Mp3VoiceRecorder.BitRate>()
+    val input = PublishSubject.create<Mp3VoiceRecorder.BitRate>()
 
     @Inject
     lateinit var interactor: BitRateSettingsInteractor
@@ -19,7 +19,7 @@ class BitRateSettingsViewModel : ViewModel() {
 
     init {
         App.appComponent.inject(this)
-        inputSubject
+        input
             .compose(interactor.processIO())
             .subscribe(state::onNext)
             .disposedBy(compositeDisposable)

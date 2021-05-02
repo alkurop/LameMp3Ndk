@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class SampleRateViewModel : ViewModel() {
     val state = BehaviorSubject.create<Mp3VoiceRecorder.SampleRate>()
-    val inputSubject = PublishSubject.create<Mp3VoiceRecorder.SampleRate>()
+    val input = PublishSubject.create<Mp3VoiceRecorder.SampleRate>()
 
     @Inject
     lateinit var interactor: SampleRateInteractor
@@ -19,7 +19,7 @@ class SampleRateViewModel : ViewModel() {
 
     init {
         App.appComponent.inject(this)
-        inputSubject
+        input
             .compose(interactor.processIO())
             .subscribe(state::onNext)
             .disposedBy(compositeDisposable)

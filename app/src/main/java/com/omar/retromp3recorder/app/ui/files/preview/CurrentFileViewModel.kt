@@ -9,7 +9,6 @@ import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 class CurrentFileViewModel : ViewModel() {
-
     val state = BehaviorSubject.create<CurrentFileView.State>()
     val input = PublishSubject.create<CurrentFileView.Input>()
 

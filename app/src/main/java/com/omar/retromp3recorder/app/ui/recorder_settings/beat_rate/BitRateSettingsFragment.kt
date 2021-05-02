@@ -27,7 +27,7 @@ class BitRateSettingsFragment : RecorderSettingsBaseFragment() {
             radioButton.clicks()
                 .observe(viewLifecycleOwner) {
                     val bitRate = Mp3VoiceRecorder.BitRate.values()[index]
-                    viewModel.inputSubject.onNext(bitRate)
+                    viewModel.input.onNext(bitRate)
                 }
         }
 

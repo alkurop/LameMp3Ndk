@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class SelectorViewModel : ViewModel() {
     val state = BehaviorSubject.create<SelectorView.State>()
-    val inputSubject = PublishSubject.create<SelectorView.Input>()
+    val input = PublishSubject.create<SelectorView.Input>()
 
     @Inject
     lateinit var interactor: SelectorInteractor
@@ -18,7 +18,7 @@ class SelectorViewModel : ViewModel() {
 
     init {
         App.appComponent.inject(this)
-        inputSubject
+        input
             .compose(interactor.processIO())
             .compose(SelectorOutputMapper.mapOutputToState())
             .subscribe(state::onNext)

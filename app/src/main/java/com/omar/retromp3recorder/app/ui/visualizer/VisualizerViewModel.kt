@@ -10,16 +10,15 @@ import javax.inject.Inject
 
 class VisualizerViewModel : ViewModel() {
     val state = MutableLiveData<VisualizerView.State>()
+    val input = PublishSubject.create<VisualizerView.Input>()
 
     @Inject
     lateinit var interactor: VisualizerInteractor
-
-    private val inputSubject = PublishSubject.create<VisualizerView.Input>()
     private val compositeDisposable = CompositeDisposable()
 
     init {
         App.appComponent.inject(this)
-        inputSubject
+        input
             .compose(interactor.processIO())
             .compose(VisualizerOutputMapper.mapOutputToState())
             .distinctUntilChanged()

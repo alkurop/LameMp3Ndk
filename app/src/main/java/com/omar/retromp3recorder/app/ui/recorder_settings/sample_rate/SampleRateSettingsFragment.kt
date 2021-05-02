@@ -29,7 +29,7 @@ class SampleRateSettingsFragment : RecorderSettingsBaseFragment() {
             radioButton.clicks()
                 .observe(viewLifecycleOwner) {
                     val sampleRate = Mp3VoiceRecorder.SampleRate.values()[index]
-                    viewModel.inputSubject.onNext(sampleRate)
+                    viewModel.input.onNext(sampleRate)
                 }
         }
 
