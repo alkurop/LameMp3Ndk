@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.bl
+package com.omar.retromp3recorder.bl.settings
 
 import android.content.SharedPreferences
 import com.nhaarman.mockitokotlin2.verify

@@ -1,6 +1,17 @@
 package com.omar.retromp3recorder.di
 
-import com.omar.retromp3recorder.bl.*
+import com.omar.retromp3recorder.bl.CheckPermissionsUCTest
+import com.omar.retromp3recorder.bl.ShareUCImplTest
+import com.omar.retromp3recorder.bl.audio.StartPlaybackUCTest
+import com.omar.retromp3recorder.bl.audio.StartRecordUCTest
+import com.omar.retromp3recorder.bl.audio.StopPlaybackAndRecordUCTest
+import com.omar.retromp3recorder.bl.files.DeleteFileUCTest
+import com.omar.retromp3recorder.bl.files.LookForFilesUCTest
+import com.omar.retromp3recorder.bl.files.SetCurrentFileUCTest
+import com.omar.retromp3recorder.bl.files.TakeLastFileUCTest
+import com.omar.retromp3recorder.bl.settings.ChangeBitrateUCTest
+import com.omar.retromp3recorder.bl.settings.ChangeSampleRateUCImplTest
+import com.omar.retromp3recorder.bl.settings.LoadRecorderSettingsUCTest
 import dagger.Component
 import javax.inject.Singleton
 
