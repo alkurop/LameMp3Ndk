@@ -29,7 +29,8 @@ import javax.inject.Singleton
         RepoModule::class,
         TestFunctionalityModule::class,
         TestUtilsModule::class,
-        TestStorageModule::class
+        TestStorageModule::class,
+        TestRepoModule::class
     ]
 )
 interface TestAppComponent {
