@@ -4,14 +4,16 @@ import com.omar.retromp3recorder.dto.FileWrapper
 import java.io.File
 
 interface FileRenamer {
-    fun renameFile(fileWrapper: FileWrapper, newName: String)
+    fun renameFile(fileWrapper: FileWrapper, newName: String): String
 
     fun canRename(fileWrapper: FileWrapper, newName: String): Boolean
 }
 
 class FileRenameImpl : FileRenamer {
-    override fun renameFile(fileWrapper: FileWrapper, newName: String) {
-        File(fileWrapper.path).renameTo(generateNewFile(fileWrapper, newName))
+    override fun renameFile(fileWrapper: FileWrapper, newName: String): String {
+        val newFile = generateNewFile(fileWrapper, newName)
+        File(fileWrapper.path).renameTo(newFile)
+        return newFile.path
     }
 
     override fun canRename(fileWrapper: FileWrapper, newName: String): Boolean {
