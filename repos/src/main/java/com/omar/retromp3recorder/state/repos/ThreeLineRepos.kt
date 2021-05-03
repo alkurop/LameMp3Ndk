@@ -23,3 +23,4 @@ class FileListRepo @Inject constructor() :
 @Singleton
 class SampleRateRepo @Inject constructor(defaults: RecorderDefaults) :
     BehaviorSubjectRepo<Mp3VoiceRecorder.SampleRate>(defaults.sampleRate)
+

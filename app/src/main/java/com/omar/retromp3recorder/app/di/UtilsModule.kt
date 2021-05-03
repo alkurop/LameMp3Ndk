@@ -41,8 +41,11 @@ class UtilsModule(private val app: Application) {
 
     @Provides
     fun providePermissionChecker(context: Context): PermissionChecker =
-            PermissionCheckerImpl(context)
+        PermissionCheckerImpl(context)
 
     @Provides
     fun provideFileDeleter(): FileDeleter = FileDeleterImpl()
+
+    @Provides
+    fun provideFileRenamer(): FileRenamer = FileRenameImpl()
 }

@@ -34,7 +34,7 @@ internal class TestStorageModule {
     @Provides
     fun provideDatabase(fileDao: FileDbEntityDao): DatabaseI {
         return mock<DatabaseI>().apply {
-            whenever(this.userDao()) doReturn fileDao
+            whenever(this.fileEntityDao()) doReturn fileDao
         }
     }
 

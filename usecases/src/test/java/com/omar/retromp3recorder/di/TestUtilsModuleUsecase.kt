@@ -1,10 +1,7 @@
 package com.omar.retromp3recorder.di
 
 import android.content.Context
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import com.omar.retromp3recorder.dto.toTestFileWrapper
 import com.omar.retromp3recorder.utils.*
 import dagger.Module
@@ -64,5 +61,14 @@ internal class TestUtilsModuleUsecase {
     @Provides
     fun provideFileDeleter(): FileDeleter {
         return mock<FileDeleter>()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFileRenamer(): FileRenamer {
+        return mock<FileRenamer>().apply {
+            whenever(this.canRename(any(), any())) doReturn true
+            whenever(this.renameFile(any(), any())) doAnswer { mock -> mock.arguments[1] as String }
+        }
     }
 }

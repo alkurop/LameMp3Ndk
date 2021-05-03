@@ -19,15 +19,15 @@ class LookForFilesUC @Inject constructor(
         return Completable.fromAction {
             val fileDir = filePathGenerator.fileDir
             val dirFiles = fileLister.listFiles(fileDir)
-            val dbFiles = database.userDao().getAll().map { it.toFileWrapper() }
+            val dbFiles = database.fileEntityDao().getAll().map { it.toFileWrapper() }
             val newFiles = dirFiles.filter { dirFile ->
                 dbFiles.map { dbFile -> dbFile.path }.contains(dirFile.path).not()
             }
-            database.userDao().insert(newFiles.map { it.toDatabaseEntity() })
+            database.fileEntityDao().insert(newFiles.map { it.toDatabaseEntity() })
             val unresolvedFiles = dbFiles.filter { dbFile ->
                 dirFiles.map { it.path }.contains(dbFile.path).not()
             }
-            database.userDao().delete(unresolvedFiles.map { it.toDatabaseEntity() })
+            database.fileEntityDao().delete(unresolvedFiles.map { it.toDatabaseEntity() })
             fileListRepo.onNext(dirFiles)
         }
     }
