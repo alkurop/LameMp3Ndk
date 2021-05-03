@@ -5,10 +5,7 @@ import com.omar.retromp3recorder.bl.ShareUCImplTest
 import com.omar.retromp3recorder.bl.audio.StartPlaybackUCTest
 import com.omar.retromp3recorder.bl.audio.StartRecordUCTest
 import com.omar.retromp3recorder.bl.audio.StopPlaybackAndRecordUCTest
-import com.omar.retromp3recorder.bl.files.DeleteFileUCTest
-import com.omar.retromp3recorder.bl.files.LookForFilesUCTest
-import com.omar.retromp3recorder.bl.files.SetCurrentFileUCTest
-import com.omar.retromp3recorder.bl.files.TakeLastFileUCTest
+import com.omar.retromp3recorder.bl.files.*
 import com.omar.retromp3recorder.bl.settings.ChangeBitrateUCTest
 import com.omar.retromp3recorder.bl.settings.ChangeSampleRateUCImplTest
 import com.omar.retromp3recorder.bl.settings.LoadRecorderSettingsUCTest
@@ -38,4 +35,6 @@ interface UseCaseComponent {
     fun inject(setCurrentFileUCTest: SetCurrentFileUCTest)
     fun inject(deleteFileUCTest: DeleteFileUCTest)
     fun inject(loadRecorderSettingsUCTest: LoadRecorderSettingsUCTest)
+    fun inject(canRenameFileUCTest: CanRenameFileUCTest)
+    fun inject(renameFileUCTest: RenameFileUCTest)
 }

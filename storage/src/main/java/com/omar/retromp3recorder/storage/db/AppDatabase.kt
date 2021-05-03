@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 
 interface DatabaseI {
-    fun userDao(): FileDbEntityDao
+    fun fileEntityDao(): FileDbEntityDao
 }
 
 @Database(entities = [FileDbEntity::class], version = 1)

@@ -17,7 +17,7 @@ class DeleteFileUC @Inject constructor(
     fun execute(filePath: String): Completable {
         return Completable.fromAction {
             fileDeleter.deleteFile(filePath)
-            databaseI.userDao().deleteByFilepath(filePath)
+            databaseI.fileEntityDao().deleteByFilepath(filePath)
             val newFileList = fileListRepo
                 .observe()
                 .blockingFirst().filter { it.path != filePath }
