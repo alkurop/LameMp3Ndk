@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.bl
+package com.omar.retromp3recorder.bl.files
 
 import com.omar.retromp3recorder.state.repos.FileListRepo
 import com.omar.retromp3recorder.storage.db.DatabaseI

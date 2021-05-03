@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.bl
+package com.omar.retromp3recorder.bl.audio
 
 import com.nhaarman.mockitokotlin2.*
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent

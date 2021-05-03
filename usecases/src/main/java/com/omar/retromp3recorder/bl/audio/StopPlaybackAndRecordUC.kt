@@ -1,6 +1,7 @@
-package com.omar.retromp3recorder.bl
+package com.omar.retromp3recorder.bl.audio
 
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
+import com.omar.retromp3recorder.bl.files.LookForFilesUC
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.state.repos.AudioState
 import com.omar.retromp3recorder.state.repos.AudioStateMapper

@@ -5,9 +5,9 @@ import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.RecordButton
 import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.ShareButtonStateMapper
 import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.StopButtonStateMapper
 import com.omar.retromp3recorder.bl.ShareUC
-import com.omar.retromp3recorder.bl.StartPlaybackUC
-import com.omar.retromp3recorder.bl.StartRecordUC
-import com.omar.retromp3recorder.bl.StopPlaybackAndRecordUC
+import com.omar.retromp3recorder.bl.audio.StartPlaybackUC
+import com.omar.retromp3recorder.bl.audio.StartRecordUC
+import com.omar.retromp3recorder.bl.audio.StopPlaybackAndRecordUC
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable

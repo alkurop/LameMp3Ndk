@@ -5,7 +5,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.di.DaggerAppComponent
 import com.omar.retromp3recorder.app.di.UtilsModule
-import com.omar.retromp3recorder.bl.LoadRecorderSettingsUC
+import com.omar.retromp3recorder.bl.settings.LoadRecorderSettingsUC
 import timber.log.Timber
 import javax.inject.Inject
 
