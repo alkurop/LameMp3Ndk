@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.utils.fileName
@@ -16,8 +17,11 @@ class SelectorAdapter(
     private lateinit var layoutInflater: LayoutInflater
     var items: List<SelectorView.Item> = emptyList()
         set(value) {
+            val diff = DiffUtil.calculateDiff(
+                Diff(field, value)
+            )
             field = value
-            notifyDataSetChanged()
+            diff.dispatchUpdatesTo(this)
         }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -47,5 +51,28 @@ class SelectorAdapter(
             textView.text = item.fileWrapper.path.fileName()
             currentFileSign.isVisible = item.isCurrentItem
         }
+    }
+}
+
+private class Diff(
+    private val oldList: List<SelectorView.Item>,
+    private val newList: List<SelectorView.Item>
+) : DiffUtil.Callback() {
+    override fun getOldListSize(): Int = oldList.size
+
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = oldList[oldItemPosition]
+        val newItem = newList[newItemPosition]
+        return oldItem.fileWrapper.createTimedStamp == newItem.fileWrapper.createTimedStamp
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = oldList[oldItemPosition]
+        val newItem = newList[newItemPosition]
+        val isFilepathSame = oldItem.fileWrapper.path == newItem.fileWrapper.path
+        val isSelectionSame = oldItem.isCurrentItem == newItem.isCurrentItem
+        return isFilepathSame && isSelectionSame
     }
 }
