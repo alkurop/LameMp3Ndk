@@ -3,9 +3,9 @@ package com.omar.retromp3recorder.bl.audio
 import android.Manifest
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.bl.CheckPermissionsUC
-import com.omar.retromp3recorder.state.repos.CurrentFileRepo
-import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
-import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo.ShouldRequestPermissions
+import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
+import com.omar.retromp3recorder.storage.repo.RequestPermissionsRepo
+import com.omar.retromp3recorder.storage.repo.RequestPermissionsRepo.ShouldRequestPermissions
 import com.omar.retromp3recorder.utils.takeOne
 import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject

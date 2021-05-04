@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.ui.files.edit.rename
 
-import com.omar.retromp3recorder.state.repos.CanRenameFileRepo
+import com.omar.retromp3recorder.storage.repo.CanRenameFileRepo
 import dagger.Module
 import dagger.Provides
 

@@ -5,8 +5,8 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.dto.toTestFileWrapper
-import com.omar.retromp3recorder.state.repos.CurrentFileRepo
-import com.omar.retromp3recorder.state.repos.FileListRepo
+import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
+import com.omar.retromp3recorder.storage.repo.FileListRepo
 import com.omar.retromp3recorder.utils.FileEmptyChecker
 import com.omar.retromp3recorder.utils.Optional
 import org.junit.Before

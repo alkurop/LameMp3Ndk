@@ -3,8 +3,8 @@ package com.omar.retromp3recorder.app.ui.files.edit.delete
 import com.nhaarman.mockitokotlin2.verify
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.dto.toTestFileWrapper
-import com.omar.retromp3recorder.state.repos.CurrentFileRepo
-import com.omar.retromp3recorder.state.repos.FileListRepo
+import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
+import com.omar.retromp3recorder.storage.repo.FileListRepo
 import com.omar.retromp3recorder.utils.FileDeleter
 import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.rxjava3.observers.TestObserver

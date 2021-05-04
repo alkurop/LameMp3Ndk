@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.di
 
 import com.nhaarman.mockitokotlin2.mock
 import com.omar.retromp3recorder.bl.audio.AudioStateMapper
-import com.omar.retromp3recorder.state.repos.CanRenameFileRepo
+import com.omar.retromp3recorder.storage.repo.CanRenameFileRepo
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

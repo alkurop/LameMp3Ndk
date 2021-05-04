@@ -3,7 +3,7 @@ package com.omar.retromp3recorder.bl.files
 import com.google.common.truth.Truth.assertThat
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.dto.toTestFileWrapper
-import com.omar.retromp3recorder.state.repos.CanRenameFileRepo
+import com.omar.retromp3recorder.storage.repo.CanRenameFileRepo
 import com.omar.retromp3recorder.utils.Optional
 import org.junit.Before
 import org.junit.Test

@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.app.ui.files.preview
 
 import com.google.common.truth.Truth.assertThat
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.state.repos.CurrentFileRepo
+import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import io.reactivex.rxjava3.observers.TestObserver
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject

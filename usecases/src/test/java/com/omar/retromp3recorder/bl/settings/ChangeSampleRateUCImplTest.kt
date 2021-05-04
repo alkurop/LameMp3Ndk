@@ -5,8 +5,8 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import com.omar.retromp3recorder.storage.RecorderPrefsKeys
+import com.omar.retromp3recorder.storage.repo.SampleRateRepo
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject

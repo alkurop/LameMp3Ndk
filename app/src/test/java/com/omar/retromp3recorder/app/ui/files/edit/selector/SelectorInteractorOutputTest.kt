@@ -2,8 +2,8 @@ package com.omar.retromp3recorder.app.ui.files.edit.selector
 
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.dto.toTestFileWrapper
-import com.omar.retromp3recorder.state.repos.CurrentFileRepo
-import com.omar.retromp3recorder.state.repos.FileListRepo
+import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
+import com.omar.retromp3recorder.storage.repo.FileListRepo
 import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.rxjava3.observers.TestObserver
 import io.reactivex.rxjava3.subjects.PublishSubject

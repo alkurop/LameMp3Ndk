@@ -6,9 +6,9 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.dto.toTestFileWrapper
-import com.omar.retromp3recorder.state.repos.FileListRepo
 import com.omar.retromp3recorder.storage.db.FileDbEntityDao
 import com.omar.retromp3recorder.storage.db.toDatabaseEntity
+import com.omar.retromp3recorder.storage.repo.FileListRepo
 import com.omar.retromp3recorder.utils.FileLister
 import com.omar.retromp3recorder.utils.FilePathGenerator
 import org.junit.Before

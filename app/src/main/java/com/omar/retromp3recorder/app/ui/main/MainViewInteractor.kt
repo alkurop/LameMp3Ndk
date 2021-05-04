@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.ui.main
 
 import com.omar.retromp3recorder.app.ui.main.MainView.Output
-import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
+import com.omar.retromp3recorder.storage.repo.RequestPermissionsRepo
 import com.omar.retromp3recorder.utils.flatMapGhost
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.rxjava3.core.Completable

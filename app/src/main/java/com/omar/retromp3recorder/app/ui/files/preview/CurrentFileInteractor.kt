@@ -3,7 +3,7 @@ package com.omar.retromp3recorder.app.ui.files.preview
 import com.omar.retromp3recorder.app.ui.files.preview.buttonstate.DeleteFileButtonStateMapper
 import com.omar.retromp3recorder.app.ui.files.preview.buttonstate.OpenFileButtonStateMapper
 import com.omar.retromp3recorder.bl.files.TakeLastFileUC
-import com.omar.retromp3recorder.state.repos.CurrentFileRepo
+import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable

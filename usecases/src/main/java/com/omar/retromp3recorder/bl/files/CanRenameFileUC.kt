@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.bl.files
 
 import com.omar.retromp3recorder.dto.FileWrapper
-import com.omar.retromp3recorder.state.repos.CanRenameFileRepo
+import com.omar.retromp3recorder.storage.repo.CanRenameFileRepo
 import com.omar.retromp3recorder.utils.FileRenamer
 import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.rxjava3.core.Completable

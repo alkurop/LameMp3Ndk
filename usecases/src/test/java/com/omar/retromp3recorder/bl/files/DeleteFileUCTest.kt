@@ -3,9 +3,9 @@ package com.omar.retromp3recorder.bl.files
 import com.nhaarman.mockitokotlin2.verify
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.dto.toTestFileWrapper
-import com.omar.retromp3recorder.state.repos.CurrentFileRepo
-import com.omar.retromp3recorder.state.repos.FileListRepo
 import com.omar.retromp3recorder.storage.db.FileDbEntityDao
+import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
+import com.omar.retromp3recorder.storage.repo.FileListRepo
 import com.omar.retromp3recorder.utils.FileDeleter
 import com.omar.retromp3recorder.utils.Optional
 import org.junit.Before

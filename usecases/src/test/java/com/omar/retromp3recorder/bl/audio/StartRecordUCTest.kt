@@ -3,7 +3,7 @@ package com.omar.retromp3recorder.bl.audio
 import com.nhaarman.mockitokotlin2.*
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.state.repos.CurrentFileRepo
+import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.utils.FilePathGenerator
 import com.omar.retromp3recorder.utils.Optional
 import com.omar.retromp3recorder.utils.PermissionChecker

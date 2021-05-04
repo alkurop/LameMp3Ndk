@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.app.ui.files.edit.rename
 
 import com.omar.retromp3recorder.bl.files.CanRenameFileUC
 import com.omar.retromp3recorder.bl.files.RenameFileUC
-import com.omar.retromp3recorder.state.repos.CanRenameFileRepo
+import com.omar.retromp3recorder.storage.repo.CanRenameFileRepo
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable

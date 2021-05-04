@@ -6,8 +6,8 @@ import com.nhaarman.mockitokotlin2.check
 import com.nhaarman.mockitokotlin2.verify
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.dto.toTestFileWrapper
-import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.storage.db.FileDbEntityDao
+import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.utils.FileLister
 import com.omar.retromp3recorder.utils.FileRenamer
 import com.omar.retromp3recorder.utils.Optional

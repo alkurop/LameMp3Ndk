@@ -4,7 +4,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.share.Sharer
-import com.omar.retromp3recorder.state.repos.CurrentFileRepo
+import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.rxjava3.core.Completable
 import org.junit.Before

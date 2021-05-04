@@ -74,7 +74,6 @@ dependencies {
     implementation project(':io-audioplayer')
     implementation project(':io-share')
     implementation project(':ui-state-button')
-    implementation project(':repos')
     implementation project(':usecases')
     implementation project(':storage')
 

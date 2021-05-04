@@ -4,7 +4,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
-import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
+import com.omar.retromp3recorder.storage.repo.RequestPermissionsRepo
 import com.omar.retromp3recorder.utils.PermissionChecker
 import org.junit.Before
 import org.junit.Test

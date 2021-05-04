@@ -2,10 +2,10 @@ package com.omar.retromp3recorder.app.ui.main
 
 import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
-import com.omar.retromp3recorder.state.repos.BitRateRepo
-import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
-import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo.ShouldRequestPermissions
-import com.omar.retromp3recorder.state.repos.SampleRateRepo
+import com.omar.retromp3recorder.storage.repo.BitRateRepo
+import com.omar.retromp3recorder.storage.repo.RequestPermissionsRepo
+import com.omar.retromp3recorder.storage.repo.RequestPermissionsRepo.ShouldRequestPermissions
+import com.omar.retromp3recorder.storage.repo.SampleRateRepo
 import io.reactivex.rxjava3.observers.TestObserver
 import io.reactivex.rxjava3.subjects.PublishSubject
 import org.junit.Before

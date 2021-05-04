@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.bl.audio.AudioStateMapper
-import com.omar.retromp3recorder.state.repos.CurrentFileRepo
+import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
 import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.rxjava3.observers.TestObserver
