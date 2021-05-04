@@ -3,6 +3,7 @@ package com.omar.retromp3recorder.app.di
 import com.omar.retromp3recorder.app.App
 import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsViewModel
 import com.omar.retromp3recorder.app.ui.files.edit.delete.DeleteFileViewModel
+import com.omar.retromp3recorder.app.ui.files.edit.properties.PropertiesViewModel
 import com.omar.retromp3recorder.app.ui.files.edit.rename.CanRenameFileComponent
 import com.omar.retromp3recorder.app.ui.files.edit.selector.SelectorViewModel
 import com.omar.retromp3recorder.app.ui.files.preview.CurrentFileViewModel
@@ -38,4 +39,5 @@ interface AppComponent {
     fun inject(app: App)
 
     fun canRenameFileComponent(): CanRenameFileComponent
+    fun inject(propertiesViewModel: PropertiesViewModel)
 }
