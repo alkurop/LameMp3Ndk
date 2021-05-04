@@ -1,10 +1,10 @@
-package com.omar.retromp3recorder.state.repos
+package com.omar.retromp3recorder.bl.audio
 
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
-class PlayerIdRepo @Inject internal constructor(
+class PlayerIdMapper @Inject internal constructor(
     private val audioPlayer: AudioPlayer
 ) {
     fun observe(): Observable<Int> {

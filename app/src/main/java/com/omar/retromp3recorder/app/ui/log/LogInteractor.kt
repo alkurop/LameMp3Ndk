@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.ui.log
 
-import com.omar.retromp3recorder.state.repos.LogRepo
+import com.omar.retromp3recorder.bl.LogMapper
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class LogInteractor @Inject constructor(
     private val scheduler: Scheduler,
-    private val logRepo: LogRepo
+    private val logMapper: LogMapper
 ) {
     fun processIO(): ObservableTransformer<LogView.Input, LogView.Output> =
         scheduler.processIO(
@@ -21,11 +21,11 @@ class LogInteractor @Inject constructor(
     private val mapRepoToOutput: () -> Observable<LogView.Output> = {
         Observable.merge(
             listOf(
-                logRepo.observe()
-                    .ofType(LogRepo.Event.Message::class.java)
+                logMapper.observe()
+                    .ofType(LogMapper.Event.Message::class.java)
                     .map { message -> LogView.Output.MessageLogOutput(message.message) },
-                logRepo.observe()
-                    .ofType(LogRepo.Event.Error::class.java)
+                logMapper.observe()
+                    .ofType(LogMapper.Event.Error::class.java)
                     .map { message -> LogView.Output.ErrorLogOutput(message.error) },
             )
         )

@@ -2,9 +2,9 @@ package com.omar.retromp3recorder.app.ui.audio_controls
 
 import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
+import com.omar.retromp3recorder.bl.audio.AudioState
+import com.omar.retromp3recorder.bl.audio.AudioStateMapper
 import com.omar.retromp3recorder.share.Sharer
-import com.omar.retromp3recorder.state.repos.AudioState
-import com.omar.retromp3recorder.state.repos.AudioStateMapper
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
 import com.omar.retromp3recorder.state.repos.RequestPermissionsRepo
 import com.omar.retromp3recorder.utils.Optional

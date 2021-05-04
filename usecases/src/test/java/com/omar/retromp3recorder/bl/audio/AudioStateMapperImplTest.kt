@@ -1,11 +1,10 @@
-package com.omar.retromp3recorder.state.repos
+package com.omar.retromp3recorder.bl.audio
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.state.repos.di.DaggerRepoTestComponent
 import com.omar.retromp3recorder.utils.FileEmptyChecker
 import io.reactivex.rxjava3.core.Observable
 import org.junit.Before
@@ -27,7 +26,6 @@ internal class AudioStateMapperImplTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        DaggerRepoTestComponent.create().inject(this)
         audioStateMapper = AudioStateMapperImpl(
             recorder = recorder,
             player = player

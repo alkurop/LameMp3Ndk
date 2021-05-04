@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.ui.visualizer
 
-import com.omar.retromp3recorder.state.repos.AudioState
+import com.omar.retromp3recorder.bl.audio.AudioState
 import io.reactivex.rxjava3.observers.TestObserver
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject

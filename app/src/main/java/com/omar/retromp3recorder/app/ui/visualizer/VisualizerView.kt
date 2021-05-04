@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.ui.visualizer
 
-import com.omar.retromp3recorder.state.repos.AudioState
+import com.omar.retromp3recorder.bl.audio.AudioState
 
 object VisualizerView {
     data class State(

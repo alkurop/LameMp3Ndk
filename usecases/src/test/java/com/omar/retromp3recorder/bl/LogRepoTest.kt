@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.state.repos
+package com.omar.retromp3recorder.bl
 
 import com.github.alkurop.stringerbell.Stringer
 import com.nhaarman.mockitokotlin2.doReturn
@@ -21,7 +21,7 @@ internal class LogRepoTest {
 
     @Mock
     lateinit var sharer: Sharer
-    lateinit var logRepo: LogRepo
+    lateinit var logMapper: LogMapper
     private val message = Stringer.ofString("hello")
     private val audioPlayerSubject = PublishSubject.create<AudioPlayer.Event>()
     private val voiceRecorderSubject = PublishSubject.create<Mp3VoiceRecorder.Event>()
@@ -33,7 +33,7 @@ internal class LogRepoTest {
         whenever(audioPlayer.observeEvents()) doReturn audioPlayerSubject
         whenever(mp3VoiceRecorder.observeEvents()) doReturn voiceRecorderSubject
         whenever(sharer.observeEvents()) doReturn sharerSubject
-        logRepo = LogRepo(
+        logMapper = LogMapper(
             audioPlayer = audioPlayer,
             recorder = mp3VoiceRecorder,
             sharer = sharer
@@ -42,47 +42,47 @@ internal class LogRepoTest {
 
     @Test
     fun `Mp3VoiceRecorder Event Message logs Message`() {
-        val test = logRepo.observe().test()
+        val test = logMapper.observe().test()
 
         voiceRecorderSubject.onNext(Mp3VoiceRecorder.Event.Message(message))
 
         test.assertNoErrors().assertNotComplete()
-            .assertValue(LogRepo.Event.Message(message))
+            .assertValue(LogMapper.Event.Message(message))
     }
 
     @Test
     fun `Mp3VoiceRecorder Event Error logs Error`() {
-        val test = logRepo.observe().test()
+        val test = logMapper.observe().test()
 
         voiceRecorderSubject.onNext(Mp3VoiceRecorder.Event.Error(message))
 
         test.assertNoErrors().assertNotComplete()
-            .assertValue(LogRepo.Event.Error(message))
+            .assertValue(LogMapper.Event.Error(message))
     }
 
     @Test
     fun `AudioPlayer Event Message logs Message`() {
-        val test = logRepo.observe().test()
+        val test = logMapper.observe().test()
 
         audioPlayerSubject.onNext(AudioPlayer.Event.Message(message))
 
         test.assertNoErrors().assertNotComplete()
-            .assertValue(LogRepo.Event.Message(message))
+            .assertValue(LogMapper.Event.Message(message))
     }
 
     @Test
     fun `AudioPlayer Event Error logs Error`() {
-        val test = logRepo.observe().test()
+        val test = logMapper.observe().test()
 
         audioPlayerSubject.onNext(AudioPlayer.Event.Error(message))
 
         test.assertNoErrors().assertNotComplete()
-            .assertValue(LogRepo.Event.Error(message))
+            .assertValue(LogMapper.Event.Error(message))
     }
 
     @Test
     fun `AudioPlayer id see no evil`() {
-        val test = logRepo.observe().test()
+        val test = logMapper.observe().test()
 
         audioPlayerSubject.onNext(AudioPlayer.Event.PlayerId(17))
 
@@ -92,21 +92,21 @@ internal class LogRepoTest {
 
     @Test
     fun `Sharer Event SharingOk logs Message`() {
-        val test = logRepo.observe().test()
+        val test = logMapper.observe().test()
 
         sharerSubject.onNext(Sharer.Event.SharingOk(message))
 
         test.assertNoErrors().assertNotComplete()
-            .assertValue(LogRepo.Event.Message(message))
+            .assertValue(LogMapper.Event.Message(message))
     }
 
     @Test
     fun `Sharer Event SharingError logs Error`() {
-        val test = logRepo.observe().test()
+        val test = logMapper.observe().test()
 
         sharerSubject.onNext(Sharer.Event.Error(message))
 
         test.assertNoErrors().assertNotComplete()
-            .assertValue(LogRepo.Event.Error(message))
+            .assertValue(LogMapper.Event.Error(message))
     }
 }

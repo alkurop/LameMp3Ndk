@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.bl.files
 
 import com.omar.retromp3recorder.dto.FileWrapper
 import com.omar.retromp3recorder.state.repos.CurrentFileRepo
-import com.omar.retromp3recorder.storage.db.DatabaseI
+import com.omar.retromp3recorder.storage.db.AppDatabase
 import com.omar.retromp3recorder.storage.db.toDatabaseEntity
 import com.omar.retromp3recorder.utils.FileRenamer
 import com.omar.retromp3recorder.utils.Optional
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class RenameFileUC @Inject constructor(
     private val currentFileRepo: CurrentFileRepo,
-    private val databaseI: DatabaseI,
+    private val appDatabase: AppDatabase,
     private val fileRenamer: FileRenamer,
     private val lookForFilesUC: LookForFilesUC
 ) {
@@ -22,7 +22,7 @@ class RenameFileUC @Inject constructor(
                 path = newPath,
                 modifiedTimestamp = System.currentTimeMillis()
             )
-            databaseI.fileEntityDao().updateItem(copy.toDatabaseEntity())
+            appDatabase.fileEntityDao().updateItem(copy.toDatabaseEntity())
             currentFileRepo.onNext(Optional(newPath))
         }
         .andThen(lookForFilesUC.execute())

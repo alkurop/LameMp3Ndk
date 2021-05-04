@@ -4,8 +4,6 @@ import com.nhaarman.mockitokotlin2.*
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.state.repos.AudioState
-import com.omar.retromp3recorder.state.repos.AudioStateMapper
 import com.omar.retromp3recorder.utils.FileLister
 import io.reactivex.rxjava3.core.Observable
 import org.junit.Before

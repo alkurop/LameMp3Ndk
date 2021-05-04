@@ -3,7 +3,7 @@ package com.omar.retromp3recorder.app.ui.visualizer
 import com.omar.retromp3recorder.app.di.DaggerTestAppComponent
 import com.omar.retromp3recorder.app.modules.TestAudioPlayer.Companion.PLAYER_ID
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
-import com.omar.retromp3recorder.state.repos.AudioState
+import com.omar.retromp3recorder.bl.audio.AudioState
 import io.reactivex.rxjava3.observers.TestObserver
 import io.reactivex.rxjava3.subjects.PublishSubject
 import org.junit.Before

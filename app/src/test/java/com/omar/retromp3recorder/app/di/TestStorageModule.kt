@@ -5,7 +5,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.omar.retromp3recorder.storage.db.DatabaseI
+import com.omar.retromp3recorder.storage.db.AppDatabase
 import com.omar.retromp3recorder.storage.db.FileDbEntityDao
 import dagger.Module
 import dagger.Provides
@@ -32,8 +32,8 @@ internal class TestStorageModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(fileDao: FileDbEntityDao): DatabaseI {
-        return mock<DatabaseI>().apply {
+    fun provideDatabase(fileDao: FileDbEntityDao): AppDatabase {
+        return mock<AppDatabase>().apply {
             whenever(this.fileEntityDao()) doReturn fileDao
         }
     }

@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.state.repos
+package com.omar.retromp3recorder.bl.audio
 
 import com.github.alkurop.stringerbell.Stringer
 import com.nhaarman.mockitokotlin2.doReturn
@@ -16,7 +16,7 @@ class PlayerIdRepoTest {
     lateinit var audioPlayer: AudioPlayer
 
     @InjectMocks
-    lateinit var repo: PlayerIdRepo
+    lateinit var mapper: PlayerIdMapper
     private val playerSubject = PublishSubject.create<AudioPlayer.Event>()
 
     @Before
@@ -27,7 +27,7 @@ class PlayerIdRepoTest {
 
     @Test
     fun `repo listens to player event player Id`() {
-        val consumer = repo.observe().test()
+        val consumer = mapper.observe().test()
         val playerId = 26
 
         playerSubject.onNext(AudioPlayer.Event.PlayerId(playerId))
@@ -37,7 +37,7 @@ class PlayerIdRepoTest {
 
     @Test
     fun `repo does not listen to message events`() {
-        val consumer = repo.observe().test()
+        val consumer = mapper.observe().test()
 
         playerSubject.onNext(AudioPlayer.Event.Message(Stringer.ofString("hello")))
 
@@ -46,7 +46,7 @@ class PlayerIdRepoTest {
 
     @Test
     fun `player does not listen to error events`() {
-        val consumer = repo.observe().test()
+        val consumer = mapper.observe().test()
 
         playerSubject.onNext(AudioPlayer.Event.Error(Stringer.ofString("sos")))
 

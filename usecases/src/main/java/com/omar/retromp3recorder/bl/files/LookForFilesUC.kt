@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.bl.files
 
 import com.omar.retromp3recorder.state.repos.FileListRepo
-import com.omar.retromp3recorder.storage.db.DatabaseI
+import com.omar.retromp3recorder.storage.db.AppDatabase
 import com.omar.retromp3recorder.storage.db.toDatabaseEntity
 import com.omar.retromp3recorder.storage.db.toFileWrapper
 import com.omar.retromp3recorder.utils.FileLister
@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 
 class LookForFilesUC @Inject constructor(
-    private val database: DatabaseI,
+    private val appDatabase: AppDatabase,
     private val fileListRepo: FileListRepo,
     private val filePathGenerator: FilePathGenerator,
     private val fileLister: FileLister
@@ -19,15 +19,15 @@ class LookForFilesUC @Inject constructor(
         return Completable.fromAction {
             val fileDir = filePathGenerator.fileDir
             val dirFiles = fileLister.listFiles(fileDir)
-            val dbFiles = database.fileEntityDao().getAll().map { it.toFileWrapper() }
+            val dbFiles = appDatabase.fileEntityDao().getAll().map { it.toFileWrapper() }
             val newFiles = dirFiles.filter { dirFile ->
                 dbFiles.map { dbFile -> dbFile.path }.contains(dirFile.path).not()
             }
-            database.fileEntityDao().insert(newFiles.map { it.toDatabaseEntity() })
+            appDatabase.fileEntityDao().insert(newFiles.map { it.toDatabaseEntity() })
             val unresolvedFiles = dbFiles.filter { dbFile ->
                 dirFiles.map { it.path }.contains(dbFile.path).not()
             }
-            database.fileEntityDao().delete(unresolvedFiles.map { it.toDatabaseEntity() })
+            appDatabase.fileEntityDao().delete(unresolvedFiles.map { it.toDatabaseEntity() })
             fileListRepo.onNext(dirFiles)
         }
     }
