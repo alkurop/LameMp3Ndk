@@ -8,5 +8,7 @@ object PropertiesView {
     )
 
     sealed class Input
-    sealed class Output
+    sealed class Output {
+        data class CurrentFileProperties(val currentFile: FileWrapper?) : Output()
+    }
 }

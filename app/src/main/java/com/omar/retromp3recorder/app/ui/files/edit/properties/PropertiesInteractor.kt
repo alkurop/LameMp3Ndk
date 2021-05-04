@@ -1,6 +1,5 @@
 package com.omar.retromp3recorder.app.ui.files.edit.properties
 
-import com.omar.retromp3recorder.bl.files.FilePropertiesMapper
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -21,6 +20,7 @@ class PropertiesInteractor @Inject constructor(
     private val mapRepoToOutput: () -> Observable<PropertiesView.Output> = {
         Observable.merge(
             listOf(
+                filePropertiesMapper.observe()
             )
         )
     }

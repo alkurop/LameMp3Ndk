@@ -1,10 +1,8 @@
-package com.omar.retromp3recorder.bl.files
+package com.omar.retromp3recorder.app.ui.files.edit.properties
 
-import com.omar.retromp3recorder.dto.FileWrapper
 import com.omar.retromp3recorder.storage.db.AppDatabase
 import com.omar.retromp3recorder.storage.db.toFileWrapper
 import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
-import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
@@ -12,12 +10,14 @@ class FilePropertiesMapper @Inject constructor(
     private val currentFileRepo: CurrentFileRepo,
     private val appDatabase: AppDatabase
 ) {
-    fun observe(): Observable<Optional<FileWrapper>> {
+    fun observe(): Observable<PropertiesView.Output.CurrentFileProperties> {
         return currentFileRepo.observe().switchMap { currentFile ->
             val filepath = currentFile.value
-            if (filepath == null) Observable.just(Optional.empty())
+            if (filepath == null) Observable.just(PropertiesView.Output.CurrentFileProperties(null))
             else Observable.fromCallable {
-                Optional(appDatabase.fileEntityDao().getByFilepath(filepath)[0].toFileWrapper())
+                PropertiesView.Output.CurrentFileProperties(
+                    appDatabase.fileEntityDao().getByFilepath(filepath)[0].toFileWrapper()
+                )
             }
         }
     }
