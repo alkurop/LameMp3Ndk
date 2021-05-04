@@ -2,11 +2,11 @@ package com.omar.retromp3recorder.app.di
 
 import com.omar.retromp3recorder.app.App
 import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsViewModel
-import com.omar.retromp3recorder.app.ui.files.edit.delete.DeleteFileViewModel
-import com.omar.retromp3recorder.app.ui.files.edit.properties.PropertiesViewModel
-import com.omar.retromp3recorder.app.ui.files.edit.rename.CanRenameFileComponent
-import com.omar.retromp3recorder.app.ui.files.edit.selector.SelectorViewModel
+import com.omar.retromp3recorder.app.ui.files.delete.DeleteFileViewModel
 import com.omar.retromp3recorder.app.ui.files.preview.CurrentFileViewModel
+import com.omar.retromp3recorder.app.ui.files.properties.PropertiesViewModel
+import com.omar.retromp3recorder.app.ui.files.rename.CanRenameFileComponent
+import com.omar.retromp3recorder.app.ui.files.selector.SelectorViewModel
 import com.omar.retromp3recorder.app.ui.log.LogViewModel
 import com.omar.retromp3recorder.app.ui.main.MainViewModel
 import com.omar.retromp3recorder.app.ui.recorder_settings.beat_rate.BitRateSettingsViewModel

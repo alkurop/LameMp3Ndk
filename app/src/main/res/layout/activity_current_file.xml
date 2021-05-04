@@ -12,7 +12,7 @@
 
     <fragment
         android:id="@+id/selector_fragment"
-        android:name="com.omar.retromp3recorder.app.ui.files.edit.selector.SelectorFragment"
+        android:name="com.omar.retromp3recorder.app.ui.files.selector.SelectorFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
