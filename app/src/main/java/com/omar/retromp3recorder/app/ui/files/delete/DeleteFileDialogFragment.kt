@@ -1,6 +1,7 @@
 package com.omar.retromp3recorder.app.ui.files.delete
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -13,12 +14,10 @@ class DeleteFileDialogFragment : DialogFragment() {
     private val viewModel by viewModels<DeleteFileViewModel>()
     private lateinit var dialog: AlertDialog
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        //val fileName = filePath.fileName()
         dialog = AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.delete_file))
             .setMessage("fileName")
             .setPositiveButton(getString(R.string.yes)) { _, _ ->
-                viewModel.input.onNext(DeleteFileView.Input.DeleteFile)
             }
             .setNegativeButton(getString(R.string.no)) { _, _ -> dismiss() }.create()
         viewModel.state.observe(this, ::render)
@@ -29,5 +28,9 @@ class DeleteFileDialogFragment : DialogFragment() {
         state.fileWrapper?.let {
             dialog.setMessage(it.path.toFileName())
         }
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
+            viewModel.input.onNext(DeleteFileView.Input.DeleteFile)
+        }
+        state.shouldDismiss.takeIf { it }?.let { dismiss() }
     }
 }

@@ -5,14 +5,12 @@ import android.content.DialogInterface.BUTTON_POSITIVE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.jakewharton.rxbinding4.widget.afterTextChangeEvents
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.ui.utils.findViewById
 import com.omar.retromp3recorder.app.ui.utils.toFileName
 import com.omar.retromp3recorder.app.uiutils.observe
 
@@ -30,7 +28,6 @@ class RenameFileDialogFragment : DialogFragment() {
             .setTitle(getString(R.string.rename_file))
             .setView(parent)
             .setPositiveButton(getString(R.string.yes)) { _, _ ->
-                viewModel.input.onNext(RenameFileView.Input.Rename(newName = input.text.toString()))
             }
             .setNegativeButton(getString(R.string.no)) { _, _ -> dismiss() }
             .create()
@@ -44,7 +41,9 @@ class RenameFileDialogFragment : DialogFragment() {
     private fun render(state: RenameFileView.State) {
         if (state.shouldDismiss) dismiss()
         alertDialog.getButton(BUTTON_POSITIVE).isEnabled = state.isOkButtonEnabled
+        alertDialog.getButton(BUTTON_POSITIVE).setOnClickListener {
+            viewModel.input.onNext(RenameFileView.Input.Rename(newName = input.text.toString()))
+        }
         state.fileWrapper.ghost?.let { input.setText(it.path.toFileName()) }
-
     }
 }

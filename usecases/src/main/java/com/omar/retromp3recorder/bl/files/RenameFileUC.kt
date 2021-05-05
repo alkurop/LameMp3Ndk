@@ -36,7 +36,8 @@ class RenameFileUC @Inject constructor(
                                 currentFileRepo.onNext(Optional(newPath))
                             },
                         lookForFilesUC.execute(),
-                        Completable.fromAction { finishedCallback.onNext(true) })
+                        Completable.fromAction { finishedCallback.onNext(true) }
+                    )
                 )
             }
 }
