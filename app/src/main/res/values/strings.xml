@@ -1,21 +1,22 @@
 <resources>
     <string name="app_name">MP3 Recorder</string>
 
-    <string name="timer_no_text"><![CDATA[<< : >>]]></string>
     <string name="bit_rate">Bit Rate</string>
-    <string name="sample_rate">Sample Rate</string>
-    <string name="write_permission_title">Write Storage</string>
-    <string name="write_permission_message">This app is going to save mp3 files to your phone.</string>
-    <string name="write_required_message">Saving mp3 is required. Go to settings and let this app Write Internal Storage</string>
+    <string name="bit_rate_format">"%1$d kbps"</string>
+    <string name="current_file">Current file</string>
+    <string name="delete_file">Delete file</string>
+    <string name="error_string">Error: %1$s</string>
+    <string name="no_file">*** NO FILE ***</string>
+    <string name="no">No</string>
     <string name="record_permission_title">Record Audio</string>
     <string name="record_permission_message">This app is going to record audio files using your mic.</string>
     <string name="record_required_message">Recording audio is required. Go to settings let this app use Microphone</string>
-    <string name="error_string">Error: %1$s</string>
+    <string name="rename_file">Rename file</string>
+    <string name="timer_no_text"><![CDATA[<< : >>]]></string>
+    <string name="sample_rate">Sample Rate</string>
     <string name="sample_rate_format">"%1$d kb"</string>
-    <string name="bit_rate_format">"%1$d kbps"</string>
-    <string name="no_file">*** NO FILE ***</string>
-    <string name="current_file">Current file</string>
-    <string name="delete_file">Delete file</string>
+    <string name="write_required_message">Saving mp3 is required. Go to settings and let this app Write Internal Storage</string>
+    <string name="write_permission_message">This app is going to save mp3 files to your phone.</string>
+    <string name="write_permission_title">Write Storage</string>
     <string name="yes">Yes</string>
-    <string name="no">No</string>
 </resources>

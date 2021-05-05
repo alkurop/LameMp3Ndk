@@ -19,6 +19,7 @@ class LookForFilesUC @Inject constructor(
         return Completable.fromAction {
             val fileDir = filePathGenerator.fileDir
             val dirFiles = fileLister.listFiles(fileDir)
+                .sortedBy { it.createTimedStamp }
             val dbFiles = appDatabase.fileEntityDao().getAll().map { it.toFileWrapper() }
             val newFiles = dirFiles.filter { dirFile ->
                 dbFiles.map { dbFile -> dbFile.path }.contains(dirFile.path).not()
