@@ -8,16 +8,17 @@ object PropertiesOutputMapper {
     fun mapOutputToState(): ObservableTransformer<PropertiesView.Output, PropertiesView.State> =
         ObservableTransformer { upstream: Observable<PropertiesView.Output> ->
             upstream.scan(
-                getDefaultViewModel(),
+                PropertiesView.State(),
                 getMapper()
             )
         }
 
     private fun getMapper(): BiFunction<PropertiesView.State, PropertiesView.Output, PropertiesView.State> =
         BiFunction { oldState: PropertiesView.State, output: PropertiesView.Output ->
-            oldState.copy()
+            when (output) {
+                is PropertiesView.Output.CurrentFileProperties -> {
+                    oldState.copy(currentFile = output.currentFile)
+                }
+            }
         }
-
-    private fun getDefaultViewModel() = PropertiesView.State(
-    )
 }
