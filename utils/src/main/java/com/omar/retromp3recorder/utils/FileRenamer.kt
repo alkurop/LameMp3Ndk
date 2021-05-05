@@ -17,7 +17,8 @@ class FileRenameImpl : FileRenamer {
     }
 
     override fun canRename(fileWrapper: ExistingFileWrapper, newName: String): Boolean {
-        return generateNewFile(fileWrapper, newName).exists().not()
+        val generateNewFile = generateNewFile(fileWrapper, newName)
+        return generateNewFile.exists().not()
     }
 
     private fun generateNewFile(fileWrapper: ExistingFileWrapper, newName: String): File {
@@ -26,6 +27,6 @@ class FileRenameImpl : FileRenamer {
         val oldFileName = split.last()
         val ext = oldFileName.split(".").last()
         val newFileName = "$newName.$ext"
-        return File(pathWithoutName + newFileName)
+        return File("$pathWithoutName/$newFileName")
     }
 }

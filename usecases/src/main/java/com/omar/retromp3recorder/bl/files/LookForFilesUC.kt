@@ -15,7 +15,6 @@ class LookForFilesUC @Inject constructor(
     private val fileListRepo: FileListRepo,
     private val filePathGenerator: FilePathGenerator,
     private val fileLister: FileLister,
-    private val scheduler: Scheduler
 ) {
     fun execute(): Completable = Completable
         .fromAction {
@@ -33,5 +32,4 @@ class LookForFilesUC @Inject constructor(
             appDatabase.fileEntityDao().delete(unresolvedFiles.map { it.toDatabaseEntity() })
             fileListRepo.onNext(dirFiles)
         }
-        .subscribeOn(scheduler)
 }

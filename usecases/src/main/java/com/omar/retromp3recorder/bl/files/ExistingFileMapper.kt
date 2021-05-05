@@ -14,5 +14,6 @@ class ExistingFileMapper @Inject constructor(
             .map { option ->
                 Optional(option.value as? ExistingFileWrapper)
             }
+            .share()
     }
 }

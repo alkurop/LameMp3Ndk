@@ -19,7 +19,7 @@ class DeleteCurrentFileUC @Inject constructor(
     private val fileListRepo: FileListRepo
 ) {
     fun execute(finishedCallback: BehaviorSubject<Boolean>): Completable {
-        return currentFileMapper.observe().takeOne().switchMapCompletable { optional ->
+        return currentFileMapper.observe().takeOne().flatMapCompletable { optional ->
             val filePath = (optional.value!! as ExistingFileWrapper).path
             Completable.fromAction {
                 fileDeleter.deleteFile(filePath)

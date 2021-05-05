@@ -11,11 +11,11 @@ class CanRenameFileUC @Inject constructor(
     private val currentFileMapper: CurrentFileMapper
 ) {
     fun execute(newFileName: String, canRenameFileRepo: BehaviorSubjectRepo<Boolean>): Completable =
-        currentFileMapper.observe().switchMapCompletable { optional ->
+        currentFileMapper.observe().flatMapCompletable { optional ->
             val fileWrapper = optional.value
             Completable.fromAction {
                 canRenameFileRepo.onNext(false)
-                val canRename = if (fileWrapper != null && fileWrapper is ExistingFileWrapper)
+                val canRename = if (newFileName.isNotEmpty() && fileWrapper != null && fileWrapper is ExistingFileWrapper)
                     fileRenamer.canRename(fileWrapper, newFileName) else false
                 canRenameFileRepo.onNext(canRename)
             }

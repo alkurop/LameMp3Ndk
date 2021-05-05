@@ -21,6 +21,6 @@ class DeleteFileButtonStateMapper @Inject constructor(
                     is AudioState.Idle -> currentFile.value != null
                 }
             }
-        )
+        ).share()
     }
 }

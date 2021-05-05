@@ -27,5 +27,6 @@ class CurrentFileMapper @Inject constructor(
                 Observable.just(Optional(currentFile))
             }
             .subscribeOn(scheduler)
+            .share()
     }
 }

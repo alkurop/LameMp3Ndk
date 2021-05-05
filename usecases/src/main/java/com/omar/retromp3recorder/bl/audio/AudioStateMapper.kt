@@ -23,7 +23,7 @@ class AudioStateMapperImpl @Inject constructor(
                 else -> AudioState.Idle
             }
         }
-    ).distinctUntilChanged()
+    ).share()
 }
 
 sealed class AudioState {
