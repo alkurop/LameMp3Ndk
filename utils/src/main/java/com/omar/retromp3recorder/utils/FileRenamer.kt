@@ -1,26 +1,26 @@
 package com.omar.retromp3recorder.utils
 
-import com.omar.retromp3recorder.dto.FileWrapper
+import com.omar.retromp3recorder.dto.ExistingFileWrapper
 import java.io.File
 
 interface FileRenamer {
-    fun renameFile(fileWrapper: FileWrapper, newName: String): String
+    fun renameFile(fileWrapper: ExistingFileWrapper, newName: String): String
 
-    fun canRename(fileWrapper: FileWrapper, newName: String): Boolean
+    fun canRename(fileWrapper: ExistingFileWrapper, newName: String): Boolean
 }
 
 class FileRenameImpl : FileRenamer {
-    override fun renameFile(fileWrapper: FileWrapper, newName: String): String {
+    override fun renameFile(fileWrapper: ExistingFileWrapper, newName: String): String {
         val newFile = generateNewFile(fileWrapper, newName)
         File(fileWrapper.path).renameTo(newFile)
         return newFile.path
     }
 
-    override fun canRename(fileWrapper: FileWrapper, newName: String): Boolean {
+    override fun canRename(fileWrapper: ExistingFileWrapper, newName: String): Boolean {
         return generateNewFile(fileWrapper, newName).exists().not()
     }
 
-    private fun generateNewFile(fileWrapper: FileWrapper, newName: String): File {
+    private fun generateNewFile(fileWrapper: ExistingFileWrapper, newName: String): File {
         val split = fileWrapper.path.split("/")
         val pathWithoutName = split.dropLast(1).joinToString(separator = "/")
         val oldFileName = split.last()

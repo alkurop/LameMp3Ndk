@@ -15,6 +15,6 @@ object RenameFileOutputMapper {
 
     private fun getMapper(): BiFunction<RenameFileView.State, RenameFileView.Output, RenameFileView.State> =
         BiFunction { oldState: RenameFileView.State, output: RenameFileView.Output ->
-            oldState.copy()
+        oldState.copy()
         }
 }

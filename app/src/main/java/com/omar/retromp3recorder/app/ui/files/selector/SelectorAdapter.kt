@@ -8,8 +8,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.ui.utils.fileName
 import com.omar.retromp3recorder.app.ui.utils.findViewById
+import com.omar.retromp3recorder.app.ui.utils.toFileName
 
 class SelectorAdapter(
     val onItemSelectedListener: (SelectorView.Item) -> Unit
@@ -48,7 +48,7 @@ class SelectorAdapter(
 
         fun bind(item: SelectorView.Item) {
             itemView.setOnClickListener { onItemSelectedListener(item) }
-            textView.text = item.fileWrapper.path.fileName()
+            textView.text = item.fileWrapper.path.toFileName()
             currentFileSign.isVisible = item.isCurrentItem
         }
     }

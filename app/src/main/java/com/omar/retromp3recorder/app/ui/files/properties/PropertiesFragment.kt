@@ -9,8 +9,8 @@ import androidx.fragment.app.viewModels
 import com.jakewharton.rxbinding4.view.clicks
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.files.rename.RenameFileDialogFragment
-import com.omar.retromp3recorder.app.ui.utils.fileName
 import com.omar.retromp3recorder.app.ui.utils.findViewById
+import com.omar.retromp3recorder.app.ui.utils.toFileName
 import com.omar.retromp3recorder.app.uiutils.observe
 
 class PropertiesFragment : Fragment(R.layout.fragment_properties) {
@@ -27,11 +27,10 @@ class PropertiesFragment : Fragment(R.layout.fragment_properties) {
         val currentFile = state.currentFile
         requireView().isVisible = currentFile != null
         if (currentFile != null) {
-            titleView.text = currentFile.path.fileName()
+            titleView.text = currentFile.path.toFileName()
             findViewById<View>(R.id.edit_title).clicks()
                 .subscribe {
-                    RenameFileDialogFragment
-                        .newInstance(currentFile.path)
+                    RenameFileDialogFragment()
                         .show(
                             childFragmentManager,
                             RenameFileDialogFragment::class.java.canonicalName

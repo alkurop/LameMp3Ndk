@@ -8,6 +8,7 @@ import com.omar.retromp3recorder.bl.ShareUC
 import com.omar.retromp3recorder.bl.audio.StartPlaybackUC
 import com.omar.retromp3recorder.bl.audio.StartRecordUC
 import com.omar.retromp3recorder.bl.audio.StopPlaybackAndRecordUC
+import com.omar.retromp3recorder.utils.mapToUsecase
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -47,16 +48,14 @@ class AudioControlsInteractor @Inject constructor(
         )
     }
     private val mapInputToUsecase: (Observable<AudioControlsView.Input>) -> Completable = { input ->
-        Completable.merge(listOf(
-            input.ofType(AudioControlsView.Input.Play::class.java)
-                .flatMapCompletable { startPlaybackUC.execute() },
-            input.ofType(AudioControlsView.Input.Stop::class.java)
-                .flatMapCompletable { stopPlaybackAndRecordUC.execute() },
-            input.ofType(AudioControlsView.Input.Record::class.java)
-                .flatMapCompletable { startRecordUC.execute() },
-            input.ofType(AudioControlsView.Input.Share::class.java)
-                .flatMapCompletable { shareUC.execute() }
-        ))
+        Completable.merge(
+            listOf(
+                input.mapToUsecase<AudioControlsView.Input.Play> { startPlaybackUC.execute() },
+                input.mapToUsecase<AudioControlsView.Input.Stop> { stopPlaybackAndRecordUC.execute() },
+                input.mapToUsecase<AudioControlsView.Input.Record> { startRecordUC.execute() },
+                input.mapToUsecase<AudioControlsView.Input.Share> { shareUC.execute() },
+            )
+        )
     }
 }
 

@@ -5,9 +5,8 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
-import com.omar.retromp3recorder.dto.toTestFileWrapper
+import com.omar.retromp3recorder.dto.toFutureFileWrapper
 import com.omar.retromp3recorder.storage.db.FileDbEntityDao
-import com.omar.retromp3recorder.storage.db.toDatabaseEntity
 import com.omar.retromp3recorder.storage.repo.FileListRepo
 import com.omar.retromp3recorder.utils.FileLister
 import com.omar.retromp3recorder.utils.FilePathGenerator
@@ -38,7 +37,7 @@ class LookForFilesUCTest {
 
     @Test
     fun `files found are sent to FileListRepo`() {
-        val file = "filePath".toTestFileWrapper()
+        val file = "filePath".toFutureFileWrapper()
         whenever(fileLister.listFiles(any())) doReturn listOf(file)
 
         lookForFilesUC.execute().test().assertNoErrors().assertComplete()
@@ -48,7 +47,7 @@ class LookForFilesUCTest {
 
     @Test
     fun `new files added to db`() {
-        val newFile = "newFile".toTestFileWrapper()
+        val newFile = "newFile".toFutureFileWrapper()
 
         whenever(fileLister.listFiles(any())) doReturn listOf(newFile)
 
@@ -59,7 +58,7 @@ class LookForFilesUCTest {
 
     @Test
     fun `unresolved files removed from db`() {
-        val newFile = "newFile".toTestFileWrapper()
+        val newFile = "newFile".toFutureFileWrapper()
 
         whenever(fileLister.listFiles(any())) doReturn emptyList()
 

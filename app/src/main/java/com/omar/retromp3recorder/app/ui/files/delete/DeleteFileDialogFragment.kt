@@ -2,48 +2,32 @@ package com.omar.retromp3recorder.app.ui.files.delete
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.ui.utils.fileName
+import com.omar.retromp3recorder.app.ui.utils.toFileName
 import com.omar.retromp3recorder.app.uiutils.observe
 
 class DeleteFileDialogFragment : DialogFragment() {
     private val viewModel by viewModels<DeleteFileViewModel>()
-
+    private lateinit var dialog: AlertDialog
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val filePath = requireArguments().getString(PARAM_FILEPATH)!!
-        val fileName = filePath.fileName()
-        return AlertDialog.Builder(requireContext())
+        //val fileName = filePath.fileName()
+        dialog = AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.delete_file))
-            .setMessage(fileName)
+            .setMessage("fileName")
             .setPositiveButton(getString(R.string.yes)) { _, _ ->
-                viewModel.input.onNext(
-                    DeleteFileView.Input.DeleteFile(
-                        filePath = filePath
-                    )
-                )
+                viewModel.input.onNext(DeleteFileView.Input.DeleteFile)
             }
-            .setNegativeButton(getString(R.string.no)) { _, _ -> dismiss() }
-            .create()
+            .setNegativeButton(getString(R.string.no)) { _, _ -> dismiss() }.create()
+        viewModel.state.observe(this, ::render)
+        return dialog
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.state.observe(this.viewLifecycleOwner, { dismiss() })
-    }
-
-    companion object {
-        fun newInstance(filePath: String) =
-            DeleteFileDialogFragment().apply {
-                val bundle = Bundle().apply {
-                    putString(PARAM_FILEPATH, filePath)
-                }
-                arguments = bundle
-            }
+    private fun render(state: DeleteFileView.State) {
+        state.fileWrapper?.let {
+            dialog.setMessage(it.path.toFileName())
+        }
     }
 }
-
-private const val PARAM_FILEPATH = "PARAM_FILEPATH"

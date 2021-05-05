@@ -17,7 +17,7 @@ object CurrentFileOutputMapper {
         BiFunction { oldState: CurrentFileView.State, output: CurrentFileView.Output ->
             when (output) {
                 is CurrentFileView.Output.CurrentFileOutput -> oldState.copy(
-                    currentFilePath = output.currentFilePath
+                    currentFile = output.currentFile
                 )
                 is CurrentFileView.Output.DeleteButtonState -> oldState.copy(
                     isDeleteFileActive = output.isActive,

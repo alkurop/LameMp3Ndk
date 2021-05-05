@@ -2,8 +2,9 @@ package com.omar.retromp3recorder.app.ui.files.preview
 
 import com.omar.retromp3recorder.app.ui.files.preview.buttonstate.DeleteFileButtonStateMapper
 import com.omar.retromp3recorder.app.ui.files.preview.buttonstate.OpenFileButtonStateMapper
+import com.omar.retromp3recorder.bl.files.CurrentFileMapper
 import com.omar.retromp3recorder.bl.files.TakeLastFileUC
-import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
+import com.omar.retromp3recorder.utils.mapToUsecase
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -15,7 +16,7 @@ class CurrentFileInteractor @Inject constructor(
     private val takeLastFileUC: TakeLastFileUC,
     private val deleteFileButtonStateMapper: DeleteFileButtonStateMapper,
     private val openFileButtonStateMapper: OpenFileButtonStateMapper,
-    private val currentFileRepo: CurrentFileRepo,
+    private val currentFileMapper: CurrentFileMapper,
     private val scheduler: Scheduler
 ) {
     fun processIO(): ObservableTransformer<CurrentFileView.Input, CurrentFileView.Output> =
@@ -27,18 +28,17 @@ class CurrentFileInteractor @Inject constructor(
     private val mapInputToUC: (Observable<CurrentFileView.Input>) -> Completable = { input ->
         Completable.merge(
             listOf(
-                input.ofType(CurrentFileView.Input.LookForPlayableFile::class.java)
-                    .flatMapCompletable { takeLastFileUC.execute() },
+                input.mapToUsecase<CurrentFileView.Input.LookForPlayableFile> { takeLastFileUC.execute() },
             )
         )
     }
     private val mapRepoToOutput: () -> Observable<CurrentFileView.Output> = {
         Observable.merge(
             listOf(
-                currentFileRepo.observe()
-                    .map { filePath ->
+                currentFileMapper.observe()
+                    .map { file ->
                         CurrentFileView.Output.CurrentFileOutput(
-                            filePath.value
+                            file.value
                         )
                     },
                 deleteFileButtonStateMapper.observe()

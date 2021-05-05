@@ -7,16 +7,18 @@ import com.omar.retromp3recorder.storage.repo.FileListRepo
 import com.omar.retromp3recorder.utils.FileLister
 import com.omar.retromp3recorder.utils.FilePathGenerator
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Inject
 
 class LookForFilesUC @Inject constructor(
     private val appDatabase: AppDatabase,
     private val fileListRepo: FileListRepo,
     private val filePathGenerator: FilePathGenerator,
-    private val fileLister: FileLister
+    private val fileLister: FileLister,
+    private val scheduler: Scheduler
 ) {
-    fun execute(): Completable {
-        return Completable.fromAction {
+    fun execute(): Completable = Completable
+        .fromAction {
             val fileDir = filePathGenerator.fileDir
             val dirFiles = fileLister.listFiles(fileDir)
                 .sortedBy { it.createTimedStamp }
@@ -31,5 +33,5 @@ class LookForFilesUC @Inject constructor(
             appDatabase.fileEntityDao().delete(unresolvedFiles.map { it.toDatabaseEntity() })
             fileListRepo.onNext(dirFiles)
         }
-    }
+        .subscribeOn(scheduler)
 }

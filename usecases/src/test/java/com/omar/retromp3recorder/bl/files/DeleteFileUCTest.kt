@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.bl.files
 
 import com.nhaarman.mockitokotlin2.verify
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
-import com.omar.retromp3recorder.dto.toTestFileWrapper
+import com.omar.retromp3recorder.dto.toFutureFileWrapper
 import com.omar.retromp3recorder.storage.db.FileDbEntityDao
 import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.storage.repo.FileListRepo
@@ -26,14 +26,14 @@ class DeleteFileUCTest {
     lateinit var fileDbEntityDao: FileDbEntityDao
 
     @Inject
-    lateinit var useCase: DeleteFileUC
+    lateinit var useCase: DeleteCurrentFileUC
     private val testPath: String = "delete_file_test"
 
     @Before
     fun setUp() {
         DaggerUseCaseComponent.create().inject(this)
         currentFileRepo.onNext(Optional.empty())
-        fileListRepo.onNext(listOf(testPath.toTestFileWrapper()))
+        fileListRepo.onNext(listOf(testPath.toFutureFileWrapper()))
     }
 
     @Test
@@ -62,7 +62,7 @@ class DeleteFileUCTest {
 
     @Test
     fun `file list repo was updated`() {
-        fileListRepo.onNext(listOf(testPath.toTestFileWrapper()))
+        fileListRepo.onNext(listOf(testPath.toFutureFileWrapper()))
         useCase.execute(testPath).test().assertNoErrors().assertComplete()
 
         fileListRepo.observe().test().assertValue(emptyList())

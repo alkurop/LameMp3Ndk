@@ -8,7 +8,7 @@ object DeleteFileOutputMapper {
     fun mapOutputToState(): ObservableTransformer<DeleteFileView.Output, DeleteFileView.State> =
         ObservableTransformer { upstream: Observable<DeleteFileView.Output> ->
             upstream.scan(
-                getDefaultViewModel(),
+                DeleteFileView.State(),
                 getMapper()
             )
         }
@@ -16,12 +16,11 @@ object DeleteFileOutputMapper {
     private fun getMapper(): BiFunction<DeleteFileView.State, DeleteFileView.Output, DeleteFileView.State> =
         BiFunction { oldState: DeleteFileView.State, output: DeleteFileView.Output ->
             when (output) {
-                is DeleteFileView.Output.Finished ->
-                    oldState.copy(shouldDismiss = true)
+                is DeleteFileView.Output.ShouldDismiss ->
+                    oldState.copy(shouldDismiss = output.shouldDismiss)
+                is DeleteFileView.Output.CurrentFile -> {
+                    oldState.copy(fileWrapper = output.fileWrapper)
+                }
             }
         }
-
-    private fun getDefaultViewModel() = DeleteFileView.State(
-        shouldDismiss = false
-    )
 }

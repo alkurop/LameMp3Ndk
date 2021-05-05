@@ -28,3 +28,6 @@ fun <In, Out> Scheduler.processIO(
 }
 
 fun <T> Observable<T>.takeOne() = this.take(1)
+
+inline fun <reified T> Observable<out Any>.mapToUsecase(crossinline action: (T) -> Completable): Completable =
+    this.filter { it is T }.map { it as T }.flatMapCompletable { action(it) }

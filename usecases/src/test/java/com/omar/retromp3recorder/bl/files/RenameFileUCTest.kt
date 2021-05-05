@@ -5,7 +5,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.check
 import com.nhaarman.mockitokotlin2.verify
 import com.omar.retromp3recorder.di.DaggerUseCaseComponent
-import com.omar.retromp3recorder.dto.toTestFileWrapper
+import com.omar.retromp3recorder.dto.toFutureFileWrapper
 import com.omar.retromp3recorder.storage.db.FileDbEntityDao
 import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.utils.FileLister
@@ -30,7 +30,7 @@ class RenameFileUCTest {
 
     @Inject
     lateinit var dao: FileDbEntityDao
-    private val file = "file".toTestFileWrapper()
+    private val file = "file".toFutureFileWrapper()
     private val newName = "newName"
 
     @Before

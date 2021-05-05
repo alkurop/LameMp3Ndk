@@ -9,8 +9,8 @@ import androidx.fragment.app.viewModels
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.files.CurrentFileActivity
 import com.omar.retromp3recorder.app.ui.files.delete.DeleteFileDialogFragment
-import com.omar.retromp3recorder.app.ui.utils.fileName
 import com.omar.retromp3recorder.app.ui.utils.findViewById
+import com.omar.retromp3recorder.app.ui.utils.toFileName
 import com.omar.retromp3recorder.app.uiutils.observe
 
 class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
@@ -28,24 +28,20 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         buttonOpen.setOnClickListener {
             startActivity(Intent(requireContext(), CurrentFileActivity::class.java))
         }
+        viewModel.input.onNext(CurrentFileView.Input.LookForPlayableFile)
     }
 
     private fun renderState(state: CurrentFileView.State) {
-        textView.text = state.currentFilePath?.fileName() ?: getString(R.string.no_file)
+        textView.text = state.currentFile?.path?.toFileName() ?: getString(R.string.no_file)
         buttonOpen.setIsButtonActive(state.isOpenFileActive)
         buttonDelete.setIsButtonActive(state.isDeleteFileActive)
-        if (state.currentFilePath != null)
+        if (state.currentFile != null)
             buttonDelete.setOnClickListener {
-                DeleteFileDialogFragment.newInstance(state.currentFilePath).show(
+                DeleteFileDialogFragment().show(
                     childFragmentManager,
                     DeleteFileDialogFragment::class.java.canonicalName
                 )
             }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.input.onNext(CurrentFileView.Input.LookForPlayableFile)
     }
 }
 

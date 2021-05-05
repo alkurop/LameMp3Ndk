@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.ui.files.selector
 
-import com.omar.retromp3recorder.dto.toTestFileWrapper
+import com.omar.retromp3recorder.dto.toFutureFileWrapper
 import io.reactivex.rxjava3.observers.TestObserver
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
@@ -8,11 +8,11 @@ import org.junit.Before
 import org.junit.Test
 
 class SelectorOutputMapperTest {
-    private val files = listOf("one", "two", "three").map { it.toTestFileWrapper() }
+    private val files = listOf("one", "two", "three").map { it.toFutureFileWrapper() }
     private val outputPublisher: Subject<SelectorView.Output> = PublishSubject.create()
     private lateinit var test: TestObserver<SelectorView.State>
     private val selection = files[1]
-    private val anOtherOne = "anOtherOne".toTestFileWrapper()
+    private val anOtherOne = "anOtherOne".toFutureFileWrapper()
 
     @Before
     fun setUp() {

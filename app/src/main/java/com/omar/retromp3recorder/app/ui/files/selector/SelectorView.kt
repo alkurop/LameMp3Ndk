@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.ui.files.selector
 
-import com.omar.retromp3recorder.dto.FileWrapper
+import com.omar.retromp3recorder.dto.ExistingFileWrapper
 
 object SelectorView {
     data class State(
@@ -13,12 +13,12 @@ object SelectorView {
     }
 
     sealed class Output {
-        data class FileList(val items: List<FileWrapper>) : Output()
+        data class FileList(val items: List<ExistingFileWrapper>) : Output()
         data class CurrentFile(val filePath: String?) : Output()
     }
 
     data class Item(
-        val fileWrapper: FileWrapper,
+        val fileWrapper: ExistingFileWrapper,
         val isCurrentItem: Boolean
     )
 }

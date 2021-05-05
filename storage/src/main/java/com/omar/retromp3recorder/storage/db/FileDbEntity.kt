@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.storage.db
 
 import androidx.room.*
-import com.omar.retromp3recorder.dto.FileWrapper
+import com.omar.retromp3recorder.dto.ExistingFileWrapper
 
 @Entity
 data class FileDbEntity(
@@ -31,10 +31,10 @@ interface FileDbEntityDao {
     fun deleteByFilepath(filePath: String)
 }
 
-fun FileDbEntity.toFileWrapper(): FileWrapper =
-    FileWrapper(this.filepath, this.created, this.lastModified)
+fun FileDbEntity.toFileWrapper(): ExistingFileWrapper =
+    ExistingFileWrapper(this.filepath, this.created, this.lastModified)
 
-fun FileWrapper.toDatabaseEntity(): FileDbEntity = FileDbEntity(
+fun ExistingFileWrapper.toDatabaseEntity(): FileDbEntity = FileDbEntity(
     this.createTimedStamp, this.modifiedTimestamp, this.path
 )
 
