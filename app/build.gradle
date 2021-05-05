@@ -13,8 +13,8 @@ android {
         applicationId "com.omar.retromp3recorder.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 191
-        versionName "1.91"
+        versionCode 200
+        versionName "2.00"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         signingConfig signingConfigs.debug
