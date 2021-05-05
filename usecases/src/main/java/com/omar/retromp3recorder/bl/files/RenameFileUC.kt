@@ -8,16 +8,14 @@ import com.omar.retromp3recorder.storage.repo.common.BehaviorSubjectRepo
 import com.omar.retromp3recorder.utils.FileRenamer
 import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Inject
 
 class RenameFileUC @Inject constructor(
-    private val currentFileRepo: CurrentFileRepo,
     private val appDatabase: AppDatabase,
+    private val currentFileRepo: CurrentFileRepo,
+    private val currentFileMapper: CurrentFileMapper,
     private val fileRenamer: FileRenamer,
     private val lookForFilesUC: LookForFilesUC,
-    private val currentFileMapper: CurrentFileMapper,
-    private val scheduler: Scheduler
 ) {
     fun execute(newFileName: String, finishedCallback: BehaviorSubjectRepo<Boolean>): Completable =
         currentFileMapper.observe()

@@ -12,9 +12,9 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import javax.inject.Inject
 
 class DeleteCurrentFileUC @Inject constructor(
+    private val appDatabase: AppDatabase,
     private val currentFileMapper: CurrentFileMapper,
     private val currentFileRepo: CurrentFileRepo,
-    private val appDatabase: AppDatabase,
     private val fileDeleter: FileDeleter,
     private val fileListRepo: FileListRepo
 ) {

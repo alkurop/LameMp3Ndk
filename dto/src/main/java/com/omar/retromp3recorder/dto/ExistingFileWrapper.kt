@@ -16,5 +16,8 @@ data class ExistingFileWrapper(
 fun String.toFutureFileWrapper(): FutureFileWrapper =
     FutureFileWrapper(this)
 
+fun String.toTestExistingFileWrapper(): ExistingFileWrapper =
+    ExistingFileWrapper(this, 0L, 0L)
+
 fun File.toFileWrapper(): ExistingFileWrapper =
     ExistingFileWrapper(this.path, this.lastModified(), this.lastModified())

@@ -7,8 +7,8 @@ import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 
 class CanRenameFileUC @Inject constructor(
-    private val fileRenamer: FileRenamer,
-    private val currentFileMapper: CurrentFileMapper
+    private val currentFileMapper: CurrentFileMapper,
+    private val fileRenamer: FileRenamer
 ) {
     fun execute(newFileName: String, canRenameFileRepo: BehaviorSubjectRepo<Boolean>): Completable =
         currentFileMapper.observe().flatMapCompletable { optional ->

@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.app.di
 
 import android.content.Context
 import com.nhaarman.mockitokotlin2.*
-import com.omar.retromp3recorder.dto.toFutureFileWrapper
+import com.omar.retromp3recorder.dto.toTestExistingFileWrapper
 import com.omar.retromp3recorder.utils.*
 import dagger.Module
 import dagger.Provides
@@ -37,7 +37,7 @@ class TestUtilsModule {
     @Provides
     fun provideFileLister(): FileLister {
         return mock<FileLister>().apply {
-            whenever(this.listFiles(any())) doReturn listOf("test".toFutureFileWrapper())
+            whenever(this.listFiles(any())) doReturn listOf("test".toTestExistingFileWrapper())
         }
     }
 

@@ -13,11 +13,11 @@ import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Inject
 
 class CurrentFileInteractor @Inject constructor(
-    private val takeLastFileUC: TakeLastFileUC,
+    private val currentFileMapper: CurrentFileMapper,
     private val deleteFileButtonStateMapper: DeleteFileButtonStateMapper,
     private val openFileButtonStateMapper: OpenFileButtonStateMapper,
-    private val currentFileMapper: CurrentFileMapper,
-    private val scheduler: Scheduler
+    private val scheduler: Scheduler,
+    private val takeLastFileUC: TakeLastFileUC
 ) {
     fun processIO(): ObservableTransformer<CurrentFileView.Input, CurrentFileView.Output> =
         scheduler.processIO(
@@ -35,12 +35,11 @@ class CurrentFileInteractor @Inject constructor(
     private val mapRepoToOutput: () -> Observable<CurrentFileView.Output> = {
         Observable.merge(
             listOf(
-                currentFileMapper.observe()
-                    .map { file ->
-                        CurrentFileView.Output.CurrentFileOutput(
-                            file.value
-                        )
-                    },
+                currentFileMapper.observe().map { file ->
+                    CurrentFileView.Output.CurrentFileOutput(
+                        file.value
+                    )
+                },
                 deleteFileButtonStateMapper.observe()
                     .map { CurrentFileView.Output.DeleteButtonState(it) },
                 openFileButtonStateMapper.observe()

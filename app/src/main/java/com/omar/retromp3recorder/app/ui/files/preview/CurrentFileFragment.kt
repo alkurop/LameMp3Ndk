@@ -29,19 +29,18 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
             startActivity(Intent(requireContext(), CurrentFileActivity::class.java))
         }
         viewModel.input.onNext(CurrentFileView.Input.LookForPlayableFile)
+        buttonDelete.setOnClickListener {
+            DeleteFileDialogFragment().show(
+                childFragmentManager,
+                DeleteFileDialogFragment::class.java.canonicalName
+            )
+        }
     }
 
     private fun renderState(state: CurrentFileView.State) {
         textView.text = state.currentFile?.path?.toFileName() ?: getString(R.string.no_file)
         buttonOpen.setIsButtonActive(state.isOpenFileActive)
         buttonDelete.setIsButtonActive(state.isDeleteFileActive)
-        if (state.currentFile != null)
-            buttonDelete.setOnClickListener {
-                DeleteFileDialogFragment().show(
-                    childFragmentManager,
-                    DeleteFileDialogFragment::class.java.canonicalName
-                )
-            }
     }
 }
 
