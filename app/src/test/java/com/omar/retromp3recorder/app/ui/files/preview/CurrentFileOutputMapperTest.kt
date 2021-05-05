@@ -1,0 +1,71 @@
+package com.omar.retromp3recorder.app.ui.files.preview
+
+import io.reactivex.rxjava3.observers.TestObserver
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
+import org.junit.Before
+import org.junit.Test
+
+class CurrentFileOutputMapperTest {
+    private val outputPublisher: Subject<CurrentFileView.Output> = PublishSubject.create()
+    private lateinit var test: TestObserver<CurrentFileView.State>
+    private val default = CurrentFileView.State(null, false)
+
+    @Before
+    fun setUp() {
+        test = outputPublisher.compose(CurrentFileOutputMapper.mapOutputToState()).test()
+    }
+
+    @Test
+    fun `mapper starts with default view state`() {
+        test.assertNoErrors()
+            .assertNotComplete()
+            .assertNoErrors()
+            .assertValueCount(1)
+            .assertValueAt(0) { value ->
+                value == default
+            }
+    }
+
+    @Test
+    fun `map file output change result`() {
+        val stateChangedResult = CurrentFileView.Output.CurrentFileOutput("la")
+        //When
+        outputPublisher.onNext(stateChangedResult)
+        //Then
+        test.assertNoErrors()
+            .assertNotComplete()
+            .assertNoErrors()
+            .assertValueCount(2)
+            .assertValueAt(1) { value ->
+                value == default.copy(currentFilePath = "la")
+            }
+    }
+
+    @Test
+    fun `map delete button state`() {
+        outputPublisher.onNext(CurrentFileView.Output.DeleteButtonState(true))
+        //Then
+        test.assertNoErrors()
+            .assertNotComplete()
+            .assertNoErrors()
+            .assertValueCount(2)
+            .assertValueAt(1) { value ->
+                value == default.copy(isDeleteFileActive = true)
+            }
+    }
+
+    @Test
+    fun `map open button state`() {
+        outputPublisher.onNext(CurrentFileView.Output.OpenButtonState(true))
+        //Then
+        test.assertNoErrors()
+            .assertNotComplete()
+            .assertNoErrors()
+            .assertValueCount(2)
+            .assertValueAt(1) { value ->
+                value == default.copy(isOpenFileActive = true)
+            }
+    }
+}
+

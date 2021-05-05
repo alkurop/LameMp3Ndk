@@ -77,4 +77,9 @@ dependencies {
     implementation project(':usecases')
     implementation project(':storage')
 
+    kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
+    testImplementation "androidx.room:room-runtime:$versions.room"
+    testImplementation "junit:junit:$testVersions.junit"
+    testImplementation "com.google.truth:truth:$testVersions.truth"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$testVersions.mockitoKotlin"
 }
