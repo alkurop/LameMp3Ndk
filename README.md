@@ -9,13 +9,8 @@ Retro MP3 Recorder:
 
 
 //todo
-- file properties
-- file properties db
-- change file name (in db)
 - mp3 file properties
 - record from line
 - multitrack
 - use exo player
 - scrubbing
-- save recorder prefs
-- add ui smoke tests

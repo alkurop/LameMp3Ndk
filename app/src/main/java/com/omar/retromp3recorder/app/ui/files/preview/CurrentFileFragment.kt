@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.files.CurrentFileActivity
 import com.omar.retromp3recorder.app.ui.files.delete.DeleteFileDialogFragment
+import com.omar.retromp3recorder.app.ui.files.rename.RenameFileDialogFragment
 import com.omar.retromp3recorder.app.ui.utils.findViewById
 import com.omar.retromp3recorder.app.ui.utils.toFileName
 import com.omar.retromp3recorder.app.uiutils.observe
@@ -35,9 +36,16 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
                 DeleteFileDialogFragment::class.java.canonicalName
             )
         }
+        textView.setOnClickListener {
+            RenameFileDialogFragment().show(
+                childFragmentManager,
+                RenameFileDialogFragment::class.java.canonicalName
+            )
+        }
     }
 
     private fun renderState(state: CurrentFileView.State) {
+        textView.isClickable = state.currentFile != null
         textView.text = state.currentFile?.path?.toFileName() ?: getString(R.string.no_file)
         buttonOpen.setIsButtonActive(state.isOpenFileActive)
         buttonDelete.setIsButtonActive(state.isDeleteFileActive)
