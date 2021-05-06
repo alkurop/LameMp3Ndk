@@ -1,6 +1,6 @@
 package com.omar.retromp3recorder.app.ui.visualizer
 
-import com.omar.retromp3recorder.state.repos.AudioState
+import com.omar.retromp3recorder.bl.audio.AudioState
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableTransformer
 import io.reactivex.rxjava3.functions.BiFunction

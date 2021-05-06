@@ -13,8 +13,8 @@ android {
         applicationId "com.omar.retromp3recorder.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 191
-        versionName "1.91"
+        versionCode 200
+        versionName "2.00"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         signingConfig signingConfigs.debug
@@ -74,13 +74,6 @@ dependencies {
     implementation project(':io-audioplayer')
     implementation project(':io-share')
     implementation project(':ui-state-button')
-    implementation project(':repos')
     implementation project(':usecases')
     implementation project(':storage')
-
-    kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
-    testImplementation "androidx.room:room-runtime:$versions.room"
-    testImplementation "junit:junit:$testVersions.junit"
-    testImplementation "com.google.truth:truth:$testVersions.truth"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$testVersions.mockitoKotlin"
 }

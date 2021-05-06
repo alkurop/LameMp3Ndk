@@ -1,8 +1,10 @@
 package com.omar.retromp3recorder.app.ui.files.preview
 
+import com.omar.retromp3recorder.dto.FileWrapper
+
 object CurrentFileView {
     data class State(
-        val currentFilePath: String? = null,
+        val currentFile: FileWrapper? = null,
         val isOpenFileActive: Boolean = false,
         val isDeleteFileActive: Boolean = false
     )
@@ -12,7 +14,7 @@ object CurrentFileView {
     }
 
     sealed class Output {
-        data class CurrentFileOutput(val currentFilePath: String?) : CurrentFileView.Output()
+        data class CurrentFileOutput(val currentFile: FileWrapper?) : CurrentFileView.Output()
         data class DeleteButtonState(val isActive: Boolean) : Output()
         data class OpenButtonState(val isActive: Boolean) : Output()
     }

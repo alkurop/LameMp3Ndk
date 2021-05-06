@@ -23,8 +23,11 @@ fun <In, Out> Scheduler.processIO(
     outputMapper: () -> Observable<Out>
 ): ObservableTransformer<In, Out> = ObservableTransformer { actions ->
     outputMapper().mergeWith(
-        inputMapper(actions.observeOn(this))
+        inputMapper(actions.observeOn(this)).subscribeOn(this)
     )
 }
 
 fun <T> Observable<T>.takeOne() = this.take(1)
+
+inline fun <reified T> Observable<out Any>.mapToUsecase(crossinline action: (T) -> Completable): Completable =
+    this.filter { it is T }.map { it as T }.flatMapCompletable { action(it) }

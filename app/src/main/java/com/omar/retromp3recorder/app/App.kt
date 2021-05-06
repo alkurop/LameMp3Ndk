@@ -16,9 +16,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         appComponent = DaggerAppComponent.builder().utilsModule(UtilsModule(this)).build()
-//        RxJava2Debug.enableRxJava2AssemblyTracking(
-//            arrayOf(BuildConfig.APPLICATION_ID)
-//        )
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {

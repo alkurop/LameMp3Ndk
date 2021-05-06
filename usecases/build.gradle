@@ -34,14 +34,10 @@ dependencies {
     implementation project(':io-mp3recorder')
     implementation project(':io-audioplayer')
     implementation project(':io-share')
-    implementation project(':repos')
     implementation project(':storage')
     implementation "com.google.dagger:dagger:$versions.dagger"
     implementation "com.github.alkurop:ghostinshell:$versions.ghostinshell"
-    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
+    implementation "com.github.alkurop:stringerbell:$versions.stringerbell"
 
-    kaptTest "com.google.dagger:dagger-compiler:$versions.dagger"
-    testImplementation "junit:junit:$testVersions.junit"
-    testImplementation "com.google.truth:truth:$testVersions.truth"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$testVersions.mockitoKotlin"
+    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 }

@@ -1,8 +1,8 @@
 package com.omar.retromp3recorder.app.ui.files.preview.buttonstate
 
-import com.omar.retromp3recorder.state.repos.AudioState
-import com.omar.retromp3recorder.state.repos.AudioStateMapper
-import com.omar.retromp3recorder.state.repos.CurrentFileRepo
+import com.omar.retromp3recorder.bl.audio.AudioState
+import com.omar.retromp3recorder.bl.audio.AudioStateMapper
+import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
@@ -21,6 +21,6 @@ class DeleteFileButtonStateMapper @Inject constructor(
                     is AudioState.Idle -> currentFile.value != null
                 }
             }
-        )
+        ).share()
     }
 }

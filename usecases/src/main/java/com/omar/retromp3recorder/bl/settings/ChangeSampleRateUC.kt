@@ -2,8 +2,8 @@ package com.omar.retromp3recorder.bl.settings
 
 import android.content.SharedPreferences
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.state.repos.SampleRateRepo
 import com.omar.retromp3recorder.storage.RecorderPrefsKeys
+import com.omar.retromp3recorder.storage.repo.SampleRateRepo
 import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 

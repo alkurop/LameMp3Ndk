@@ -6,7 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.state.repos.AudioState
+import com.omar.retromp3recorder.bl.audio.AudioState
 
 class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
 

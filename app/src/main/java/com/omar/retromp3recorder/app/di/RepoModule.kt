@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.app.di
 
-import com.omar.retromp3recorder.state.repos.AudioStateMapper
-import com.omar.retromp3recorder.state.repos.AudioStateMapperImpl
+import com.omar.retromp3recorder.bl.audio.AudioStateMapper
+import com.omar.retromp3recorder.bl.audio.AudioStateMapperImpl
 import dagger.Binds
 import dagger.Module
 
