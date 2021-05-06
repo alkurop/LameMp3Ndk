@@ -58,7 +58,7 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
 
             setDataCaptureListener(
                 visualizerListener,
-                Visualizer.getMaxCaptureRate() / 2,
+                Visualizer.getMaxCaptureRate(),
                 true,
                 false
             )
