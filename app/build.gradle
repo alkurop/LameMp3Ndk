@@ -1,8 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
 
 android {
 
@@ -61,9 +59,6 @@ dependencies {
     implementation "com.github.alkurop:Android-Runtime-Permission-Manager:$versions.permission"
     implementation "androidx.fragment:fragment-ktx:$versions.ktxFragment"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
-    implementation platform("com.google.firebase:firebase-bom:$versions.firebase")
-    implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation "com.github.alkurop:ghostinshell:$versions.ghostinshell"
 
     implementation "com.google.dagger:dagger:$versions.dagger"
