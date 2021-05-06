@@ -10,9 +10,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.jakewharton.rxbinding4.widget.afterTextChangeEvents
+import com.jakewharton.rxbinding4.widget.editorActionEvents
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.utils.toFileName
 import com.omar.retromp3recorder.app.uiutils.observe
+import io.reactivex.rxjava3.disposables.Disposable
 
 class RenameFileDialogFragment : DialogFragment() {
     private val viewModel by viewModels<RenameFileViewModel>()
@@ -20,6 +22,7 @@ class RenameFileDialogFragment : DialogFragment() {
     private lateinit var parent: View
     private val input: EditText
         get() = parent.findViewById(R.id.input)
+    private var actionDisposable: Disposable? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         parent = LayoutInflater.from(requireContext())
@@ -41,6 +44,15 @@ class RenameFileDialogFragment : DialogFragment() {
     private fun render(state: RenameFileView.State) {
         if (state.shouldDismiss) dismiss()
         alertDialog.getButton(BUTTON_POSITIVE).isEnabled = state.isOkButtonEnabled
+
+        actionDisposable?.dispose()
+        actionDisposable = input.editorActionEvents().subscribe {
+            if (state.isOkButtonEnabled) {
+                viewModel.input.onNext(RenameFileView.Input.Rename(newName = input.text.toString()))
+            } else {
+                dismiss()
+            }
+        }
         alertDialog.getButton(BUTTON_POSITIVE).setOnClickListener {
             viewModel.input.onNext(RenameFileView.Input.Rename(newName = input.text.toString()))
         }

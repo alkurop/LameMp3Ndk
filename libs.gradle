@@ -8,7 +8,7 @@ ext.versions = [
         'lifecycle'             :'2.3.1',
         'permission'            :'0.0.13',
         'picasso'               :'2.5.2',
-        'recyclerView'          :'1.1.0',
+        'recyclerView'          :'1.2.0',
         'room'                  :'2.3.0',
         'rxView'                :'4.0.0',
         'rxAndroid'             :'3.0.0',
