@@ -40,6 +40,9 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
                 renderPlayerId(state.playerId)
             }
         }
+        viewModel.recorderImpl.observeRecorder().subscribe { bytes ->
+            // visualizerDisplayView?.updateVisualizer(bytes)
+        }
     }
 
     private fun stopVisualizer() {

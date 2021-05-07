@@ -3,6 +3,7 @@ package com.omar.retromp3recorder.app.ui.visualizer
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.omar.retromp3recorder.app.App
+import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorderImpl
 import com.omar.retromp3recorder.utils.disposedBy
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -14,6 +15,9 @@ class VisualizerViewModel : ViewModel() {
 
     @Inject
     lateinit var interactor: VisualizerInteractor
+
+    @Inject
+    lateinit var recorderImpl: Mp3VoiceRecorderImpl
     private val compositeDisposable = CompositeDisposable()
 
     init {

@@ -30,20 +30,13 @@ interface Mp3VoiceRecorder {
     )
 
     companion object {
-        val AUDIO_FORMAT_PRESETS = shortArrayOf(
-            AudioFormat.ENCODING_PCM_8BIT.toShort(),
+        val AUDIO_FORMAT_PRESETS = intArrayOf(
+            AudioFormat.ENCODING_PCM_8BIT,
             AudioFormat.ENCODING_PCM_16BIT
-                .toShort()
         )
-        val QUALITY_PRESETS = intArrayOf(
-            2,
-            5,
-            7
-        ) // the lower the better
-        val CHANNEL_PRESETS = shortArrayOf(
-            AudioFormat.CHANNEL_IN_MONO.toShort(),
-            AudioFormat.CHANNEL_IN_STEREO
-                .toShort()
+        val QUALITY_PRESETS = intArrayOf(0, 2, 5) // the lower the better
+        val CHANNEL_PRESETS = intArrayOf(
+            AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_STEREO
         )
     }
 
@@ -53,4 +46,6 @@ interface Mp3VoiceRecorder {
         Idle,
         Recording
     }
+
+    fun observeRecorder(): Observable<ByteArray>
 }

@@ -44,6 +44,7 @@ class VisualizerDisplayView @JvmOverloads constructor(
         val length = mBytes.size - 1
         val height = mRect.height()
 
+
         for (i in 0 until length) {
             val index = i * 4
             mPoints[index] = (mRect.width() * i / length).toFloat()
