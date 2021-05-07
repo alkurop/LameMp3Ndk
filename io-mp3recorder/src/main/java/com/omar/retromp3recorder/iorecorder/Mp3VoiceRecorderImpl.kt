@@ -32,12 +32,21 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
     private val events: Subject<Mp3VoiceRecorder.Event> = PublishSubject.create()
     private val elapsed = AtomicLong(0)
     private val compositeDisposable = CompositeDisposable()
-    private val recorderBus = PublishSubject.create<ByteArray>()
+    private val recorderBus = PublishSubject.create<ShortArray>()
     private val state = BehaviorSubject.createDefault(Mp3VoiceRecorder.State.Idle)
 
     override fun observeState(): Observable<Mp3VoiceRecorder.State> = state
     override fun observeRecorder(): Observable<ByteArray> {
-        return recorderBus.map { it.toList().take(1024).toByteArray() }
+        return recorderBus
+            .map { bytes ->
+                val target = 1024
+                val f = bytes.toList()
+                    .filter { it != ZERO_SHORT }
+                val bytesInTarget = f.size / target + 1
+                val b = f.windowed(bytesInTarget, bytesInTarget, false)
+                    .map { (it.average() / Byte.MAX_VALUE).toShort() }
+                b.map { i -> i.toByte() }.toByteArray()
+            }
     }
 
     override fun observeEvents(): Observable<Mp3VoiceRecorder.Event> {
@@ -147,7 +156,7 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
                     readSize = recorder.read(buffer, 0, minBufferSize)
                     //left and right channel goes into one
                     val encResult = LameModule.encode(buffer, buffer, readSize, mp3Buffer)
-                    recorderBus.onNext(buffer.map { it.toByte() }.toByteArray())
+                    recorderBus.onNext(buffer)
                     output.write(mp3Buffer, 0, encResult)
                 }
                 val flushResult = LameModule.flush(mp3Buffer)
@@ -212,6 +221,8 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
     }
 
     companion object {
+        private const val ZERO = 0
+        private const val ZERO_SHORT = ZERO.toShort()
         private val channelConfig: Int = CHANNEL_PRESETS[0]
         private val quality: Int = QUALITY_PRESETS[1]
         private val audioFormat: Int = AUDIO_FORMAT_PRESETS[1]

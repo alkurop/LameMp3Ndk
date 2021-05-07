@@ -9,11 +9,9 @@ import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.bl.audio.AudioState
 
 class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
-
     private val viewModel by viewModels<VisualizerViewModel>()
     private val visualizerDisplayView: VisualizerDisplayView?
         get() = view as? VisualizerDisplayView
-
     private var visualizer: Visualizer? = null
     private val visualizerListener = object : Visualizer.OnDataCaptureListener {
         override fun onWaveFormDataCapture(
@@ -41,7 +39,7 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
             }
         }
         viewModel.recorderImpl.observeRecorder().subscribe { bytes ->
-            // visualizerDisplayView?.updateVisualizer(bytes)
+            visualizerDisplayView?.updateVisualizer(bytes)
         }
     }
 
