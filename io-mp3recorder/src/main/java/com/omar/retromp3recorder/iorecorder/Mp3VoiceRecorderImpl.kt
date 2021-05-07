@@ -32,10 +32,22 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
     private val events: Subject<Mp3VoiceRecorder.Event> = PublishSubject.create()
     private val elapsed = AtomicLong(0)
     private val compositeDisposable = CompositeDisposable()
-
+    private val recorderBus = PublishSubject.create<ShortArray>()
     private val state = BehaviorSubject.createDefault(Mp3VoiceRecorder.State.Idle)
 
     override fun observeState(): Observable<Mp3VoiceRecorder.State> = state
+    override fun observeRecorder(): Observable<ByteArray> {
+        return recorderBus
+            .map { bytes ->
+                val target = 1024
+                val f = bytes.toList()
+                    .filter { it != ZERO_SHORT }
+                val bytesInTarget = f.size / target + 1
+                val b = f.windowed(bytesInTarget, bytesInTarget, false)
+                    .map { (it.average() / (Short.MAX_VALUE / Byte.MAX_VALUE).toInt()).toShort() }
+                b.map { i -> i.toByte() }.toByteArray()
+            }
+    }
 
     override fun observeEvents(): Observable<Mp3VoiceRecorder.Event> {
         return events
@@ -44,8 +56,8 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
     override fun record(props: Mp3VoiceRecorder.RecorderProps) {
         val minBufferSize = AudioRecord.getMinBufferSize(
             props.sampleRate.value,
-            channelConfig.toInt(),
-            audioFormat.toInt()
+            channelConfig,
+            audioFormat
         )
         createOutputFile(props.filepath)
             .zipWith(
@@ -85,10 +97,6 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
         state.onNext(Mp3VoiceRecorder.State.Idle)
     }
 
-    private fun createBuffer(sampleRate: Int): ShortArray {
-        return ShortArray(sampleRate * (16 / 8) * 5)
-    }
-
     private fun createMp3Buffer(buffer: ShortArray): ByteArray {
         return ByteArray((7200 + buffer.size * 2 * 1.25).toInt())
     }
@@ -126,50 +134,39 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
     }
 
     private fun record(outFile: File, recorder: AudioRecord, sampleRate: Int): Completable {
-        return Completable
-            .create { emitter: CompletableEmitter ->
-                try {
-                    elapsed.set(System.currentTimeMillis())
-                    Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO)
-                    val output = FileOutputStream(outFile)
-                    emitter.setCancellable {
-                        recorder.stop()
-                        recorder.release()
-                        LameModule.close()
-                        output.close()
-                        sendFinishLog(outFile)
-                    }
-                    val buffer = createBuffer(sampleRate)
-                    val mp3Buffer = createMp3Buffer(buffer)
-                    val minBufferSize = AudioRecord.getMinBufferSize(
-                        sampleRate,
-                        channelConfig.toInt(),
-                        audioFormat.toInt()
-                    )
-                    recorder.startRecording()
-                    var readSize: Int
-                    while (!emitter.isDisposed) {
-                        readSize = recorder.read(
-                            buffer,
-                            0,
-                            minBufferSize
-                        )
-                        val encResult = LameModule.encode(
-                            buffer,
-                            buffer,
-                            readSize,
-                            mp3Buffer
-                        )
-                        output.write(mp3Buffer, 0, encResult)
-                    }
-                    val flushResult = LameModule.flush(mp3Buffer)
-                    if (flushResult != 0) {
-                        output.write(mp3Buffer, 0, flushResult)
-                    }
-                } catch (e: Throwable) {
-                    emitter.tryOnError(e)
+        return Completable.create { emitter: CompletableEmitter ->
+            try {
+                elapsed.set(System.currentTimeMillis())
+                Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO)
+                val output = FileOutputStream(outFile)
+                emitter.setCancellable {
+                    recorder.stop()
+                    recorder.release()
+                    LameModule.close()
+                    output.close()
+                    sendFinishLog(outFile)
                 }
+                val buffer = ShortArray(sampleRate)
+                val mp3Buffer = createMp3Buffer(buffer)
+                val minBufferSize = AudioRecord
+                    .getMinBufferSize(sampleRate, channelConfig, audioFormat)
+                recorder.startRecording()
+                var readSize: Int
+                while (!emitter.isDisposed) {
+                    readSize = recorder.read(buffer, 0, minBufferSize)
+                    //left and right channel goes into one
+                    val encResult = LameModule.encode(buffer, buffer, readSize, mp3Buffer)
+                    recorderBus.onNext(buffer)
+                    output.write(mp3Buffer, 0, encResult)
+                }
+                val flushResult = LameModule.flush(mp3Buffer)
+                if (flushResult != 0) {
+                    output.write(mp3Buffer, 0, flushResult)
+                }
+            } catch (e: Throwable) {
+                emitter.tryOnError(e)
             }
+        }
     }
 
     private fun sendFinishLog(outFile: File?) {
@@ -202,24 +199,14 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
             val recorder = AudioRecord(
                 MediaRecorder.AudioSource.DEFAULT,
                 sampleRate,
-                channelConfig.toInt(),
-                audioFormat.toInt(),
+                channelConfig,
+                audioFormat,
                 minBufferSize * 4
             )
             try {
-                LameModule.init(
-                    sampleRate,
-                    1,
-                    sampleRate,
-                    bitRate,
-                    quality
-                )
+                LameModule.init(sampleRate, 1, sampleRate, bitRate, quality)
             } catch (e: Exception) {
-                throw Exception(
-                    context.getString(
-                        R.string.rcdr_error_init_recorder
-                    )
-                )
+                throw Exception(context.getString(R.string.rcdr_error_init_recorder))
             }
             if (recorder.state == AudioRecord.STATE_INITIALIZED) {
                 val logMessage = Stringer(
@@ -229,25 +216,15 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
                 )
                 events.onNext(Mp3VoiceRecorder.Event.Message(logMessage))
                 recorder
-            } else {
-                throw Exception(
-                    context.getString(
-                        R.string.rcdr_error_init_recorder
-                    )
-                )
-            }
-        } else {
-            throw Exception(
-                context.getString(
-                    R.string.rcdr_audio_record_bad_value
-                )
-            )
-        }
+            } else throw Exception(context.getString(R.string.rcdr_error_init_recorder))
+        } else throw Exception(context.getString(R.string.rcdr_audio_record_bad_value))
     }
 
     companion object {
-        private val channelConfig: Short = CHANNEL_PRESETS.get(0)
-        private val quality: Int = QUALITY_PRESETS.get(1)
-        private val audioFormat: Short = AUDIO_FORMAT_PRESETS.get(1)
+        private const val ZERO = 0
+        private const val ZERO_SHORT = ZERO.toShort()
+        private val channelConfig: Int = CHANNEL_PRESETS[0]
+        private val quality: Int = QUALITY_PRESETS[1]
+        private val audioFormat: Int = AUDIO_FORMAT_PRESETS[1]
     }
 }
