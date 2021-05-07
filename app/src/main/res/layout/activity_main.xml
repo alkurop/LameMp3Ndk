@@ -1,82 +1,82 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineTopHor"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="70dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineTopLeft"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.43" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineTopRight"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.57" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineCentralHor"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.6" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineFarLeft"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.17" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineFarRight"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.83" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineCentralLeft"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineCentralRight"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.8" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineBottomLeft"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineBottomRight"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.7" />
 
     <ImageView
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_width="0dp"
         android:src="@drawable/title"
         app:layout_constraintEnd_toEndOf="@id/guidelineFarRight"
         app:layout_constraintStart_toStartOf="@id/guidelineFarLeft"
@@ -84,11 +84,11 @@
 
     <fragment
         android:id="@+id/left_radio_container"
-        android:name="com.omar.retromp3recorder.app.ui.recorder_settings.beat_rate.BitRateSettingsFragment"
-        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_width="0dp"
+        android:name="com.omar.retromp3recorder.app.ui.recorder_settings.beat_rate.BitRateSettingsFragment"
         app:layout_constraintBottom_toTopOf="@id/current_file"
         app:layout_constraintEnd_toEndOf="@id/guidelineTopLeft"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,11 +96,11 @@
 
     <fragment
         android:id="@+id/right_radio_container"
-        android:name="com.omar.retromp3recorder.app.ui.recorder_settings.sample_rate.SampleRateSettingsFragment"
-        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_width="0dp"
+        android:name="com.omar.retromp3recorder.app.ui.recorder_settings.sample_rate.SampleRateSettingsFragment"
         app:layout_constraintBottom_toTopOf="@id/current_file"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guidelineTopRight"
@@ -108,24 +108,24 @@
 
     <fragment
         android:id="@+id/current_file"
-        android:name="com.omar.retromp3recorder.app.ui.files.preview.CurrentFileFragment"
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_width="0dp"
+        android:name="com.omar.retromp3recorder.app.ui.files.preview.CurrentFileFragment"
         app:layout_constraintBottom_toTopOf="@+id/audio_controls"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <fragment
         android:id="@+id/audio_controls"
-        android:name="com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsFragment"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_width="wrap_content"
+        android:name="com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsFragment"
         app:layout_constraintBottom_toBottomOf="@+id/guidelineCentralHor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -133,32 +133,32 @@
 
     <fragment
         android:id="@+id/fragment_visualizer"
-        android:name="com.omar.retromp3recorder.app.ui.visualizer.VisualizerFragment"
-        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="@dimen/controller_margin"
-        android:layout_marginEnd="@dimen/controller_margin"
-        android:layout_marginBottom="38dp"
+        android:layout_width="0dp"
+        android:name="com.omar.retromp3recorder.app.ui.visualizer.VisualizerFragment"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/guidelineBottomLeft"
+        app:layout_constraintBottom_toTopOf="@id/log_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guidelineCentralHor" />
 
     <fragment
-        android:id="@+id/log_fragment"
-        android:name="com.omar.retromp3recorder.app.ui.log.LogFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/controller_margin"
-        android:layout_marginTop="@dimen/controller_margin"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="38dp"
         android:background="@color/color_visualizer_bg"
+        android:id="@+id/log_fragment"
+        android:layout_height="30dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/controller_margin"
+        android:layout_width="0dp"
+        android:name="com.omar.retromp3recorder.app.ui.log.LogFragment"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guidelineBottomLeft"
-        app:layout_constraintTop_toTopOf="@id/guidelineCentralHor" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
