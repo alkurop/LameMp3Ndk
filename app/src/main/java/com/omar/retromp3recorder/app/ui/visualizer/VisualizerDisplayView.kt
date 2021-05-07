@@ -37,7 +37,7 @@ class VisualizerDisplayView @JvmOverloads constructor(
             return
         }
         val mBytes = bytesBus.blockingFirst()
-        if (mPoints.size < mBytes.size * 4) {
+        if (mPoints.size != mBytes.size * 4) {
             mPoints = FloatArray(mBytes.size * 4)
         }
         mRect[0, 0, width] = height
@@ -50,12 +50,10 @@ class VisualizerDisplayView @JvmOverloads constructor(
             mPoints[index] = (mRect.width() * i / length).toFloat()
             mPoints[index + 2] = (mRect.width() * (i + 1) / length).toFloat()
             mPoints[index + 1] =
-                height / 2 + ((mBytes[i] + Byte.MAX_VALUE).toByte() * (height / 2) / Byte.MAX_VALUE).toFloat()
+                height / 2 + ((mBytes[i]) * (height / 2) / Byte.MAX_VALUE).toFloat()
             mPoints[index + 3] =
-                height / 2 + ((mBytes[i + 1] + Byte.MAX_VALUE).toByte() * (height / 2) / Byte.MAX_VALUE).toFloat()
+                height / 2 + (mBytes[i + 1] * (height / 2) / Byte.MAX_VALUE).toFloat()
         }
         canvas.drawLines(mPoints, mForePaint)
     }
 }
-
-private const val i1 = Byte.MAX_VALUE
