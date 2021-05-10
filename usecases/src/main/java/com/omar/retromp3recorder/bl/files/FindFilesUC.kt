@@ -8,17 +8,25 @@ import com.omar.retromp3recorder.utils.FileEmptyChecker
 import com.omar.retromp3recorder.utils.FileLister
 import com.omar.retromp3recorder.utils.FilePathGenerator
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Scheduler
 import java.io.File
 import javax.inject.Inject
 
-class LookForFilesUC @Inject constructor(
+/**
+ * Looks for files in directory (cache) for files
+ *
+ * If a file is empty - delete it
+ * other files go to the list
+ *
+ * Then database is synced according to the list
+ *
+ * Finally FileListRepo is updated
+ */
+class FindFilesUC @Inject constructor(
     private val appDatabase: AppDatabase,
     private val fileListRepo: FileListRepo,
     private val filePathGenerator: FilePathGenerator,
     private val fileEmptyChecker: FileEmptyChecker,
-    private val fileLister: FileLister,
-    private val scheduler: Scheduler
+    private val fileLister: FileLister
 ) {
     fun execute(): Completable = Completable
         .fromAction {
@@ -46,5 +54,4 @@ class LookForFilesUC @Inject constructor(
             //finally update the file list repo
             fileListRepo.onNext(dirFiles)
         }
-        .subscribeOn(scheduler)
 }

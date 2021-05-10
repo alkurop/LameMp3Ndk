@@ -5,16 +5,26 @@ import com.omar.retromp3recorder.storage.repo.FileListRepo
 import com.omar.retromp3recorder.utils.FileEmptyChecker
 import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Inject
 
+/**
+ * Runs the FindFilesUC
+ *
+ * Tasks the last file from file list repo
+ * (we expect it to be the last recording)
+ *
+ * and puts it into the CurrentFileRepo
+ */
 class TakeLastFileUC @Inject constructor(
     private val fileListRepo: FileListRepo,
     private val fileEmptyChecker: FileEmptyChecker,
-    private val lookForFilesUC: LookForFilesUC,
-    private val currentFileRepo: CurrentFileRepo
+    private val findFilesUC: FindFilesUC,
+    private val currentFileRepo: CurrentFileRepo,
+    private val scheduler: Scheduler
 ) {
     fun execute(): Completable {
-        return lookForFilesUC.execute()
+        return findFilesUC.execute()
             .andThen(Completable.fromAction {
                 val currentFilePath = currentFileRepo.observe().blockingFirst().value
                 if (currentFilePath != null) return@fromAction
@@ -25,5 +35,6 @@ class TakeLastFileUC @Inject constructor(
                     currentFileRepo.onNext(Optional(lastFile.path))
                 }
             })
+            .subscribeOn(scheduler)
     }
 }

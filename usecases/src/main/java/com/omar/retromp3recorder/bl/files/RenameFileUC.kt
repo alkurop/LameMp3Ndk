@@ -15,7 +15,7 @@ class RenameFileUC @Inject constructor(
     private val currentFileRepo: CurrentFileRepo,
     private val currentFileMapper: CurrentFileMapper,
     private val fileRenamer: FileRenamer,
-    private val lookForFilesUC: LookForFilesUC,
+    private val findFilesUC: FindFilesUC,
 ) {
     fun execute(newFileName: String, finishedCallback: BehaviorSubjectRepo<Boolean>): Completable =
         currentFileMapper.observe()
@@ -33,7 +33,7 @@ class RenameFileUC @Inject constructor(
                                 appDatabase.fileEntityDao().updateItem(copy.toDatabaseEntity())
                                 currentFileRepo.onNext(Optional(newPath))
                             },
-                        lookForFilesUC.execute(),
+                        findFilesUC.execute(),
                         Completable.fromAction { finishedCallback.onNext(true) }
                     )
                 )
