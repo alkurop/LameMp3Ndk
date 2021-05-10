@@ -44,7 +44,7 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
                     .filter { it != ZERO_SHORT }
                 val bytesInTarget = f.size / target + 1
                 val b = f.windowed(bytesInTarget, bytesInTarget, false)
-                    .map { (it.average() / (Short.MAX_VALUE / Byte.MAX_VALUE).toInt()).toShort() }
+                    .map { (it.average() / (Short.MAX_VALUE / Byte.MAX_VALUE)).toShort() }
                 b.map { i -> i.toByte() }.toByteArray()
             }
     }
