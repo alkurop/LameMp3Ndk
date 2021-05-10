@@ -13,7 +13,6 @@ import javax.inject.Singleton
 
 @Singleton
 class AudioPlayerImpl @Inject constructor() : AudioPlayer {
-
     private val events = PublishSubject.create<AudioPlayer.Event>()
     private val state = BehaviorSubject.createDefault(AudioPlayer.State.Idle)
 
@@ -60,7 +59,11 @@ class AudioPlayerImpl @Inject constructor() : AudioPlayer {
         mediaPlayer
             ?.let {
                 state.onNext(AudioPlayer.State.Idle)
-                it.stop()
+                try {
+                    it.stop()
+                } catch (e: IllegalStateException) {
+                    events.onNext(AudioPlayer.Event.Error(Stringer.ofString(e.message ?: "wtf")))
+                }
                 it.release()
                 mediaPlayer = null
                 events.onNext(AudioPlayer.Event.Message(Stringer(R.string.aplr_stopped_playing)))
@@ -83,5 +86,4 @@ class AudioPlayerImpl @Inject constructor() : AudioPlayer {
     //to have single source of truth
     override val isPlaying: Boolean
         get() = state.blockingFirst() == AudioPlayer.State.Playing
-
 }
