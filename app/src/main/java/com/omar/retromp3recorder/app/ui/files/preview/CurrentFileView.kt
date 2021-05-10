@@ -10,7 +10,6 @@ object CurrentFileView {
     )
 
     sealed class Input {
-        object LookForPlayableFile : Input()
     }
 
     sealed class Output {

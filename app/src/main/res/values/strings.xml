@@ -6,7 +6,7 @@
     <string name="current_file">Current file</string>
     <string name="delete_file">Delete file</string>
     <string name="error_string">Error: %1$s</string>
-    <string name="no_file">*** NO FILE ***</string>
+    <string name="no_file">Please record something</string>
     <string name="no">No</string>
     <string name="record_permission_title">Record Audio</string>
     <string name="record_permission_message">This app is going to record audio files using your mic.</string>
