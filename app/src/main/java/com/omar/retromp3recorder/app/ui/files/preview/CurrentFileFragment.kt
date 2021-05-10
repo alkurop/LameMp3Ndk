@@ -29,7 +29,6 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         buttonOpen.setOnClickListener {
             startActivity(Intent(requireContext(), CurrentFileActivity::class.java))
         }
-        viewModel.input.onNext(CurrentFileView.Input.LookForPlayableFile)
         buttonDelete.setOnClickListener {
             DeleteFileDialogFragment().show(
                 childFragmentManager,
