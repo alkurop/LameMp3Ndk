@@ -34,5 +34,10 @@ class SelectorFragment : Fragment(R.layout.fragment_selector) {
 
     private fun renderState(state: SelectorView.State) {
         adapter.items = state.items
+        state.items
+            .indexOfFirst { it.isCurrentItem }
+            .takeIf { it != -1 }?.let {
+                recyclerView.smoothScrollToPosition(it)
+            }
     }
 }
