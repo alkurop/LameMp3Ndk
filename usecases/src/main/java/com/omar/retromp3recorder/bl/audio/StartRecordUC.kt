@@ -2,13 +2,14 @@ package com.omar.retromp3recorder.bl.audio
 
 import android.Manifest
 import com.omar.retromp3recorder.bl.CheckPermissionsUC
+import com.omar.retromp3recorder.bl.files.GetNewFileNameUC
+import com.omar.retromp3recorder.bl.files.IncrementFileNameUC
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.storage.repo.BitRateRepo
 import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.storage.repo.RequestPermissionsRepo
 import com.omar.retromp3recorder.storage.repo.RequestPermissionsRepo.ShouldRequestPermissions
 import com.omar.retromp3recorder.storage.repo.SampleRateRepo
-import com.omar.retromp3recorder.utils.FilePathGenerator
 import com.omar.retromp3recorder.utils.Optional
 import com.omar.retromp3recorder.utils.takeOne
 import io.reactivex.rxjava3.core.Completable
@@ -20,7 +21,8 @@ class StartRecordUC @Inject constructor(
     private val bitRateRepo: BitRateRepo,
     private val checkPermissionsUC: CheckPermissionsUC,
     private val currentFileRepo: CurrentFileRepo,
-    private val filePathGenerator: FilePathGenerator,
+    private val getNewFileNameUC: GetNewFileNameUC,
+    private val incrementFileNameUC: IncrementFileNameUC,
     private val requestPermissionsRepo: RequestPermissionsRepo,
     private val sampleRateRepo: SampleRateRepo,
     private val voiceRecorder: Mp3VoiceRecorder,
@@ -31,10 +33,9 @@ class StartRecordUC @Inject constructor(
                                       sampleRate: Mp3VoiceRecorder.SampleRate ->
             Mp3VoiceRecorder.RecorderProps(filepath, bitRate, sampleRate)
         }
-        val abort = Completable.complete()
         val execute = Observable
             .zip(
-                Observable.fromCallable { filePathGenerator.generateFilePath() },
+                getNewFileNameUC.execute().toObservable(),
                 bitRateRepo.observe().takeOne(),
                 sampleRateRepo.observe().takeOne(),
                 propsZipper
@@ -45,6 +46,8 @@ class StartRecordUC @Inject constructor(
                     voiceRecorder.record(props)
                 }
             }
+            .andThen(incrementFileNameUC.execute())
+        val abort = Completable.complete()
         return checkPermissionsUC
             .execute(voiceRecordPermissions)
             .andThen(requestPermissionsRepo.observe().takeOne())

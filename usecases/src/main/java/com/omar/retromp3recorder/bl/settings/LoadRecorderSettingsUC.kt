@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.bl.settings
 
 import android.content.SharedPreferences
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.storage.RecorderPrefsKeys
+import com.omar.retromp3recorder.storage.SharedPrefsKeys
 import com.omar.retromp3recorder.storage.repo.BitRateRepo
 import com.omar.retromp3recorder.storage.repo.SampleRateRepo
 import io.reactivex.rxjava3.core.Completable
@@ -18,7 +18,7 @@ class LoadRecorderSettingsUC @Inject constructor(
     fun execute() = Completable
         .fromAction {
             val noSetting = -1
-            sharedPreferences.getInt(RecorderPrefsKeys.SAMPLE_RATE, noSetting)
+            sharedPreferences.getInt(SharedPrefsKeys.SAMPLE_RATE, noSetting)
                 .takeIf { it != noSetting }
                 ?.let {
                     val sampleRate = Mp3VoiceRecorder.SampleRate.values()[it]
@@ -27,7 +27,7 @@ class LoadRecorderSettingsUC @Inject constructor(
         }
         .andThen(Completable.fromAction {
             val noSetting = -1
-            sharedPreferences.getInt(RecorderPrefsKeys.BIT_RATE, noSetting)
+            sharedPreferences.getInt(SharedPrefsKeys.BIT_RATE, noSetting)
                 .takeIf { it != noSetting }
                 ?.let {
                     val bitRate = Mp3VoiceRecorder.BitRate.values()[it]
