@@ -26,8 +26,6 @@ class TakeLastFileUC @Inject constructor(
     fun execute(): Completable {
         return findFilesUC.execute()
             .andThen(Completable.fromAction {
-                val currentFilePath = currentFileRepo.observe().blockingFirst().value
-                if (currentFilePath != null) return@fromAction
                 val lastFile = fileListRepo.observe().blockingFirst().lastOrNull()
                 if (lastFile == null || fileEmptyChecker.isFileEmpty(lastFile.path)) {
                     currentFileRepo.onNext(Optional.empty())

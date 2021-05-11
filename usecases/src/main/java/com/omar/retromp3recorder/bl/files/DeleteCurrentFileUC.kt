@@ -16,23 +16,27 @@ class DeleteCurrentFileUC @Inject constructor(
     private val currentFileMapper: CurrentFileMapper,
     private val currentFileRepo: CurrentFileRepo,
     private val fileDeleter: FileDeleter,
-    private val fileListRepo: FileListRepo
+    private val fileListRepo: FileListRepo,
+    private val takeLastFileUC: TakeLastFileUC
 ) {
     fun execute(finishedCallback: BehaviorSubject<Boolean>): Completable {
-        return currentFileMapper.observe().takeOne().flatMapCompletable { optional ->
-            val filePath = (optional.value!! as ExistingFileWrapper).path
-            Completable.fromAction {
-                fileDeleter.deleteFile(filePath)
-                appDatabase.fileEntityDao().deleteByFilepath(filePath)
-                val newFileList = fileListRepo
-                    .observe()
-                    .blockingFirst().filter { it.path != filePath }
-                fileListRepo.onNext(newFileList)
-                val currentFile = currentFileRepo.observe().blockingFirst().value
-                if (currentFile == filePath)
-                    currentFileRepo.onNext(Optional.empty())
-                finishedCallback.onNext(true)
+        return currentFileMapper
+            .observe().takeOne()
+            .flatMapCompletable { optional ->
+                val filePath = (optional.value!! as ExistingFileWrapper).path
+                Completable.fromAction {
+                    fileDeleter.deleteFile(filePath)
+                    appDatabase.fileEntityDao().deleteByFilepath(filePath)
+                    val newFileList = fileListRepo
+                        .observe()
+                        .blockingFirst().filter { it.path != filePath }
+                    fileListRepo.onNext(newFileList)
+                    val currentFile = currentFileRepo.observe().blockingFirst().value
+                    if (currentFile == filePath)
+                        currentFileRepo.onNext(Optional.empty())
+                    finishedCallback.onNext(true)
+                }
             }
-        }
+            .andThen(takeLastFileUC.execute())
     }
 }
