@@ -6,7 +6,9 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.omar.retromp3recorder.app.R
+import com.omar.retromp3recorder.app.uiutils.observe
 import com.omar.retromp3recorder.bl.audio.AudioState
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
 class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
     private val viewModel by viewModels<VisualizerViewModel>()
@@ -40,9 +42,10 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
                 renderPlayerId(state.playerId)
             }
         }
-        viewModel.recorder.observeRecorder().subscribe { bytes ->
-            visualizerDisplayView?.updateVisualizer(bytes)
-        }
+        viewModel.recorder.observeRecorder().observeOn(AndroidSchedulers.mainThread())
+            .observe(viewLifecycleOwner) { bytes ->
+                visualizerDisplayView?.updateVisualizer(bytes)
+            }
     }
 
     private fun stopVisualizer() {
