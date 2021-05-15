@@ -4,7 +4,7 @@ buildscript {
     apply from: 'libs.gradle'
     ext.compileSdkVersion = 30
     ext.buildToolsVersion = "30.0.3"
-    ext.minSdkVersion = 19
+    ext.minSdkVersion = 21
     ext.targetSdkVersion = 30
 
     repositories {
