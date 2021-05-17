@@ -25,6 +25,9 @@ object CurrentFileOutputMapper {
                 is CurrentFileView.Output.OpenButtonState -> oldState.copy(
                     isOpenFileActive = output.isActive,
                 )
+                is CurrentFileView.Output.RenameButtonState -> oldState.copy(
+                    isRenameButtonActive = output.isActive
+                )
             }
         }
 }

@@ -6,7 +6,8 @@ object CurrentFileView {
     data class State(
         val currentFile: FileWrapper? = null,
         val isOpenFileActive: Boolean = false,
-        val isDeleteFileActive: Boolean = false
+        val isDeleteFileActive: Boolean = false,
+        val isRenameButtonActive: Boolean = false
     )
 
     sealed class Input {
@@ -16,5 +17,6 @@ object CurrentFileView {
         data class CurrentFileOutput(val currentFile: FileWrapper?) : CurrentFileView.Output()
         data class DeleteButtonState(val isActive: Boolean) : Output()
         data class OpenButtonState(val isActive: Boolean) : Output()
+        data class RenameButtonState(val isActive: Boolean) : Output()
     }
 }
