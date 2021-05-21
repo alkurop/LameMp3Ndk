@@ -13,17 +13,19 @@ class AudioStateMapperImpl @Inject constructor(
     private val player: AudioPlayer,
     private val recorder: Mp3VoiceRecorder
 ) : AudioStateMapper {
-    override fun observe(): Observable<AudioState> = Observable.combineLatest(
-        player.observeState(),
-        recorder.observeState(),
-        { playerState, recorderState ->
-            when {
-                playerState == AudioPlayer.State.Playing -> AudioState.Playing
-                recorderState == Mp3VoiceRecorder.State.Recording -> AudioState.Recording
-                else -> AudioState.Idle
+    override fun observe(): Observable<AudioState> = Observable
+        .combineLatest(
+            player.observeState(),
+            recorder.observeState(),
+            { playerState, recorderState ->
+                when {
+                    playerState == AudioPlayer.State.Playing -> AudioState.Playing
+                    recorderState == Mp3VoiceRecorder.State.Recording -> AudioState.Recording
+                    else -> AudioState.Idle
+                }
             }
-        }
-    ).share()
+        )
+        .distinctUntilChanged()
 }
 
 sealed class AudioState {

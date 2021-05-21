@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.core.Observable
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.math.absoluteValue
 
 class RecordWavetableMapper @Inject constructor(
     private val recorder: Mp3VoiceRecorder,
@@ -17,19 +18,17 @@ class RecordWavetableMapper @Inject constructor(
 ) {
     fun execute(): Completable {
         return observeRecorder(WAVETABLE_SIZE_MILLIS)
-            .buffer(
-                audioStateMapper.observe(),
-                { input ->
-                    if (input is AudioState.Idle) Observable.just(input)
-                    Observable.empty<AudioState>()
-                }
+            .takeUntil(
+                audioStateMapper.observe()
+                    .ofType(AudioState.Idle::class.java)
             )
-            .map { it.fold("", { a, b -> "$a $b" }) }
-            .switchMapCompletable {
+            .map { it.toString() }
+            .collectInto(mutableListOf<String>(), { list, item -> list.add(item) })
+            .flatMapCompletable {
                 Completable.fromAction {
                     val ghost = Wavetable(
                         WAVETABLE_SIZE_MILLIS,
-                        it
+                        it.joinToString(" ")
                     )
                     Timber.d(ghost.toString())
                     wavetableRepo.onNext(
@@ -43,10 +42,12 @@ class RecordWavetableMapper @Inject constructor(
 
     private fun observeRecorder(windowMillis: Long): Observable<Int> {
         return recorder.observeRecorder()
-            .map { it.toList().average().toInt() }
+            .map { array ->
+                array.toList().map { it.toInt().absoluteValue }.max() ?: 0
+            }
             .buffer(windowMillis, TimeUnit.MILLISECONDS)
-            .map { it.toList().average().toInt() }
+            .map { it.max() ?: 0 }
     }
 }
 
-private const val WAVETABLE_SIZE_MILLIS = 50L
+private const val WAVETABLE_SIZE_MILLIS = 100L
