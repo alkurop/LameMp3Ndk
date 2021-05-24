@@ -1,10 +1,12 @@
 package com.omar.retromp3recorder.app.ui.files.preview
 
 import com.omar.retromp3recorder.dto.FileWrapper
+import com.omar.retromp3recorder.dto.Wavetable
 
 object CurrentFileView {
     data class State(
-        val currentFile: FileWrapper? = null,
+        val filePath: String? = null,
+        val wavetable: Wavetable? = null,
         val isOpenFileActive: Boolean = false,
         val isDeleteFileActive: Boolean = false,
         val isRenameButtonActive: Boolean = false

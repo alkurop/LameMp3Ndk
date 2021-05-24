@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.omar.retromp3recorder.app.R
@@ -21,6 +22,8 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         get() = findViewById(R.id.button_open)
     private val buttonDelete: View
         get() = findViewById(R.id.button_delete)
+    private val wavetablePreview: WavetablePreview
+        get() = findViewById(R.id.wavetable)
     private val viewModel: CurrentFileViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,10 +47,14 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
     }
 
     private fun renderState(state: CurrentFileView.State) {
+        textView.text = state.filePath?.toFileName() ?: getString(R.string.no_file)
         textView.isClickable = state.isRenameButtonActive
-        textView.text = state.currentFile?.path?.toFileName() ?: getString(R.string.no_file)
         buttonOpen.setIsButtonActive(state.isOpenFileActive)
         buttonDelete.setIsButtonActive(state.isDeleteFileActive)
+        wavetablePreview.isVisible = state.wavetable != null
+        state.wavetable?.let {
+            wavetablePreview.update(it.data)
+        }
     }
 }
 
