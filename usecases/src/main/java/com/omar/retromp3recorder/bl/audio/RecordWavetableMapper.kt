@@ -1,9 +1,9 @@
 package com.omar.retromp3recorder.bl.audio
 
 import com.github.alkurop.ghostinshell.Shell
+import com.omar.retromp3recorder.dto.Wavetable
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
-import com.omar.retromp3recorder.storage.repo.WaveForm
 import com.omar.retromp3recorder.storage.repo.WavetableRepo
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -27,7 +27,7 @@ class RecordWavetableMapper @Inject constructor(
             .map { it.toByteArray() }
             .flatMapCompletable {
                 Completable.fromAction {
-                    val ghost = WaveForm(
+                    val ghost = Wavetable(
                         it
                     )
                     val currentFilePath = currentFileRepo.observe().blockingFirst().value!!
