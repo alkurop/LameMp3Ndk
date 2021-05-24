@@ -27,9 +27,8 @@ class SampleRateRepo @Inject constructor(defaults: RecorderDefaults) :
 
 @Singleton
 class WavetableRepo @Inject constructor() :
-    BehaviorSubjectRepo<Shell<Wavetable>>(Shell.empty())
+    BehaviorSubjectRepo<Shell<Pair<String, WaveForm>>>(Shell.empty())
 
-data class Wavetable(
-    val sizeMillis: Long,
-    val data: String
+data class WaveForm(
+    val data: ByteArray
 )

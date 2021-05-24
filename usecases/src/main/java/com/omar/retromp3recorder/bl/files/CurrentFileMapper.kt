@@ -10,6 +10,9 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Inject
 
+/**
+ * Maps current file filepath to database entity
+ */
 class CurrentFileMapper @Inject constructor(
     private val currentFileRepo: CurrentFileRepo,
     private val database: AppDatabase,
@@ -21,7 +24,8 @@ class CurrentFileMapper @Inject constructor(
             .flatMap {
                 val currentFilePath = it.value
                 val currentFile = currentFilePath?.let {
-                    database.fileEntityDao().getByFilepath(currentFilePath).firstOrNull()
+                    database.fileEntityDao()
+                        .getByFilepath(currentFilePath).firstOrNull()
                         ?.toFileWrapper()
                 } ?: currentFilePath?.toFutureFileWrapper()
                 Observable.just(Optional(currentFile))

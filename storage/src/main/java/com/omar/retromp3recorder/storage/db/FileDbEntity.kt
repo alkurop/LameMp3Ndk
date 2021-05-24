@@ -2,12 +2,21 @@ package com.omar.retromp3recorder.storage.db
 
 import androidx.room.*
 import com.omar.retromp3recorder.dto.ExistingFileWrapper
+import com.omar.retromp3recorder.storage.repo.WaveForm
 
 @Entity
 data class FileDbEntity(
     @PrimaryKey val created: Long,
     val lastModified: Long,
-    val filepath: String
+    val filepath: String,
+    @Embedded
+    val waveform: WaveformDbEntity?
+)
+
+@Entity
+data class WaveformDbEntity(
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    val waveform: ByteArray
 )
 
 @Dao
@@ -35,6 +44,9 @@ fun FileDbEntity.toFileWrapper(): ExistingFileWrapper =
     ExistingFileWrapper(this.filepath, this.created, this.lastModified)
 
 fun ExistingFileWrapper.toDatabaseEntity(): FileDbEntity = FileDbEntity(
-    this.createTimedStamp, this.modifiedTimestamp, this.path
+    this.createTimedStamp, this.modifiedTimestamp, this.path, waveform = null
 )
+
+fun WaveForm.toDatabaseEntity() = WaveformDbEntity(this.data)
+fun WaveformDbEntity.toWaveForm() = WaveForm(this.waveform)
 
