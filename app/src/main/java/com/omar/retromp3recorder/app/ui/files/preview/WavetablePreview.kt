@@ -37,8 +37,8 @@ class WavetablePreview @JvmOverloads constructor(
             return
         }
         val mBytes = bytesBus.blockingFirst()
-        if (mPoints.size != mBytes.size * 4) {
-            mPoints = FloatArray(mBytes.size * 4)
+        if (mPoints.size != mBytes.size * 8) {
+            mPoints = FloatArray(mBytes.size * 8)
         }
         mRect[0, 0, width] = height
         val length = mBytes.size - 1
@@ -46,13 +46,17 @@ class WavetablePreview @JvmOverloads constructor(
 
 
         for (i in 0 until length) {
-            val index = i * 4
+            val index = i * 8
+            val m = Byte.MAX_VALUE
             mPoints[index] = (mRect.width() * i / length).toFloat()
+            mPoints[index + 1] = height / 2 + ((mBytes[i]) * (height / 2) / m).toFloat()
             mPoints[index + 2] = (mRect.width() * (i + 1) / length).toFloat()
-            mPoints[index + 1] =
-                height / 2 + ((mBytes[i]) * (height / 2) / Byte.MAX_VALUE).toFloat()
-            mPoints[index + 3] =
-                height / 2 + (mBytes[i + 1] * (height / 2) / Byte.MAX_VALUE).toFloat()
+            mPoints[index + 3] = height / 2 - (mBytes[i] * (height / 2) / m).toFloat()
+
+            mPoints[4 + index] = (mRect.width() * i / length).toFloat()
+            mPoints[4 + index + 1] = height / 2 + ((mBytes[i]) * (height / 2) / m).toFloat()
+            mPoints[4 + index + 2] = (mRect.width() * (i + 1) / length).toFloat()
+            mPoints[4 + index + 3] = height / 2 - (mBytes[i] * (height / 2) / m).toFloat()
         }
         canvas.drawLines(mPoints, mForePaint)
     }
