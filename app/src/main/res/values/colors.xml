@@ -2,4 +2,5 @@
 <resources>
     <color name="log_text_color">#9900ff00</color>
     <color name="color_visualizer_bg">#55000000</color>
+    <color name="white">#fff</color>
 </resources>

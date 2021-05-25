@@ -52,6 +52,7 @@ class FindFilesUC @Inject constructor(
             appDatabase.fileEntityDao()
                 .delete(recordsToRemoveFromDatabase.map { it.toDatabaseEntity() })
             //finally update the file list repo
-            fileListRepo.onNext(dirFiles)
+            val updatedList = appDatabase.fileEntityDao().getAll()
+            fileListRepo.onNext(updatedList.map { it.toFileWrapper() })
         }
 }
