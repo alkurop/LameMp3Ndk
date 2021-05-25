@@ -23,9 +23,10 @@ class StartRecordUC @Inject constructor(
     private val currentFileRepo: CurrentFileRepo,
     private val getNewFileNameUC: GetNewFileNameUC,
     private val incrementFileNameUC: IncrementFileNameUC,
+    private val recordWavetableMapper: RecordWavetableMapper,
     private val requestPermissionsRepo: RequestPermissionsRepo,
     private val sampleRateRepo: SampleRateRepo,
-    private val voiceRecorder: Mp3VoiceRecorder,
+    private val voiceRecorder: Mp3VoiceRecorder
 ) {
     fun execute(): Completable {
         val propsZipper = Function3 { filepath: String,
@@ -47,6 +48,7 @@ class StartRecordUC @Inject constructor(
                 }
             }
             .andThen(incrementFileNameUC.execute())
+            .andThen(recordWavetableMapper.execute())
         val abort = Completable.complete()
         return checkPermissionsUC
             .execute(voiceRecordPermissions)
