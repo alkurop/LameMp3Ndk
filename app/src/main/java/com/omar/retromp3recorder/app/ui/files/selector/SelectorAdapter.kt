@@ -8,8 +8,11 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.omar.retromp3recorder.app.R
+import com.omar.retromp3recorder.app.ui.files.preview.WavetablePreview
 import com.omar.retromp3recorder.app.ui.utils.findViewById
 import com.omar.retromp3recorder.app.ui.utils.toFileName
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SelectorAdapter(
     val onItemSelectedListener: (SelectorView.Item) -> Unit
@@ -45,11 +48,23 @@ class SelectorAdapter(
             get() = findViewById(R.id.current_file_sign)
         private val textView: TextView
             get() = findViewById(R.id.current_file_text)
+        private val timeView: TextView
+            get() = findViewById(R.id.time)
+        private val wavetablePreview: WavetablePreview
+            get() = findViewById(R.id.wavetable)
 
         fun bind(item: SelectorView.Item) {
             itemView.setOnClickListener { onItemSelectedListener(item) }
             textView.text = item.fileWrapper.path.toFileName()
             currentFileSign.isVisible = item.isCurrentItem
+            val wavetable = item.fileWrapper.wavetable
+            wavetablePreview.isVisible = wavetable != null
+            wavetable?.let {
+                wavetablePreview.update(it.data)
+                val millisLength = it.data.size * 100L
+                val simpleDateFormat = SimpleDateFormat("mm:ss")
+                timeView.setText(simpleDateFormat.format(Date(millisLength)))
+            }
         }
     }
 }
