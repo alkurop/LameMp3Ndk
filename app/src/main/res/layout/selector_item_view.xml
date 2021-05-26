@@ -7,6 +7,7 @@
     android:background="?selectableItemBackground">
 
     <com.omar.retromp3recorder.app.ui.files.preview.WavetablePreview
+        android:layout_margin="4dp"
         android:id="@+id/wavetable"
         android:layout_width="match_parent"
         android:layout_height="0dp"
