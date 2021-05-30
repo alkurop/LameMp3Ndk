@@ -13,7 +13,7 @@ interface AudioPlayer {
     sealed class Event {
         data class Message(val message: Stringer) : Event()
         data class Error(val error: Stringer) : Event()
-        data class PlayerId constructor(val playerId: Int) : Event()
+        data class AudioSessionId constructor(val playerId: Int) : Event()
     }
 
     fun observeState(): Observable<State>

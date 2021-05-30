@@ -10,7 +10,7 @@ class PlayerIdMapper @Inject internal constructor(
     fun observe(): Observable<Int> {
         return audioPlayer
             .observeEvents()
-            .ofType(AudioPlayer.Event.PlayerId::class.java)
+            .ofType(AudioPlayer.Event.AudioSessionId::class.java)
             .map { it.playerId }.share()
     }
 }
