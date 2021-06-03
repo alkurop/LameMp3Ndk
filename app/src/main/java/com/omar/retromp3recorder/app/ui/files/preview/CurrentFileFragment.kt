@@ -45,6 +45,9 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
                 RenameFileDialogFragment::class.java.canonicalName
             )
         }
+        wavetablePreviewPreview.observeProgress().observe(viewLifecycleOwner) {
+            viewModel.input.onNext(CurrentFileView.Input.SeekToPosition(it.first))
+        }
     }
 
     private fun renderState(state: CurrentFileView.State) {

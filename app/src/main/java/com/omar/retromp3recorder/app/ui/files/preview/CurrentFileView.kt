@@ -14,7 +14,7 @@ object CurrentFileView {
     )
 
     sealed class Input {
-        data class SeekToPosition(val position: Int)
+        data class SeekToPosition(val position: Int) : Input()
     }
 
     sealed class Output {

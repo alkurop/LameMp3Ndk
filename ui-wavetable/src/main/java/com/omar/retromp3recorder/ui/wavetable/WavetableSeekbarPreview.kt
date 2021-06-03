@@ -31,6 +31,7 @@ class WavetableSeekbarPreview @JvmOverloads constructor(
                 if (fromUser) {
                     userChangedProgress = Pair(progress, (seekbar.max))
                     wavetableProgressBar.update(userChangedProgress)
+                    progressUpdate.onNext(userChangedProgress)
                 }
             }
 
@@ -39,7 +40,6 @@ class WavetableSeekbarPreview @JvmOverloads constructor(
             }
 
             override fun onStopTrackingTouch(v: SeekBar?) {
-                progressUpdate.onNext(userChangedProgress)
                 shouldUpdateProgressBar = true
             }
         })

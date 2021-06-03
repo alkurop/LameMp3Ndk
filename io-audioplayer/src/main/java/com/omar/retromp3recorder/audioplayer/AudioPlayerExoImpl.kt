@@ -21,15 +21,15 @@ class AudioPlayerExoImpl @Inject constructor(
 ) : AudioPlayer {
     private val events = PublishSubject.create<AudioPlayer.Event>()
     private val state = BehaviorSubject.createDefault(AudioPlayer.State.Idle)
-    private val progress = BehaviorSubject.create<Pair<Int, Int>>()
+    private val progress = BehaviorSubject.create<Pair<Long, Long>>()
 
     //should be nullable, because after MediaPlayer.release() becomes useless
-    private var mediaPlayer: ExoPlayer? = null
+    private var mediaPlayer: ExoPlayer = SimpleExoPlayer.Builder(context).build()
     private val handler = Handler(Looper.getMainLooper())
 
     override fun observeState(): Observable<AudioPlayer.State> = state
 
-    override fun observerProgress(): Observable<Pair<Int, Int>> = progress
+    override fun observerProgress(): Observable<Pair<Long, Long>> = progress
 
     override fun playerStop() {
         if (isPlaying) {
@@ -48,8 +48,10 @@ class AudioPlayerExoImpl @Inject constructor(
         return events
     }
 
-    override fun seek(position: Int) {
-        mediaPlayer?.seekTo(position.toLong() * 100)
+    override fun seek(position: Long) {
+        handler.post {
+            mediaPlayer.seekTo(position)
+        }
     }
 
     private fun setupMediaPlayer(voiceURL: String) {
@@ -57,7 +59,7 @@ class AudioPlayerExoImpl @Inject constructor(
             events.onNext(AudioPlayer.Event.Error(Stringer(R.string.aplr_player_cannot_find_file)))
             return
         }
-        mediaPlayer = SimpleExoPlayer.Builder(context).build().apply {
+        mediaPlayer.apply {
             setMediaItem(MediaItem.fromUri(voiceURL))
             playWhenReady = true
             addListener(object : Player.Listener {
@@ -65,20 +67,19 @@ class AudioPlayerExoImpl @Inject constructor(
                 private val simpleExoPlayer = this@apply
 
                 private fun sendProgressUpdate() {
-                    val position = (simpleExoPlayer.currentPosition / 100).toInt()
-                    val duration = (simpleExoPlayer.duration / 100).toInt()
+                    val position = (simpleExoPlayer.currentPosition)
+                    val duration = (simpleExoPlayer.duration)
                     progress.onNext(Pair(position, duration))
                 }
 
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
-                    super.onIsPlayingChanged(isPlaying)
                     if (isPlaying) {
                         progressDisposable = Observable.interval(50, TimeUnit.MILLISECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe { sendProgressUpdate() }
                         state.onNext(AudioPlayer.State.Playing)
                         events.onNext(AudioPlayer.Event.Message(Stringer(R.string.aplr_started_playing)))
-                        mediaPlayer?.audioComponent?.audioSessionId?.let {
+                        mediaPlayer.audioComponent?.audioSessionId?.let {
                             events.onNext(AudioPlayer.Event.AudioSessionId(it))
                         }
                     } else {
@@ -100,10 +101,8 @@ class AudioPlayerExoImpl @Inject constructor(
 
     private fun stopMedia() {
         handler.post {
-            mediaPlayer?.apply {
+            mediaPlayer.apply {
                 stop()
-                release()
-                mediaPlayer = null
             }
         }
     }
