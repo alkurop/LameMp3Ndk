@@ -6,19 +6,19 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:background="@color/color_visualizer_bg"
         android:layout_height="wrap_content"
-        android:background="@color/color_visualizer_bg">
+        android:layout_width="match_parent">
 
         <TextView
-            android:id="@+id/button_open"
-            android:layout_width="@dimen/file_controls_button_size"
-            android:layout_height="@dimen/file_controls_button_size"
             android:background="@drawable/bg_file_controls"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackground"
             android:gravity="center"
+            android:id="@+id/button_open"
+            android:layout_height="@dimen/file_controls_button_size"
+            android:layout_width="@dimen/file_controls_button_size"
             android:text="o"
             android:textColor="@color/log_text_color"
             android:textSize="12sp"
@@ -27,14 +27,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/current_file_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:background="?selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
+            android:id="@+id/current_file_text"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_width="0dp"
             android:padding="8dp"
             android:text="Privet"
             android:textColor="@color/log_text_color"
@@ -46,14 +46,14 @@
 
 
         <TextView
-            android:id="@+id/button_delete"
-            android:layout_width="@dimen/file_controls_button_size"
-            android:layout_height="@dimen/file_controls_button_size"
             android:background="@drawable/bg_file_controls"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackground"
             android:gravity="center"
+            android:id="@+id/button_delete"
+            android:layout_height="@dimen/file_controls_button_size"
+            android:layout_width="@dimen/file_controls_button_size"
             android:text="x"
             android:textColor="@color/log_text_color"
             android:textSize="12sp"
@@ -64,11 +64,11 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.omar.retromp3recorder.app.ui.files.preview.WavetablePreview
+    <com.omar.retromp3recorder.ui.wavetable.WavetableSeekbarPreview
+        android:background="@color/color_visualizer_bg"
         android:id="@+id/wavetable"
-        android:layout_marginTop="4dp"
-        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/color_visualizer_bg" />
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent" />
 
 </LinearLayout>

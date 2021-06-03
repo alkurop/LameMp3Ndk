@@ -21,7 +21,7 @@ class AudioPlayerExoImpl @Inject constructor(
 ) : AudioPlayer {
     private val events = PublishSubject.create<AudioPlayer.Event>()
     private val state = BehaviorSubject.createDefault(AudioPlayer.State.Idle)
-    private val progress = BehaviorSubject.createDefault(Pair(0L, 0L))
+    private val progress = BehaviorSubject.create<Pair<Long, Long>>()
 
     //should be nullable, because after MediaPlayer.release() becomes useless
     private var mediaPlayer: ExoPlayer? = null
@@ -66,7 +66,7 @@ class AudioPlayerExoImpl @Inject constructor(
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
                     super.onIsPlayingChanged(isPlaying)
                     if (isPlaying) {
-                        progressDisposable = Observable.interval(100, TimeUnit.MILLISECONDS)
+                        progressDisposable = Observable.interval(50, TimeUnit.MILLISECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe { sendProgressUpdate() }
                         state.onNext(AudioPlayer.State.Playing)
@@ -75,6 +75,7 @@ class AudioPlayerExoImpl @Inject constructor(
                             events.onNext(AudioPlayer.Event.AudioSessionId(it))
                         }
                     } else {
+                        sendProgressUpdate()
                         progressDisposable?.dispose()
                         progressDisposable = null
                         state.onNext(AudioPlayer.State.Idle)

@@ -47,10 +47,10 @@ class RecordWavetableMapper @Inject constructor(
     private fun observeRecorder(windowMillis: Long): Observable<Byte> {
         return recorder.observeRecorder()
             .map { array ->
-                array.toList().map { it.toInt().absoluteValue }.max() ?: 0
+                array.toList().map { it.toInt().absoluteValue }.maxOrNull() ?: 0
             }
             .buffer(windowMillis, TimeUnit.MILLISECONDS)
-            .map { it.max() ?: 0 }
+            .map { it.maxOrNull() ?: 0 }
             .map { it.toByte() }
     }
 }

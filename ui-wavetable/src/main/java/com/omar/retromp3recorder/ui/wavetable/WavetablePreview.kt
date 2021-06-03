@@ -1,4 +1,4 @@
-package com.omar.retromp3recorder.app.ui.files.preview
+package com.omar.retromp3recorder.ui.wavetable
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -40,7 +40,7 @@ class WavetablePreview @JvmOverloads constructor(
             val end = width * (i + 1) / length
             val rect = RectF(
                 start.toFloat(),
-                (height / 2 - relativeLoudness).toFloat(),
+                (height / 2 - relativeLoudness).toFloat().coerceAtLeast(1f),
                 end.toFloat() + 100,
                 (height / 2 + relativeLoudness).toFloat(),
             )

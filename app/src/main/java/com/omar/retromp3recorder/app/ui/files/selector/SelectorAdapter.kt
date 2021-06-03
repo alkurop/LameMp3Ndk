@@ -8,9 +8,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.ui.files.preview.WavetablePreview
 import com.omar.retromp3recorder.app.ui.utils.findViewById
 import com.omar.retromp3recorder.app.ui.utils.toFileName
+import com.omar.retromp3recorder.ui.wavetable.WavetablePreview
 import java.text.SimpleDateFormat
 import java.util.*
 
