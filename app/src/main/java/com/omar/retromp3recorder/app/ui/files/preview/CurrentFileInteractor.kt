@@ -3,7 +3,10 @@ package com.omar.retromp3recorder.app.ui.files.preview
 import com.omar.retromp3recorder.app.ui.files.preview.buttonstate.DeleteFileButtonStateMapper
 import com.omar.retromp3recorder.app.ui.files.preview.buttonstate.OpenFileButtonStateMapper
 import com.omar.retromp3recorder.app.ui.files.preview.buttonstate.RenameFileButtonStateMapper
+import com.omar.retromp3recorder.bl.audio.AudioSeekUC
+import com.omar.retromp3recorder.bl.audio.PlayerProgressMapper
 import com.omar.retromp3recorder.bl.files.CurrentFileMapper
+import com.omar.retromp3recorder.utils.mapToUsecase
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -12,21 +15,26 @@ import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Inject
 
 class CurrentFileInteractor @Inject constructor(
+    private val audioSeekUC: AudioSeekUC,
     private val currentFileMapper: CurrentFileMapper,
     private val deleteFileButtonStateMapper: DeleteFileButtonStateMapper,
     private val openFileButtonStateMapper: OpenFileButtonStateMapper,
+    private val playerProgressMapper: PlayerProgressMapper,
     private val renameFileButtonStateMapper: RenameFileButtonStateMapper,
     private val scheduler: Scheduler,
 ) {
     fun processIO(): ObservableTransformer<CurrentFileView.Input, CurrentFileView.Output> =
         scheduler.processIO(
-            inputMapper = { Completable.never() },
-            outputMapper = mapRepoToOutput
+            inputMapper = inputMapper,
+            outputMapper = mapRepoToOutput,
         )
 
     private val mapRepoToOutput: () -> Observable<CurrentFileView.Output> = {
         Observable.merge(
             listOf(
+                playerProgressMapper.observe().map {
+                    CurrentFileView.Output.PlayerProgress(it.value)
+                },
                 renameFileButtonStateMapper.observe().map {
                     CurrentFileView.Output.RenameButtonState(it)
                 },
@@ -41,5 +49,10 @@ class CurrentFileInteractor @Inject constructor(
                     .map { CurrentFileView.Output.OpenButtonState(it) },
             )
         )
+    }
+    private val inputMapper: (Observable<CurrentFileView.Input>) -> Completable = { input ->
+        Completable.merge(listOf(
+            input.mapToUsecase<CurrentFileView.Input.SeekToPosition> { audioSeekUC.execute(it.position) }
+        ))
     }
 }

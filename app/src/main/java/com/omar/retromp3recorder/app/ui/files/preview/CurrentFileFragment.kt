@@ -14,6 +14,7 @@ import com.omar.retromp3recorder.app.ui.files.rename.RenameFileDialogFragment
 import com.omar.retromp3recorder.app.ui.utils.findViewById
 import com.omar.retromp3recorder.app.ui.utils.toFileName
 import com.omar.retromp3recorder.app.uiutils.observe
+import com.omar.retromp3recorder.ui.wavetable.WavetableSeekbarPreview
 
 class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
     private val textView: TextView
@@ -22,7 +23,7 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         get() = findViewById(R.id.button_open)
     private val buttonDelete: View
         get() = findViewById(R.id.button_delete)
-    private val wavetablePreview: WavetablePreview
+    private val wavetablePreviewPreview: WavetableSeekbarPreview
         get() = findViewById(R.id.wavetable)
     private val viewModel: CurrentFileViewModel by viewModels()
 
@@ -44,6 +45,9 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
                 RenameFileDialogFragment::class.java.canonicalName
             )
         }
+        wavetablePreviewPreview.observeProgress().observe(viewLifecycleOwner) {
+            viewModel.input.onNext(CurrentFileView.Input.SeekToPosition(it.first))
+        }
     }
 
     private fun renderState(state: CurrentFileView.State) {
@@ -51,9 +55,12 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         textView.isClickable = state.isRenameButtonActive
         buttonOpen.setIsButtonActive(state.isOpenFileActive)
         buttonDelete.setIsButtonActive(state.isDeleteFileActive)
-        wavetablePreview.isVisible = state.wavetable != null
+        wavetablePreviewPreview.isVisible = state.wavetable != null
         state.wavetable?.let {
-            wavetablePreview.update(it.data)
+            wavetablePreviewPreview.updateWavetable(it.data)
+        }
+        state.playerProgress?.let {
+            wavetablePreviewPreview.updateProgress(it)
         }
     }
 }

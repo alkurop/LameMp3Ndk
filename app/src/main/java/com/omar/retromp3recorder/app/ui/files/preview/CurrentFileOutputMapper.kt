@@ -34,6 +34,9 @@ object CurrentFileOutputMapper {
                 is CurrentFileView.Output.RenameButtonState -> oldState.copy(
                     isRenameButtonActive = output.isActive
                 )
+                is CurrentFileView.Output.PlayerProgress -> oldState.copy(
+                    playerProgress = output.progress
+                )
             }
         }
 }

@@ -22,4 +22,13 @@ interface AudioPlayer {
         Idle,
         Playing
     }
+
+    fun observerProgress(): Observable<Pair<Long, Long>>
+
+    fun seek(position: Long)
 }
+
+private const val PROGRESS_CONVERSION_RATE = 100
+
+fun Int.toPlayerTime(): Long = this.toLong() * PROGRESS_CONVERSION_RATE
+fun Long.toSeekbarTime(): Int = (this / PROGRESS_CONVERSION_RATE).toInt()
