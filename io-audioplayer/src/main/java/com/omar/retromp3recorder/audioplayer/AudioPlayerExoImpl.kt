@@ -5,10 +5,13 @@ import android.os.Handler
 import android.os.Looper
 import com.github.alkurop.stringerbell.Stringer
 import com.google.android.exoplayer2.*
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import java.io.File
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,16 +21,19 @@ class AudioPlayerExoImpl @Inject constructor(
 ) : AudioPlayer {
     private val events = PublishSubject.create<AudioPlayer.Event>()
     private val state = BehaviorSubject.createDefault(AudioPlayer.State.Idle)
+    private val progress = BehaviorSubject.createDefault(Pair(0L, 0L))
 
     //should be nullable, because after MediaPlayer.release() becomes useless
     private var mediaPlayer: ExoPlayer? = null
     private val handler = Handler(Looper.getMainLooper())
 
     override fun observeState(): Observable<AudioPlayer.State> = state
+    override fun observerProgress(): Observable<Pair<Long, Long>> = progress
 
     override fun playerStop() {
-        if (isPlaying)
+        if (isPlaying) {
             stopMedia()
+        }
     }
 
     override fun playerStart(voiceURL: String) {
@@ -50,15 +56,27 @@ class AudioPlayerExoImpl @Inject constructor(
             setMediaItem(MediaItem.fromUri(voiceURL))
             playWhenReady = true
             addListener(object : Player.Listener {
+                private var progressDisposable: Disposable? = null
+                private val simpleExoPlayer = this@apply
+
+                private fun sendProgressUpdate() {
+                    progress.onNext(Pair(simpleExoPlayer.currentPosition, simpleExoPlayer.duration))
+                }
+
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
                     super.onIsPlayingChanged(isPlaying)
                     if (isPlaying) {
+                        progressDisposable = Observable.interval(100, TimeUnit.MILLISECONDS)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe { sendProgressUpdate() }
                         state.onNext(AudioPlayer.State.Playing)
                         events.onNext(AudioPlayer.Event.Message(Stringer(R.string.aplr_started_playing)))
                         mediaPlayer?.audioComponent?.audioSessionId?.let {
                             events.onNext(AudioPlayer.Event.AudioSessionId(it))
                         }
                     } else {
+                        progressDisposable?.dispose()
+                        progressDisposable = null
                         state.onNext(AudioPlayer.State.Idle)
                         events.onNext(AudioPlayer.Event.Message(Stringer(R.string.aplr_stopped_playing)))
                     }

@@ -22,4 +22,6 @@ interface AudioPlayer {
         Idle,
         Playing
     }
+
+    fun observerProgress(): Observable<Pair<Long, Long>>
 }
