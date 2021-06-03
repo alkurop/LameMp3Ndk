@@ -10,10 +10,11 @@ object CurrentFileView {
         val isOpenFileActive: Boolean = false,
         val isDeleteFileActive: Boolean = false,
         val isRenameButtonActive: Boolean = false,
-        val playerProgress: Pair<Long, Long>? = null
+        val playerProgress: Pair<Int, Int>? = null
     )
 
     sealed class Input {
+        data class SeekToPosition(val position: Int)
     }
 
     sealed class Output {
@@ -21,6 +22,6 @@ object CurrentFileView {
         data class DeleteButtonState(val isActive: Boolean) : Output()
         data class OpenButtonState(val isActive: Boolean) : Output()
         data class RenameButtonState(val isActive: Boolean) : Output()
-        data class PlayerProgress(val progress: Pair<Long, Long>) : Output()
+        data class PlayerProgress(val progress: Pair<Int, Int>?) : Output()
     }
 }

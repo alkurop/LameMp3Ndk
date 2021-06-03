@@ -30,7 +30,7 @@ class CurrentFileInteractor @Inject constructor(
         Observable.merge(
             listOf(
                 playerProgressMapper.observe().map {
-                    CurrentFileView.Output.PlayerProgress(it)
+                    CurrentFileView.Output.PlayerProgress(it.value)
                 },
                 renameFileButtonStateMapper.observe().map {
                     CurrentFileView.Output.RenameButtonState(it)

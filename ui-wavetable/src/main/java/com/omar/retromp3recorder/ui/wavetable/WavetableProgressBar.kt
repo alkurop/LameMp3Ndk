@@ -11,7 +11,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 
-class WavetableSeekbar @JvmOverloads constructor(
+class WavetableProgressBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
     private val paint: Paint = Paint().apply {
@@ -19,9 +19,9 @@ class WavetableSeekbar @JvmOverloads constructor(
         style = Paint.Style.FILL
         color = ContextCompat.getColor(context, android.R.color.holo_blue_dark)
     }
-    private val bytesBus = BehaviorSubject.create<Pair<Long, Long>>()
+    private val bytesBus = BehaviorSubject.create<Pair<Int, Int>>()
 
-    fun update(update: Pair<Long, Long>) {
+    fun update(update: Pair<Int, Int>) {
         bytesBus.onNext(update)
         invalidate()
     }
@@ -34,7 +34,7 @@ class WavetableSeekbar @JvmOverloads constructor(
             return
         }
         val (progress, length) = bytesBus.blockingFirst()
-        if (length == 0L) return
+        if (length == 0) return
         val path = Path()
         val start = 0
         val end = width * progress / length

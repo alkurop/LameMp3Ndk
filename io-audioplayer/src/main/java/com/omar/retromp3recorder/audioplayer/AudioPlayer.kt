@@ -23,5 +23,7 @@ interface AudioPlayer {
         Playing
     }
 
-    fun observerProgress(): Observable<Pair<Long, Long>>
+    fun observerProgress(): Observable<Pair<Int, Int>>
+
+    fun seek(position: Int)
 }

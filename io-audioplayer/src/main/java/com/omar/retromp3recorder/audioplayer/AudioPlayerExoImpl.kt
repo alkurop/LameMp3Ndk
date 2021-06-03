@@ -21,14 +21,15 @@ class AudioPlayerExoImpl @Inject constructor(
 ) : AudioPlayer {
     private val events = PublishSubject.create<AudioPlayer.Event>()
     private val state = BehaviorSubject.createDefault(AudioPlayer.State.Idle)
-    private val progress = BehaviorSubject.create<Pair<Long, Long>>()
+    private val progress = BehaviorSubject.create<Pair<Int, Int>>()
 
     //should be nullable, because after MediaPlayer.release() becomes useless
     private var mediaPlayer: ExoPlayer? = null
     private val handler = Handler(Looper.getMainLooper())
 
     override fun observeState(): Observable<AudioPlayer.State> = state
-    override fun observerProgress(): Observable<Pair<Long, Long>> = progress
+
+    override fun observerProgress(): Observable<Pair<Int, Int>> = progress
 
     override fun playerStop() {
         if (isPlaying) {
@@ -47,6 +48,10 @@ class AudioPlayerExoImpl @Inject constructor(
         return events
     }
 
+    override fun seek(position: Int) {
+        mediaPlayer?.seekTo(position.toLong() * 100)
+    }
+
     private fun setupMediaPlayer(voiceURL: String) {
         if (!File(voiceURL).exists()) {
             events.onNext(AudioPlayer.Event.Error(Stringer(R.string.aplr_player_cannot_find_file)))
@@ -60,7 +65,9 @@ class AudioPlayerExoImpl @Inject constructor(
                 private val simpleExoPlayer = this@apply
 
                 private fun sendProgressUpdate() {
-                    progress.onNext(Pair(simpleExoPlayer.currentPosition, simpleExoPlayer.duration))
+                    val position = (simpleExoPlayer.currentPosition / 100).toInt()
+                    val duration = (simpleExoPlayer.duration / 100).toInt()
+                    progress.onNext(Pair(position, duration))
                 }
 
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
