@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.bl.audio
 
 import android.Manifest
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
+import com.omar.retromp3recorder.audioplayer.PlayerStartOptions
 import com.omar.retromp3recorder.bl.CheckPermissionsUC
 import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.storage.repo.RequestPermissionsRepo
@@ -22,7 +23,9 @@ class StartPlaybackUC @Inject constructor(
             .takeOne()
             .flatMapCompletable { fileName ->
                 Completable.fromAction {
-                    audioPlayer.playerStart(fileName.value!!)
+                    audioPlayer.playerStart(
+                        PlayerStartOptions(filePath = fileName.value!!)
+                    )
                 }
             }
         return checkPermissionsUC.execute(playbackPermissions)

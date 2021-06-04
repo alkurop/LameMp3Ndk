@@ -4,6 +4,7 @@ import android.app.Application
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.di.DaggerAppComponent
 import com.omar.retromp3recorder.app.di.UtilsModule
+import com.omar.retromp3recorder.bl.audio.CleanUpSeekRepoUsecase
 import com.omar.retromp3recorder.bl.files.TakeLastFileUC
 import com.omar.retromp3recorder.bl.settings.LoadRecorderSettingsUC
 import timber.log.Timber
@@ -16,6 +17,9 @@ class App : Application() {
     @Inject
     lateinit var takeLastFileUC: TakeLastFileUC
 
+    @Inject
+    lateinit var cleanUpSeekRepoUsecase: CleanUpSeekRepoUsecase
+
     override fun onCreate() {
         super.onCreate()
         appComponent = DaggerAppComponent.builder().utilsModule(UtilsModule(this)).build()
@@ -23,10 +27,10 @@ class App : Application() {
             Timber.plant(Timber.DebugTree())
         }
         appComponent.inject(this)
-        //load user prefs for the recorder
+
         loadRecorderSettingsUC.execute().subscribe()
-        //take last recording and put into the CurrentFileRepo
         takeLastFileUC.execute().subscribe()
+        cleanUpSeekRepoUsecase.execute().subscribe()
     }
 
     companion object {

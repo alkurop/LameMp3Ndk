@@ -37,10 +37,10 @@ class AudioPlayerExoImpl @Inject constructor(
         }
     }
 
-    override fun playerStart(voiceURL: String) {
+    override fun playerStart(options: PlayerStartOptions) {
         if (!isPlaying)
             handler.post {
-                setupMediaPlayer(voiceURL)
+                setupMediaPlayer(options.filePath, options.seekPosition)
             }
     }
 
@@ -54,13 +54,17 @@ class AudioPlayerExoImpl @Inject constructor(
         }
     }
 
-    private fun setupMediaPlayer(voiceURL: String) {
+    private fun setupMediaPlayer(voiceURL: String, seekPosition: Long?) {
         if (!File(voiceURL).exists()) {
             events.onNext(AudioPlayer.Event.Error(Stringer(R.string.aplr_player_cannot_find_file)))
             return
         }
         mediaPlayer.apply {
-            setMediaItem(MediaItem.fromUri(voiceURL))
+            if (seekPosition != null) {
+                setMediaItem(MediaItem.fromUri(voiceURL), seekPosition)
+            } else {
+                setMediaItem(MediaItem.fromUri(voiceURL))
+            }
             playWhenReady = true
             addListener(object : Player.Listener {
                 private var progressDisposable: Disposable? = null

@@ -29,3 +29,7 @@ class SampleRateRepo @Inject constructor(defaults: RecorderDefaults) :
 @Singleton
 class WavetableRepo @Inject constructor() :
     BehaviorSubjectRepo<Shell<Pair<String, Wavetable>>>(Shell.empty())
+
+@Singleton
+class SeekToPositionRepo @Inject constructor() :
+    BehaviorSubjectRepo<Shell<Int>>(Shell.empty())
