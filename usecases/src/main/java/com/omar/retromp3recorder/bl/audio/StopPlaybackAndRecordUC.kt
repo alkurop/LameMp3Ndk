@@ -15,6 +15,8 @@ class StopPlaybackAndRecordUC @Inject constructor(
         .flatMapCompletable { state: AudioState ->
             when (state) {
                 AudioState.Playing -> Completable.fromAction { audioPlayer.playerStop() }
+                AudioState.Seek_Paused,
+                AudioState.Paused -> Completable.fromAction { audioPlayer.playerStop() }
                 AudioState.Recording -> stopRecordUC.execute()
                 is AudioState.Idle -> Completable.complete()
             }

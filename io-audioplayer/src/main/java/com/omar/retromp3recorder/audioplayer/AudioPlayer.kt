@@ -22,7 +22,9 @@ interface AudioPlayer {
 
     enum class State {
         Idle,
-        Playing
+        Playing,
+        Paused,
+        Seek_Paused
     }
 
     fun observerProgress(): Observable<Pair<Long, Long>>
