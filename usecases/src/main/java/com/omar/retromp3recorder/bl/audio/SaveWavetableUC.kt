@@ -24,7 +24,7 @@ class SaveWavetableUC @Inject constructor(
                         val fileEntityDao = appDatabase.fileEntityDao()
                         val fileList = fileListRepo.observe().blockingFirst()
 
-                        fileList.find { it.path == path }?.let {
+                        fileList.find { it.path == path }!!.let {
                             val waveOwner =
                                 it.toDatabaseEntity().copy(waveform = wave.toDatabaseEntity())
                             val update = waveOwner.copy(waveform = wave.toDatabaseEntity())

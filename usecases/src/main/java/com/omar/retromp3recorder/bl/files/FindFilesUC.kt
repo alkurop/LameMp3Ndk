@@ -23,6 +23,7 @@ import javax.inject.Inject
  */
 class FindFilesUC @Inject constructor(
     private val appDatabase: AppDatabase,
+    private val emptyWavetableGenerator: EmptyWavetableGenerator,
     private val fileListRepo: FileListRepo,
     private val filePathGenerator: FilePathGenerator,
     private val fileEmptyChecker: FileEmptyChecker,
@@ -30,29 +31,35 @@ class FindFilesUC @Inject constructor(
 ) {
     fun execute(): Completable = Completable
         .fromAction {
-            val fileDir = filePathGenerator.fileDir
-            //look for files in dir
-            val foundFiles = fileLister.listFiles(fileDir)
-            //these are files with content
+            val foundFiles = fileLister.listFiles(filePathGenerator.fileDir)
             val nonEmptyFiles = foundFiles.filter { fileEmptyChecker.isFileEmpty(it.path).not() }
-            //and empty files should be deleted
             foundFiles.filter { it !in nonEmptyFiles }.forEach { File(it.path).delete() }
             val dirFiles = nonEmptyFiles.sortedBy { it.createTimedStamp }
-            //now get database records
-            val dbFiles = appDatabase.fileEntityDao().getAll().map { it.toFileWrapper() }
-            val filesToAddToDatabase = dirFiles.filter { dirFile ->
-                dbFiles.map { dbFile -> dbFile.path }.contains(dirFile.path).not()
-            }
-            val recordsToRemoveFromDatabase = dbFiles.filter { dbFile ->
-                dirFiles.map { it.path }.contains(dbFile.path).not()
-            }
+            val updatedList = appDatabase.fileEntityDao().run {
+                val dbFiles = getAll().map { it.toFileWrapper() }
+                val recordsToRemoveFromDatabase = dbFiles.filter { dbFile ->
+                    dirFiles.map { it.path }.contains(dbFile.path).not()
+                }
 
-            appDatabase.fileEntityDao()
-                .delete(recordsToRemoveFromDatabase.map { it.toDatabaseEntity() })
+                insert(dirFiles
+                    .filter { dirFile ->
+                        dbFiles.map { dbFile -> dbFile.path }.contains(dirFile.path).not()
+                    }
+                    .map { it.copy(wavetable = emptyWavetableGenerator.generateWavetable(it.path)) }
+                    .map { it.toDatabaseEntity() })
 
-            appDatabase.fileEntityDao().insert(filesToAddToDatabase.map { it.toDatabaseEntity() })
-            //finally update the file list repo
-            val updatedList = appDatabase.fileEntityDao().getAll()
+                update(dbFiles.filter { it !in recordsToRemoveFromDatabase }
+                    .filter { it.wavetable == null }
+                    .map { it.copy(wavetable = emptyWavetableGenerator.generateWavetable(it.path)) }
+                    .map { it.toDatabaseEntity() }
+                )
+
+                delete(recordsToRemoveFromDatabase.map {
+                    it.toDatabaseEntity()
+                })
+
+                getAll()
+            }
             fileListRepo.onNext(updatedList.map { it.toFileWrapper() })
         }
 }

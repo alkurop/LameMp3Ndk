@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.core.view.isVisible
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.omar.retromp3recorder.app.R
@@ -55,7 +55,7 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         textView.isClickable = state.isRenameButtonActive
         buttonOpen.setIsButtonActive(state.isOpenFileActive)
         buttonDelete.setIsButtonActive(state.isDeleteFileActive)
-        wavetablePreviewPreview.isVisible = state.wavetable != null
+        wavetablePreviewPreview.isInvisible = state.wavetable == null
         state.wavetable?.let {
             wavetablePreviewPreview.updateWavetable(it.data)
         }
