@@ -30,8 +30,11 @@ interface FileDbEntityDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(items: List<FileDbEntity>)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateItem(item: FileDbEntity)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun update(items: List<FileDbEntity>)
 
     @Delete
     fun delete(items: List<FileDbEntity>)
@@ -52,7 +55,7 @@ fun ExistingFileWrapper.toDatabaseEntity(): FileDbEntity = FileDbEntity(
     this.createTimedStamp,
     this.modifiedTimestamp,
     this.path,
-    waveform = null
+    waveform = this.wavetable?.toDatabaseEntity()
 )
 
 fun Wavetable.toDatabaseEntity() = WaveformDbEntity(this.data)
