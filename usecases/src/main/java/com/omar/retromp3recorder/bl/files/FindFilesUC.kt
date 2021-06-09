@@ -23,6 +23,7 @@ import javax.inject.Inject
  */
 class FindFilesUC @Inject constructor(
     private val appDatabase: AppDatabase,
+    private val emptyWavetableGenerator: EmptyWavetableGenerator,
     private val fileListRepo: FileListRepo,
     private val filePathGenerator: FilePathGenerator,
     private val fileEmptyChecker: FileEmptyChecker,
@@ -50,7 +51,11 @@ class FindFilesUC @Inject constructor(
             appDatabase.fileEntityDao()
                 .delete(recordsToRemoveFromDatabase.map { it.toDatabaseEntity() })
 
-            appDatabase.fileEntityDao().insert(filesToAddToDatabase.map { it.toDatabaseEntity() })
+            appDatabase.fileEntityDao().insert(filesToAddToDatabase.map {
+                it.toDatabaseEntity().copy(
+                    waveform = emptyWavetableGenerator.generateWavetable(it.path).toDatabaseEntity()
+                )
+            })
             //finally update the file list repo
             val updatedList = appDatabase.fileEntityDao().getAll()
             fileListRepo.onNext(updatedList.map { it.toFileWrapper() })
