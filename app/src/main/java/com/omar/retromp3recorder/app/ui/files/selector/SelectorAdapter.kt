@@ -59,11 +59,15 @@ class SelectorAdapter(
             currentFileSign.isVisible = item.isCurrentItem
             val wavetable = item.fileWrapper.wavetable
             wavetablePreview.isVisible = wavetable != null
-            wavetable?.let {
-                wavetablePreview.update(it.data)
-                val millisLength = it.data.size * 100L
+            if (wavetable != null) {
+                wavetablePreview.isVisible = true
+                wavetablePreview.update(wavetable.data)
+                val millisLength = wavetable.data.size * 100L
                 val simpleDateFormat = SimpleDateFormat("mm:ss")
-                timeView.setText(simpleDateFormat.format(Date(millisLength)))
+                timeView.text = simpleDateFormat.format(Date(millisLength))
+            } else {
+                wavetablePreview.isVisible = false
+                timeView.text = null
             }
         }
     }
