@@ -41,9 +41,7 @@ class DeleteFileInteractor @Inject constructor(
             Completable.merge(
                 listOf(
                     input.mapToUsecase<DeleteFileView.Input.DeleteFile> {
-                        deleteCurrentFileUC.execute(
-                            dismissSubject
-                        )
+                        deleteCurrentFileUC.execute().andThen { dismissSubject.onNext(true) }
                     }
                 )
             )

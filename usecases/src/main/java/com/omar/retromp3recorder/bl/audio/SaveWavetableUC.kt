@@ -22,14 +22,18 @@ class SaveWavetableUC @Inject constructor(
                     val (path, wave) = ghost
                     Completable.fromAction {
                         val fileEntityDao = appDatabase.fileEntityDao()
-                        val waveOwner = fileEntityDao.getByFilepath(path)[0]
-                        val update = waveOwner.copy(waveform = wave.toDatabaseEntity())
-                        fileEntityDao.updateItem(update)
-                        //update filelist with the wavetable for first file
                         val fileList = fileListRepo.observe().blockingFirst()
-                        val size = fileList.size
-                        val newItem = fileList[size - 1].copy(wavetable = wave)
-                        fileListRepo.onNext(fileList.take(size - 1) + listOf(newItem))
+
+                        fileList.find { it.path == path }?.let {
+                            val waveOwner =
+                                it.toDatabaseEntity().copy(waveform = wave.toDatabaseEntity())
+                            val update = waveOwner.copy(waveform = wave.toDatabaseEntity())
+                            fileEntityDao.updateItem(update)
+                            //update filelist with the wavetable for first file
+                            val size = fileList.size
+                            val newItem = fileList[size - 1].copy(wavetable = wave)
+                            fileListRepo.onNext(fileList.take(size - 1) + listOf(newItem))
+                        }
                     }
                 }
             }

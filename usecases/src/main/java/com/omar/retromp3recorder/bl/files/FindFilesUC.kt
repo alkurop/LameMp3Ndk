@@ -43,14 +43,14 @@ class FindFilesUC @Inject constructor(
             val filesToAddToDatabase = dirFiles.filter { dirFile ->
                 dbFiles.map { dbFile -> dbFile.path }.contains(dirFile.path).not()
             }
-
-            appDatabase.fileEntityDao().insert(filesToAddToDatabase.map { it.toDatabaseEntity() })
             val recordsToRemoveFromDatabase = dbFiles.filter { dbFile ->
                 dirFiles.map { it.path }.contains(dbFile.path).not()
             }
 
             appDatabase.fileEntityDao()
                 .delete(recordsToRemoveFromDatabase.map { it.toDatabaseEntity() })
+
+            appDatabase.fileEntityDao().insert(filesToAddToDatabase.map { it.toDatabaseEntity() })
             //finally update the file list repo
             val updatedList = appDatabase.fileEntityDao().getAll()
             fileListRepo.onNext(updatedList.map { it.toFileWrapper() })
