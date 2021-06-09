@@ -27,7 +27,7 @@ interface FileDbEntityDao {
     @Query("SELECT * from FileDbEntity WHERE filepath = :filepath")
     fun getByFilepath(filepath: String): List<FileDbEntity>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(items: List<FileDbEntity>)
 
     @Update
