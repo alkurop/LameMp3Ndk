@@ -68,7 +68,7 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         state.wavetable?.let {
             wavetablePreviewPreview.updateWavetable(it.data)
         }
-        state.playerProgress?.let {
+        state.playerProgress.ghost?.let {
             wavetablePreviewPreview.updateProgress(it)
         }
     }
