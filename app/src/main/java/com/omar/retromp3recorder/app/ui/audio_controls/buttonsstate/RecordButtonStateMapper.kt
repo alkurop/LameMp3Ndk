@@ -9,8 +9,8 @@ import javax.inject.Inject
 class RecordButtonStateMapper @Inject constructor(
     private val audioStateMapper: AudioStateMapper,
 ) {
-    fun observe(): Observable<InteractiveButton.State> {
-        return audioStateMapper.observe().map { audioState ->
+    fun observe(): Observable<InteractiveButton.State> =
+        audioStateMapper.observe().map { audioState ->
             when (audioState) {
                 is AudioState.Recording -> InteractiveButton.State.RUNNING
                 is AudioState.Playing -> InteractiveButton.State.DISABLED
@@ -19,5 +19,4 @@ class RecordButtonStateMapper @Inject constructor(
                 is AudioState.Idle -> InteractiveButton.State.ENABLED
             }
         }
-    }
 }

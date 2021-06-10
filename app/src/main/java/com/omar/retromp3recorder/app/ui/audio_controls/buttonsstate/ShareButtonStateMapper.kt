@@ -13,8 +13,8 @@ class ShareButtonStateMapper @Inject constructor(
     private val audioStateMapper: AudioStateMapper,
     private val fileEmptyChecker: FileEmptyChecker
 ) {
-    fun observe(): Observable<InteractiveButton.State> {
-        return Observable.combineLatest(
+    fun observe(): Observable<InteractiveButton.State> =
+        Observable.combineLatest(
             currentFileRepo.observe(),
             audioStateMapper.observe(), { currentFile, audioState ->
                 when (audioState) {
@@ -33,5 +33,4 @@ class ShareButtonStateMapper @Inject constructor(
                 }
             }
         )
-    }
 }
