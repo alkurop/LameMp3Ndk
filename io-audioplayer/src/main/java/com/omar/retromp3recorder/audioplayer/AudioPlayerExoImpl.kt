@@ -39,17 +39,21 @@ class AudioPlayerExoImpl @Inject constructor(
             is AudioPlayer.Input.Pause -> {
                 mediaPlayer.pause()
                 state.onNext(AudioPlayer.State.Paused)
+                events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_pause)))
             }
             is AudioPlayer.Input.Resume -> {
                 mediaPlayer.play()
+                events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_resume)))
                 state.onNext(AudioPlayer.State.Playing)
             }
             is AudioPlayer.Input.SeekPause -> {
                 mediaPlayer.pause()
+                events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_seek_pause)))
                 state.onNext(AudioPlayer.State.Seek_Paused)
             }
             is AudioPlayer.Input.Seek -> {
                 handler.post {
+                    events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_seek)))
                     mediaPlayer.seekTo(input.position)
                 }
             }
@@ -104,6 +108,7 @@ class AudioPlayerExoImpl @Inject constructor(
                         mediaPlayer.audioComponent?.audioSessionId?.let {
                             events.onNext(AudioPlayer.Output.Event.AudioSessionId(it))
                         }
+                        events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_started_playing)))
                     } else {
                         sendProgressUpdate()
                         progressDisposable?.dispose()
@@ -125,6 +130,7 @@ class AudioPlayerExoImpl @Inject constructor(
                 stop()
             }
             state.onNext(AudioPlayer.State.Idle)
+            events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_stopped_playing)))
         }
     }
 }
