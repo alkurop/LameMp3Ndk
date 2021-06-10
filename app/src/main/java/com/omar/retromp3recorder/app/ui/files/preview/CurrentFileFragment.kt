@@ -45,8 +45,17 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
                 RenameFileDialogFragment::class.java.canonicalName
             )
         }
-        wavetablePreviewPreview.observeProgress().observe(viewLifecycleOwner) {
-            viewModel.input.onNext(CurrentFileView.Input.SeekToPosition(it.first))
+        wavetablePreviewPreview.observeIsSeeking().observe(viewLifecycleOwner) {
+            val event = when (it) {
+                is WavetableSeekbarPreview.SeekState.SeekFinished ->
+                    CurrentFileView.Input.SeekToPosition(it.progress)
+                is WavetableSeekbarPreview.SeekState.SeekStarted -> {
+                    CurrentFileView.Input.SeekingStarted
+                }
+            }
+            viewModel.input.onNext(event)
+        }
+        wavetablePreviewPreview.observeIsSeeking().observe(viewLifecycleOwner) {
         }
     }
 
@@ -59,7 +68,7 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         state.wavetable?.let {
             wavetablePreviewPreview.updateWavetable(it.data)
         }
-        state.playerProgress?.let {
+        state.playerProgress.ghost?.let {
             wavetablePreviewPreview.updateProgress(it)
         }
     }

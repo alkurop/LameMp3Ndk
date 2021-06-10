@@ -16,9 +16,8 @@ class OpenFileButtonStateMapper @Inject constructor(
             audioStateMapper.observe(),
             { fileList, audioState ->
                 when (audioState) {
-                    is AudioState.Recording,
-                    is AudioState.Playing -> false
                     is AudioState.Idle -> fileList.isNotEmpty()
+                    else -> false
                 }
             }
         )

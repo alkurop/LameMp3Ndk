@@ -36,7 +36,12 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.state.observe(viewLifecycleOwner) { state ->
-            if (state.audioState != AudioState.Playing) {
+            if (state.audioState !in listOf(
+                    AudioState.Playing,
+                    AudioState.Paused,
+                    AudioState.Seek_Paused
+                )
+            ) {
                 stopVisualizer()
             } else {
                 renderPlayerId(state.playerId)

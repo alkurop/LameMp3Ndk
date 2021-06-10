@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.ui.files.preview
 
+import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.dto.ExistingFileWrapper
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableTransformer
@@ -35,7 +36,7 @@ object CurrentFileOutputMapper {
                     isRenameButtonActive = output.isActive
                 )
                 is CurrentFileView.Output.PlayerProgress -> oldState.copy(
-                    playerProgress = output.progress
+                    playerProgress = Shell(output.progress)
                 )
             }
         }

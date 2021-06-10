@@ -3,5 +3,9 @@
     <string name="aplr_not_recorder_yet">Not recorded yet</string>
     <string name="aplr_stopped_playing">stopped playing</string>
     <string name="aplr_started_playing">started playing</string>
+    <string name="aplr_seek">player seek</string>
     <string name="aplr_player_error_on_stop">player error onPlay</string>
+    <string name="aplr_pause">player pause</string>
+    <string name="aplr_resume">player resume</string>
+    <string name="aplr_seek_pause">player pause during seek</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.ui.files.preview
 
+import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.dto.FileWrapper
 import com.omar.retromp3recorder.dto.Wavetable
 
@@ -10,11 +11,12 @@ object CurrentFileView {
         val isOpenFileActive: Boolean = false,
         val isDeleteFileActive: Boolean = false,
         val isRenameButtonActive: Boolean = false,
-        val playerProgress: Pair<Int, Int>? = null
+        val playerProgress: Shell<Pair<Int, Int>> = Shell.empty()
     )
 
     sealed class Input {
         data class SeekToPosition(val position: Int) : Input()
+        object SeekingStarted : Input()
     }
 
     sealed class Output {

@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.bl
 
 import com.github.alkurop.stringerbell.Stringer
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
+import com.omar.retromp3recorder.audioplayer.observeEvents
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.share.Sharer
 import io.reactivex.rxjava3.core.Observable
@@ -41,11 +42,11 @@ private fun Mp3VoiceRecorder.createLogs(): Observable<LogMapper.Event> {
 private fun AudioPlayer.createLogs(): Observable<LogMapper.Event> {
     val message: Observable<LogMapper.Event> = this
         .observeEvents()
-        .ofType(AudioPlayer.Event.Message::class.java)
+        .ofType(AudioPlayer.Output.Event.Message::class.java)
         .map { answer -> LogMapper.Event.Message(answer.message) }
     val error: Observable<LogMapper.Event> = this
         .observeEvents()
-        .ofType(AudioPlayer.Event.Error::class.java)
+        .ofType(AudioPlayer.Output.Event.Error::class.java)
         .map { answer -> LogMapper.Event.Error(answer.error) }
 
     return Observable.merge(message, error)

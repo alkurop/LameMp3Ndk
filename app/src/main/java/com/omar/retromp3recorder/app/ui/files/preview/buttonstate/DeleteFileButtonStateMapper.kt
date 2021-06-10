@@ -16,9 +16,8 @@ class DeleteFileButtonStateMapper @Inject constructor(
             audioStateMapper.observe(),
             { currentFile, audioState ->
                 when (audioState) {
-                    is AudioState.Recording,
-                    is AudioState.Playing -> false
                     is AudioState.Idle -> currentFile.value != null
+                    else -> false
                 }
             }
         ).share()
