@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 class WavetableSeekbarPreview @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -17,10 +17,11 @@ class WavetableSeekbarPreview @JvmOverloads constructor(
         get() = findViewById(R.id.wavetable_preview)
     private val seekbar: SeekBar
         get() = findViewById(R.id.seek_bar)
-    private var shouldUpdateProgressBar = true
-    private var progressUpdate = PublishSubject.create<Pair<Int, Int>>()
+    private val isSeekingBus = BehaviorSubject.create<SeekState>()
+    private val shouldUpdateProgressBar =
+        isSeekingBus.hasValue().not() || isSeekingBus.blockingFirst() is SeekState.SeekFinished
 
-    fun observeProgress(): Observable<Pair<Int, Int>> = progressUpdate
+    fun observeIsSeeking(): Observable<SeekState> = isSeekingBus
 
     init {
         View.inflate(context, R.layout.view_wavetable_seekbar, this)
@@ -29,21 +30,25 @@ class WavetableSeekbarPreview @JvmOverloads constructor(
             var userChangedProgress: Pair<Int, Int> = Pair(0, 0)
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
-                    userChangedProgress = Pair(progress, (seekbar.max))
+                    userChangedProgress = Pair(progress, seekbar.max)
                     wavetableProgressBar.update(userChangedProgress)
-                    progressUpdate.onNext(userChangedProgress)
                 }
             }
 
             override fun onStartTrackingTouch(v: SeekBar?) {
-                shouldUpdateProgressBar = false
+                isSeekingBus.onNext(SeekState.SeekStarted)
             }
 
             override fun onStopTrackingTouch(v: SeekBar?) {
-                shouldUpdateProgressBar = true
+                isSeekingBus.onNext(
+                    SeekState.SeekFinished(
+                        userChangedProgress.first,
+                        userChangedProgress.second
+                    )
+                )
             }
         })
-        seekbar.setPadding(0, 0, 0, 0);
+        seekbar.setPadding(0, 0, 0, 0)
     }
 
     fun updateWavetable(bytes: ByteArray) {
@@ -58,5 +63,10 @@ class WavetableSeekbarPreview @JvmOverloads constructor(
             seekbar.max = (progress.second)
             seekbar.progress = (progress.first)
         }
+    }
+
+    sealed class SeekState {
+        object SeekStarted : SeekState()
+        data class SeekFinished(val progress: Int, val max: Int) : SeekState()
     }
 }

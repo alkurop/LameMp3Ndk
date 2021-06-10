@@ -15,6 +15,7 @@ object CurrentFileView {
 
     sealed class Input {
         data class SeekToPosition(val position: Int) : Input()
+        object SeekingStarted : Input()
     }
 
     sealed class Output {
