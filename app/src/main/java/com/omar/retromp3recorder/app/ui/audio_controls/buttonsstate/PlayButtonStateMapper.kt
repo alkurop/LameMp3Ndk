@@ -20,7 +20,7 @@ class PlayButtonStateMapper @Inject constructor(
                 when (audioState) {
                     is AudioState.Recording -> InteractiveButton.State.DISABLED
                     is AudioState.Paused -> InteractiveButton.State.ENABLED
-                    is AudioState.Seek_Paused -> InteractiveButton.State.DISABLED
+                    is AudioState.Seek_Paused,
                     is AudioState.Playing -> InteractiveButton.State.RUNNING
                     is AudioState.Idle -> {
                         val path = currentFile.value

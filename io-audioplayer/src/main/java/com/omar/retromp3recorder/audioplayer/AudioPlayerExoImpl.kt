@@ -35,38 +35,33 @@ class AudioPlayerExoImpl @Inject constructor(
     override fun observeState(): Observable<AudioPlayer.State> = state
 
     override fun onInput(input: AudioPlayer.Input) {
-        when (input) {
-            is AudioPlayer.Input.Pause -> {
-                mediaPlayer.pause()
-                state.onNext(AudioPlayer.State.Paused)
-                events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_pause)))
-            }
-            is AudioPlayer.Input.Resume -> {
-                mediaPlayer.play()
-                events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_resume)))
-                state.onNext(AudioPlayer.State.Playing)
-            }
-            is AudioPlayer.Input.SeekPause -> {
-                mediaPlayer.pause()
-                events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_seek_pause)))
-                state.onNext(AudioPlayer.State.Seek_Paused)
-            }
-            is AudioPlayer.Input.Seek -> {
-                handler.post {
+        handler.post {
+            when (input) {
+                is AudioPlayer.Input.Pause -> {
+                    mediaPlayer.pause()
+                    state.onNext(AudioPlayer.State.Paused)
+                    events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_pause)))
+                }
+                is AudioPlayer.Input.Resume -> {
+                    mediaPlayer.play()
+                    events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_resume)))
+                    state.onNext(AudioPlayer.State.Playing)
+                }
+                is AudioPlayer.Input.SeekPause -> {
+                    mediaPlayer.pause()
+                    events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_seek_pause)))
+                    state.onNext(AudioPlayer.State.Seek_Paused)
+                }
+                is AudioPlayer.Input.Seek -> {
                     events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_seek)))
                     mediaPlayer.seekTo(input.position)
                 }
-            }
-            is AudioPlayer.Input.Stop -> {
-                if (isPlaying) {
+                is AudioPlayer.Input.Stop -> {
                     stopMedia()
                 }
-            }
-            is AudioPlayer.Input.Start -> {
-                if (!isPlaying)
-                    handler.post {
-                        setupMediaPlayer(input.options.filePath, input.options.seekPosition)
-                    }
+                is AudioPlayer.Input.Start -> {
+                    setupMediaPlayer(input.options.filePath, input.options.seekPosition)
+                }
             }
         }
     }
@@ -125,12 +120,10 @@ class AudioPlayerExoImpl @Inject constructor(
     }
 
     private fun stopMedia() {
-        handler.post {
-            mediaPlayer.apply {
-                stop()
-            }
-            state.onNext(AudioPlayer.State.Idle)
-            events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_stopped_playing)))
+        mediaPlayer.apply {
+            stop()
         }
+        state.onNext(AudioPlayer.State.Idle)
+        events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_stopped_playing)))
     }
 }

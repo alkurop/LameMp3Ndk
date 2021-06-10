@@ -3,14 +3,14 @@ package com.omar.retromp3recorder.bl.audio
 import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.audioplayer.toPlayerTime
-import com.omar.retromp3recorder.storage.repo.SeekToPositionRepo
+import com.omar.retromp3recorder.storage.repo.SeekRepo
 import com.omar.retromp3recorder.utils.takeOne
 import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 
 class AudioSeekUC @Inject constructor(
     private val audioPlayer: AudioPlayer,
-    private val seekToPositionRepo: SeekToPositionRepo
+    private val seekRepo: SeekRepo
 ) {
     fun execute(position: Int): Completable =
         audioPlayer.observeState().takeOne().flatMapCompletable { state ->
@@ -21,9 +21,10 @@ class AudioSeekUC @Inject constructor(
                     }
                     AudioPlayer.State.Seek_Paused -> {
                         audioPlayer.onInput(AudioPlayer.Input.Seek(position.toPlayerTime()))
+                        audioPlayer.onInput(AudioPlayer.Input.Resume)
                     }
                     else -> {
-                        seekToPositionRepo.onNext(Shell(position))
+                        seekRepo.onNext(Shell(position))
                     }
                 }
             }

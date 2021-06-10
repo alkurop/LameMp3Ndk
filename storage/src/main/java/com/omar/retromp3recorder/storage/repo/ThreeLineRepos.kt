@@ -31,5 +31,5 @@ class WavetableRepo @Inject constructor() :
     BehaviorSubjectRepo<Shell<Pair<String, Wavetable>>>(Shell.empty())
 
 @Singleton
-class SeekToPositionRepo @Inject constructor() :
+class SeekRepo @Inject constructor() :
     BehaviorSubjectRepo<Shell<Int>>(Shell.empty())
