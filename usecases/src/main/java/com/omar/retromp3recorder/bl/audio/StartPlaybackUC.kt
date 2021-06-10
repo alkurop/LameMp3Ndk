@@ -23,8 +23,10 @@ class StartPlaybackUC @Inject constructor(
             .takeOne()
             .flatMapCompletable { fileName ->
                 Completable.fromAction {
-                    audioPlayer.playerStart(
-                        PlayerStartOptions(filePath = fileName.value!!)
+                    audioPlayer.onInput(
+                        AudioPlayer.Input.Start(
+                            PlayerStartOptions(filePath = fileName.value!!)
+                        )
                     )
                 }
             }

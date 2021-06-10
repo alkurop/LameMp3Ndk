@@ -3,6 +3,7 @@ package com.omar.retromp3recorder.bl.audio
 import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.audioplayer.PlayerStartOptions
+import com.omar.retromp3recorder.audioplayer.isPlaying
 import com.omar.retromp3recorder.audioplayer.toPlayerTime
 import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.storage.repo.SeekToPositionRepo
@@ -17,14 +18,16 @@ class AudioSeekUC @Inject constructor(
     fun execute(position: Int): Completable =
         Completable.fromAction {
             if (audioPlayer.isPlaying) {
-                audioPlayer.seek(position.toPlayerTime())
+                audioPlayer.onInput(AudioPlayer.Input.Seek(position.toPlayerTime()))
             } else {
                 seekToPositionRepo.onNext(Shell(position))
                 val blockingFirst = currentFileRepo.observe().blockingFirst()
-                audioPlayer.playerStart(
-                    PlayerStartOptions(
-                        filePath = blockingFirst.value!!,
-                        seekPosition = position.toPlayerTime()
+                audioPlayer.onInput(
+                    AudioPlayer.Input.Start(
+                        PlayerStartOptions(
+                            filePath = blockingFirst.value!!,
+                            seekPosition = position.toPlayerTime()
+                        )
                     )
                 )
             }

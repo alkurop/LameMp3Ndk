@@ -4,21 +4,29 @@ import com.github.alkurop.stringerbell.Stringer
 import io.reactivex.rxjava3.core.Observable
 
 interface AudioPlayer {
-    fun playerStop()
-    fun playerStart(options: PlayerStartOptions)
-    fun seek(position: Long)
+    fun observe(): Observable<Output>
+    fun observeState(): Observable<State>
 
-    fun observeEvents(): Observable<Event>
-    val isPlaying: Boolean
+    fun onInput(input: Input)
 
-    //region events
-    sealed class Event {
-        data class Message(val message: Stringer) : Event()
-        data class Error(val error: Stringer) : Event()
-        data class AudioSessionId constructor(val playerId: Int) : Event()
+    sealed class Input {
+        data class Start(val options: PlayerStartOptions) : Input()
+        object Stop : Input()
+        object Pause : Input()
+        object SeekPause : Input()
+        object Resume : Input()
+        data class Seek(val position: Long) : Input()
     }
 
-    fun observeState(): Observable<State>
+    sealed class Output {
+        data class Progress(val position: Long, val duration: Long) : Output()
+
+        sealed class Event : Output() {
+            data class Message(val message: Stringer) : Event()
+            data class Error(val error: Stringer) : Event()
+            data class AudioSessionId constructor(val playerId: Int) : Event()
+        }
+    }
 
     enum class State {
         Idle,
@@ -26,8 +34,6 @@ interface AudioPlayer {
         Paused,
         Seek_Paused
     }
-
-    fun observerProgress(): Observable<Pair<Long, Long>>
 }
 
 private const val PROGRESS_CONVERSION_RATE = 100
@@ -39,3 +45,12 @@ data class PlayerStartOptions(
     val seekPosition: Long? = null,
     val filePath: String
 )
+
+fun AudioPlayer.observeEvents(): Observable<AudioPlayer.Output.Event> =
+    this.observe().ofType(AudioPlayer.Output.Event::class.java)
+
+fun AudioPlayer.observeProgress(): Observable<AudioPlayer.Output.Progress> =
+    this.observe().ofType(AudioPlayer.Output.Progress::class.java)
+
+val AudioPlayer.isPlaying: Boolean
+    get() = this.observeState().blockingFirst() == AudioPlayer.State.Playing
