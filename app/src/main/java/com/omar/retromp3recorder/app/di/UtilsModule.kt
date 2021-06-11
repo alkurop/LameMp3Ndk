@@ -48,4 +48,7 @@ class UtilsModule(private val app: Application) {
 
     @Provides
     fun provideFileRenamer(): FileRenamer = FileRenameImpl()
+
+    @Provides
+    fun provideDirCreator(): DirCreator = DirCreatorImpl()
 }

@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.bl.audio
 
 import android.Manifest
 import com.omar.retromp3recorder.bl.CheckPermissionsUC
+import com.omar.retromp3recorder.bl.files.GenerateDirIfNotExistsUC
 import com.omar.retromp3recorder.bl.files.GetNewFileNameUC
 import com.omar.retromp3recorder.bl.files.IncrementFileNameUC
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
@@ -22,6 +23,7 @@ class StartRecordUC @Inject constructor(
     private val checkPermissionsUC: CheckPermissionsUC,
     private val currentFileRepo: CurrentFileRepo,
     private val getNewFileNameUC: GetNewFileNameUC,
+    private val generateDirIfNotExistsUC: GenerateDirIfNotExistsUC,
     private val incrementFileNameUC: IncrementFileNameUC,
     private val recordWavetableMapper: RecordWavetableMapper,
     private val requestPermissionsRepo: RequestPermissionsRepo,
@@ -34,12 +36,14 @@ class StartRecordUC @Inject constructor(
                                       sampleRate: Mp3VoiceRecorder.SampleRate ->
             Mp3VoiceRecorder.RecorderProps(filepath, bitRate, sampleRate)
         }
-        val execute = Observable
-            .zip(
-                getNewFileNameUC.execute().toObservable(),
-                bitRateRepo.observe().takeOne(),
-                sampleRateRepo.observe().takeOne(),
-                propsZipper
+        val execute = generateDirIfNotExistsUC.execute()
+            .andThen(
+                Observable.zip(
+                    getNewFileNameUC.execute().toObservable(),
+                    bitRateRepo.observe().takeOne(),
+                    sampleRateRepo.observe().takeOne(),
+                    propsZipper
+                )
             )
             .flatMapCompletable { props: Mp3VoiceRecorder.RecorderProps ->
                 Completable.fromAction {

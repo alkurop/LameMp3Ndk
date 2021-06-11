@@ -32,7 +32,7 @@ class FindFilesUC @Inject constructor(
 ) {
     fun execute(): Completable = Completable
         .fromAction {
-            val foundFiles = fileLister.listFiles(filePathGenerator.fileDir)
+            val foundFiles = fileLister.listFiles(filePathGenerator.fileDirs)
             val nonEmptyFiles = foundFiles.filter { fileEmptyChecker.isFileEmpty(it.path).not() }
             foundFiles.filter { it !in nonEmptyFiles }.forEach { File(it.path).delete() }
             val dirFiles = nonEmptyFiles.sortedBy { it.createTimedStamp }
