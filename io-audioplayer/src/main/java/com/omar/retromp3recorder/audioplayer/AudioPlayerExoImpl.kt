@@ -91,6 +91,9 @@ class AudioPlayerExoImpl @Inject constructor(
 
                 override fun onPlaybackStateChanged(state: Int) {
                     if (state == STATE_ENDED) {
+                        val position = (mediaPlayer.duration)
+                        val duration = (mediaPlayer.duration)
+                        progress.onNext(AudioPlayer.Output.Progress(position, duration))
                         stopMedia()
                     }
                 }
@@ -105,7 +108,6 @@ class AudioPlayerExoImpl @Inject constructor(
                         }
                         events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_started_playing)))
                     } else {
-                        sendProgressUpdate()
                         progressDisposable?.dispose()
                         progressDisposable = null
                     }

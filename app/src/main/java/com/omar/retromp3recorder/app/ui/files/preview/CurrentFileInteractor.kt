@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.ui.files.preview
 
+import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.RecordButtonStateMapper
 import com.omar.retromp3recorder.app.ui.files.preview.buttonstate.DeleteFileButtonStateMapper
 import com.omar.retromp3recorder.app.ui.files.preview.buttonstate.OpenFileButtonStateMapper
 import com.omar.retromp3recorder.app.ui.files.preview.buttonstate.RenameFileButtonStateMapper
@@ -7,6 +8,7 @@ import com.omar.retromp3recorder.bl.audio.AudioSeekPauseUC
 import com.omar.retromp3recorder.bl.audio.AudioSeekUC
 import com.omar.retromp3recorder.bl.audio.PlayerProgressMapper
 import com.omar.retromp3recorder.bl.files.CurrentFileMapper
+import com.omar.retromp3recorder.ui.state_button.InteractiveButton
 import com.omar.retromp3recorder.utils.mapToUsecase
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.rxjava3.core.Completable
@@ -22,6 +24,7 @@ class CurrentFileInteractor @Inject constructor(
     private val deleteFileButtonStateMapper: DeleteFileButtonStateMapper,
     private val openFileButtonStateMapper: OpenFileButtonStateMapper,
     private val playerProgressMapper: PlayerProgressMapper,
+    private val recordButtonStateMapper: RecordButtonStateMapper,
     private val renameFileButtonStateMapper: RenameFileButtonStateMapper,
     private val scheduler: Scheduler,
 ) {
@@ -49,6 +52,8 @@ class CurrentFileInteractor @Inject constructor(
                     .map { CurrentFileView.Output.DeleteButtonState(it) },
                 openFileButtonStateMapper.observe()
                     .map { CurrentFileView.Output.OpenButtonState(it) },
+                recordButtonStateMapper.observe()
+                    .map { CurrentFileView.Output.IsRecording(it == InteractiveButton.State.RUNNING) }
             )
         )
     }

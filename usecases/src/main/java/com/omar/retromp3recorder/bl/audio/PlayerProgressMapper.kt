@@ -17,6 +17,7 @@ class PlayerProgressMapper @Inject constructor(
 ) {
     fun observe(): Observable<Optional<Pair<Int, Int>>> =
         audioPlayer.observeProgress()
+            .distinctUntilChanged()
             .map { (position, duration) ->
                 val mappedPosition = position.toSeekbarTime()
                 val mappedDuration = duration.toSeekbarTime()
@@ -26,4 +27,5 @@ class PlayerProgressMapper @Inject constructor(
             .mergeWith(currentFileRepo.observe()
                 .map { Optional.empty() }
             )
+            .distinctUntilChanged()
 }
