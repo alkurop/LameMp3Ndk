@@ -4,6 +4,7 @@ import com.omar.retromp3recorder.storage.db.AppDatabase
 import com.omar.retromp3recorder.storage.db.toDatabaseEntity
 import com.omar.retromp3recorder.storage.db.toFileWrapper
 import com.omar.retromp3recorder.storage.repo.FileListRepo
+import com.omar.retromp3recorder.utils.EmptyWavetableGenerator
 import com.omar.retromp3recorder.utils.FileEmptyChecker
 import com.omar.retromp3recorder.utils.FileLister
 import com.omar.retromp3recorder.utils.FilePathGenerator
