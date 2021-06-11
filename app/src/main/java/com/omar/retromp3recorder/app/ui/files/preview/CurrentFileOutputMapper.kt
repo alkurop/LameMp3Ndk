@@ -23,7 +23,7 @@ object CurrentFileOutputMapper {
 
                     oldState.copy(
                         filePath = output.currentFile?.path,
-                        wavetable = existingFile?.wavetable
+                        wavetable = Shell(existingFile?.wavetable)
                     )
                 }
                 is CurrentFileView.Output.DeleteButtonState -> oldState.copy(
@@ -37,6 +37,9 @@ object CurrentFileOutputMapper {
                 )
                 is CurrentFileView.Output.PlayerProgress -> oldState.copy(
                     playerProgress = Shell(output.progress)
+                )
+                is CurrentFileView.Output.IsRecording -> oldState.copy(
+                    isRecording = output.isRecording
                 )
             }
         }
