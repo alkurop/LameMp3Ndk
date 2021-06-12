@@ -17,5 +17,4 @@ class GenerateDirIfNotExistsUC @Inject constructor(
                 dirCreator.createDirIfNotExists(it)
             }
         }
-        .subscribeOn(scheduler)
 }

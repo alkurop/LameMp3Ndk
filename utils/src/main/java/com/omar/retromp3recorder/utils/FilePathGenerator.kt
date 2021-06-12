@@ -17,7 +17,7 @@ class FilePathGeneratorImpl(
 
     override val fileDirs: List<String>
         get() = listOf(
-            "${Environment.getExternalStorageDirectory()}/RetroMp3Recorder",
+            "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)}/RetroMp3Recorder",
             context.externalCacheDir.toString()
         )
 }
