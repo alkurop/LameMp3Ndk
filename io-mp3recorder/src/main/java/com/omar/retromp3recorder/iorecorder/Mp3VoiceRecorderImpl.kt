@@ -122,6 +122,11 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
             if (outFile.exists()) {
                 outFile.delete()
             }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                Files.createFile(Paths.get(outFile.absolutePath))
+//            } else {
+//                outFile.createNewFile()
+//            }
             val fileWasCreated = outFile.createNewFile()
             if (!fileWasCreated) {
                 throw IOException(
