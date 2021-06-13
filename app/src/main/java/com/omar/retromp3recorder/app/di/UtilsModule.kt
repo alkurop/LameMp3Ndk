@@ -53,6 +53,6 @@ class UtilsModule(private val app: Application) {
     fun provideDirCreator(): DirCreator = DirCreatorImpl()
 
     @Provides
-    fun provideMp3MetadataEditor(context: Context): Mp3MetadataEditor =
-        Mp3MetadataEditorImpl(context)
+    fun provideMp3MetadataEditor(context: Context): Mp3TagsEditor =
+        Mp3TagsEditorImpl(context)
 }
