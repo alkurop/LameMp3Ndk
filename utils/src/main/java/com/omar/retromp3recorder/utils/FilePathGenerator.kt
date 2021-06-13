@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.utils
 
 import android.content.Context
 import android.os.Environment
+import java.io.File
 
 interface FilePathGenerator {
     fun generateFilePath(): String
@@ -12,7 +13,7 @@ class FilePathGeneratorImpl(
     private val context: Context
 ) : FilePathGenerator {
     override fun generateFilePath(): String {
-        return fileDirs[0]
+        return fileDirs.first { File(it).exists() }
     }
 
     override val fileDirs: List<String>

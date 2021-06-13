@@ -13,7 +13,6 @@ class RecordingTagsDefaultProvider @Inject constructor() {
         return RecordingTags(
             title = "",
             artist = "RetroMp3Recorder",
-            album = "RetroMp3Recorder",
             year = year.toString()
         )
     }

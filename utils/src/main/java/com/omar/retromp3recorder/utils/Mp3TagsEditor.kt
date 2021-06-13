@@ -23,7 +23,6 @@ class Mp3TagsEditorImpl(
             year = tags.year
             artist = tags.artist
             title = tags.title
-            album = tags.album
         }
         val temp = "${context.cacheDir}/temp.mp3"
         mp3File.save(temp)
@@ -47,8 +46,7 @@ class Mp3TagsEditorImpl(
             RecordingTags(
                 year = year ?: defaults.year,
                 artist = artist ?: defaults.artist,
-                title = title ?: titleFromFileName,
-                album = album ?: defaults.album
+                title = title ?: titleFromFileName
             )
         }
     }

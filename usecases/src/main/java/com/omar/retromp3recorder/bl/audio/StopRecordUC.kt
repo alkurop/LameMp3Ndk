@@ -1,10 +1,10 @@
 package com.omar.retromp3recorder.bl.audio
 
 import com.omar.retromp3recorder.bl.files.FindFilesUC
-import com.omar.retromp3recorder.dto.RecordingTags
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.utils.Mp3TagsEditor
+import com.omar.retromp3recorder.utils.RecordingTagsDefaultProvider
 import com.omar.retromp3recorder.utils.takeOne
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Scheduler
@@ -14,6 +14,7 @@ class StopRecordUC @Inject constructor(
     private val currentFileRepo: CurrentFileRepo,
     private val findFilesUC: FindFilesUC,
     private val mp3TagsEditor: Mp3TagsEditor,
+    private val recordingTagsDefaultProvider: RecordingTagsDefaultProvider,
     private val saveWavetableUC: SaveWavetableUC,
     private val scheduler: Scheduler,
     private val voiceRecorder: Mp3VoiceRecorder
@@ -31,11 +32,9 @@ class StopRecordUC @Inject constructor(
                 .fromAction {
                     val filepath = currentFileWrapper.value!!
                     mp3TagsEditor.setTags(
-                        filepath, RecordingTags(
-                            title = filepath.split("/").last().split(".").first(),
-                            album = "RetroMp3Recorder",
-                            artist = "RetroMp3Recorder",
-                            year = 2021
+                        filepath,
+                        recordingTagsDefaultProvider.provideDefaults().copy(
+                            title = mp3TagsEditor.getFilenameFromPath(filepath)
                         )
                     )
                 }

@@ -14,11 +14,17 @@ class DirCreatorImpl : DirCreator {
     override fun createDirIfNotExists(filepath: String) {
         val f = File(filepath)
         if (f.exists().not()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                Files.createDirectory(Paths.get(f.absolutePath))
-            } else {
-                f.mkdir()
-                f.mkdirs()
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Files.createDirectory(Paths.get(f.absolutePath))
+                } else {
+                    f.mkdir()
+                    f.mkdirs()
+                }
+            } catch (
+                e: Throwable
+            ) {
+                Timber.e(e)
             }
         }
         val exists = f.exists()
