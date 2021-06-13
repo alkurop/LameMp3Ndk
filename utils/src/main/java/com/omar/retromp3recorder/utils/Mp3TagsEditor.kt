@@ -10,6 +10,7 @@ import java.io.File
 interface Mp3TagsEditor {
     fun setTags(filepath: String, tags: RecordingTags)
     fun getTags(filepath: String): RecordingTags
+    fun getFilenameFromPath(filePath: String): String
 }
 
 class Mp3TagsEditorImpl(
@@ -35,9 +36,13 @@ class Mp3TagsEditorImpl(
         Timber.d("Tag $id3v1Tag")
     }
 
+    override fun getFilenameFromPath(filePath: String): String {
+        return filePath.split("/").last().split("-").last().split(".").first()
+    }
+
     override fun getTags(filepath: String): RecordingTags {
         val defaults = recordingTagsDefaultsProvider.provideDefaults()
-        val titleFromFileName = filepath.split("/").last().split("-").last().split(".").first()
+        val titleFromFileName = getFilenameFromPath(filepath)
         return Mp3File(filepath).id3v1Tag.run {
             RecordingTags(
                 year = year ?: defaults.year,

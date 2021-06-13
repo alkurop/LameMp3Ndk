@@ -6,6 +6,7 @@ import com.omar.retromp3recorder.storage.db.toDatabaseEntity
 import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.storage.repo.common.BehaviorSubjectRepo
 import com.omar.retromp3recorder.utils.FileRenamer
+import com.omar.retromp3recorder.utils.Mp3TagsEditor
 import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
@@ -16,6 +17,7 @@ class RenameFileUC @Inject constructor(
     private val currentFileMapper: CurrentFileMapper,
     private val fileRenamer: FileRenamer,
     private val findFilesUC: FindFilesUC,
+    private val mp3TagsEditor: Mp3TagsEditor
 ) {
     fun execute(newFileName: String, finishedCallback: BehaviorSubjectRepo<Boolean>): Completable =
         currentFileMapper.observe()
@@ -26,6 +28,9 @@ class RenameFileUC @Inject constructor(
                         Completable
                             .fromAction {
                                 val newPath = fileRenamer.renameFile(fileWrapper, newFileName)
+                                val tags = mp3TagsEditor.getTags(newFileName)
+                                    .copy(title = mp3TagsEditor.getFilenameFromPath(newFileName))
+                                mp3TagsEditor.setTags(newPath, tags)
                                 val copy = fileWrapper.copy(
                                     path = newPath,
                                     modifiedTimestamp = System.currentTimeMillis()
