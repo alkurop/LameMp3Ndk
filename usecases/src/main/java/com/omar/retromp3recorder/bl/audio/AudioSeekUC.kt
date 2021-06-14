@@ -2,9 +2,9 @@ package com.omar.retromp3recorder.bl.audio
 
 import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
-import com.omar.retromp3recorder.audioplayer.toPlayerTime
 import com.omar.retromp3recorder.storage.repo.SeekRepo
 import com.omar.retromp3recorder.utils.takeOne
+import com.omar.retromp3recorder.utils.toPlayerTime
 import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 

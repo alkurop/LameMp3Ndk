@@ -37,11 +37,6 @@ class AudioPlayerExoImpl @Inject constructor(
     override fun onInput(input: AudioPlayer.Input) {
         handler.post {
             when (input) {
-                is AudioPlayer.Input.Pause -> {
-                    mediaPlayer.pause()
-                    state.onNext(AudioPlayer.State.Paused)
-                    events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_pause)))
-                }
                 is AudioPlayer.Input.Resume -> {
                     mediaPlayer.play()
                     events.onNext(AudioPlayer.Output.Event.Message(Stringer(R.string.aplr_resume)))

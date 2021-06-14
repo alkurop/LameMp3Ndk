@@ -48,4 +48,14 @@ class UtilsModule(private val app: Application) {
 
     @Provides
     fun provideFileRenamer(): FileRenamer = FileRenameImpl()
+
+    @Provides
+    fun provideDirCreator(): DirCreator = DirCreatorImpl()
+
+    @Provides
+    fun provideMp3MetadataEditor(
+        context: Context,
+        recordingTagsDefaultsProvider: RecordingTagsDefaultProvider
+    ): Mp3TagsEditor =
+        Mp3TagsEditorImpl(context, recordingTagsDefaultsProvider)
 }

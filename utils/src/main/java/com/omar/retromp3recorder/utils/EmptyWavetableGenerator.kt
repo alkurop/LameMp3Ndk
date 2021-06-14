@@ -1,7 +1,6 @@
-package com.omar.retromp3recorder.bl.files
+package com.omar.retromp3recorder.utils
 
 import android.media.MediaMetadataRetriever
-import com.omar.retromp3recorder.audioplayer.toSeekbarTime
 import com.omar.retromp3recorder.dto.Wavetable
 import javax.inject.Inject
 
