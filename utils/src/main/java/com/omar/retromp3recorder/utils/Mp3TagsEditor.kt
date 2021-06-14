@@ -1,6 +1,7 @@
 package com.omar.retromp3recorder.utils
 
 import android.content.Context
+import android.os.Build
 import com.mpatric.mp3agic.ID3v1Tag
 import com.mpatric.mp3agic.Mp3File
 import com.omar.retromp3recorder.dto.RecordingTags
@@ -18,21 +19,24 @@ class Mp3TagsEditorImpl(
     private val recordingTagsDefaultsProvider: RecordingTagsDefaultProvider
 ) : Mp3TagsEditor {
     override fun setTags(filepath: String, tags: RecordingTags) {
-        val mp3File = Mp3File(filepath)
-        mp3File.id3v1Tag = ID3v1Tag().apply {
-            year = tags.year
-            artist = tags.artist
-            title = tags.title
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) return
+        try {
+            val mp3File = Mp3File(filepath)
+            mp3File.id3v1Tag = ID3v1Tag().apply {
+                year = tags.year
+                artist = tags.artist
+                title = tags.title
+            }
+            val temp = "${context.cacheDir}/temp.mp3"
+            mp3File.save(temp)
+            File(temp).copyTo(File(filepath), overwrite = true)
+            File(temp).delete()
+            val newFile = Mp3File(filepath)
+            val id3v1Tag = newFile.id3v1Tag
+            Timber.d("Tag $id3v1Tag")
+        } catch (e: NoClassDefFoundError) {
+            Timber.e(e)
         }
-        val temp = "${context.cacheDir}/temp.mp3"
-        mp3File.save(temp)
-
-
-        File(temp).copyTo(File(filepath), overwrite = true)
-        File(temp).delete()
-        val newFile = Mp3File(filepath)
-        val id3v1Tag = newFile.id3v1Tag
-        Timber.d("Tag $id3v1Tag")
     }
 
     override fun getFilenameFromPath(filePath: String): String {
