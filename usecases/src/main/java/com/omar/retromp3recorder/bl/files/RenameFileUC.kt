@@ -28,7 +28,7 @@ class RenameFileUC @Inject constructor(
                         Completable
                             .fromAction {
                                 val newPath = fileRenamer.renameFile(fileWrapper, newFileName)
-                                val tags = mp3TagsEditor.getTags(newFileName)
+                                val tags = mp3TagsEditor.getTags(newPath)
                                     .copy(title = mp3TagsEditor.getFilenameFromPath(newFileName))
                                 mp3TagsEditor.setTags(newPath, tags)
                                 val copy = fileWrapper.copy(
