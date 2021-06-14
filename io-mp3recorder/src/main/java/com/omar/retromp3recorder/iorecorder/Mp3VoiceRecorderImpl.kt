@@ -122,11 +122,6 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
             if (outFile.exists()) {
                 outFile.delete()
             }
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                Files.createFile(Paths.get(outFile.absolutePath))
-//            } else {
-//                outFile.createNewFile()
-//            }
             val fileWasCreated = outFile.createNewFile()
             if (!fileWasCreated) {
                 throw IOException(
@@ -166,9 +161,16 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
                     recorderBus.onNext(buffer)
                     output.write(mp3Buffer, 0, encResult)
                 }
-                val flushResult = LameModule.flush(mp3Buffer)
-                if (flushResult != 0) {
-                    output.write(mp3Buffer, 0, flushResult)
+                try {
+                    val flushResult = LameModule.flush(mp3Buffer)
+                    if (flushResult != 0) {
+                        output.write(mp3Buffer, 0, flushResult)
+                    }
+                } catch (e: Exception) {
+                    Timber.e(e)
+                    Mp3VoiceRecorder.Event.Error(
+                        Stringer(R.string.rcdr_flush_error, e.toString())
+                    )
                 }
             } catch (e: Throwable) {
                 emitter.tryOnError(e)

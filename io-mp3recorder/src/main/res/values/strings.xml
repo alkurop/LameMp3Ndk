@@ -7,5 +7,6 @@
     <string name="rcdr_file_size">file size = %1$.1f kb</string>
     <string name="rcdr_file_saved_to">"file saved to %1$s"</string>
     <string name="rcdr_file_was_not_created">File %1$s was not created</string>
+    <string name="rcdr_flush_error">Error flushing remaining bytes %1$s </string>
     <string name="rcdr_recording_mp3_at">"recording MP3 at %1$d kbps, %2$d hz"</string>
 </resources>
