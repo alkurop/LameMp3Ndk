@@ -14,7 +14,6 @@ class RecordButtonStateMapper @Inject constructor(
             when (audioState) {
                 is AudioState.Recording -> InteractiveButton.State.RUNNING
                 is AudioState.Playing -> InteractiveButton.State.DISABLED
-                is AudioState.Paused -> InteractiveButton.State.DISABLED
                 is AudioState.Seek_Paused -> InteractiveButton.State.DISABLED
                 is AudioState.Idle -> InteractiveButton.State.ENABLED
             }

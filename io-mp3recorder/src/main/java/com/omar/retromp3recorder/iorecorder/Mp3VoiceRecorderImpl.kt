@@ -161,17 +161,6 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
                     recorderBus.onNext(buffer)
                     output.write(mp3Buffer, 0, encResult)
                 }
-                try {
-                    val flushResult = LameModule.flush(mp3Buffer)
-                    if (flushResult != 0) {
-                        output.write(mp3Buffer, 0, flushResult)
-                    }
-                } catch (e: Exception) {
-                    Timber.e(e)
-                    Mp3VoiceRecorder.Event.Error(
-                        Stringer(R.string.rcdr_flush_error, e.toString())
-                    )
-                }
             } catch (e: Throwable) {
                 emitter.tryOnError(e)
             }

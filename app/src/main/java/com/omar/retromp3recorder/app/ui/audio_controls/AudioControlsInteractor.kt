@@ -5,6 +5,7 @@ import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.RecordButton
 import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.ShareButtonStateMapper
 import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.StopButtonStateMapper
 import com.omar.retromp3recorder.bl.ShareUC
+import com.omar.retromp3recorder.bl.audio.PlayerProgressMapper
 import com.omar.retromp3recorder.bl.audio.StartPlaybackUC
 import com.omar.retromp3recorder.bl.audio.StartRecordUC
 import com.omar.retromp3recorder.bl.audio.StopPlaybackAndRecordUC
@@ -18,6 +19,7 @@ import javax.inject.Inject
 
 class AudioControlsInteractor @Inject constructor(
     private val playButtonStateMapper: PlayButtonStateMapper,
+    private val playerProgressMapper: PlayerProgressMapper,
     private val recordButtonStateMapper: RecordButtonStateMapper,
     private val shareButtonStateMapper: ShareButtonStateMapper,
     private val stopButtonStateMapper: StopButtonStateMapper,
