@@ -1,11 +1,7 @@
 package com.omar.retromp3recorder.app.ui.audio_controls
 
-import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.PlayButtonStateMapper
-import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.RecordButtonStateMapper
-import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.ShareButtonStateMapper
-import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.StopButtonStateMapper
+import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.*
 import com.omar.retromp3recorder.bl.ShareUC
-import com.omar.retromp3recorder.bl.audio.PlayerProgressMapper
 import com.omar.retromp3recorder.bl.audio.StartPlaybackUC
 import com.omar.retromp3recorder.bl.audio.StartRecordUC
 import com.omar.retromp3recorder.bl.audio.StopPlaybackAndRecordUC
@@ -19,7 +15,7 @@ import javax.inject.Inject
 
 class AudioControlsInteractor @Inject constructor(
     private val playButtonStateMapper: PlayButtonStateMapper,
-    private val playerProgressMapper: PlayerProgressMapper,
+    private val playerProgressMapper: PlayerProgressViewMapper,
     private val recordButtonStateMapper: RecordButtonStateMapper,
     private val shareButtonStateMapper: ShareButtonStateMapper,
     private val stopButtonStateMapper: StopButtonStateMapper,
@@ -46,6 +42,8 @@ class AudioControlsInteractor @Inject constructor(
                     .map { AudioControlsView.Output.StopButtonState(it) },
                 shareButtonStateMapper.observe()
                     .map { AudioControlsView.Output.ShareButtonState(it) },
+                playerProgressMapper.observe()
+                    .map { AudioControlsView.Output.PlayerProgress(it) }
             )
         )
     }

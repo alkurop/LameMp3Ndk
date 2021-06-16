@@ -10,28 +10,28 @@ class PlayerProgressViewMapper @Inject constructor(
     private val audioStateMapper: AudioStateMapper,
     private val playerProgressMapper: PlayerProgressMapper
 ) {
-    fun obsserve(): Observable<PlayerProgress> = audioStateMapper
+    fun observe(): Observable<PlayerProgressViewState> = audioStateMapper
         .observe()
         .switchMap { audioState ->
             when (audioState) {
                 is AudioState.Recording,
                 is AudioState.Idle,
                 is AudioState.Seek_Paused ->
-                    Observable.just(PlayerProgress.Hidden)
+                    Observable.just(PlayerProgressViewState.Hidden)
                 is AudioState.Playing ->
                     playerProgressMapper.observe().map {
                         val progress = it.value
                         if (progress != null) {
-                            PlayerProgress.Visible(progress.first, progress.second)
+                            PlayerProgressViewState.Visible(progress.first, progress.second)
                         } else {
-                            PlayerProgress.Hidden
+                            PlayerProgressViewState.Hidden
                         }
                     }
             }
         }
 }
 
-sealed class PlayerProgress {
-    object Hidden : PlayerProgress()
-    data class Visible(val progress: Int, val duration: Int) : PlayerProgress()
+sealed class PlayerProgressViewState {
+    object Hidden : PlayerProgressViewState()
+    data class Visible(val progress: Int, val duration: Int) : PlayerProgressViewState()
 }
