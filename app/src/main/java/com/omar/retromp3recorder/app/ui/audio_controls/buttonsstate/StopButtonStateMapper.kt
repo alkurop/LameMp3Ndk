@@ -15,7 +15,6 @@ class StopButtonStateMapper @Inject constructor(
                 is AudioState.Recording -> InteractiveButton.State.ENABLED
                 is AudioState.Playing -> InteractiveButton.State.ENABLED
                 is AudioState.Idle -> InteractiveButton.State.DISABLED
-                is AudioState.Paused -> InteractiveButton.State.ENABLED
                 is AudioState.Seek_Paused -> InteractiveButton.State.ENABLED
             }
         }

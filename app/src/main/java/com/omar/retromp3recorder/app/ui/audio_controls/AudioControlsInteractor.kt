@@ -36,14 +36,14 @@ class AudioControlsInteractor @Inject constructor(
             listOf(
                 playButtonStateMapper.observe()
                     .map { AudioControlsView.Output.PlayButtonState(it) },
+                playerProgressMapper.observe()
+                    .map { AudioControlsView.Output.PlayerProgress(it) },
                 recordButtonStateMapper.observe()
                     .map { AudioControlsView.Output.RecordButtonState(it) },
-                stopButtonStateMapper.observe()
-                    .map { AudioControlsView.Output.StopButtonState(it) },
                 shareButtonStateMapper.observe()
                     .map { AudioControlsView.Output.ShareButtonState(it) },
-                playerProgressMapper.observe()
-                    .map { AudioControlsView.Output.PlayerProgress(it) }
+                stopButtonStateMapper.observe()
+                    .map { AudioControlsView.Output.StopButtonState(it) }
             )
         )
     }
@@ -51,9 +51,9 @@ class AudioControlsInteractor @Inject constructor(
         Completable.merge(
             listOf(
                 input.mapToUsecase<AudioControlsView.Input.Play> { startPlaybackUC.execute() },
-                input.mapToUsecase<AudioControlsView.Input.Stop> { stopPlaybackAndRecordUC.execute() },
                 input.mapToUsecase<AudioControlsView.Input.Record> { startRecordUC.execute() },
                 input.mapToUsecase<AudioControlsView.Input.Share> { shareUC.execute() },
+                input.mapToUsecase<AudioControlsView.Input.Stop> { stopPlaybackAndRecordUC.execute() },
             )
         )
     }
