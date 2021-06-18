@@ -1,7 +1,8 @@
-package com.omar.retromp3recorder.bl.files
+package com.omar.retromp3recorder.bl.audio
 
+import com.github.alkurop.ghostinshell.Shell
+import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.storage.repo.SeekRepo
-import com.omar.retromp3recorder.utils.Optional
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Inject
@@ -11,14 +12,14 @@ import javax.inject.Inject
  */
 class NewFileUpdater @Inject constructor(
     private val hasPlayableFileMapper: HasPlayableFileMapper,
-    private val seekRepo: SeekRepo,
+    private val ppRepo: PPRepo,
     private val scheduler: Scheduler
 ) {
     fun execute(): Completable =
         hasPlayableFileMapper.observe()
             .flatMapCompletable {
                 Completable
-                    .fromAction { seekRepo.onNext(Optional.empty()) }
+                    .fromAction { ppRepo.onNext(PPRepo.In.Hidden) }
             }
             .subscribeOn(scheduler)
 }

@@ -7,14 +7,27 @@ class PPRepo : ReducerRepo<PPRepo.In, PPRepo.Out>(
     function = function
 ) {
     sealed class In {
-        data class Seek(val progress: Int, val timestamp: Long) : In()
-        data class Progress(val progress: Long, val duration: Long, val timestamp: Long) : In()
+        data class Seek(
+            val progress: Int,
+            val timestamp: Long = System.currentTimeMillis()
+        ) : In()
+
+        data class Progress(
+            val progress: Long,
+            val duration: Long,
+            val timestamp: Long = System.currentTimeMillis()
+        ) : In()
+
         object Hidden : In()
     }
 
     sealed class Out {
         object Hidden : Out()
-        data class Shown(val progress: Long, val duration: Long, val timestamp: Long) : Out()
+        data class Shown(
+            val progress: Long,
+            val duration: Long,
+            val timestamp: Long
+        ) : Out()
     }
 }
 

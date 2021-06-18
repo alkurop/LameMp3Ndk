@@ -72,7 +72,7 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         }
         state.playerProgress.ghost?.let {
             Timber.d("Progress $it")
-            wavetablePreviewPreview.updateProgress(it)
+            wavetablePreviewPreview.updateProgress(it.run { Pair(it.progress.toProgress()) })
         }
     }
 }

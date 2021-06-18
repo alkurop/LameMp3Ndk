@@ -1,8 +1,7 @@
 package com.omar.retromp3recorder.bl.audio
 
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
-import com.omar.retromp3recorder.storage.repo.SeekRepo
-import com.omar.retromp3recorder.utils.Optional
+import com.omar.retromp3recorder.storage.repo.common.PPRepo
 import com.omar.retromp3recorder.utils.takeOne
 import com.omar.retromp3recorder.utils.toPlayerTime
 import io.reactivex.rxjava3.core.Completable
@@ -10,7 +9,7 @@ import javax.inject.Inject
 
 class AudioSeekUC @Inject constructor(
     private val audioPlayer: AudioPlayer,
-    private val seekRepo: SeekRepo
+    private val ppRepo: PPRepo
 ) {
     fun execute(position: Int): Completable =
         audioPlayer.observeState().takeOne().flatMapCompletable { state ->
@@ -24,7 +23,7 @@ class AudioSeekUC @Inject constructor(
                         audioPlayer.onInput(AudioPlayer.Input.Resume)
                     }
                     else -> {
-                        seekRepo.onNext(Optional(position))
+                        ppRepo.onNext(PPRepo.In.Seek(position))
                     }
                 }
             }
