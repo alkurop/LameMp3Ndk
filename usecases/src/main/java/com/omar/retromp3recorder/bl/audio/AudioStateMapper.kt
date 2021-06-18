@@ -20,7 +20,6 @@ class AudioStateMapperImpl @Inject constructor(
             { playerState, recorderState ->
                 when {
                     playerState == AudioPlayer.State.Playing -> AudioState.Playing
-                    playerState == AudioPlayer.State.Paused -> AudioState.Paused
                     playerState == AudioPlayer.State.Seek_Paused -> AudioState.Seek_Paused
                     recorderState == Mp3VoiceRecorder.State.Recording -> AudioState.Recording
                     else -> AudioState.Idle
@@ -33,7 +32,6 @@ class AudioStateMapperImpl @Inject constructor(
 sealed class AudioState {
     object Idle : AudioState()
     object Playing : AudioState()
-    object Paused : AudioState()
     object Seek_Paused : AudioState()
     object Recording : AudioState()
 }

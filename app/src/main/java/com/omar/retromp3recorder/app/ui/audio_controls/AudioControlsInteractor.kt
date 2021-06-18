@@ -1,9 +1,6 @@
 package com.omar.retromp3recorder.app.ui.audio_controls
 
-import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.PlayButtonStateMapper
-import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.RecordButtonStateMapper
-import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.ShareButtonStateMapper
-import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.StopButtonStateMapper
+import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.*
 import com.omar.retromp3recorder.bl.ShareUC
 import com.omar.retromp3recorder.bl.audio.StartPlaybackUC
 import com.omar.retromp3recorder.bl.audio.StartRecordUC
@@ -18,6 +15,7 @@ import javax.inject.Inject
 
 class AudioControlsInteractor @Inject constructor(
     private val playButtonStateMapper: PlayButtonStateMapper,
+    private val playerProgressMapper: PlayerProgressViewMapper,
     private val recordButtonStateMapper: RecordButtonStateMapper,
     private val shareButtonStateMapper: ShareButtonStateMapper,
     private val stopButtonStateMapper: StopButtonStateMapper,
@@ -38,12 +36,14 @@ class AudioControlsInteractor @Inject constructor(
             listOf(
                 playButtonStateMapper.observe()
                     .map { AudioControlsView.Output.PlayButtonState(it) },
+                playerProgressMapper.observe()
+                    .map { AudioControlsView.Output.PlayerProgress(it) },
                 recordButtonStateMapper.observe()
                     .map { AudioControlsView.Output.RecordButtonState(it) },
-                stopButtonStateMapper.observe()
-                    .map { AudioControlsView.Output.StopButtonState(it) },
                 shareButtonStateMapper.observe()
                     .map { AudioControlsView.Output.ShareButtonState(it) },
+                stopButtonStateMapper.observe()
+                    .map { AudioControlsView.Output.StopButtonState(it) }
             )
         )
     }
@@ -51,9 +51,9 @@ class AudioControlsInteractor @Inject constructor(
         Completable.merge(
             listOf(
                 input.mapToUsecase<AudioControlsView.Input.Play> { startPlaybackUC.execute() },
-                input.mapToUsecase<AudioControlsView.Input.Stop> { stopPlaybackAndRecordUC.execute() },
                 input.mapToUsecase<AudioControlsView.Input.Record> { startRecordUC.execute() },
                 input.mapToUsecase<AudioControlsView.Input.Share> { shareUC.execute() },
+                input.mapToUsecase<AudioControlsView.Input.Stop> { stopPlaybackAndRecordUC.execute() },
             )
         )
     }

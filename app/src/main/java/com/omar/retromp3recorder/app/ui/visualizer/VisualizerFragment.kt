@@ -38,7 +38,6 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
         viewModel.state.observe(viewLifecycleOwner) { state ->
             if (state.audioState !in listOf(
                     AudioState.Playing,
-                    AudioState.Paused,
                     AudioState.Seek_Paused
                 )
             ) {
