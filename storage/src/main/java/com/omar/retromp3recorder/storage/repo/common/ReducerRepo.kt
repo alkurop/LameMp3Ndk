@@ -8,6 +8,8 @@ open class ReducerRepo<In : Any, State : Any>(
     private val function: State.(In) -> State
 ) {
     private val stateKeeper = BehaviorSubject.createDefault(init)
+
+    @Synchronized
     fun onNext(input: In) {
         val prev = stateKeeper.blockingFirst()
         val next = prev.function(input)
