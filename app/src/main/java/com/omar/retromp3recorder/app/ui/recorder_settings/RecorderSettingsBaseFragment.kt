@@ -6,12 +6,11 @@ import android.widget.RadioButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.omar.retromp3recorder.app.R
+import com.omar.retromp3recorder.app.ui.utils.lazyView
 
 abstract class RecorderSettingsBaseFragment : Fragment(R.layout.fragment_recorder_controls) {
-
     private val checkboxHeight by lazy { resources.getDimensionPixelSize(R.dimen.cb_height) }
-    private val container: ViewGroup
-        get() = requireView().findViewById(R.id.container) as ViewGroup
+    private val container by lazyView<ViewGroup>(R.id.container)
 
     protected fun addTitleView(title: String) {
         layoutInflater.inflate(R.layout.container_title, container)
