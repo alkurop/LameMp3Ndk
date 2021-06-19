@@ -8,13 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.jakewharton.rxbinding4.view.clicks
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.ui.audio_controls.buttonsstate.PlayerProgressViewState
 import com.omar.retromp3recorder.app.ui.utils.findViewById
 import com.omar.retromp3recorder.app.uiutils.observe
+import com.omar.retromp3recorder.storage.repo.common.PlayerProgressRepo
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
 import com.omar.retromp3recorder.ui.state_button.InteractiveButtonBlinking
 import com.omar.retromp3recorder.utils.toDisplay
-import com.omar.retromp3recorder.utils.toPlayerTime
 import io.reactivex.rxjava3.core.Observable.merge
 
 class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
@@ -51,13 +50,13 @@ class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
         shareButton.onState(state.shareButtonState)
         stopButton.onState(state.stopButtonState)
         state.playerProgressState.apply {
-            progressView.isGone = this is PlayerProgressViewState.Hidden
-            durationView.isGone = this is PlayerProgressViewState.Hidden
-            this.takeIf { it is PlayerProgressViewState.Visible }
-                ?.run { this as PlayerProgressViewState.Visible }
+            progressView.isGone = this is PlayerProgressRepo.Out.Hidden
+            durationView.isGone = this is PlayerProgressRepo.Out.Hidden
+            this.takeIf { it is PlayerProgressRepo.Out.Shown }
+                ?.run { this as PlayerProgressRepo.Out.Shown }
                 ?.let {
-                    progressView.text = it.progress.toPlayerTime().toDisplay()
-                    durationView.text = it.duration.toPlayerTime().toDisplay()
+                    progressView.text = it.progress.toDisplay()
+                    durationView.text = it.duration.toDisplay()
                 }
         }
     }

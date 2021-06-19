@@ -5,6 +5,7 @@ import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.di.DaggerAppComponent
 import com.omar.retromp3recorder.app.di.UtilsModule
 import com.omar.retromp3recorder.bl.files.NewFileUpdater
+import com.omar.retromp3recorder.bl.audio.PlayerProgressMapper
 import com.omar.retromp3recorder.bl.files.TakeLastFileUC
 import com.omar.retromp3recorder.bl.settings.LoadRecorderSettingsUC
 import timber.log.Timber
@@ -19,6 +20,8 @@ class App : Application() {
 
     @Inject
     lateinit var cleanUpSeekRepoUsecase: NewFileUpdater
+    @Inject
+    lateinit var playerProgressMapper: PlayerProgressMapper
 
     override fun onCreate() {
         super.onCreate()
@@ -31,6 +34,7 @@ class App : Application() {
         loadRecorderSettingsUC.execute().subscribe()
         takeLastFileUC.execute().subscribe()
         cleanUpSeekRepoUsecase.execute().subscribe()
+        playerProgressMapper.execute().subscribe()
     }
 
     companion object {

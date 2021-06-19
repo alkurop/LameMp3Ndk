@@ -30,7 +30,6 @@ interface AudioPlayer {
     enum class State {
         Idle,
         Playing,
-        Paused,
         Seek_Paused
     }
 }

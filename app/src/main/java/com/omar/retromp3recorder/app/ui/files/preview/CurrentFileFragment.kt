@@ -15,6 +15,7 @@ import com.omar.retromp3recorder.app.ui.utils.findViewById
 import com.omar.retromp3recorder.app.ui.utils.toFileName
 import com.omar.retromp3recorder.app.uiutils.observe
 import com.omar.retromp3recorder.ui.wavetable.WavetableSeekbarPreview
+import com.omar.retromp3recorder.utils.toSeekbarTime
 import timber.log.Timber
 
 class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
@@ -48,10 +49,13 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         }
         wavetablePreviewPreview.observeIsSeeking().observe(viewLifecycleOwner) {
             val event = when (it) {
-                is WavetableSeekbarPreview.SeekState.SeekFinished ->
+                is WavetableSeekbarPreview.SeekState.Seeking ->
                     CurrentFileView.Input.SeekToPosition(it.progress)
                 is WavetableSeekbarPreview.SeekState.SeekStarted -> {
                     CurrentFileView.Input.SeekingStarted
+                }
+                is WavetableSeekbarPreview.SeekState.SeekFinished -> {
+                    CurrentFileView.Input.SeekingFinished
                 }
             }
             viewModel.input.onNext(event)
@@ -72,7 +76,12 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         }
         state.playerProgress.ghost?.let {
             Timber.d("Progress $it")
-            wavetablePreviewPreview.updateProgress(it)
+            wavetablePreviewPreview.updateProgress(it.run {
+                Pair(
+                    it.progress.toSeekbarTime(),
+                    it.duration.toSeekbarTime()
+                )
+            })
         }
     }
 }
