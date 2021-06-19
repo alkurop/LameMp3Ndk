@@ -32,6 +32,12 @@ class WavetableSeekbarPreview @JvmOverloads constructor(
                 if (fromUser) {
                     userChangedProgress = Pair(progress, seekbar.max)
                     wavetableProgressBar.update(userChangedProgress)
+                    isSeekingBus.onNext(
+                        SeekState.Seeking(
+                            userChangedProgress.first,
+                            userChangedProgress.second
+                        )
+                    )
                 }
             }
 
@@ -41,10 +47,7 @@ class WavetableSeekbarPreview @JvmOverloads constructor(
 
             override fun onStopTrackingTouch(v: SeekBar?) {
                 isSeekingBus.onNext(
-                    SeekState.SeekFinished(
-                        userChangedProgress.first,
-                        userChangedProgress.second
-                    )
+                    SeekState.SeekFinished
                 )
             }
         })
@@ -67,6 +70,7 @@ class WavetableSeekbarPreview @JvmOverloads constructor(
 
     sealed class SeekState {
         object SeekStarted : SeekState()
-        data class SeekFinished(val progress: Int, val max: Int) : SeekState()
+        data class Seeking(val progress: Int, val max: Int) : SeekState()
+        object SeekFinished : SeekState()
     }
 }

@@ -49,10 +49,13 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         }
         wavetablePreviewPreview.observeIsSeeking().observe(viewLifecycleOwner) {
             val event = when (it) {
-                is WavetableSeekbarPreview.SeekState.SeekFinished ->
+                is WavetableSeekbarPreview.SeekState.Seeking ->
                     CurrentFileView.Input.SeekToPosition(it.progress)
                 is WavetableSeekbarPreview.SeekState.SeekStarted -> {
                     CurrentFileView.Input.SeekingStarted
+                }
+                is WavetableSeekbarPreview.SeekState.SeekFinished -> {
+                    CurrentFileView.Input.SeekingFinished
                 }
             }
             viewModel.input.onNext(event)
