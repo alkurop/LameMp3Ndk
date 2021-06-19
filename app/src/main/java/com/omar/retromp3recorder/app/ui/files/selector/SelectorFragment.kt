@@ -8,13 +8,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.ui.utils.findViewById
+import com.omar.retromp3recorder.app.ui.utils.lazyView
 import com.omar.retromp3recorder.app.uiutils.observe
 
 class SelectorFragment : Fragment(R.layout.fragment_selector) {
     private val viewModel by viewModels<SelectorViewModel>()
-    private val recyclerView: RecyclerView
-        get() = findViewById(R.id.recycler_view)
+    private val recyclerView by lazyView<RecyclerView>(R.id.recycler_view)
     private val adapter = SelectorAdapter {
         viewModel.input.onNext(SelectorView.Input.ItemSelected(it))
         requireActivity().finish()

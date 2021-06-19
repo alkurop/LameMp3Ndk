@@ -9,16 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.ui.utils.findViewById
+import com.omar.retromp3recorder.app.ui.utils.lazyView
 import com.omar.retromp3recorder.app.uiutils.observe
 
 class LogFragment : Fragment(R.layout.fragment_log) {
-
-    private val recyclerView: RecyclerView
-        get() = findViewById(R.id.log_holder)
-
+    private val recyclerView by lazyView<RecyclerView>(R.id.log_holder)
     private val adapter = LogAdapter()
-
     private val viewModel by viewModels<LogViewModel>()
     private val scrollDownHandler = Handler(Looper.getMainLooper())
 

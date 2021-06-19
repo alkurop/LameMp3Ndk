@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.jakewharton.rxbinding4.view.clicks
 import com.omar.retromp3recorder.app.R
-import com.omar.retromp3recorder.app.ui.utils.findViewById
+import com.omar.retromp3recorder.app.ui.utils.lazyView
 import com.omar.retromp3recorder.app.uiutils.observe
 import com.omar.retromp3recorder.storage.repo.common.PlayerProgressRepo
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
@@ -17,18 +17,12 @@ import com.omar.retromp3recorder.utils.toDisplay
 import io.reactivex.rxjava3.core.Observable.merge
 
 class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
-    private val playButton: InteractiveButtonBlinking
-        get() = findViewById(R.id.acf_play)
-    private val recordButton: InteractiveButton
-        get() = findViewById(R.id.acf_record)
-    private val shareButton: InteractiveButton
-        get() = findViewById(R.id.acf_share)
-    private val stopButton: InteractiveButton
-        get() = findViewById(R.id.acf_stop)
-    private val progressView: TextView
-        get() = findViewById(R.id.acf_player_progress)
-    private val durationView: TextView
-        get() = findViewById(R.id.acf_player_duration)
+    private val playButton: InteractiveButtonBlinking by lazyView(R.id.acf_play)
+    private val recordButton by lazyView<InteractiveButton>(R.id.acf_record)
+    private val shareButton by lazyView<InteractiveButton>(R.id.acf_share)
+    private val stopButton by lazyView<InteractiveButton>(R.id.acf_stop)
+    private val progressView by lazyView<TextView>(R.id.acf_player_progress)
+    private val durationView by lazyView<TextView>(R.id.acf_player_duration)
     private val viewModel: AudioControlsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

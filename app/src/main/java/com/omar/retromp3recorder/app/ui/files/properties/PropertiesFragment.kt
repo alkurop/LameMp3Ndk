@@ -10,13 +10,13 @@ import com.jakewharton.rxbinding4.view.clicks
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.files.rename.RenameFileDialogFragment
 import com.omar.retromp3recorder.app.ui.utils.findViewById
+import com.omar.retromp3recorder.app.ui.utils.lazyView
 import com.omar.retromp3recorder.app.ui.utils.toFileName
 import com.omar.retromp3recorder.app.uiutils.observe
 
 class PropertiesFragment : Fragment(R.layout.fragment_properties) {
     private val viewModel by viewModels<PropertiesViewModel>()
-    private val titleView: TextView
-        get() = findViewById(R.id.title)
+    private val titleView by lazyView<TextView>(R.id.title)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
