@@ -1,8 +1,8 @@
 package com.omar.retromp3recorder.bl.audio
 
-import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.storage.repo.SeekRepo
+import com.omar.retromp3recorder.utils.Optional
 import com.omar.retromp3recorder.utils.takeOne
 import com.omar.retromp3recorder.utils.toPlayerTime
 import io.reactivex.rxjava3.core.Completable
@@ -24,7 +24,7 @@ class AudioSeekUC @Inject constructor(
                         audioPlayer.onInput(AudioPlayer.Input.Resume)
                     }
                     else -> {
-                        seekRepo.onNext(Shell(position))
+                        seekRepo.onNext(Optional(position))
                     }
                 }
             }

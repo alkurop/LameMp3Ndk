@@ -11,8 +11,7 @@ import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.utils.findViewById
 import com.omar.retromp3recorder.app.ui.utils.toFileName
 import com.omar.retromp3recorder.ui.wavetable.WavetablePreview
-import java.text.SimpleDateFormat
-import java.util.*
+import com.omar.retromp3recorder.utils.toDisplay
 
 class SelectorAdapter(
     val onItemSelectedListener: (SelectorView.Item) -> Unit
@@ -63,8 +62,7 @@ class SelectorAdapter(
                 wavetablePreview.isVisible = true
                 wavetablePreview.update(wavetable.data)
                 val millisLength = wavetable.data.size * 100L
-                val simpleDateFormat = SimpleDateFormat("mm:ss")
-                timeView.text = simpleDateFormat.format(Date(millisLength))
+                timeView.text = millisLength.toDisplay()
             } else {
                 wavetablePreview.isVisible = false
                 timeView.text = null

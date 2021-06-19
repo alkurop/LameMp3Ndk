@@ -4,7 +4,7 @@ import android.app.Application
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.di.DaggerAppComponent
 import com.omar.retromp3recorder.app.di.UtilsModule
-import com.omar.retromp3recorder.bl.audio.CleanUpSeekRepoUsecase
+import com.omar.retromp3recorder.bl.files.NewFileUpdater
 import com.omar.retromp3recorder.bl.files.TakeLastFileUC
 import com.omar.retromp3recorder.bl.settings.LoadRecorderSettingsUC
 import timber.log.Timber
@@ -18,7 +18,7 @@ class App : Application() {
     lateinit var takeLastFileUC: TakeLastFileUC
 
     @Inject
-    lateinit var cleanUpSeekRepoUsecase: CleanUpSeekRepoUsecase
+    lateinit var cleanUpSeekRepoUsecase: NewFileUpdater
 
     override fun onCreate() {
         super.onCreate()

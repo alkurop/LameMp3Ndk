@@ -32,4 +32,4 @@ class WavetableRepo @Inject constructor() :
 
 @Singleton
 class SeekRepo @Inject constructor() :
-    BehaviorSubjectRepo<Shell<Int>>(Shell.empty())
+    BehaviorSubjectRepo<Optional<Int>>(Optional.empty())

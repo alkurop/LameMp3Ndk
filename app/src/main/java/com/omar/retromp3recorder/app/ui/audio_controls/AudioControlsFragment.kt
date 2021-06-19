@@ -13,6 +13,8 @@ import com.omar.retromp3recorder.app.ui.utils.findViewById
 import com.omar.retromp3recorder.app.uiutils.observe
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
 import com.omar.retromp3recorder.ui.state_button.InteractiveButtonBlinking
+import com.omar.retromp3recorder.utils.toDisplay
+import com.omar.retromp3recorder.utils.toPlayerTime
 import io.reactivex.rxjava3.core.Observable.merge
 
 class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
@@ -54,8 +56,8 @@ class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
             this.takeIf { it is PlayerProgressViewState.Visible }
                 ?.run { this as PlayerProgressViewState.Visible }
                 ?.let {
-                    progressView.text = "${it.progress}"
-                    durationView.text = "${it.duration}"
+                    progressView.text = it.progress.toPlayerTime().toDisplay()
+                    durationView.text = it.duration.toPlayerTime().toDisplay()
                 }
         }
     }
