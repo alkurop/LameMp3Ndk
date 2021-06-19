@@ -7,7 +7,7 @@ import com.omar.retromp3recorder.app.ui.files.preview.buttonstate.RenameFileButt
 import com.omar.retromp3recorder.bl.audio.AudioSeekPauseUC
 import com.omar.retromp3recorder.bl.audio.AudioSeekUC
 import com.omar.retromp3recorder.bl.files.CurrentFileMapper
-import com.omar.retromp3recorder.storage.repo.common.PPRepo
+import com.omar.retromp3recorder.storage.repo.common.PlayerProgressRepo
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
 import com.omar.retromp3recorder.utils.mapToUsecase
 import com.omar.retromp3recorder.utils.processIO
@@ -23,7 +23,7 @@ class CurrentFileInteractor @Inject constructor(
     private val currentFileMapper: CurrentFileMapper,
     private val deleteFileButtonStateMapper: DeleteFileButtonStateMapper,
     private val openFileButtonStateMapper: OpenFileButtonStateMapper,
-    private val ppRepo: PPRepo,
+    private val playerProgressRepo: PlayerProgressRepo,
     private val recordButtonStateMapper: RecordButtonStateMapper,
     private val renameFileButtonStateMapper: RenameFileButtonStateMapper,
     private val scheduler: Scheduler,
@@ -37,7 +37,7 @@ class CurrentFileInteractor @Inject constructor(
     private val mapRepoToOutput: () -> Observable<CurrentFileView.Output> = {
         Observable.merge(
             listOf(
-                ppRepo.observe().map {
+                playerProgressRepo.observe().map {
                     CurrentFileView.Output.PlayerProgress(it)
                 },
                 renameFileButtonStateMapper.observe().map {

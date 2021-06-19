@@ -2,14 +2,14 @@ package com.omar.retromp3recorder.bl.audio
 
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.audioplayer.observeProgress
-import com.omar.retromp3recorder.storage.repo.common.PPRepo
+import com.omar.retromp3recorder.storage.repo.common.PlayerProgressRepo
 import com.omar.retromp3recorder.utils.toSeekbarTime
 import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 
 class PlayerProgressMapper @Inject constructor(
     private val audioPlayer: AudioPlayer,
-    private val ppRepo: PPRepo
+    private val playerProgressRepo: PlayerProgressRepo
 ) {
     fun execute(): Completable =
         audioPlayer.observeProgress()
@@ -19,7 +19,12 @@ class PlayerProgressMapper @Inject constructor(
                     val mappedPosition = position.toSeekbarTime()
                     val mappedDuration = duration.toSeekbarTime()
                     val fixedPosition = if (mappedDuration == mappedPosition) 0 else position
-                    ppRepo.onNext(PPRepo.In.Progress(fixedPosition, duration))
+                    playerProgressRepo.onNext(
+                        PlayerProgressRepo.In.Progress(
+                            fixedPosition,
+                            duration
+                        )
+                    )
                 }
             }
 }

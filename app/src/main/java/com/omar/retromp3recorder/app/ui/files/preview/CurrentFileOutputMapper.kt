@@ -2,7 +2,7 @@ package com.omar.retromp3recorder.app.ui.files.preview
 
 import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.dto.ExistingFileWrapper
-import com.omar.retromp3recorder.storage.repo.common.PPRepo
+import com.omar.retromp3recorder.storage.repo.common.PlayerProgressRepo
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableTransformer
 import io.reactivex.rxjava3.functions.BiFunction
@@ -37,7 +37,7 @@ object CurrentFileOutputMapper {
                     isRenameButtonActive = output.isActive
                 )
                 is CurrentFileView.Output.PlayerProgress -> {
-                    val progress = if (output.progress is PPRepo.Out.Shown) {
+                    val progress = if (output.progress is PlayerProgressRepo.Out.Shown) {
                         Shell(output.progress)
                     } else {
                         Shell.empty()

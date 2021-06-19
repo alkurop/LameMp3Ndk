@@ -1,11 +1,15 @@
 package com.omar.retromp3recorder.storage.repo.common
 
 import com.omar.retromp3recorder.utils.toPlayerTime
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PPRepo : ReducerRepo<PPRepo.In, PPRepo.Out>(
-    init = Out.Hidden,
-    function = function
-) {
+@Singleton
+class PlayerProgressRepo @Inject constructor() :
+    ReducerRepo<PlayerProgressRepo.In, PlayerProgressRepo.Out>(
+        init = Out.Hidden,
+        function = FUNCTION
+    ) {
     sealed class In {
         data class Seek(
             val progress: Int,
@@ -31,18 +35,19 @@ class PPRepo : ReducerRepo<PPRepo.In, PPRepo.Out>(
     }
 }
 
-private fun PPRepo.In.Progress.map() = PPRepo.Out.Shown(
+private fun PlayerProgressRepo.In.Progress.map() = PlayerProgressRepo.Out.Shown(
     progress = this.progress,
     duration = this.duration,
     timestamp = System.currentTimeMillis()
 )
 
-private val function: PPRepo.Out.(PPRepo.In) -> PPRepo.Out = { input ->
-    when (input) {
-        is PPRepo.In.Seek -> (this as PPRepo.Out.Shown).copy(
-            progress = input.progress.toPlayerTime()
-        )
-        is PPRepo.In.Progress -> input.map()
-        else -> PPRepo.Out.Hidden
+private val FUNCTION: PlayerProgressRepo.Out.(PlayerProgressRepo.In) -> PlayerProgressRepo.Out =
+    { input ->
+        when (input) {
+            is PlayerProgressRepo.In.Seek -> (this as PlayerProgressRepo.Out.Shown).copy(
+                progress = input.progress.toPlayerTime()
+            )
+            is PlayerProgressRepo.In.Progress -> input.map()
+            else -> PlayerProgressRepo.Out.Hidden
+        }
     }
-}
