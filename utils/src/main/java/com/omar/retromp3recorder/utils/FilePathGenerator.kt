@@ -9,6 +9,7 @@ interface FilePathGenerator {
     val fileDirs: List<String>
 }
 
+@Suppress("DEPRECATION")
 class FilePathGeneratorImpl(
     private val context: Context
 ) : FilePathGenerator {

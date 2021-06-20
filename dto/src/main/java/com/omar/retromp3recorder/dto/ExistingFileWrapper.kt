@@ -25,6 +25,3 @@ fun File.toFileWrapper(): ExistingFileWrapper =
         null
     )
 
-data class Wavetable(
-    val data: ByteArray
-)

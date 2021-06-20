@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.bl.audio
 
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.audioplayer.observeProgress
+import com.omar.retromp3recorder.dto.PlayerProgress
 import com.omar.retromp3recorder.storage.repo.common.PlayerProgressRepo
 import com.omar.retromp3recorder.utils.toSeekbarTime
 import io.reactivex.rxjava3.core.Completable
@@ -21,8 +22,10 @@ class PlayerProgressMapper @Inject constructor(
                     val fixedPosition = if (mappedDuration == mappedPosition) 0 else position
                     playerProgressRepo.onNext(
                         PlayerProgressRepo.In.Progress(
-                            fixedPosition,
-                            duration
+                            PlayerProgress(
+                                fixedPosition,
+                                duration
+                            )
                         )
                     )
                 }

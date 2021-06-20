@@ -2,8 +2,9 @@ package com.omar.retromp3recorder.app.ui.files.preview
 
 import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.dto.FileWrapper
+import com.omar.retromp3recorder.dto.PlayerProgress
 import com.omar.retromp3recorder.dto.Wavetable
-import com.omar.retromp3recorder.storage.repo.common.PlayerProgressRepo
+import com.omar.retromp3recorder.utils.Optional
 
 object CurrentFileView {
     data class State(
@@ -13,7 +14,7 @@ object CurrentFileView {
         val isDeleteFileActive: Boolean = false,
         val isRenameButtonActive: Boolean = false,
         val isRecording: Boolean = false,
-        val playerProgress: Shell<PlayerProgressRepo.Out.Shown> = Shell.empty()
+        val playerProgress: Shell<PlayerProgress> = Shell.empty()
     )
 
     sealed class Input {
@@ -27,7 +28,7 @@ object CurrentFileView {
         data class DeleteButtonState(val isActive: Boolean) : Output()
         data class OpenButtonState(val isActive: Boolean) : Output()
         data class RenameButtonState(val isActive: Boolean) : Output()
-        data class PlayerProgress(val progress: PlayerProgressRepo.Out) : Output()
-        data class IsRecording(val isRecording: Boolean) : Output()
+        data class PlayerProgressOut(val progress: Optional<PlayerProgress>) : Output()
+        data class IsRecordingOut(val isRecording: Boolean) : Output()
     }
 }

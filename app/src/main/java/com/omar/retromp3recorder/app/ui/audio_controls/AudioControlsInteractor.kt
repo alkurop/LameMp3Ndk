@@ -41,7 +41,7 @@ class AudioControlsInteractor @Inject constructor(
                 playButtonStateMapper.observe()
                     .map { AudioControlsView.Output.PlayButtonState(it) },
                 playerProgressRepo.observe()
-                    .map { AudioControlsView.Output.PlayerProgress(it) },
+                    .map { AudioControlsView.Output.PlayerProgressState(it.value) },
                 recordButtonStateMapper.observe()
                     .map { AudioControlsView.Output.RecordButtonState(it) },
                 shareButtonStateMapper.observe()

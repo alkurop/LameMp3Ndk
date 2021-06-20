@@ -16,7 +16,6 @@ import com.omar.retromp3recorder.app.ui.utils.toFileName
 import com.omar.retromp3recorder.app.uiutils.observe
 import com.omar.retromp3recorder.ui.wavetable.WavetableSeekbarPreview
 import com.omar.retromp3recorder.utils.toSeekbarTime
-import timber.log.Timber
 
 class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
     private val textView by lazyView<TextView>(R.id.current_file_text)
@@ -67,11 +66,9 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         buttonDelete.setIsButtonActive(state.isDeleteFileActive)
         wavetablePreviewPreview.isInvisible = state.isRecording
         state.wavetable.ghost?.let {
-            Timber.d("Progress wavetable")
             wavetablePreviewPreview.updateWavetable(it.data)
         }
         state.playerProgress.ghost?.let {
-            Timber.d("Progress $it")
             wavetablePreviewPreview.updateProgress(it.run {
                 Pair(
                     it.progress.toSeekbarTime(),

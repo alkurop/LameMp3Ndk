@@ -10,7 +10,6 @@ import com.jakewharton.rxbinding4.view.clicks
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.utils.lazyView
 import com.omar.retromp3recorder.app.uiutils.observe
-import com.omar.retromp3recorder.storage.repo.common.PlayerProgressRepo
 import com.omar.retromp3recorder.ui.state_button.InteractiveButton
 import com.omar.retromp3recorder.ui.state_button.InteractiveButtonBlinking
 import com.omar.retromp3recorder.utils.toDisplay
@@ -43,15 +42,11 @@ class AudioControlsFragment : Fragment(R.layout.fragment_audio_controls) {
         recordButton.onState(state.recordButtonState)
         shareButton.onState(state.shareButtonState)
         stopButton.onState(state.stopButtonState)
-        state.playerProgressState.apply {
-            progressView.isGone = this is PlayerProgressRepo.Out.Hidden
-            durationView.isGone = this is PlayerProgressRepo.Out.Hidden
-            this.takeIf { it is PlayerProgressRepo.Out.Shown }
-                ?.run { this as PlayerProgressRepo.Out.Shown }
-                ?.let {
-                    progressView.text = it.progress.toDisplay()
-                    durationView.text = it.duration.toDisplay()
-                }
+        progressView.isGone = state.playerProgressState == null
+        durationView.isGone = state.playerProgressState == null
+        state.playerProgressState?.apply {
+            progressView.text = progress.toDisplay()
+            durationView.text = duration.toDisplay()
         }
     }
 }

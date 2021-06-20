@@ -114,7 +114,19 @@
         android:layout_marginStart="16dp"
         android:layout_width="0dp"
         android:name="com.omar.retromp3recorder.app.ui.files.preview.CurrentFileFragment"
-        app:layout_constraintBottom_toTopOf="@+id/audio_controls"
+        app:layout_constraintBottom_toTopOf="@+id/progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <fragment
+        android:id="@+id/progress"
+        android:layout_height="@dimen/wavetable_height"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_width="0dp"
+        android:name="com.omar.retromp3recorder.app.ui.joined_progress.JoinedProgressFragment"
+        app:layout_constraintBottom_toTopOf="@id/audio_controls"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -129,7 +141,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/guidelineCentralHor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
     <fragment
         android:id="@+id/fragment_visualizer"

@@ -28,13 +28,12 @@ class StartPlaybackUC @Inject constructor(
                 playerProgressRepo.observe(), { p1, p2 -> Pair(p1, p2) })
                 .takeOne()
                 .flatMapCompletable { (fileName, progressState) ->
-                    val seekPosition = progressState as? PlayerProgressRepo.Out.Shown
                     Completable.fromAction {
                         audioPlayer.onInput(
                             AudioPlayer.Input.Start(
                                 PlayerStartOptions(
                                     filePath = fileName.value!!,
-                                    seekPosition = seekPosition?.progress
+                                    seekPosition = progressState.value?.progress
                                 )
                             )
                         )

@@ -25,7 +25,7 @@ object AudioControlsOutputMapper {
                 is AudioControlsView.Output.StopButtonState -> oldState.copy(
                     stopButtonState = output.state
                 )
-                is AudioControlsView.Output.PlayerProgress -> oldState.copy(
+                is AudioControlsView.Output.PlayerProgressState -> oldState.copy(
                     playerProgressState = output.state
                 )
             }
