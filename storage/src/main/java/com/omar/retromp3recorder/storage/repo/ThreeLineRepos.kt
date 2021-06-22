@@ -1,6 +1,5 @@
 package com.omar.retromp3recorder.storage.repo
 
-import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.dto.ExistingFileWrapper
 import com.omar.retromp3recorder.dto.Wavetable
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
@@ -28,7 +27,7 @@ class SampleRateRepo @Inject constructor(defaults: RecorderDefaults) :
 
 @Singleton
 class WavetableRepo @Inject constructor() :
-    BehaviorSubjectRepo<Shell<Pair<String, Wavetable>>>(Shell.empty())
+    BehaviorSubjectRepo<Pair<String, Wavetable>>()
 
 @Singleton
 class SeekRepo @Inject constructor() :

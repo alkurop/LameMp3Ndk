@@ -16,7 +16,8 @@ data class FileDbEntity(
 @Entity
 data class WaveformDbEntity(
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    val waveform: ByteArray
+    val waveform: ByteArray,
+    val stepMillis: Int?
 )
 
 @Dao
@@ -58,6 +59,6 @@ fun ExistingFileWrapper.toDatabaseEntity(): FileDbEntity = FileDbEntity(
     waveform = this.wavetable?.toDatabaseEntity()
 )
 
-fun Wavetable.toDatabaseEntity() = WaveformDbEntity(this.data)
-fun WaveformDbEntity.toWavetable() = Wavetable(this.waveform)
+fun Wavetable.toDatabaseEntity() = WaveformDbEntity(this.data, stepMillis)
+fun WaveformDbEntity.toWavetable() = Wavetable(this.waveform, stepMillis ?: 100)
 

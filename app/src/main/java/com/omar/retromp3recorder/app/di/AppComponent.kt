@@ -7,6 +7,7 @@ import com.omar.retromp3recorder.app.ui.files.preview.CurrentFileViewModel
 import com.omar.retromp3recorder.app.ui.files.properties.PropertiesViewModel
 import com.omar.retromp3recorder.app.ui.files.rename.RenameFileViewModel
 import com.omar.retromp3recorder.app.ui.files.selector.SelectorViewModel
+import com.omar.retromp3recorder.app.ui.joined_progress.JoinedProgressViewModel
 import com.omar.retromp3recorder.app.ui.log.LogViewModel
 import com.omar.retromp3recorder.app.ui.main.MainViewModel
 import com.omar.retromp3recorder.app.ui.recorder_settings.beat_rate.BitRateSettingsViewModel
@@ -39,4 +40,5 @@ interface AppComponent {
     fun inject(app: App)
     fun inject(propertiesViewModel: PropertiesViewModel)
     fun inject(renameFileViewModel: RenameFileViewModel)
+    fun inject(joinedProgressViewModel: JoinedProgressViewModel)
 }
