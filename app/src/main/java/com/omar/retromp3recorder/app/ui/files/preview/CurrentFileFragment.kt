@@ -55,8 +55,6 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
             }
             viewModel.input.onNext(event)
         }
-        wavetablePreviewPreview.observeIsSeeking().observe(viewLifecycleOwner) {
-        }
     }
 
     private fun renderState(state: CurrentFileView.State) {
