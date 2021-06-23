@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.app.ui.joined_progress
 
+import com.github.alkurop.ghostinshell.Shell
 import com.omar.retromp3recorder.bl.audio.AudioState
 import com.omar.retromp3recorder.bl.audio.AudioStateMapper
 import com.omar.retromp3recorder.bl.audio.RecordWavetableMapper
@@ -23,9 +24,15 @@ class JoinedProgressMapper @Inject constructor(
                 Observable.combineLatest(
                     currentFileMapper.observe(),
                     playerProgressRepo.observe(), { currentFile, playerProgress ->
-                        val progress = playerProgress.value!!
-                        val file = (currentFile!!.value as ExistingFileWrapper)
-                        JoinedProgress.PlayerProgressShown(progress, file.wavetable!!)
+                        val progress = playerProgress.value
+                        if (progress != null && currentFile.value is ExistingFileWrapper) {
+                            val file = (currentFile!!.value as ExistingFileWrapper)
+                            JoinedProgress.PlayerProgressShown(
+                                Shell(progress),
+                                Shell(file.wavetable!!)
+                            )
+                        } else
+                            JoinedProgress.Hidden
                     }
                 )
             },
@@ -36,7 +43,10 @@ class JoinedProgressMapper @Inject constructor(
                         val progress = playerProgress.value
                         if (progress != null && currentFile.value is ExistingFileWrapper) {
                             val file = (currentFile!!.value as ExistingFileWrapper)
-                            JoinedProgress.PlayerProgressShown(progress, file.wavetable!!)
+                            JoinedProgress.PlayerProgressShown(
+                                Shell(progress),
+                                Shell(file.wavetable!!)
+                            )
                         } else
                             JoinedProgress.Hidden
                     }
@@ -49,7 +59,10 @@ class JoinedProgressMapper @Inject constructor(
                         val progress = playerProgress.value
                         if (progress != null && currentFile.value is ExistingFileWrapper) {
                             val file = (currentFile!!.value as ExistingFileWrapper)
-                            JoinedProgress.PlayerProgressShown(progress, file.wavetable!!)
+                            JoinedProgress.PlayerProgressShown(
+                                Shell(progress),
+                                Shell(file.wavetable!!)
+                            )
                         } else
                             JoinedProgress.Hidden
                     }
@@ -79,7 +92,7 @@ sealed class JoinedProgress {
     ) : JoinedProgress()
 
     data class PlayerProgressShown(
-        val progress: PlayerProgress,
-        val wavetable: Wavetable
+        val progress: Shell<PlayerProgress>,
+        val wavetable: Shell<Wavetable>
     ) : JoinedProgress()
 }

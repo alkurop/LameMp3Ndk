@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.omar.retromp3recorder.app.R
@@ -14,14 +13,11 @@ import com.omar.retromp3recorder.app.ui.files.rename.RenameFileDialogFragment
 import com.omar.retromp3recorder.app.ui.utils.lazyView
 import com.omar.retromp3recorder.app.ui.utils.toFileName
 import com.omar.retromp3recorder.app.uiutils.observe
-import com.omar.retromp3recorder.ui.wavetable.WavetableSeekbarPreview
-import com.omar.retromp3recorder.utils.toSeekbarTime
 
 class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
     private val textView by lazyView<TextView>(R.id.current_file_text)
     private val buttonOpen by lazyView<View>(R.id.button_open)
     private val buttonDelete by lazyView<View>(R.id.button_delete)
-    private val wavetablePreviewPreview by lazyView<WavetableSeekbarPreview>(R.id.wavetable)
     private val viewModel: CurrentFileViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,19 +38,6 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
                 RenameFileDialogFragment::class.java.canonicalName
             )
         }
-        wavetablePreviewPreview.observeIsSeeking().observe(viewLifecycleOwner) {
-            val event = when (it) {
-                is WavetableSeekbarPreview.SeekState.Seeking ->
-                    CurrentFileView.Input.SeekToPosition(it.progress)
-                is WavetableSeekbarPreview.SeekState.SeekStarted -> {
-                    CurrentFileView.Input.SeekingStarted
-                }
-                is WavetableSeekbarPreview.SeekState.SeekFinished -> {
-                    CurrentFileView.Input.SeekingFinished
-                }
-            }
-            viewModel.input.onNext(event)
-        }
     }
 
     private fun renderState(state: CurrentFileView.State) {
@@ -62,18 +45,6 @@ class CurrentFileFragment : Fragment(R.layout.fragment_current_file) {
         textView.isClickable = state.isRenameButtonActive
         buttonOpen.setIsButtonActive(state.isOpenFileActive)
         buttonDelete.setIsButtonActive(state.isDeleteFileActive)
-        wavetablePreviewPreview.isInvisible = state.isRecording
-        state.wavetable.ghost?.let {
-            wavetablePreviewPreview.updateWavetable(it.data)
-        }
-        state.playerProgress.ghost?.let {
-            wavetablePreviewPreview.updateProgress(it.run {
-                Pair(
-                    it.progress.toSeekbarTime(),
-                    it.duration.toSeekbarTime()
-                )
-            })
-        }
     }
 }
 

@@ -13,6 +13,7 @@ import com.omar.retromp3recorder.ui.wavetable.WavetablePreview
 import com.omar.retromp3recorder.ui.wavetable.WavetableSeekbarPreview
 import com.omar.retromp3recorder.utils.toDisplay
 import com.omar.retromp3recorder.utils.toSeekbarTime
+import timber.log.Timber
 
 class JoinedProgressFragment : Fragment(R.layout.fragment_joined_progress) {
     private val viewModel by viewModels<JoinedProgressViewModel>()
@@ -39,6 +40,7 @@ class JoinedProgressFragment : Fragment(R.layout.fragment_joined_progress) {
     }
 
     private fun renderView(joinedProgress: JoinedProgress) {
+        Timber.d("Joined progress, $joinedProgress")
         playerProgress.isGone = joinedProgress !is JoinedProgress.PlayerProgressShown
         recorderProgress.isGone = joinedProgress !is JoinedProgress.RecorderProgressShown
         recorderWavetable.isGone = joinedProgress !is JoinedProgress.RecorderProgressShown
@@ -49,10 +51,14 @@ class JoinedProgressFragment : Fragment(R.layout.fragment_joined_progress) {
             }
             is JoinedProgress.PlayerProgressShown -> {
                 val progress = joinedProgress.progress
-                playerProgress.updateProgress(
-                    progress.progress.toSeekbarTime() to progress.duration.toSeekbarTime()
-                )
-                playerProgress.updateWavetable(joinedProgress.wavetable.data)
+                progress.ghost?.let { p ->
+                    playerProgress.updateProgress(
+                        p.progress.toSeekbarTime() to p.duration.toSeekbarTime()
+                    )
+                }
+                joinedProgress.wavetable.ghost?.let { wavetable ->
+                    playerProgress.updateWavetable(wavetable.data)
+                }
             }
             else -> {
                 //nothing

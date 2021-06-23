@@ -64,11 +64,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.omar.retromp3recorder.ui.wavetable.WavetableSeekbarPreview
-        android:id="@+id/wavetable"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="4dp"
-        android:background="@color/color_visualizer_bg" />
-
 </LinearLayout>
