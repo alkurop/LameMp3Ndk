@@ -1,6 +1,7 @@
 package com.omar.retromp3recorder.app.ui.files.preview
 
 import com.github.alkurop.ghostinshell.Shell
+import com.omar.retromp3recorder.dto.FileWrapper
 import com.omar.retromp3recorder.dto.Wavetable
 
 object CurrentFileView {
@@ -20,9 +21,10 @@ object CurrentFileView {
     }
 
     sealed class Output {
+        data class CurrentFileOutput(val currentFile: FileWrapper?) : CurrentFileView.Output()
         data class DeleteButtonState(val isActive: Boolean) : Output()
         data class OpenButtonState(val isActive: Boolean) : Output()
         data class RenameButtonState(val isActive: Boolean) : Output()
-        data class IsRecordingOut(val isRecording: Boolean) : Output()
+        data class IsRecording(val isRecording: Boolean) : Output()
     }
 }
