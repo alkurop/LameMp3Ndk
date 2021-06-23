@@ -1,0 +1,58 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "7561597e662797b8becd35cb546f71a1",
+    "entities": [
+      {
+        "tableName": "FileDbEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`created` INTEGER NOT NULL, `lastModified` INTEGER NOT NULL, `filepath` TEXT NOT NULL, `waveform` BLOB, `stepMillis` INTEGER, PRIMARY KEY(`created`))",
+        "fields": [
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastModified",
+            "columnName": "lastModified",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "filepath",
+            "columnName": "filepath",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "waveform.waveform",
+            "columnName": "waveform",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "waveform.stepMillis",
+            "columnName": "stepMillis",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "created"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7561597e662797b8becd35cb546f71a1')"
+    ]
+  }
+}

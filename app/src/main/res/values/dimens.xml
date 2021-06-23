@@ -7,4 +7,5 @@
     <dimen name="control_buttons_dimen">50dp</dimen>
     <dimen name="progress_width">60dp</dimen>
     <dimen name="file_controls_button_size">48dp</dimen>
+    <dimen name="wavetable_height">40dp</dimen>
 </resources>

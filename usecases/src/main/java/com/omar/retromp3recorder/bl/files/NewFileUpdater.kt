@@ -1,5 +1,6 @@
 package com.omar.retromp3recorder.bl.files
 
+import com.omar.retromp3recorder.dto.PlayerProgress
 import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.storage.repo.common.PlayerProgressRepo
 import com.omar.retromp3recorder.utils.AudioDurationRetriever
@@ -25,7 +26,7 @@ class NewFileUpdater @Inject constructor(
                 if (hasPlayableFile) {
                     val durationMillis =
                         audioDurationRetriever.getAudioDurationForExistingFile(currentFile.value!!)
-                    PlayerProgressRepo.In.Progress(0, durationMillis)
+                    PlayerProgressRepo.In.Progress(PlayerProgress(0, durationMillis))
                 } else PlayerProgressRepo.In.Hidden
             })
             .flatMapCompletable { progress ->

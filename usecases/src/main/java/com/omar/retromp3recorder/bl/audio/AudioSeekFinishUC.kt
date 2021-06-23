@@ -18,7 +18,7 @@ class AudioSeekFinishUC @Inject constructor(
             { state, progress -> Pair(state, progress) })
             .flatMapCompletable { (state, progress) ->
                 Completable.fromAction {
-                    val position = (progress as PlayerProgressRepo.Out.Shown).progress
+                    val position = progress.value!!.progress
 
                     when (state!!) {
                         AudioPlayer.State.Playing -> {
