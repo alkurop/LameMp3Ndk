@@ -52,7 +52,7 @@ class JoinedProgressFragment : Fragment(R.layout.fragment_joined_progress) {
                 playerProgress.updateProgress(
                     progress.progress.toSeekbarTime() to progress.duration.toSeekbarTime()
                 )
-                //todo update wavetable
+                playerProgress.updateWavetable(joinedProgress.wavetable.data)
             }
             else -> {
                 //nothing
