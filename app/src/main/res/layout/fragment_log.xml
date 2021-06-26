@@ -5,11 +5,9 @@
     android:scrollbars="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@color/color_visualizer_bg"
         android:id="@+id/log_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginEnd="8dp"
         android:padding="8dp" />
 </FrameLayout>
