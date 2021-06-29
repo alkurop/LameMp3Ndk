@@ -9,8 +9,7 @@ Retro MP3 Recorder:
 
 
 //todo
-- mp3 file properties
-- record from line
-- multitrack
-- use exo player
-- scrubbing
+- cleanup the waveform convertion
+- foreground service to keep alive while playing and recording
+- notification to control recorder and playback while app is in the background
+
