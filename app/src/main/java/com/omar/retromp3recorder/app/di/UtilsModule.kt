@@ -37,7 +37,8 @@ class UtilsModule(private val app: Application) {
     fun provideFileLister(): FileLister = FileListerImpl()
 
     @Provides
-    fun provideFileNonEmptyChecker(): FileEmptyChecker = FileEmptyCheckerImpl()
+    fun provideFileNonEmptyChecker(audioDurationRetriever: AudioDurationRetriever): FileEmptyChecker =
+        FileEmptyCheckerImpl(audioDurationRetriever)
 
     @Provides
     fun providePermissionChecker(context: Context): PermissionChecker =
@@ -55,7 +56,8 @@ class UtilsModule(private val app: Application) {
     @Provides
     fun provideMp3MetadataEditor(
         context: Context,
-        recordingTagsDefaultsProvider: RecordingTagsDefaultProvider
+        recordingTagsDefaultsProvider: RecordingTagsDefaultProvider,
+        fileEmptyChecker: FileEmptyChecker
     ): Mp3TagsEditor =
-        Mp3TagsEditorImpl(context, recordingTagsDefaultsProvider)
+        Mp3TagsEditorImpl(context, recordingTagsDefaultsProvider, fileEmptyChecker)
 }

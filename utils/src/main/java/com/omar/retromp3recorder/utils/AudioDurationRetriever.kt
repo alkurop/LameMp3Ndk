@@ -5,9 +5,13 @@ import javax.inject.Inject
 
 class AudioDurationRetriever @Inject constructor() {
     fun getAudioDurationForExistingFile(filepath: String): Long {
-        val retriever = MediaMetadataRetriever()
-        retriever.setDataSource(filepath)
-        return retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong()
-            ?: 0L
+        return try {
+            val retriever = MediaMetadataRetriever()
+            retriever.setDataSource(filepath)
+            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong()
+                ?: 0L
+        } catch (e: Exception) {
+            0
+        }
     }
 }
