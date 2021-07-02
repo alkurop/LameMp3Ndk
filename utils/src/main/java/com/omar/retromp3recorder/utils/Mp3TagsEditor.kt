@@ -43,14 +43,16 @@ class Mp3TagsEditorImpl(
     override fun getTags(filepath: String): RecordingTags {
         val defaults = recordingTagsDefaultsProvider.provideDefaults()
         val titleFromFileName = getFilenameFromPath(filepath)
-        return if (isTagsWork() && fileEmptyChecker.isFileEmpty(filepath).not())
-            Mp3File(filepath).id3v1Tag.run {
+        return if (isTagsWork() && fileEmptyChecker.isFileEmpty(filepath).not()) {
+            val id3v1Tag = Mp3File(filepath).id3v1Tag
+            id3v1Tag.run {
                 RecordingTags(
                     year = year ?: defaults.year,
                     artist = artist ?: defaults.artist,
                     title = title ?: titleFromFileName
                 )
-            } else defaults.copy(title = titleFromFileName)
+            }
+        } else defaults.copy(title = titleFromFileName)
     }
 }
 
