@@ -20,17 +20,17 @@ class SaveWavetableUC @Inject constructor(
                 Completable.fromAction {
                     val fileEntityDao = appDatabase.fileEntityDao()
                     val fileList = fileListRepo.observe().blockingFirst()
-
-                    fileList.find { it.path == path }!!.let {
-                        val waveOwner =
-                            it.toDatabaseEntity().copy(waveform = wave.toDatabaseEntity())
-                        val update = waveOwner.copy(waveform = wave.toDatabaseEntity())
-                        fileEntityDao.updateItem(update)
-                        //update filelist with the wavetable for first file
-                        val size = fileList.size
-                        val newItem = fileList[size - 1].copy(wavetable = wave)
-                        fileListRepo.onNext(fileList.take(size - 1) + listOf(newItem))
-                    }
+                    val theFile = fileList.find { it.path == path } ?: error(
+                        "File not found with fileList $fileList and path $path and wave $wave"
+                    )
+                    val waveOwner =
+                        theFile.toDatabaseEntity().copy(waveform = wave.toDatabaseEntity())
+                    val update = waveOwner.copy(waveform = wave.toDatabaseEntity())
+                    fileEntityDao.updateItem(update)
+                    //update filelist with the wavetable for first file
+                    val size = fileList.size
+                    val newItem = fileList[size - 1].copy(wavetable = wave)
+                    fileListRepo.onNext(fileList.take(size - 1) + listOf(newItem))
                 }
             }
 }
