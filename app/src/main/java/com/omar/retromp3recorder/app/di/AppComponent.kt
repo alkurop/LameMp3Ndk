@@ -1,6 +1,7 @@
 package com.omar.retromp3recorder.app.di
 
 import com.omar.retromp3recorder.app.App
+import com.omar.retromp3recorder.app.WakelockService
 import com.omar.retromp3recorder.app.ui.audio_controls.AudioControlsViewModel
 import com.omar.retromp3recorder.app.ui.files.delete.DeleteFileViewModel
 import com.omar.retromp3recorder.app.ui.files.preview.CurrentFileViewModel
@@ -41,4 +42,5 @@ interface AppComponent {
     fun inject(propertiesViewModel: PropertiesViewModel)
     fun inject(renameFileViewModel: RenameFileViewModel)
     fun inject(joinedProgressViewModel: JoinedProgressViewModel)
+    fun inject(wakelockService: WakelockService)
 }

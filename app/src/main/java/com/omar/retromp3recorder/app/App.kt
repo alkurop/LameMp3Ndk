@@ -4,8 +4,9 @@ import android.app.Application
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.di.DaggerAppComponent
 import com.omar.retromp3recorder.app.di.UtilsModule
-import com.omar.retromp3recorder.bl.files.NewFileUpdater
+import com.omar.retromp3recorder.bl.WakeLockUsecase
 import com.omar.retromp3recorder.bl.audio.PlayerProgressMapper
+import com.omar.retromp3recorder.bl.files.NewFileUpdater
 import com.omar.retromp3recorder.bl.files.TakeLastFileUC
 import com.omar.retromp3recorder.bl.settings.LoadRecorderSettingsUC
 import timber.log.Timber
@@ -16,12 +17,16 @@ class App : Application() {
     lateinit var loadRecorderSettingsUC: LoadRecorderSettingsUC
 
     @Inject
+    lateinit var cleanUpSeekRepoUsecase: NewFileUpdater
+
+    @Inject
+    lateinit var playerProgressMapper: PlayerProgressMapper
+
+    @Inject
     lateinit var takeLastFileUC: TakeLastFileUC
 
     @Inject
-    lateinit var cleanUpSeekRepoUsecase: NewFileUpdater
-    @Inject
-    lateinit var playerProgressMapper: PlayerProgressMapper
+    lateinit var wakelockUsecase: WakeLockUsecase
 
     override fun onCreate() {
         super.onCreate()
@@ -35,6 +40,7 @@ class App : Application() {
         takeLastFileUC.execute().subscribe()
         cleanUpSeekRepoUsecase.execute().subscribe()
         playerProgressMapper.execute().subscribe()
+        wakelockUsecase.execute().subscribe()
     }
 
     companion object {
