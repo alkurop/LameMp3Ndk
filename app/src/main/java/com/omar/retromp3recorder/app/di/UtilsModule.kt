@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.app.di
 
 import android.app.Application
 import android.content.Context
+import com.omar.retromp3recorder.app.WakelockDealerImpl
 import com.omar.retromp3recorder.utils.*
 import dagger.Module
 import dagger.Provides
@@ -29,35 +30,34 @@ class UtilsModule(private val app: Application) {
     }
 
     @Provides
-    fun provideFilePathGenerator(context: Context): FilePathGenerator {
-        return FilePathGeneratorImpl(context)
-    }
+    fun provideFilePathGenerator(filePathGeneratorImpl: FilePathGeneratorImpl): FilePathGenerator =
+        filePathGeneratorImpl
 
     @Provides
-    fun provideFileLister(): FileLister = FileListerImpl()
+    fun provideFileLister(fileListerImpl: FileListerImpl): FileLister = fileListerImpl
 
     @Provides
-    fun provideFileNonEmptyChecker(audioDurationRetriever: AudioDurationRetriever): FileEmptyChecker =
-        FileEmptyCheckerImpl(audioDurationRetriever)
+    fun provideFileNonEmptyChecker(fileEmptyCheckerImpl: FileEmptyCheckerImpl): FileEmptyChecker =
+        fileEmptyCheckerImpl
 
     @Provides
-    fun providePermissionChecker(context: Context): PermissionChecker =
-        PermissionCheckerImpl(context)
+    fun providePermissionChecker(permissionCheckerImpl: PermissionCheckerImpl): PermissionChecker =
+        permissionCheckerImpl
 
     @Provides
-    fun provideFileDeleter(): FileDeleter = FileDeleterImpl()
+    fun provideFileDeleter(fileDeleter: FileDeleterImpl): FileDeleter = fileDeleter
 
     @Provides
-    fun provideFileRenamer(): FileRenamer = FileRenameImpl()
+    fun provideFileRenamer(fileRenamer: FileRenameImpl): FileRenamer = fileRenamer
 
     @Provides
-    fun provideDirCreator(): DirCreator = DirCreatorImpl()
+    fun provideDirCreator(dirCreatorImpl: DirCreatorImpl): DirCreator = dirCreatorImpl
 
     @Provides
-    fun provideMp3MetadataEditor(
-        context: Context,
-        recordingTagsDefaultsProvider: RecordingTagsDefaultProvider,
-        fileEmptyChecker: FileEmptyChecker
-    ): Mp3TagsEditor =
-        Mp3TagsEditorImpl(context, recordingTagsDefaultsProvider, fileEmptyChecker)
+    fun provideMp3MetadataEditor(mp3TagsEditorImpl: Mp3TagsEditorImpl): Mp3TagsEditor =
+        mp3TagsEditorImpl
+
+    @Provides
+    fun provideWakelockDealer(wakelockDealerImpl: WakelockDealerImpl): WakeLockDealer =
+        wakelockDealerImpl
 }

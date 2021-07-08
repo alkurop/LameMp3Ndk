@@ -3,6 +3,7 @@ package com.omar.retromp3recorder.utils
 import android.content.Context
 import android.os.Environment
 import java.io.File
+import javax.inject.Inject
 
 interface FilePathGenerator {
     fun generateFilePath(): String
@@ -10,7 +11,7 @@ interface FilePathGenerator {
 }
 
 @Suppress("DEPRECATION")
-class FilePathGeneratorImpl(
+class FilePathGeneratorImpl @Inject constructor(
     private val context: Context
 ) : FilePathGenerator {
     override fun generateFilePath(): String {
