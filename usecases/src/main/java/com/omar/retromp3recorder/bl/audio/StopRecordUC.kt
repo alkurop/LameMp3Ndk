@@ -28,21 +28,21 @@ class StopRecordUC @Inject constructor(
         //silly way to update current file preview and show wavetable of recently
         //recorded file
         .andThen(currentFileRepo.observe().takeOne().flatMapCompletable { currentFileWrapper ->
-            Completable
-                .fromAction {
-                    val filepath = currentFileWrapper.value!!
-                    mp3TagsEditor.setTags(
-                        filepath,
-                        recordingTagsDefaultProvider.provideDefaults().copy(
-                            title = mp3TagsEditor.getFilenameFromPath(filepath)
+            Completable.merge(
+                listOf(
+                    Completable.fromAction {
+                        val filepath = currentFileWrapper.value!!
+                        mp3TagsEditor.setTags(
+                            filepath,
+                            recordingTagsDefaultProvider.provideDefaults().copy(
+                                title = mp3TagsEditor.getFilenameFromPath(filepath)
+                            )
                         )
-                    )
-                }
-                .andThen(
+                    },
                     Completable.fromAction {
                         currentFileRepo.onNext(currentFileWrapper)
                     }
-                )
+                ))
         })
         .subscribeOn(scheduler)
 }

@@ -7,7 +7,6 @@ import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import timber.log.Timber
 
 class WavetableSeekbarPreview @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -66,7 +65,6 @@ class WavetableSeekbarPreview @JvmOverloads constructor(
 
     fun updateProgress(progress: Pair<Int, Int>) {
         if (shouldUpdateProgressBar) {
-            Timber.d("Progress, $progress")
             wavetableProgressBar.update(progress)
             seekbar.max = (progress.second)
             seekbar.progress = (progress.first)
