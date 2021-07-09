@@ -3,6 +3,7 @@ package com.omar.retromp3recorder.bl.audio
 import com.omar.retromp3recorder.audioplayer.AudioPlayer
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import io.reactivex.rxjava3.core.Observable
+import timber.log.Timber
 import javax.inject.Inject
 
 interface AudioStateMapper {
@@ -27,6 +28,7 @@ class AudioStateMapperImpl @Inject constructor(
             }
         )
         .distinctUntilChanged()
+        .doOnNext { Timber.d("$it") }
 }
 
 sealed class AudioState {
