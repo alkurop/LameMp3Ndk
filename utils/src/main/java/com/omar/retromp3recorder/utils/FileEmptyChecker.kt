@@ -1,12 +1,13 @@
 package com.omar.retromp3recorder.utils
 
 import java.io.File
+import javax.inject.Inject
 
 interface FileEmptyChecker {
     fun isFileEmpty(filePath: String): Boolean
 }
 
-class FileEmptyCheckerImpl(
+class FileEmptyCheckerImpl @Inject constructor(
     private val audioDurationRetriever: AudioDurationRetriever
 ) :
     FileEmptyChecker {

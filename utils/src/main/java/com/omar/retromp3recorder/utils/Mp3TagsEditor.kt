@@ -7,6 +7,7 @@ import com.mpatric.mp3agic.Mp3File
 import com.omar.retromp3recorder.dto.RecordingTags
 import timber.log.Timber
 import java.io.File
+import javax.inject.Inject
 
 interface Mp3TagsEditor {
     fun setTags(filepath: String, tags: RecordingTags)
@@ -14,7 +15,7 @@ interface Mp3TagsEditor {
     fun getFilenameFromPath(filePath: String): String
 }
 
-class Mp3TagsEditorImpl(
+class Mp3TagsEditorImpl @Inject constructor(
     private val context: Context,
     private val recordingTagsDefaultsProvider: RecordingTagsDefaultProvider,
     private val fileEmptyChecker: FileEmptyChecker

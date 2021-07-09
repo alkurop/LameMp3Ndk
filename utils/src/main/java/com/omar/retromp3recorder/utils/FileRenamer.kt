@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.utils
 
 import com.omar.retromp3recorder.dto.ExistingFileWrapper
 import java.io.File
+import javax.inject.Inject
 
 interface FileRenamer {
     fun renameFile(fileWrapper: ExistingFileWrapper, newName: String): String
@@ -9,7 +10,7 @@ interface FileRenamer {
     fun canRename(fileWrapper: ExistingFileWrapper, newName: String): Boolean
 }
 
-class FileRenameImpl : FileRenamer {
+class FileRenameImpl @Inject constructor() : FileRenamer {
     override fun renameFile(fileWrapper: ExistingFileWrapper, newName: String): String {
         val newFile = generateNewFile(fileWrapper, newName)
         File(fileWrapper.path).renameTo(newFile)

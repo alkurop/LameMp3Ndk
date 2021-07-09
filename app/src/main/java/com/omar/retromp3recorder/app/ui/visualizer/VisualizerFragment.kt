@@ -9,6 +9,7 @@ import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.uiutils.observe
 import com.omar.retromp3recorder.bl.audio.AudioState
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import timber.log.Timber
 
 class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
     private val viewModel by viewModels<VisualizerViewModel>()
@@ -64,15 +65,19 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
             return
         }
         visualizer = Visualizer(playerId).apply {
-            captureSize = Visualizer.getCaptureSizeRange()[1]
+            try {
+                captureSize = Visualizer.getCaptureSizeRange()[1]
 
-            setDataCaptureListener(
-                visualizerListener,
-                Visualizer.getMaxCaptureRate() / 2,
-                true,
-                false
-            )
-            enabled = true
+                setDataCaptureListener(
+                    visualizerListener,
+                    Visualizer.getMaxCaptureRate() / 2,
+                    true,
+                    false
+                )
+                enabled = true
+            } catch (exception: Exception) {
+                Timber.e(exception)
+            }
         }
     }
 
