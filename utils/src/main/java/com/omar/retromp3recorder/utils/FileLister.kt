@@ -7,11 +7,17 @@ import javax.inject.Inject
 
 interface FileLister {
     fun listFiles(dirPathList: List<String>): List<ExistingFileWrapper>
+    fun discoverFile(path: String): ExistingFileWrapper
 }
 
 class FileListerImpl @Inject constructor() : FileLister {
     override fun listFiles(dirPathList: List<String>): List<ExistingFileWrapper> {
         return dirPathList.map { listFiles(it) }.flatten()
+    }
+
+    override fun discoverFile(path: String): ExistingFileWrapper {
+        val file = File(path)
+        return file.toFileWrapper()
     }
 
     private fun listFiles(dirPath: String): List<ExistingFileWrapper> {
