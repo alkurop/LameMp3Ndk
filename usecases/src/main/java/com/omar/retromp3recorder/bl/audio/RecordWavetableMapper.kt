@@ -12,12 +12,12 @@ class RecordWavetableMapper @Inject constructor(
     fun observe(): Observable<Byte> {
         return recorder.observeRecorder()
             .map { array ->
-                array.toList().map { it.toInt().absoluteValue }.maxOrNull() ?: 0
+                array.toList().map { it.toInt().absoluteValue }.average()
             }
             .buffer(WAVETABLE_SIZE_MILLIS, TimeUnit.MILLISECONDS)
-            .map { it.maxOrNull() ?: 0 }
+            .map { it.average() }
             .map { it.toByte() }
     }
 }
 
-private const val WAVETABLE_SIZE_MILLIS = 100L
+private const val WAVETABLE_SIZE_MILLIS = 50L
