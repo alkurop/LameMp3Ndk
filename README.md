@@ -9,5 +9,6 @@ Retro MP3 Recorder:
 
 
 //todo
+ - optimize resolving files
  - settings activity
  - experimental feature flags

@@ -1,7 +1,7 @@
 package com.omar.retromp3recorder.bl.audio
 
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
-import com.omar.retromp3recorder.utils.PLAYER_TO_RECORDER_CONVERSION_MILLIS
+import com.omar.retromp3recorder.utils.Constants.PLAYER_TO_RECORDER_CONVERSION_MILLIS
 import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -17,6 +17,6 @@ class RecordWavetableMapper @Inject constructor(
             }
             .buffer(PLAYER_TO_RECORDER_CONVERSION_MILLIS.toLong(), TimeUnit.MILLISECONDS)
             .map { it.average() }
-            .map { it.toByte() }
+            .map { it.toInt().toByte() }
     }
 }

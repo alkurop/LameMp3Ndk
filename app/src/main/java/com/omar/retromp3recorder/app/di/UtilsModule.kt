@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.omar.retromp3recorder.app.WakelockDealerImpl
 import com.omar.retromp3recorder.utils.*
+import com.omar.retromp3recorder.utils.Constants.MAIN_THREAD
 import dagger.Module
 import dagger.Provides
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers

@@ -221,8 +221,8 @@ class Mp3VoiceRecorderImpl @Inject internal constructor(
     companion object {
         private const val ZERO = 0
         private const val ZERO_SHORT = ZERO.toShort()
-        private val channelConfig: Int = CHANNEL_PRESETS[1]
-        private val quality: Int = QUALITY_PRESETS[0]
+        private val channelConfig: Int = CHANNEL_PRESETS[0]
+        private val quality: Int = QUALITY_PRESETS[1]
         private val audioFormat: Int = AUDIO_FORMAT_PRESETS[1]
     }
 }

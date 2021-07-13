@@ -2,6 +2,7 @@ package com.omar.retromp3recorder.utils
 
 import android.media.MediaMetadataRetriever
 import com.omar.retromp3recorder.dto.Wavetable
+import com.omar.retromp3recorder.utils.Constants.PLAYER_TO_RECORDER_CONVERSION_MILLIS
 import javax.inject.Inject
 
 class EmptyWavetableGenerator @Inject constructor() {
@@ -11,6 +12,6 @@ class EmptyWavetableGenerator @Inject constructor() {
         val duration =
             metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)!!.toLong()
         val data = (0 until duration.toSeekbarTime()).map { 0 }.map { it.toByte() }.toByteArray()
-        return Wavetable(data)
+        return Wavetable(data, PLAYER_TO_RECORDER_CONVERSION_MILLIS)
     }
 }
