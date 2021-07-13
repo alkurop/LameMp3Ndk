@@ -2,12 +2,11 @@ package com.omar.retromp3recorder.utils
 
 import java.util.*
 
-private const val PROGRESS_CONVERSION_RATE = 100
 typealias SeekbarTime = Int
 typealias PlayerTime = Long
 
-fun SeekbarTime.toPlayerTime(): PlayerTime = this.toLong() * PROGRESS_CONVERSION_RATE
-fun PlayerTime.toSeekbarTime(): SeekbarTime = (this / PROGRESS_CONVERSION_RATE).toInt()
+fun SeekbarTime.toPlayerTime(): PlayerTime = this.toLong() * PLAYER_TO_RECORDER_CONVERSION_MILLIS
+fun PlayerTime.toSeekbarTime(): SeekbarTime = (this / PLAYER_TO_RECORDER_CONVERSION_MILLIS).toInt()
 
 fun PlayerTime.toDisplay(): String {
     val calendar = Calendar.getInstance()

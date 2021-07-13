@@ -1,6 +1,7 @@
 package com.omar.retromp3recorder.bl.audio
 
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
+import com.omar.retromp3recorder.utils.PLAYER_TO_RECORDER_CONVERSION_MILLIS
 import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -14,10 +15,8 @@ class RecordWavetableMapper @Inject constructor(
             .map { array ->
                 array.toList().map { it.toInt().absoluteValue }.average()
             }
-            .buffer(WAVETABLE_SIZE_MILLIS, TimeUnit.MILLISECONDS)
+            .buffer(PLAYER_TO_RECORDER_CONVERSION_MILLIS.toLong(), TimeUnit.MILLISECONDS)
             .map { it.average() }
             .map { it.toByte() }
     }
 }
-
-private const val WAVETABLE_SIZE_MILLIS = 50L

@@ -26,7 +26,7 @@ interface Mp3VoiceRecorder {
     data class RecorderProps(
         val filepath: String,
         val bitRate: BitRate,
-        val sampleRate: SampleRate
+        val sampleRate: SampleRate,
     )
 
     companion object {
