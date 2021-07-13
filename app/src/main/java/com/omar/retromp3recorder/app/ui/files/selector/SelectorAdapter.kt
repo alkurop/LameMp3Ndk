@@ -61,7 +61,7 @@ class SelectorAdapter(
             if (wavetable != null) {
                 wavetablePreview.isVisible = true
                 wavetablePreview.update(wavetable.data)
-                val millisLength = wavetable.data.size * 100L
+                val millisLength = wavetable.data.size * wavetable.stepMillis.toLong()
                 timeView.text = millisLength.toDisplay()
             } else {
                 wavetablePreview.isVisible = false

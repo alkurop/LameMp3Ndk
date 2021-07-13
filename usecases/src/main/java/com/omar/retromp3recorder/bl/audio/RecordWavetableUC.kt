@@ -3,6 +3,7 @@ package com.omar.retromp3recorder.bl.audio
 import com.omar.retromp3recorder.dto.Wavetable
 import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.storage.repo.WavetableRepo
+import com.omar.retromp3recorder.utils.Constants
 import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 
@@ -24,7 +25,8 @@ class RecordWavetableUC @Inject constructor(
             .flatMapCompletable {
                 Completable.fromAction {
                     val ghost = Wavetable(
-                        it
+                        it,
+                        Constants.PLAYER_TO_RECORDER_CONVERSION_MILLIS
                     )
                     val currentFilePath = currentFileRepo.observe().blockingFirst().value!!
                     val pair = Pair(

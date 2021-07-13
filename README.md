@@ -9,7 +9,6 @@ Retro MP3 Recorder:
 
 
 //todo
-- cleanup the waveform convertion
-- foreground service to keep alive while playing and recording
-- notification to control recorder and playback while app is in the background
-
+ - optimize resolving files
+ - settings activity
+ - experimental feature flags

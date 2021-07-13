@@ -9,6 +9,7 @@ import com.omar.retromp3recorder.dto.ExistingFileWrapper
 import com.omar.retromp3recorder.dto.PlayerProgress
 import com.omar.retromp3recorder.dto.Wavetable
 import com.omar.retromp3recorder.storage.repo.common.PlayerProgressRepo
+import com.omar.retromp3recorder.utils.Constants.PLAYER_TO_RECORDER_CONVERSION_MILLIS
 import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
@@ -76,8 +77,8 @@ class JoinedProgressMapper @Inject constructor(
                     })
                     .map {
                         JoinedProgress.RecorderProgressShown(
-                            it.size * 100L,
-                            Wavetable(it.toByteArray(), 100)
+                            it.size * PLAYER_TO_RECORDER_CONVERSION_MILLIS.toLong(),
+                            Wavetable(it.toByteArray(), PLAYER_TO_RECORDER_CONVERSION_MILLIS)
                         )
                     }
             }
