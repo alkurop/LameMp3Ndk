@@ -18,7 +18,7 @@ class RenameFileUC @Inject constructor(
     private val currentFileRepo: CurrentFileRepo,
     private val currentFileMapper: CurrentFileMapper,
     private val fileRenamer: FileRenamer,
-    private val findFilesUC: FindFilesUC,
+    private val findFilesUC: FindFilesNoScanUC,
     private val mp3TagsEditor: Mp3TagsEditor,
     private val scheduler: Scheduler
 ) {

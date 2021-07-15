@@ -13,8 +13,9 @@ interface FileRenamer {
 class FileRenameImpl @Inject constructor() : FileRenamer {
     override fun renameFile(fileWrapper: ExistingFileWrapper, newName: String): String {
         val newFile = generateNewFile(fileWrapper, newName)
-        File(fileWrapper.path).renameTo(newFile)
-        return newFile.path
+        val isRenamed = File(fileWrapper.path).renameTo(newFile)
+
+        return if (isRenamed) newFile.path else fileWrapper.path
     }
 
     override fun canRename(fileWrapper: ExistingFileWrapper, newName: String): Boolean {

@@ -20,7 +20,7 @@ import javax.inject.Inject
 class TakeLastFileWithScanUC @Inject constructor(
     private val fileListRepo: FileListRepo,
     private val fileEmptyChecker: FileEmptyChecker,
-    private val findFilesUC: FindFilesUC,
+    private val findFilesUC: ScanDirFilesUC,
     private val currentFileRepo: CurrentFileRepo,
     private val scheduler: Scheduler
 ) {

@@ -22,7 +22,7 @@ import javax.inject.Inject
  *
  * Finally FileListRepo is updated
  */
-class FindFilesUC @Inject constructor(
+class ScanDirFilesUC @Inject constructor(
     private val appDatabase: AppDatabase,
     private val emptyWavetableGenerator: EmptyWavetableGenerator,
     private val fileListRepo: FileListRepo,

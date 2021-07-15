@@ -7,7 +7,7 @@ import com.omar.retromp3recorder.app.di.UtilsModule
 import com.omar.retromp3recorder.bl.WakeLockUsecase
 import com.omar.retromp3recorder.bl.audio.PlayerProgressMapper
 import com.omar.retromp3recorder.bl.files.NewFileUpdater
-import com.omar.retromp3recorder.bl.files.TakeLastFileWithScanUC
+import com.omar.retromp3recorder.bl.files.TakeLastFileNoScanUC
 import com.omar.retromp3recorder.bl.settings.LoadRecorderSettingsUC
 import timber.log.Timber
 import javax.inject.Inject
@@ -23,7 +23,7 @@ class App : Application() {
     lateinit var playerProgressMapper: PlayerProgressMapper
 
     @Inject
-    lateinit var takeLastFileWithScanWithScanUC: TakeLastFileWithScanUC
+    lateinit var takeLastFileWithScanWithScanUC: TakeLastFileNoScanUC
 
     @Inject
     lateinit var wakelockUsecase: WakeLockUsecase
