@@ -36,7 +36,7 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.state.observe(viewLifecycleOwner) { state ->
+        viewModel.state.observe(viewLifecycleOwner, { state ->
             if (state.audioState !in listOf(
                     AudioState.Playing,
                     AudioState.Seek_Paused
@@ -46,7 +46,9 @@ class VisualizerFragment : Fragment(R.layout.fragment_visualizer) {
             } else {
                 renderPlayerId(state.playerId)
             }
-        }
+        }, {
+            Timber.e(it)
+        })
         viewModel.recorder.observeRecorder().observeOn(AndroidSchedulers.mainThread())
             .observe(viewLifecycleOwner) { bytes ->
                 visualizerDisplayView?.updateVisualizer(bytes)
