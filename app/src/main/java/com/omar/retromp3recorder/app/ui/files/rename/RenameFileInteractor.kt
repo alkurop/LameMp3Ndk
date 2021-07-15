@@ -41,10 +41,10 @@ class RenameFileInteractor @Inject constructor(
             Completable.merge(
                 listOf(
                     input.mapToUsecase<RenameFileView.Input.Rename> {
-                        renameFileUC.execute(
-                            it.newName,
-                            finishedCallback = finishedRenameCallback
-                        )
+                        renameFileUC.execute(it.newName)
+                            .andThen {
+                                finishedRenameCallback.onNext(true)
+                            }
                     },
                     input.mapToUsecase<RenameFileView.Input.CheckCanRename> {
                         canRenameFileUC.execute(
