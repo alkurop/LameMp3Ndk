@@ -30,8 +30,12 @@ class Mp3TagsEditorImpl @Inject constructor(
         }
         val temp = "${context.cacheDir}/temp.mp3"
         mp3File.save(temp)
-        File(temp).copyTo(File(filepath), overwrite = true)
-        File(temp).delete()
+        try {
+            File(temp).copyTo(File(filepath), overwrite = true)
+            File(temp).delete()
+        } catch (e: FileAlreadyExistsException) {
+            Timber.e(e)
+        }
         val newFile = Mp3File(filepath)
         val id3v1Tag = newFile.id3v1Tag
         Timber.d("Tag $id3v1Tag")
@@ -45,7 +49,7 @@ class Mp3TagsEditorImpl @Inject constructor(
         val defaults = recordingTagsDefaultsProvider.provideDefaults()
         val titleFromFileName = getFilenameFromPath(filepath)
         return if (isTagsWork() && fileEmptyChecker.isFileEmpty(filepath).not()) {
-            val id3v1Tag = Mp3File(filepath).id3v1Tag
+            val id3v1Tag = Mp3File(filepath).id3v1Tag ?: ID3v1Tag()
             id3v1Tag.run {
                 RecordingTags(
                     year = year ?: defaults.year,

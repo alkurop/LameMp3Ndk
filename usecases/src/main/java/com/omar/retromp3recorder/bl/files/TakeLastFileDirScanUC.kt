@@ -16,10 +16,11 @@ import javax.inject.Inject
  *
  * and puts it into the CurrentFileRepo
  */
-class TakeLastFileUC @Inject constructor(
+@Deprecated("use TakeLastFileNoScanUC. this version is very slow when user has a lot of files")
+class TakeLastFileDirScanUC @Inject constructor(
     private val fileListRepo: FileListRepo,
     private val fileEmptyChecker: FileEmptyChecker,
-    private val findFilesUC: FindFilesUC,
+    private val findFilesUC: ScanDirFilesUC,
     private val currentFileRepo: CurrentFileRepo,
     private val scheduler: Scheduler
 ) {

@@ -7,8 +7,10 @@ import com.omar.retromp3recorder.app.di.UtilsModule
 import com.omar.retromp3recorder.bl.WakeLockUsecase
 import com.omar.retromp3recorder.bl.audio.PlayerProgressMapper
 import com.omar.retromp3recorder.bl.files.NewFileUpdater
-import com.omar.retromp3recorder.bl.files.TakeLastFileUC
+import com.omar.retromp3recorder.bl.files.ScanDirFilesUC
+import com.omar.retromp3recorder.bl.files.TakeLastFileDirScanUC
 import com.omar.retromp3recorder.bl.settings.LoadRecorderSettingsUC
+import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,7 +25,10 @@ class App : Application() {
     lateinit var playerProgressMapper: PlayerProgressMapper
 
     @Inject
-    lateinit var takeLastFileUC: TakeLastFileUC
+    lateinit var takeLastFileWithScanDirScanUC: TakeLastFileDirScanUC
+
+    @Inject
+    lateinit var scanDirFilesUC: ScanDirFilesUC
 
     @Inject
     lateinit var wakelockUsecase: WakeLockUsecase
@@ -37,10 +42,11 @@ class App : Application() {
         appComponent.inject(this)
 
         loadRecorderSettingsUC.execute().subscribe()
-        takeLastFileUC.execute().subscribe()
+        takeLastFileWithScanDirScanUC.execute().subscribe()
         cleanUpSeekRepoUsecase.execute().subscribe()
         playerProgressMapper.execute().subscribe()
         wakelockUsecase.execute().subscribe()
+        scanDirFilesUC.execute(true).subscribeOn(Schedulers.io()).subscribe()
     }
 
     companion object {
