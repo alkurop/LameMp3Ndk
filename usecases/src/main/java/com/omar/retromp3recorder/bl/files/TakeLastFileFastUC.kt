@@ -17,7 +17,7 @@ import javax.inject.Inject
  *
  * and puts it into the CurrentFileRepo
  */
-class TakeLastFileFastScanUC @Inject constructor(
+class TakeLastFileFastUC @Inject constructor(
     private val appDatabase: AppDatabase,
     private val fileEmptyChecker: FileEmptyChecker,
     private val currentFileRepo: CurrentFileRepo,

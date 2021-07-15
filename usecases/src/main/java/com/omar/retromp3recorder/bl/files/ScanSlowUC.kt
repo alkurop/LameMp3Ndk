@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Looks for files that exist in db
  */
-class FindFilesNoScanUC @Inject constructor(
+class ScanSlowUC @Inject constructor(
     private val appDatabase: AppDatabase,
     private val fileListRepo: FileListRepo,
     private val fileEmptyChecker: FileEmptyChecker,

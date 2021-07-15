@@ -9,7 +9,7 @@ import javax.inject.Inject
 class DeleteCurrentFileUC @Inject constructor(
     private val currentFileMapper: CurrentFileMapper,
     private val fileDeleter: FileDeleter,
-    private val takeLastFileUC: TakeLastFileFastScanUC
+    private val takeLastFileUC: TakeLastFileFastUC
 ) {
     fun execute(): Completable {
         return currentFileMapper

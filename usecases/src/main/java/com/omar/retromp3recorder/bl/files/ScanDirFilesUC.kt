@@ -30,12 +30,22 @@ class ScanDirFilesUC @Inject constructor(
     private val fileEmptyChecker: FileEmptyChecker,
     private val fileLister: FileLister
 ) {
-    fun execute(): Completable = Completable
+    fun execute(
+        shouldCheckEmptyFiles: Boolean = false
+    ): Completable = Completable
         .fromAction {
             val foundFiles = fileLister.listFiles(filePathGenerator.fileDirs)
                 .filter { it.path.split(".").last() == "mp3" }
-            val nonEmptyFiles = foundFiles.filter { fileEmptyChecker.isFileEmpty(it.path).not() }
-            foundFiles.filter { it !in nonEmptyFiles }.forEach { File(it.path).delete() }
+            val nonEmptyFiles =
+                if (shouldCheckEmptyFiles) {
+                    foundFiles.filter { fileEmptyChecker.isFileEmpty(it.path).not() }
+                        .also { nonEmptyFiles ->
+                            foundFiles.filter { it !in nonEmptyFiles }
+                                .forEach { File(it.path).delete() }
+                        }
+                } else {
+                    foundFiles
+                }
             val dirFiles = nonEmptyFiles.sortedBy { it.createTimedStamp }
             val updatedList = appDatabase.fileEntityDao().run {
                 val dbFiles = getAll().map { it.toFileWrapper() }
@@ -43,8 +53,9 @@ class ScanDirFilesUC @Inject constructor(
                     dirFiles.map { it.path }.contains(dbFile.path).not()
                 }
 
-                insert(dirFiles
-                    .filter { dirFile ->
+                insert(
+                    dirFiles
+                        .filter { dirFile ->
                         dbFiles.map { dbFile -> dbFile.path }.contains(dirFile.path).not()
                     }
                     .map { it.copy(wavetable = emptyWavetableGenerator.generateWavetable(it.path)) }
