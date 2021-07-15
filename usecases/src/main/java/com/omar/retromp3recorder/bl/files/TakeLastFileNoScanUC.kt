@@ -1,5 +1,7 @@
 package com.omar.retromp3recorder.bl.files
 
+import com.omar.retromp3recorder.storage.db.AppDatabase
+import com.omar.retromp3recorder.storage.db.toFileWrapper
 import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.storage.repo.FileListRepo
 import com.omar.retromp3recorder.utils.FileEmptyChecker
@@ -16,23 +18,20 @@ import javax.inject.Inject
  *
  * and puts it into the CurrentFileRepo
  */
-class TakeLastFileUC @Inject constructor(
+class TakeLastFileNoScanUC @Inject constructor(
+    private val appDatabase: AppDatabase,
     private val fileListRepo: FileListRepo,
     private val fileEmptyChecker: FileEmptyChecker,
     private val findFilesUC: FindFilesUC,
     private val currentFileRepo: CurrentFileRepo,
     private val scheduler: Scheduler
 ) {
-    fun execute(): Completable {
-        return findFilesUC.execute()
-            .andThen(Completable.fromAction {
-                val lastFile = fileListRepo.observe().blockingFirst().lastOrNull()
-                if (lastFile == null || fileEmptyChecker.isFileEmpty(lastFile.path)) {
-                    currentFileRepo.onNext(Optional.empty())
-                } else {
-                    currentFileRepo.onNext(Optional(lastFile.path))
-                }
-            })
-            .subscribeOn(scheduler)
-    }
+    fun execute(): Completable = Completable
+        .fromAction {
+            val fileList =
+                appDatabase.fileEntityDao().getAll().map { it.toFileWrapper() }.asReversed()
+            val path = fileList.find { fileEmptyChecker.isFileEmpty(it.path).not() }?.path
+            currentFileRepo.onNext(Optional(path))
+        }
+        .subscribeOn(scheduler)
 }

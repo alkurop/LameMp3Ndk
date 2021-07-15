@@ -12,7 +12,7 @@ class DeleteCurrentFileUC @Inject constructor(
     private val currentFileMapper: CurrentFileMapper,
     private val currentFileRepo: CurrentFileRepo,
     private val fileDeleter: FileDeleter,
-    private val takeLastFileUC: TakeLastFileUC
+    private val takeLastFileUC: TakeLastFileNoScanUC
 ) {
     fun execute(): Completable {
         return currentFileMapper
