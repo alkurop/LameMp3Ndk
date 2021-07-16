@@ -5,7 +5,7 @@ import com.omar.retromp3recorder.storage.repo.CurrentFileRepo
 import com.omar.retromp3recorder.storage.repo.WavetableRepo
 import com.omar.retromp3recorder.utils.Constants
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Scheduler
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -14,7 +14,8 @@ class RecordWavetableUC @Inject constructor(
     private val recorderMapper: RecordWavetableMapper,
     private val audioStateMapper: AudioStateMapper,
     private val wavetableRepo: WavetableRepo,
-    private val currentFileRepo: CurrentFileRepo
+    private val currentFileRepo: CurrentFileRepo,
+    private val scheduler: Scheduler
 ) {
     fun execute(): Completable = audioStateMapper.observe()
         .ofType(AudioState.Recording::class.java)
@@ -41,6 +42,6 @@ class RecordWavetableUC @Inject constructor(
                     }
                 }
         }
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(scheduler)
 }
 

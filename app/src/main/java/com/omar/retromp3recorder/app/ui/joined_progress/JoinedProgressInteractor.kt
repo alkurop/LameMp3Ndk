@@ -3,6 +3,8 @@ package com.omar.retromp3recorder.app.ui.joined_progress
 import com.omar.retromp3recorder.bl.audio.AudioSeekFinishUC
 import com.omar.retromp3recorder.bl.audio.AudioSeekPauseUC
 import com.omar.retromp3recorder.bl.audio.AudioSeekProgressUC
+import com.omar.retromp3recorder.dto.JoinedProgress
+import com.omar.retromp3recorder.storage.repo.JoinedProgressRepo
 import com.omar.retromp3recorder.utils.mapToUsecase
 import com.omar.retromp3recorder.utils.processIO
 import io.reactivex.rxjava3.core.Completable
@@ -15,7 +17,7 @@ class JoinedProgressInteractor @Inject constructor(
     private val audioSeekProgressUC: AudioSeekProgressUC,
     private val audioSeekPauseUC: AudioSeekPauseUC,
     private val audioSeekFinishUC: AudioSeekFinishUC,
-    private val joinedProgressMapper: JoinedProgressMapper,
+    private val joinedProgressRepo: JoinedProgressRepo,
     private val scheduler: Scheduler
 ) {
     fun processIO(): ObservableTransformer<JoinedProgressView.In, JoinedProgress> =
@@ -25,7 +27,7 @@ class JoinedProgressInteractor @Inject constructor(
         )
 
     private val mapRepoToOutput: () -> Observable<JoinedProgress> = {
-        joinedProgressMapper.observe()
+        joinedProgressRepo.observe()
     }
     private val inputMapper: (Observable<JoinedProgressView.In>) -> Completable = { input ->
         Completable.merge(listOf(
