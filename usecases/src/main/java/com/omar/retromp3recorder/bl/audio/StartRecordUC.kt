@@ -25,7 +25,6 @@ class StartRecordUC @Inject constructor(
     private val getNewFileNameUC: GetNewFileNameUC,
     private val generateDirIfNotExistsUC: GenerateDirIfNotExistsUC,
     private val incrementFileNameUC: IncrementFileNameUC,
-    private val recordWavetableUC: RecordWavetableUC,
     private val requestPermissionsRepo: RequestPermissionsRepo,
     private val sampleRateRepo: SampleRateRepo,
     private val voiceRecorder: Mp3VoiceRecorder
@@ -52,7 +51,6 @@ class StartRecordUC @Inject constructor(
                 }
             }
             .andThen(incrementFileNameUC.execute())
-            .andThen(recordWavetableUC.execute())
         val abort = Completable.complete()
         return checkPermissionsUC
             .execute(voiceRecordPermissions)

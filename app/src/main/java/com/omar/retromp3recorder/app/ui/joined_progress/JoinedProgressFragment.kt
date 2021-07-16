@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.omar.retromp3recorder.app.R
 import com.omar.retromp3recorder.app.ui.utils.lazyView
 import com.omar.retromp3recorder.app.uiutils.observe
+import com.omar.retromp3recorder.dto.JoinedProgress
 import com.omar.retromp3recorder.ui.wavetable.WavetablePreview
 import com.omar.retromp3recorder.ui.wavetable.WavetableSeekbarPreview
 import com.omar.retromp3recorder.utils.toDisplay

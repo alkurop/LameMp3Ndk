@@ -4,13 +4,14 @@ import android.app.Application
 import com.omar.retromp3recorder.app.di.AppComponent
 import com.omar.retromp3recorder.app.di.DaggerAppComponent
 import com.omar.retromp3recorder.app.di.UtilsModule
+import com.omar.retromp3recorder.app.ui.joined_progress.JoinedProgressMapper
 import com.omar.retromp3recorder.bl.WakeLockUsecase
 import com.omar.retromp3recorder.bl.audio.PlayerProgressMapper
+import com.omar.retromp3recorder.bl.audio.RecordWavetableUC
 import com.omar.retromp3recorder.bl.files.NewFileUpdater
 import com.omar.retromp3recorder.bl.files.ScanDirFilesUC
 import com.omar.retromp3recorder.bl.files.TakeLastFileDirScanUC
 import com.omar.retromp3recorder.bl.settings.LoadRecorderSettingsUC
-import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -33,6 +34,12 @@ class App : Application() {
     @Inject
     lateinit var wakelockUsecase: WakeLockUsecase
 
+    @Inject
+    lateinit var wavetableUC: RecordWavetableUC
+
+    @Inject
+    lateinit var joinPlayerProgressMapper: JoinedProgressMapper
+
     override fun onCreate() {
         super.onCreate()
         appComponent = DaggerAppComponent.builder().utilsModule(UtilsModule(this)).build()
@@ -46,7 +53,9 @@ class App : Application() {
         cleanUpSeekRepoUsecase.execute().subscribe()
         playerProgressMapper.execute().subscribe()
         wakelockUsecase.execute().subscribe()
-        scanDirFilesUC.execute(true).subscribeOn(Schedulers.io()).subscribe()
+        scanDirFilesUC.execute(true).subscribe()
+        wavetableUC.execute().subscribe()
+        joinPlayerProgressMapper.observe().subscribe()
     }
 
     companion object {

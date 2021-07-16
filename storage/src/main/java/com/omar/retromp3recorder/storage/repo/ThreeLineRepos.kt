@@ -1,6 +1,7 @@
 package com.omar.retromp3recorder.storage.repo
 
 import com.omar.retromp3recorder.dto.ExistingFileWrapper
+import com.omar.retromp3recorder.dto.JoinedProgress
 import com.omar.retromp3recorder.dto.Wavetable
 import com.omar.retromp3recorder.iorecorder.Mp3VoiceRecorder
 import com.omar.retromp3recorder.iorecorder.RecorderDefaults
@@ -32,3 +33,7 @@ class WavetableRepo @Inject constructor() :
 @Singleton
 class SeekRepo @Inject constructor() :
     BehaviorSubjectRepo<Optional<Int>>(Optional.empty())
+
+@Singleton
+class JoinedProgressRepo @Inject constructor() :
+    BehaviorSubjectRepo<JoinedProgress>(JoinedProgress.Hidden)

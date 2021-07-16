@@ -9,6 +9,7 @@ import com.omar.retromp3recorder.utils.FileEmptyChecker
 import com.omar.retromp3recorder.utils.FileLister
 import com.omar.retromp3recorder.utils.FilePathGenerator
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Scheduler
 import java.io.File
 import javax.inject.Inject
 
@@ -28,7 +29,8 @@ class ScanDirFilesUC @Inject constructor(
     private val fileListRepo: FileListRepo,
     private val filePathGenerator: FilePathGenerator,
     private val fileEmptyChecker: FileEmptyChecker,
-    private val fileLister: FileLister
+    private val fileLister: FileLister,
+    private val scheduler: Scheduler
 ) {
     fun execute(
         shouldCheckEmptyFiles: Boolean = false
@@ -75,4 +77,5 @@ class ScanDirFilesUC @Inject constructor(
             }
             fileListRepo.onNext(updatedList.map { it.toFileWrapper() })
         }
+        .subscribeOn(scheduler)
 }
