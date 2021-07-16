@@ -6,6 +6,7 @@ import com.omar.retromp3recorder.app.di.DaggerAppComponent
 import com.omar.retromp3recorder.app.di.UtilsModule
 import com.omar.retromp3recorder.bl.WakeLockUsecase
 import com.omar.retromp3recorder.bl.audio.PlayerProgressMapper
+import com.omar.retromp3recorder.bl.audio.RecordWavetableUC
 import com.omar.retromp3recorder.bl.files.NewFileUpdater
 import com.omar.retromp3recorder.bl.files.ScanDirFilesUC
 import com.omar.retromp3recorder.bl.files.TakeLastFileDirScanUC
@@ -33,6 +34,9 @@ class App : Application() {
     @Inject
     lateinit var wakelockUsecase: WakeLockUsecase
 
+    @Inject
+    lateinit var wavetableUC: RecordWavetableUC
+
     override fun onCreate() {
         super.onCreate()
         appComponent = DaggerAppComponent.builder().utilsModule(UtilsModule(this)).build()
@@ -47,6 +51,7 @@ class App : Application() {
         playerProgressMapper.execute().subscribe()
         wakelockUsecase.execute().subscribe()
         scanDirFilesUC.execute(true).subscribeOn(Schedulers.io()).subscribe()
+        wavetableUC.execute().subscribe()
     }
 
     companion object {
