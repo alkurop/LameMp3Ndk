@@ -35,6 +35,12 @@
             android:name=".ui.files.CurrentFileActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:label="@string/settings"
+            android:launchMode="singleTask"
+            android:name=".ui.settings.SettingsActivity"
+            android:screenOrientation="portrait" />
+
         <service
             android:exported="false"
             android:name=".WakelockService" />

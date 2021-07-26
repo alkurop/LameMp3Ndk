@@ -1,26 +1,31 @@
 package com.omar.retromp3recorder.app.ui.main
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.github.alkurop.jpermissionmanager.PermissionOptionalDetails
 import com.github.alkurop.jpermissionmanager.PermissionRequiredDetails
 import com.github.alkurop.jpermissionmanager.PermissionsManager
 import com.omar.retromp3recorder.app.R
+import com.omar.retromp3recorder.app.ui.settings.SettingsActivity
 import com.omar.retromp3recorder.app.uiutils.observe
 import java.util.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
-
     private val permissionsManager: PermissionsManager by lazy { PermissionsManager(this) }
     private val permissionsMap: Map<String, PermissionOptionalDetails> by lazy { createPermissionsMap() }
-
     private val viewModel by viewModels<MainViewModel>()
+    private val titleContainer by lazy { findViewById<View>(R.id.titleContainer) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.state.observe(this, ::renderView)
+        titleContainer.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
     }
 
     private fun renderView(state: MainView.State) {
