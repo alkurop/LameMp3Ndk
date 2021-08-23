@@ -15,8 +15,8 @@ import javax.inject.Inject
  * (we expect it to be the last recording)
  *
  * and puts it into the CurrentFileRepo
+ * use TakeLastFileNoScanUC. this version is very slow when user has a lot of files
  */
-@Deprecated("use TakeLastFileNoScanUC. this version is very slow when user has a lot of files")
 class TakeLastFileDirScanUC @Inject constructor(
     private val fileListRepo: FileListRepo,
     private val fileEmptyChecker: FileEmptyChecker,
