@@ -10,17 +10,18 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        android:name=".App"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".App"
         android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
 
         <activity
-            android:label="@string/app_name"
             android:name="com.omar.retromp3recorder.app.ui.main.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,25 +31,25 @@
         </activity>
 
         <activity
+            android:name=".ui.files.CurrentFileActivity"
             android:label="@string/current_file"
             android:launchMode="singleTask"
-            android:name=".ui.files.CurrentFileActivity"
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.settings.SettingsActivity"
             android:label="@string/settings"
             android:launchMode="singleTask"
-            android:name=".ui.settings.SettingsActivity"
             android:screenOrientation="portrait" />
 
         <service
-            android:exported="false"
-            android:name=".WakelockService" />
+            android:name=".WakelockService"
+            android:exported="false" />
         <provider
+            android:name="com.omar.retromp3recorder.utils.GenericFileProvider"
             android:authorities="${applicationId}.com.omar.retromp3recorder.app.provider"
             android:exported="false"
-            android:grantUriPermissions="true"
-            android:name="com.omar.retromp3recorder.utils.GenericFileProvider">
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider" />
