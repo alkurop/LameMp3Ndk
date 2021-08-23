@@ -3,8 +3,8 @@
 buildscript {
     apply from: 'libs.gradle'
     ext.compileSdk = 31
-    ext.minSdk = 21
-    ext.targetSdk = 30
+    ext.minSdk = 23
+    ext.targetSdk = 31
 
     repositories {
         google()
