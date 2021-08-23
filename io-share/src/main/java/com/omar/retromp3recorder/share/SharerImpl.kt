@@ -13,6 +13,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.subjects.PublishSubject
+import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Named
@@ -38,9 +39,18 @@ class SharerImpl @Inject internal constructor(
                         context.getString(R.string.sh_select)
                     ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 )
-                SharingOk(Stringer(R.string.sh_trying_to_share))
+                events.onNext(SharingOk(Stringer(R.string.sh_trying_to_share)))
             }
-
+            .onErrorComplete {
+                val cause = it.message
+                val message =
+                    if (cause == null) Stringer(R.string.sharing_failed) else Stringer.ofString(
+                        cause
+                    )
+                events.onNext(Error(message))
+                Timber.e(it)
+                true
+            }
             .subscribeOn(mainThreadScheduler)
     }
 
