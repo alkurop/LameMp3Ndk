@@ -2,19 +2,17 @@
 
 buildscript {
     apply from: 'libs.gradle'
-    ext.compileSdkVersion = 30
-    ext.buildToolsVersion = "30.0.3"
-    ext.minSdkVersion = 21
-    ext.targetSdkVersion = 30
+    ext.compileSdk = 31
+    ext.minSdk = 21
+    ext.targetSdk = 30
 
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
-        classpath 'com.google.gms:google-services:4.3.5'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.2'
+        classpath 'com.android.tools.build:gradle:7.0.1'
+        classpath 'com.google.gms:google-services:4.3.10'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
     }
 }
