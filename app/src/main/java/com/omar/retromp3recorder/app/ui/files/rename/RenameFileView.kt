@@ -26,7 +26,7 @@ object RenameFileView {
     sealed class Output {
         data class CanDismiss(val isDismissed: Boolean) : Output()
         data class OkButtonState(val isEnabled: Boolean) : Output()
-        data class CurrentFile(val fileWrapper: ExistingFileWrapper) : Output()
+        data class CurrentFile(val fileWrapper: ExistingFileWrapper?) : Output()
     }
 }
 

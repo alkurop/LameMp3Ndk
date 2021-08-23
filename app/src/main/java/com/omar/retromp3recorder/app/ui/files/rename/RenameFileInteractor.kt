@@ -30,7 +30,7 @@ class RenameFileInteractor @Inject constructor(
     private val mapRepoToOutput: () -> Observable<RenameFileView.Output> = {
         Observable.merge(
             listOf(
-                currentFileRepo.observe().map { RenameFileView.Output.CurrentFile(it.value!!) },
+                currentFileRepo.observe().map { RenameFileView.Output.CurrentFile(it.value) },
                 canRenameFileRepo.observe().map { RenameFileView.Output.OkButtonState(it) },
                 finishedRenameCallback.observe().map { RenameFileView.Output.CanDismiss(it) }
             )
