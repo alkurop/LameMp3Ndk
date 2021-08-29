@@ -15,9 +15,10 @@ class DeleteCurrentFileUC @Inject constructor(
         return currentFileMapper
             .observe().takeOne()
             .flatMapCompletable { optional ->
-                val filePath = (optional.value!! as ExistingFileWrapper).path
+                val filePath = (optional.value as? ExistingFileWrapper)?.path
+
                 Completable.fromAction {
-                    fileDeleter.deleteFile(filePath)
+                    filePath?.let { fileDeleter.deleteFile(filePath) }
                 }
             }
             .andThen(takeLastFileUC.execute())
