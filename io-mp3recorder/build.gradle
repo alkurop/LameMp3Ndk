@@ -26,5 +26,5 @@ dependencies {
     implementation project(':utils')
     implementation "com.github.alkurop:stringerbell:$versions.stringerbell"
     implementation "com.google.dagger:dagger:$versions.dagger"
-    implementation 'com.github.alkurop:LameMp3RecorderModule:0.4'
+    implementation 'com.github.alkurop:LameMp3RecorderModule:0.5'
 }
